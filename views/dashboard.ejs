@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard - VaidyaVaani</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<h2>Welcome to Your Dashboard</h2>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+  <input type="file" name="description" required />
+  <button type="submit">Upload</button>
+</form>
+<h3>Your Uploaded Descriptions:</h3>
+<ul>
+<% files.forEach(file => { %>
+  <li><%= file.originalname %> — Uploaded on <%= file.createdAt.toDateString() %></li>
+<% }) %>
+</ul>
+<a href="/logout">Logout</a>
+</body></html>

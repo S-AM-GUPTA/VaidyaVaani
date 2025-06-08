@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Prescription - VaidyaVaani</title>
+ <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar container">
+    <a href="/index.html" class="logo" style="display: flex; align-items: center;">
+      <img src="/logo.png" alt="VaidyaVaani Logo" style="height: 40px; margin-right: 10px;">🩺 VaidyaVaani
+    </a>
+    <ul class="nav-links">
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/upload.html">Upload</a></li>
+      <li><a href="/howitworks.html">How It Works</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+  </header>
+
+  <!-- Upload Section -->
+  <section class="hero" style="background: #1976d2;">
+    <div class="container hero-text">
+      <h1>Upload Your Prescription</h1>
+      <p>We'll decode and narrate it in simple terms and your local language.</p>
+    </div>
+  </section>
+
+  <section class="features container">
+    <div class="feature">
+      <form action="/upload" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 1rem;">
+        <label for="file">Choose a prescription image (JPG, PNG, or PDF):</label>
+        <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png,.pdf" required />
+
+        <button type="submit" class="btn-primary" style="width: fit-content;">Upload Now</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 VaidyaVaani. All rights reserved. | <a href="/contact.html">Contact Us</a></p>
+  </footer>
+
+</body>
+</html>
