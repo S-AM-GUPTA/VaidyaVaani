@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-medical-blue: #0A84FF;
+  --color-healthcare-green: #22C55E;
+  --color-soft-sky: #EAF4FF;
+  --color-light-mint: #ECFDF5;
+  
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-border: #E2E8F0;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #64748B;
+  
+  --color-status-success: #16A34A;
+  --color-status-warning: #F59E0B;
+  --color-status-error: #DC2626;
+  --color-status-info: #3B82F6;
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--color-background)] text-[var(--color-text-primary)] font-sans antialiased;
+  }
+}
