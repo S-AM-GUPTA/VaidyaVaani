@@ -1,6 +1,6 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
-import { Shield, Brain, Activity, ArrowRight, FileText, ChevronRight } from 'lucide-react';
+import { Shield, Activity, ArrowRight, FileText } from 'lucide-react';
 
 const Landing = () => {
   return (
