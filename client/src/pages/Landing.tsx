@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { 
   ShieldCheck, 
-  Globe, 
-  ChevronDown, 
   CloudUpload, 
   FileText, 
   FileSearch, 
@@ -15,62 +13,17 @@ import {
   MessageSquare,
   Activity
 } from 'lucide-react';
+import TopBanner from '../components/layout/TopBanner';
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 
 const Landing = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden">
-      {/* Top Security Banner */}
-      <div className="bg-[#0B1B3D] text-white py-2 px-4 flex justify-center items-center text-sm font-medium">
-        <ShieldCheck className="w-4 h-4 mr-2" />
-        Your health data is 100% secure and private. We follow industry-standard encryption.
-      </div>
-
-      {/* Navbar */}
-      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-                <span className="text-white font-display font-bold text-xl">V</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-display font-bold text-[#0B1B3D] tracking-tight leading-none mb-1">VaidyaVaani</span>
-                <span className="text-[10px] text-slate-500 font-medium leading-none hidden sm:block">Understand. Prevent. Stay Healthy.</span>
-              </div>
-            </div>
-
-            {/* Center Links (Hidden on mobile) */}
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Home</a>
-              <a href="#how-it-works" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">How It Works</a>
-              <a href="#features" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">Features</a>
-              <a href="#about" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">About Us</a>
-              <a href="#faqs" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">FAQs</a>
-              <a href="#contact" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">Contact</a>
-            </div>
-
-            {/* Right Actions */}
-            <div className="flex items-center space-x-4">
-              <button className="hidden sm:flex items-center space-x-1 text-slate-600 hover:text-slate-900 font-medium bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
-                <Globe className="w-4 h-4" />
-                <span>English</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-              <button 
-                onClick={() => navigate('/login')}
-                className="flex items-center space-x-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-sm"
-              >
-                <CloudUpload className="w-5 h-5" />
-                <span className="hidden sm:inline">Upload Report</span>
-                <span className="sm:hidden">Upload</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden flex flex-col">
+      <TopBanner />
+      <Navbar />
 
       {/* Hero Section */}
       <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 lg:pt-24 lg:pb-32 flex flex-col lg:flex-row items-center">
@@ -309,18 +262,7 @@ const Landing = () => {
         </div>
       </section>
       
-      {/* Footer */}
-      <footer className="bg-[#0B1B3D] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-slate-300 font-medium text-sm">
-           <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-              <span className="text-white font-display font-bold text-sm">V</span>
-            </div>
-            <span className="font-display font-bold text-white text-lg">VaidyaVaani</span>
-          </div>
-          <p>© 2026 VaidyaVaani AI. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

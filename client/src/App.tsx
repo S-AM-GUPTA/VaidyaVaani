@@ -7,6 +7,9 @@ import Uploader from './components/Uploader';
 import ReportSummary from './components/ReportSummary';
 import PrescriptionDetails from './components/PrescriptionDetails';
 import Landing from './pages/Landing';
+import TopBanner from './components/layout/TopBanner';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -19,7 +22,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Dashboard = () => {
-  const { logout, token } = useAuth();
+  const { token } = useAuth();
   const [reports, setReports] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<'reports' | 'prescriptions'>('reports');
   const [viewMode, setViewMode] = useState<'upload' | 'history'>('history');
@@ -46,29 +49,15 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)] relative overflow-hidden">
-      {/* Decorative background shapes */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-500/10 blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-teal-500/10 blur-[100px] pointer-events-none" />
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden flex flex-col">
+      <TopBanner />
+      <Navbar />
       
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <header className="flex justify-between items-center mb-10 glass-panel p-6 rounded-2xl">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg shadow-indigo-500/30">
-              <span className="text-white font-display font-bold text-2xl">V</span>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">VaidyaVaani Dashboard</h1>
-              <p className="text-[var(--color-text-secondary)] text-sm font-medium">Your secure medical intelligence hub</p>
-            </div>
-          </div>
-          <button 
-            onClick={logout}
-            className="px-5 py-2.5 text-sm text-[var(--color-text-secondary)] font-medium hover:text-[var(--color-text-primary)] hover:bg-slate-100/50 rounded-xl transition-all border border-transparent hover:border-slate-200"
-          >
-            Sign Out
-          </button>
-        </header>
+      <main className="flex-grow w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <div className="mb-8">
+          <h1 className="text-3xl font-display font-bold text-[#0B1B3D] tracking-tight">My Dashboard</h1>
+          <p className="text-slate-500 font-medium">Your secure medical intelligence hub</p>
+        </div>
 
         <div className="glass-panel rounded-3xl overflow-hidden">
           <div className="flex p-2 gap-2 bg-slate-50/50 border-b border-[var(--color-border)]/50 backdrop-blur-sm">
@@ -192,7 +181,8 @@ const Dashboard = () => {
             )}
           </div>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 };
