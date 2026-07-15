@@ -1,106 +1,324 @@
-
-import { Link } from 'react-router-dom';
-import { Shield, Activity, ArrowRight, FileText } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { 
+  ShieldCheck, 
+  Globe, 
+  ChevronDown, 
+  CloudUpload, 
+  FileText, 
+  FileSearch, 
+  Pill, 
+  Users, 
+  Sparkles, 
+  ArrowRight,
+  Brain,
+  History,
+  MessageSquare,
+  Activity
+} from 'lucide-react';
 
 const Landing = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="min-h-screen bg-[var(--color-background)] relative overflow-hidden font-sans">
-      {/* Decorative background shapes */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-teal-500/10 blur-[120px] pointer-events-none" />
-      
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden">
+      {/* Top Security Banner */}
+      <div className="bg-[#0B1B3D] text-white py-2 px-4 flex justify-center items-center text-sm font-medium">
+        <ShieldCheck className="w-4 h-4 mr-2" />
+        Your health data is 100% secure and private. We follow industry-standard encryption.
+      </div>
+
       {/* Navbar */}
-      <nav className="relative z-10 max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg shadow-indigo-500/30">
-            <span className="text-white font-display font-bold text-xl">V</span>
+      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo */}
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <span className="text-white font-display font-bold text-xl">V</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xl font-display font-bold text-[#0B1B3D] tracking-tight leading-none mb-1">VaidyaVaani</span>
+                <span className="text-[10px] text-slate-500 font-medium leading-none hidden sm:block">Understand. Prevent. Stay Healthy.</span>
+              </div>
+            </div>
+
+            {/* Center Links (Hidden on mobile) */}
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Home</a>
+              <a href="#how-it-works" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">How It Works</a>
+              <a href="#features" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">Features</a>
+              <a href="#about" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">About Us</a>
+              <a href="#faqs" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">FAQs</a>
+              <a href="#contact" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">Contact</a>
+            </div>
+
+            {/* Right Actions */}
+            <div className="flex items-center space-x-4">
+              <button className="hidden sm:flex items-center space-x-1 text-slate-600 hover:text-slate-900 font-medium bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                <Globe className="w-4 h-4" />
+                <span>English</span>
+                <ChevronDown className="w-4 h-4" />
+              </button>
+              <button 
+                onClick={() => navigate('/login')}
+                className="flex items-center space-x-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-sm"
+              >
+                <CloudUpload className="w-5 h-5" />
+                <span className="hidden sm:inline">Upload Report</span>
+                <span className="sm:hidden">Upload</span>
+              </button>
+            </div>
           </div>
-          <span className="text-xl font-display font-bold text-[var(--color-text-primary)] tracking-tight">VaidyaVaani</span>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Link to="/login" className="px-5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
-            Sign In
-          </Link>
-          <Link to="/login" className="px-5 py-2 text-sm font-medium text-white bg-slate-900 rounded-xl hover:bg-slate-800 transition-all shadow-sm">
-            Get Started
-          </Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center">
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-sm font-medium mb-8 animate-fade-in-up">
-          <span className="flex w-2 h-2 rounded-full bg-indigo-500 mr-2 animate-pulse"></span>
-          AI-Powered Medical Intelligence
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 lg:pt-24 lg:pb-32 flex flex-col lg:flex-row items-center">
+        {/* Left Column */}
+        <div className="lg:w-1/2 lg:pr-12 mb-16 lg:mb-0 z-10">
+          <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-[#0B1B3D] leading-[1.1] tracking-tight mb-6">
+            Understand Your <br />
+            Reports. <br />
+            <span className="text-blue-700">Take Control of <br />Your Health.</span>
+          </h1>
+          <p className="text-lg text-slate-600 mb-10 max-w-xl font-medium leading-relaxed">
+            VaidyaVaani uses advanced AI to explain medical reports in simple language, check medicine interactions, and help you make better health decisions.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-16">
+            <button 
+              onClick={() => navigate('/login')}
+              className="flex items-center justify-center space-x-2 bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold hover:bg-blue-800 transition-colors shadow-lg shadow-blue-700/20 text-lg"
+            >
+              <CloudUpload className="w-6 h-6" />
+              <span>Upload Your Report</span>
+            </button>
+            <button 
+              onClick={() => navigate('/login')}
+              className="flex items-center justify-center space-x-2 bg-white text-blue-700 border-2 border-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-colors text-lg"
+            >
+              <FileText className="w-6 h-6" />
+              <span>Try Sample Report</span>
+            </button>
+          </div>
+
+          {/* Trust Badges */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="flex flex-col">
+              <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mb-3 border border-blue-100">
+                <ShieldCheck className="w-5 h-5 text-blue-700" />
+              </div>
+              <span className="font-bold text-slate-900 text-sm mb-1">100% Secure</span>
+              <span className="text-xs text-slate-500 font-medium">Your data is safe and encrypted</span>
+            </div>
+            <div className="flex flex-col">
+              <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mb-3 border border-blue-100">
+                <FileSearch className="w-5 h-5 text-blue-700" />
+              </div>
+              <span className="font-bold text-slate-900 text-sm mb-1">AI Explained</span>
+              <span className="text-xs text-slate-500 font-medium">Complex reports in simple words</span>
+            </div>
+            <div className="flex flex-col">
+              <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mb-3 border border-blue-100">
+                <Pill className="w-5 h-5 text-blue-700" />
+              </div>
+              <span className="font-bold text-slate-900 text-sm mb-1">Medicine Safety</span>
+              <span className="text-xs text-slate-500 font-medium">Check interactions instantly</span>
+            </div>
+            <div className="flex flex-col">
+              <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mb-3 border border-blue-100">
+                <Users className="w-5 h-5 text-blue-700" />
+              </div>
+              <span className="font-bold text-slate-900 text-sm mb-1">10K+ Users</span>
+              <span className="text-xs text-slate-500 font-medium">Trusted by thousands across India</span>
+            </div>
+          </div>
         </div>
-        
-        <h1 className="text-5xl md:text-7xl font-display font-extrabold text-[var(--color-text-primary)] tracking-tight max-w-4xl mb-8 leading-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          Understand your health <br />
-          <span className="text-gradient">instantly and securely.</span>
-        </h1>
-        
-        <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-2xl mb-12 font-medium leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          VaidyaVaani transforms complex medical lab reports and handwritten prescriptions into clear, actionable, and secure insights using advanced AI.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row items-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-          <Link to="/login" className="px-8 py-4 bg-gradient-primary text-white font-medium rounded-2xl hover:shadow-xl hover:shadow-indigo-500/25 hover:scale-105 transition-all duration-300 flex items-center text-lg">
-            Start Your Free Vault <ArrowRight className="ml-2 w-5 h-5" />
-          </Link>
-          <button className="px-8 py-4 bg-white text-slate-700 border border-slate-200 font-medium rounded-2xl hover:bg-slate-50 transition-colors text-lg shadow-sm">
-            See How It Works
-          </button>
+
+        {/* Right Column: Image and AI Card Overlay */}
+        <div className="lg:w-1/2 relative flex justify-center lg:justify-end">
+          <div className="relative w-full max-w-lg">
+            {/* The generated doctor image */}
+            <img 
+              src="/doctor_hero.png" 
+              alt="Doctor reviewing lab report" 
+              className="w-full h-auto rounded-3xl shadow-xl object-cover border border-slate-200"
+              onError={(e) => {
+                // Fallback if image not found during dev
+                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800';
+              }}
+            />
+            
+            {/* AI Summary Floating Card */}
+            <div className="absolute -left-4 md:-left-16 top-1/4 bg-white rounded-2xl shadow-2xl p-5 border border-slate-100 w-72 transform rotate-[-2deg] transition-transform hover:scale-105 hover:rotate-0 duration-300">
+              <div className="flex items-center space-x-2 mb-4">
+                <Sparkles className="w-5 h-5 text-blue-600" />
+                <span className="font-bold text-slate-800">AI Summary</span>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex items-center text-emerald-600 font-semibold text-sm mb-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2"></div>
+                  Overall Status
+                </div>
+                <div className="font-bold text-slate-800 text-lg mb-1">Mostly Normal</div>
+                <div className="text-xs text-slate-500 font-medium">2 parameters need attention</div>
+              </div>
+              
+              <div className="mb-4 bg-red-50 p-3 rounded-xl border border-red-100">
+                <div className="flex items-center text-red-600 font-semibold text-sm mb-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 mr-2"></div>
+                  Abnormal Findings
+                </div>
+                <ul className="text-sm text-slate-700 space-y-1 font-medium">
+                  <li>• Hemoglobin <span className="text-red-500">(Low)</span></li>
+                  <li>• Vitamin D <span className="text-red-500">(Low)</span></li>
+                </ul>
+              </div>
+
+              <div>
+                <div className="font-bold text-slate-800 text-sm mb-1">Doctor's Advice</div>
+                <div className="text-xs text-slate-600 mb-3 leading-relaxed">
+                  Increase iron rich foods and consider Vitamin D supplements.
+                </div>
+                <button className="w-full py-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-sm font-semibold text-blue-600 flex items-center justify-center transition-colors">
+                  View Full Analysis <ArrowRight className="w-4 h-4 ml-1" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
-      {/* Features Grid */}
-      <section className="relative z-10 max-w-7xl mx-auto px-6 pb-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Feature 1 */}
-          <div className="glass-card p-8 rounded-3xl border border-white/60">
-            <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-indigo-100">
-              <Activity className="w-7 h-7 text-indigo-600" />
+      {/* Core Features Grid */}
+      <section id="features" className="bg-white py-16 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-lg transition-all">
+              <div className="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-5 shadow-md shadow-blue-600/20">
+                <FileText className="w-7 h-7" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Upload Reports</h3>
+              <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                Upload medical reports in PDF, image, or text format securely to your vault.
+              </p>
             </div>
-            <h3 className="text-xl font-display font-bold text-slate-900 mb-3">Report Analysis</h3>
-            <p className="text-slate-600 leading-relaxed font-medium">
-              Upload blood tests and lab reports. Our AI instantly highlights abnormal values and explains what they mean for your health.
-            </p>
+
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-lg transition-all">
+              <div className="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-5 shadow-md shadow-blue-600/20">
+                <Brain className="w-7 h-7" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">AI Explanation</h3>
+              <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                Get easy-to-understand summaries in simple language for complex lab values.
+              </p>
+            </div>
+
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-lg transition-all">
+              <div className="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-5 shadow-md shadow-blue-600/20">
+                <Pill className="w-7 h-7" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Medicine Interaction Check</h3>
+              <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                Ensure your prescribed medicines are safe to take together without side effects.
+              </p>
+            </div>
+
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-lg transition-all">
+              <div className="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-5 shadow-md shadow-blue-600/20">
+                <History className="w-7 h-7" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Track History</h3>
+              <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                Save and track your reports and health history securely in one dashboard.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-display font-extrabold text-[#0B1B3D]">How It Works</h2>
           </div>
           
-          {/* Feature 2 */}
-          <div className="glass-card p-8 rounded-3xl border border-white/60">
-            <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-teal-100">
-              <FileText className="w-7 h-7 text-teal-600" />
+          <div className="flex flex-col md:flex-row items-center justify-between relative">
+            
+            {/* Step 1 */}
+            <div className="flex flex-col items-center text-center w-full md:w-1/4 px-4 mb-8 md:mb-0 z-10 relative">
+              <div className="w-16 h-16 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm mb-4">
+                <CloudUpload className="w-7 h-7 text-blue-600" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">1. Upload</h4>
+              <p className="text-sm text-slate-600 font-medium">Upload your medical report securely.</p>
             </div>
-            <h3 className="text-xl font-display font-bold text-slate-900 mb-3">Prescription Decoding</h3>
-            <p className="text-slate-600 leading-relaxed font-medium">
-              Confused by doctors' handwriting? We digitize and decode prescriptions, giving you clear dosage and timing instructions.
-            </p>
-          </div>
+            
+            {/* Arrow 1 */}
+            <div className="hidden md:block absolute top-8 left-[12.5%] w-[25%] -z-0">
+               <div className="w-full border-t-2 border-slate-200 relative">
+                 <div className="absolute -right-1 -top-[9px] text-slate-300"><ArrowRight className="w-4 h-4"/></div>
+               </div>
+            </div>
 
-          {/* Feature 3 */}
-          <div className="glass-card p-8 rounded-3xl border border-white/60">
-            <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-amber-100">
-              <Shield className="w-7 h-7 text-amber-600" />
+            {/* Step 2 */}
+            <div className="flex flex-col items-center text-center w-full md:w-1/4 px-4 mb-8 md:mb-0 z-10 relative">
+              <div className="w-16 h-16 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm mb-4">
+                <Activity className="w-7 h-7 text-blue-600" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">2. AI Analysis</h4>
+              <p className="text-sm text-slate-600 font-medium">Our AI analyzes and understands your report.</p>
             </div>
-            <h3 className="text-xl font-display font-bold text-slate-900 mb-3">Secure Vault</h3>
-            <p className="text-slate-600 leading-relaxed font-medium">
-              Your health data is sensitive. We use industry-standard encryption to ensure your medical history remains entirely private.
-            </p>
+
+            {/* Arrow 2 */}
+            <div className="hidden md:block absolute top-8 left-[37.5%] w-[25%] -z-0">
+               <div className="w-full border-t-2 border-slate-200 relative">
+                 <div className="absolute -right-1 -top-[9px] text-slate-300"><ArrowRight className="w-4 h-4"/></div>
+               </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex flex-col items-center text-center w-full md:w-1/4 px-4 mb-8 md:mb-0 z-10 relative">
+              <div className="w-16 h-16 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm mb-4">
+                <MessageSquare className="w-7 h-7 text-blue-600" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">3. Get Results</h4>
+              <p className="text-sm text-slate-600 font-medium">Receive simple summary, abnormal findings & advice.</p>
+            </div>
+
+            {/* Arrow 3 */}
+            <div className="hidden md:block absolute top-8 left-[62.5%] w-[25%] -z-0">
+               <div className="w-full border-t-2 border-slate-200 relative">
+                 <div className="absolute -right-1 -top-[9px] text-slate-300"><ArrowRight className="w-4 h-4"/></div>
+               </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="flex flex-col items-center text-center w-full md:w-1/4 px-4 z-10 relative">
+              <div className="w-16 h-16 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm mb-4">
+                <ShieldCheck className="w-7 h-7 text-blue-600" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">4. Take Action</h4>
+              <p className="text-sm text-slate-600 font-medium">Follow recommendations and stay healthy.</p>
+            </div>
+            
           </div>
         </div>
       </section>
       
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <div className="w-6 h-6 rounded-md bg-gradient-primary flex items-center justify-center">
-              <span className="text-white font-display font-bold text-xs">V</span>
+      <footer className="bg-[#0B1B3D] py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-slate-300 font-medium text-sm">
+           <div className="flex items-center space-x-2 mb-4 md:mb-0">
+            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+              <span className="text-white font-display font-bold text-sm">V</span>
             </div>
-            <span className="font-display font-bold text-slate-900">VaidyaVaani</span>
+            <span className="font-display font-bold text-white text-lg">VaidyaVaani</span>
           </div>
-          <p className="text-slate-500 text-sm font-medium">© 2026 VaidyaVaani AI. All rights reserved.</p>
+          <p>© 2026 VaidyaVaani AI. All rights reserved.</p>
         </div>
       </footer>
     </div>
