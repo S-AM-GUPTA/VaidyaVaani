@@ -11,14 +11,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to={isAuthenticated ? "/home" : "/"} className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
-              <span className="text-white font-display font-bold text-xl">V</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-display font-bold text-[#0B1B3D] tracking-tight leading-none mb-1 group-hover:text-blue-700 transition-colors">VaidyaVaani</span>
-              <span className="text-[10px] text-slate-500 font-medium leading-none hidden sm:block">Understand. Prevent. Stay Healthy.</span>
-            </div>
+          <Link to={isAuthenticated ? "/home" : "/"} className="flex items-center group">
+            <img src="/logo/complete logo.png" alt="VaidyaVaani Logo" className="h-10 w-auto group-hover:scale-105 transition-transform" />
           </Link>
 
           {/* Center Links (Hidden on mobile) */}

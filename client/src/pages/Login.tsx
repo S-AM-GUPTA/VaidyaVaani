@@ -56,8 +56,8 @@ const Login = () => {
         </div>
         
         <div className="relative z-10 max-w-lg">
-          <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 mb-8 shadow-2xl shadow-indigo-500/20 animate-fade-in-up">
-            <span className="text-white font-display font-bold text-3xl">V</span>
+          <div className="mb-8 animate-fade-in-up">
+            <img src="/logo/complete logo dark.png" alt="VaidyaVaani Logo" className="h-12 w-auto" />
           </div>
           <h1 className="text-4xl lg:text-5xl font-display font-bold text-white tracking-tight mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             Your secure medical intelligence hub.
@@ -82,9 +82,7 @@ const Login = () => {
       {/* Right Side - Form Area */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative">
         <div className="absolute top-8 right-8 lg:hidden">
-          <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg">
-            <span className="text-white font-display font-bold text-xl">V</span>
-          </div>
+          <img src="/logo/logo mark.png" alt="VaidyaVaani Logo" className="h-10 w-auto" />
         </div>
         
         <div className="w-full max-w-md animate-fade-in-up">
