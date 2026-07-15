@@ -37,7 +37,7 @@ const Login = () => {
     try {
       const res = await axios.post(`${API_URL}/auth/verify`, { sessionId, otp });
       login(res.data.token);
-      navigate('/dashboard');
+      navigate('/home');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to verify OTP');
     } finally {

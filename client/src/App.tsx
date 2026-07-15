@@ -7,6 +7,7 @@ import Uploader from './components/Uploader';
 import ReportSummary from './components/ReportSummary';
 import PrescriptionDetails from './components/PrescriptionDetails';
 import Landing from './pages/Landing';
+import Home from './pages/Home';
 import TopBanner from './components/layout/TopBanner';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -193,6 +194,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route 
+          path="/home" 
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          } 
+        />
         <Route 
           path="/dashboard" 
           element={

@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to={isAuthenticated ? "/home" : "/"} className="flex items-center space-x-3 group">
             <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
               <span className="text-white font-display font-bold text-xl">V</span>
             </div>
@@ -23,7 +23,7 @@ const Navbar = () => {
 
           {/* Center Links (Hidden on mobile) */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Home</Link>
+            <Link to={isAuthenticated ? "/home" : "/"} className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Home</Link>
             <a href="/#how-it-works" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">How It Works</a>
             <a href="/#features" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">Features</a>
             <a href="#about" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">About Us</a>
