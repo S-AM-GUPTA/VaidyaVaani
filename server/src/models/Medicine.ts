@@ -9,6 +9,8 @@ export interface IMedicine extends Document {
   timing?: string;
   foodInstructions?: string;
   warnings?: string;
+  confidenceScore?: number;
+  requiresVerification?: boolean;
   createdAt: Date;
 }
 
@@ -22,6 +24,8 @@ const MedicineSchema: Schema = new Schema(
     timing: { type: String },
     foodInstructions: { type: String },
     warnings: { type: String },
+    confidenceScore: { type: Number, min: 0, max: 100 },
+    requiresVerification: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -8,7 +8,17 @@ export const extractTextFromImage = async (absoluteFilePath: string): Promise<st
       file_path: absoluteFilePath
     });
     
-    return response.data.extracted_text;
+    // Check if the service returned the new extracted_lines format
+    if (response.data.extracted_lines) {
+      return response.data.extracted_lines.map((line: any) => {
+        // Round confidence to percentage
+        const confPercent = Math.round(line.confidence * 100);
+        return `${line.text} [Confidence: ${confPercent}%]`;
+      }).join('\n');
+    }
+    
+    // Fallback to old format
+    return response.data.extracted_text || '';
   } catch (error: any) {
     console.error('Error calling OCR microservice:', error.response?.data || error.message);
     throw new Error('Failed to extract text using OCR service');

@@ -1,25 +1,93 @@
 @import "tailwindcss";
 
 @theme {
-  --color-medical-blue: #0A84FF;
-  --color-healthcare-green: #22C55E;
-  --color-soft-sky: #EAF4FF;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
+  
+  --color-medical-blue: #4F46E5; /* Indigo 600 */
+  --color-medical-blue-hover: #4338CA; /* Indigo 700 */
+  --color-medical-blue-light: #EEF2FF; /* Indigo 50 */
+  
+  --color-medical-teal: #0D9488; /* Teal 600 */
+  --color-medical-teal-light: #F0FDFA; /* Teal 50 */
+  
+  --color-healthcare-green: #10B981; /* Emerald 500 */
+  --color-soft-sky: #F8FAFC;
   --color-light-mint: #ECFDF5;
   
-  --color-background: #F8FAFC;
-  --color-surface: #FFFFFF;
-  --color-border: #E2E8F0;
-  --color-text-primary: #0F172A;
-  --color-text-secondary: #64748B;
+  --color-background: #F1F5F9; /* Slate 100 */
+  --color-surface: rgba(255, 255, 255, 0.85); /* Glass surface */
+  --color-border: #E2E8F0; /* Slate 200 */
   
-  --color-status-success: #16A34A;
-  --color-status-warning: #F59E0B;
-  --color-status-error: #DC2626;
-  --color-status-info: #3B82F6;
+  --color-text-primary: #0F172A; /* Slate 900 */
+  --color-text-secondary: #64748B; /* Slate 500 */
+  
+  --color-status-success: #059669; /* Emerald 600 */
+  --color-status-success-bg: #D1FAE5; /* Emerald 100 */
+  
+  --color-status-warning: #D97706; /* Amber 600 */
+  --color-status-warning-bg: #FEF3C7; /* Amber 100 */
+  
+  --color-status-error: #DC2626; /* Red 600 */
+  --color-status-error-bg: #FEE2E2; /* Red 100 */
+  
+  --color-status-info: #2563EB; /* Blue 600 */
+  --color-status-info-bg: #DBEAFE; /* Blue 100 */
+
+  --drop-shadow-glass: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
 }
 
 @layer base {
   body {
     @apply bg-[var(--color-background)] text-[var(--color-text-primary)] font-sans antialiased;
+    /* Soft background gradient */
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(253,16%,7%,0) 0, transparent 50%), 
+      radial-gradient(at 50% 0%, hsla(225,39%,30%,0) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, hsla(339,49%,30%,0) 0, transparent 50%);
+    background-attachment: fixed;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 }
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-[var(--color-surface)] backdrop-blur-xl border border-white/40 shadow-[var(--drop-shadow-glass)];
+  }
+  
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-sm transition-all duration-300;
+  }
+  
+  .glass-card:hover {
+    @apply bg-white/90 shadow-md transform -translate-y-1;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-teal-500;
+  }
+
+  .bg-gradient-primary {
+    @apply bg-gradient-to-r from-indigo-600 to-teal-500;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out forwards;
+  }
+}
+

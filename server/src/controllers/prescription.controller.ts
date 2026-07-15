@@ -32,8 +32,20 @@ export const uploadPrescription = async (req: Request, res: Response): Promise<v
       
       if (extractedText) {
         const rawJson = await explainPrescription(extractedText);
-        const cleanJson = rawJson.replace(/```json/g, '').replace(/```/g, '');
-        const parsed = JSON.parse(cleanJson);
+        let cleanJson = rawJson.replace(/```json/gi, '').replace(/```/g, '');
+        const firstBrace = cleanJson.indexOf('{');
+        const lastBrace = cleanJson.lastIndexOf('}');
+        if (firstBrace !== -1 && lastBrace !== -1) {
+          cleanJson = cleanJson.substring(firstBrace, lastBrace + 1);
+        }
+        
+        let parsed: any = {};
+        try {
+          parsed = JSON.parse(cleanJson);
+        } catch (e) {
+          console.error("Failed to parse Gemini JSON:", cleanJson);
+        }
+        
         if (parsed.medicines && Array.isArray(parsed.medicines)) {
           medicinesData = parsed.medicines;
         }
@@ -64,7 +76,9 @@ export const uploadPrescription = async (req: Request, res: Response): Promise<v
         dosage: med.dosage,
         timing: med.timing,
         foodInstructions: med.foodInstructions,
-        warnings: med.warnings
+        warnings: med.warnings,
+        confidenceScore: med.confidenceScore,
+        requiresVerification: med.requiresVerification
       }));
       await Medicine.insertMany(medicineDocs);
     }
