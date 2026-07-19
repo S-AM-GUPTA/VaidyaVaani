@@ -58,7 +58,7 @@ const Login = () => {
         
         <div className="relative z-10 w-full">
           <Link to="/">
-            <img src="/logo/complete logo.png" alt="VaidyaVaani Logo" className="h-10 w-auto brightness-0 invert opacity-90 hover:opacity-100 transition-opacity" />
+            <img src="/logo/complete logo dark.png" alt="VaidyaVaani Logo" className="h-12 w-auto mix-blend-screen opacity-90 hover:opacity-100 transition-opacity" />
           </Link>
         </div>
 
@@ -88,7 +88,7 @@ const Login = () => {
         {/* Mobile Header */}
         <div className="absolute top-8 left-8 lg:hidden">
           <Link to="/">
-            <img src="/logo/complete logo.png" alt="VaidyaVaani Logo" className="h-8 w-auto" />
+            <img src="/logo/complete logo.png" alt="VaidyaVaani Logo" className="h-10 w-auto mix-blend-multiply" />
           </Link>
         </div>
         

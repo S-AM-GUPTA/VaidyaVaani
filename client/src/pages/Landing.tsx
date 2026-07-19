@@ -121,9 +121,9 @@ const Landing = () => {
               transition={{ delay: 0.1, duration: 0.5 }}
               className="md:col-span-2 bg-[#F8F7F4] rounded-3xl p-8 lg:p-12 border border-[#1C2A24]/5 relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-shadow"
             >
-              <div className="absolute top-0 right-0 w-3/5 h-full hidden sm:block">
-                <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#F8F7F4] z-10" />
+              <div className="absolute top-0 right-0 w-[60%] h-full hidden sm:block overflow-hidden rounded-r-3xl pointer-events-none">
                 <img src="/images/bento1.png" alt="Lab Report Decode" className="w-full h-full object-cover object-right opacity-90 transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#F8F7F4] via-[#F8F7F4]/80 to-[#F8F7F4]/0 z-10" />
               </div>
               
               <div className="relative z-20 h-full flex flex-col justify-between max-w-sm">
