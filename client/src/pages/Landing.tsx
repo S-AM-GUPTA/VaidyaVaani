@@ -1,222 +1,277 @@
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { 
   CloudUpload, 
   Activity, 
-  FileText, 
   MessageSquare,
   ArrowRight,
-  Stethoscope,
   Clock,
-  CheckCircle2,
+  ShieldCheck,
   AlertTriangle
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } }
+};
+
 const Landing = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#fcfdfc] font-sans text-slate-900 overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-[#F8F7F4] font-sans text-[#1C2A24] overflow-x-hidden flex flex-col selection:bg-[#133E2B] selection:text-[#F8F7F4]">
       <Navbar />
 
       {/* Hero Section */}
-      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 lg:pt-20 lg:pb-24 flex flex-col lg:flex-row items-center">
-        {/* Subtle background gradients */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-          <div className="absolute top-0 left-[-10%] w-[50%] h-[50%] bg-[#e0f2fe] rounded-full blur-[100px] opacity-60"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#fef3c7] rounded-full blur-[100px] opacity-60"></div>
-        </div>
-
-        {/* Left Column */}
-        <div className="lg:w-1/2 lg:pr-8 mb-12 lg:mb-0 z-10 text-center lg:text-left">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-[#0B1B3D] leading-tight tracking-tight mb-6">
-            UNDERSTAND YOUR <br className="hidden lg:block" />
-            HEALTH. INSTANTLY.
-          </h1>
-          <p className="text-lg text-slate-600 mb-8 max-w-lg mx-auto lg:mx-0 font-medium leading-relaxed">
-            Upload prescriptions & medical reports. Get simple explanations in Hindi & English, and check for medicine interactions, all in one safe place.
-          </p>
+      <main className="relative max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-12 pt-16 lg:pt-24 pb-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        
+        {/* Left Column (Content) */}
+        <motion.div 
+          className="lg:w-1/2 z-10 text-left"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.div variants={itemVariants} className="inline-block mb-6">
+            <span className="px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-[#133E2B] border border-[#133E2B]/20 rounded-full">
+              Medical Intelligence
+            </span>
+          </motion.div>
           
-          <div className="flex justify-center lg:justify-start">
+          <motion.h1 
+            variants={itemVariants}
+            className="text-5xl md:text-6xl lg:text-[72px] font-extrabold text-[#133E2B] leading-[1.05] tracking-tighter mb-6"
+          >
+            Understand your health. <br className="hidden md:block" />
+            <span className="opacity-80">Instantly.</span>
+          </motion.h1>
+          
+          <motion.p 
+            variants={itemVariants}
+            className="text-lg md:text-xl text-[#2D4238]/80 mb-10 max-w-[50ch] font-medium leading-relaxed"
+          >
+            Upload prescriptions & medical reports. Get clear explanations, check for medicine interactions, and take control of your health data in seconds.
+          </motion.p>
+          
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4">
             <button 
               onClick={() => navigate('/login')}
-              className="bg-[#49996F] text-white px-8 py-4 rounded-full font-bold hover:bg-[#387a58] transition-colors shadow-lg shadow-emerald-600/20 text-lg flex flex-col items-center leading-tight hover:scale-105"
+              className="bg-[#133E2B] text-[#F8F7F4] px-8 py-4 rounded-full font-bold hover:bg-[#0f3223] transition-colors text-base flex items-center group active:scale-[0.98]"
             >
-              <span>Start Understanding Now</span>
-              <span className="text-xs font-medium text-emerald-100 mt-0.5">(Upload First Report)</span>
+              Start Understanding Now
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Right Column: Illustration Placeholder */}
-        <div className="lg:w-1/2 relative flex justify-center">
-           {/* Fallback illustration using a mix of CSS and an existing image to simulate the family/doctor graphic */}
-           <div className="relative w-full max-w-md bg-[#fffbef] rounded-3xl p-6 border-2 border-[#fdefc3] shadow-xl">
-              <img 
-                src="/doctor_hero.png" 
-                alt="Healthcare illustration" 
-                className="w-full h-auto rounded-2xl object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1576091160550-2173ff9e5eb4?auto=format&fit=crop&q=80&w=800';
-                }}
-              />
-              {/* Decorative floating badges */}
-              <div className="absolute -top-4 -right-4 bg-white p-3 rounded-xl shadow-lg border border-slate-100 flex items-center space-x-2 animate-bounce-slow">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600"><CheckCircle2 className="w-5 h-5"/></div>
-                <div className="text-sm font-bold text-slate-700">All Safe</div>
+        {/* Right Column (Abstract Visual) */}
+        <motion.div 
+          className="lg:w-1/2 w-full relative flex justify-center lg:justify-end"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+           <div className="relative w-full max-w-lg aspect-square bg-[#F1F0EC] rounded-[40px] p-8 border border-[#1C2A24]/5 overflow-hidden">
+              <div className="absolute top-12 left-12 w-64 h-64 bg-emerald-100/50 rounded-full blur-3xl"></div>
+              
+              <div className="relative z-10 w-full h-full flex flex-col justify-center gap-6">
+                 
+                 <div className="bg-white p-5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-black/5 transform -rotate-2 ml-4">
+                   <div className="flex items-center gap-4 mb-3">
+                     <div className="w-10 h-10 bg-[#F8F7F4] rounded-full flex items-center justify-center">
+                       <ShieldCheck className="w-5 h-5 text-[#133E2B]" />
+                     </div>
+                     <div>
+                       <div className="h-3 w-24 bg-[#1C2A24]/10 rounded-full mb-2"></div>
+                       <div className="h-2 w-16 bg-[#1C2A24]/5 rounded-full"></div>
+                     </div>
+                   </div>
+                   <div className="text-sm font-bold text-[#1C2A24] tracking-tight">All Safe: No Interactions Found</div>
+                 </div>
+
+                 <div className="bg-white p-5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-black/5 transform translate-x-8 rotate-1">
+                   <div className="flex justify-between items-end">
+                     <div>
+                       <div className="text-xs font-bold text-[#1C2A24]/50 mb-1 uppercase tracking-wider">CBC Report</div>
+                       <div className="text-lg font-bold text-[#1C2A24]">Normal Ranges</div>
+                     </div>
+                     <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center">
+                       <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                     </div>
+                   </div>
+                 </div>
+
               </div>
            </div>
-        </div>
+        </motion.div>
       </main>
 
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-16 bg-white relative">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-extrabold text-[#0B1B3D]">How VaidyaVaani Works</h2>
-          </div>
+      {/* Bento Grid Features */}
+      <section id="features" className="py-24 bg-white relative">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
           
-          <div className="flex flex-col md:flex-row items-center justify-between relative space-y-12 md:space-y-0">
-            
-            {/* Step 1 */}
-            <div className="flex flex-col items-center text-center w-full md:w-1/3 px-4 z-10">
-              <div className="w-24 h-24 bg-[#eaf4ed] rounded-full flex items-center justify-center mb-6 relative">
-                <CloudUpload className="w-10 h-10 text-[#49996F]" />
-                <div className="absolute -right-2 top-0 bg-red-100 text-red-600 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm border border-red-200">PDF</div>
-              </div>
-              <h4 className="font-bold text-slate-900 text-lg">1. Scan & Upload</h4>
-            </div>
-
-            {/* Step 2 */}
-            <div className="flex flex-col items-center text-center w-full md:w-1/3 px-4 z-10">
-              <div className="w-24 h-24 bg-[#eaf4ed] rounded-full flex items-center justify-center mb-6 relative">
-                <Activity className="w-10 h-10 text-[#49996F]" />
-                <div className="absolute -right-2 top-0 bg-blue-100 text-blue-600 p-1.5 rounded-full shadow-sm border border-blue-200">
-                  <Stethoscope className="w-4 h-4" />
-                </div>
-              </div>
-              <h4 className="font-bold text-slate-900 text-lg">2. AI Analysis</h4>
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex flex-col items-center text-center w-full md:w-1/3 px-4 z-10">
-              <div className="w-24 h-24 bg-[#eaf4ed] rounded-full flex items-center justify-center mb-6 relative">
-                <MessageSquare className="w-10 h-10 text-[#49996F]" />
-                <div className="absolute -right-6 -top-2 bg-white text-green-700 text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-slate-100 flex items-center space-x-1">
-                  <span>Friendly speech</span>
-                </div>
-              </div>
-              <h4 className="font-bold text-slate-900 text-lg">3. Clear Explanation</h4>
-            </div>
-            
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Grids (Matches the Mobile View layout on the right of the mockup) */}
-      <section id="features" className="py-20 bg-[#f8fafc]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="mb-16 max-w-2xl"
+          >
+            <h2 className="text-4xl md:text-5xl font-extrabold text-[#133E2B] tracking-tighter mb-6">
+              Complete Clarity.
+            </h2>
+            <p className="text-lg text-[#2D4238]/70 font-medium">
+              We translate complex medical jargon into actionable, easy-to-understand insights.
+            </p>
+          </motion.div>
           
-          {/* Interaction Checker - Full width */}
-          <div className="bg-[#fefce8] border-2 border-[#fef08a] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between">
-             <div className="mb-6 md:mb-0 md:w-1/2">
-                <h3 className="font-bold text-slate-800 text-sm mb-1 uppercase tracking-wider">Medicine Interaction Checker:</h3>
-                <h2 className="text-xl font-bold text-slate-900">Your Safety Companion.</h2>
-                <div className="mt-6 flex items-center space-x-3">
-                   <div className="flex -space-x-2">
-                     <div className="w-12 h-14 bg-white border-2 border-slate-300 rounded-lg shadow-sm flex items-center justify-center flex-col">
-                       <div className="w-8 h-2 bg-orange-400 rounded-t-sm mb-1"></div>
-                       <div className="flex space-x-1"><div className="w-2 h-2 rounded-full bg-blue-400"></div><div className="w-2 h-2 rounded-full bg-yellow-400"></div></div>
-                     </div>
-                     <div className="w-10 h-12 bg-white border-2 border-slate-300 rounded-lg shadow-sm flex items-center justify-center mt-2 relative z-10">
-                       <div className="w-6 h-2 bg-blue-500 rounded-t-sm mb-1"></div>
-                       <div className="w-4 h-2 rounded-full bg-red-400"></div>
-                     </div>
-                   </div>
-                   <ArrowRight className="text-yellow-600 w-5 h-5" />
-                   <div className="bg-[#fef9c3] border border-yellow-400 text-yellow-800 px-3 py-2 rounded-lg text-sm font-bold flex items-center">
-                     <AlertTriangle className="w-4 h-4 mr-2 text-yellow-600" />
-                     Moderate Interaction
-                   </div>
-                </div>
-             </div>
-             <div className="md:w-1/3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                <div className="text-xs font-bold text-slate-500 mb-2">Severity Level:</div>
-                <div className="flex items-center justify-between text-xs font-semibold">
-                  <div className="flex items-center text-slate-400"><div className="w-2 h-2 rounded-full bg-green-500 mr-1"></div>Low</div>
-                  <div className="flex items-center text-slate-800"><div className="w-2 h-2 rounded-full bg-yellow-500 mr-1"></div>Moderate</div>
-                  <div className="flex items-center text-slate-400"><div className="w-2 h-2 rounded-full bg-orange-500 mr-1"></div>High</div>
-                </div>
-             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Decode Lab Reports */}
-            <div className="bg-[#f0f9ff] border-2 border-[#bae6fd] rounded-2xl p-6">
-               <h3 className="font-bold text-slate-800 text-sm mb-4 uppercase tracking-wider">Decode Lab Reports</h3>
-               <div className="flex items-center space-x-4">
-                 <div className="w-12 h-16 bg-white border-2 border-slate-300 rounded-md shadow-sm relative flex justify-center">
-                    <div className="absolute top-2 w-8 h-8 bg-red-100 rounded flex items-center justify-center text-red-500 font-bold text-xs"><Activity className="w-5 h-5"/></div>
-                 </div>
-                 <div className="flex-1 space-y-2">
-                   <div className="flex items-center text-xs font-bold text-slate-700"><div className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></div>Normal Sugar</div>
-                   <div className="flex items-center text-xs font-bold text-slate-700"><div className="w-1.5 h-1.5 rounded-full bg-red-500 mr-2"></div>Abnormal Lipid</div>
-                 </div>
-               </div>
-            </div>
-
-            {/* Simplify Prescriptions */}
-            <div className="bg-[#f0fdf4] border-2 border-[#bbf7d0] rounded-2xl p-6">
-               <h3 className="font-bold text-slate-800 text-sm mb-4 uppercase tracking-wider">Simplify Prescriptions</h3>
-               <div className="grid grid-cols-2 gap-4">
-                 <div className="flex items-center text-sm font-bold text-slate-700">
-                   <Clock className="w-5 h-5 text-blue-500 mr-2" /> Timing
-                 </div>
-                 <div className="flex items-center text-sm font-bold text-slate-700">
-                   <FileText className="w-5 h-5 text-purple-500 mr-2" /> Dosage
-                 </div>
-                 <div className="flex items-center text-sm font-bold text-slate-700 col-span-2">
-                   <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mr-2"><div className="w-3 h-1.5 bg-red-500 rounded-full transform -rotate-45"></div></div>
-                   Understand Purpose
-                 </div>
-               </div>
-            </div>
-
-            {/* Regional Language */}
-            <div className="bg-white border-2 border-slate-200 rounded-2xl p-6 shadow-sm">
-               <h3 className="font-bold text-slate-800 text-sm mb-4 uppercase tracking-wider">Regional Language Support</h3>
-               <div className="flex items-center justify-around mt-6">
-                  <div className="flex flex-col items-center">
-                    <div className="text-3xl font-display font-bold text-slate-800 mb-1">हिन्दी</div>
-                    <div className="text-sm font-bold text-slate-500 flex items-center"><span className="text-xl mr-1">🇮🇳</span> Hindi</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Cell 1: Interaction Checker (Large) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="md:col-span-2 bg-[#F8F7F4] rounded-3xl p-8 lg:p-12 border border-[#1C2A24]/5 relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#e8e6df] rounded-full blur-3xl opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
+              
+              <div className="relative z-10 h-full flex flex-col justify-between">
+                <div className="mb-12">
+                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm">
+                    <AlertTriangle className="w-6 h-6 text-[#133E2B]" />
                   </div>
-                  <div className="h-10 w-px bg-slate-200"></div>
-                  <div className="flex flex-col items-center">
-                    <div className="text-3xl font-display font-bold text-slate-800 mb-1">English</div>
-                    <div className="text-sm font-bold text-slate-500 flex items-center"><span className="text-xl mr-1">🇬🇧</span> English</div>
+                  <h3 className="text-2xl font-bold text-[#133E2B] tracking-tight mb-2">Medicine Interaction Checker</h3>
+                  <p className="text-[#2D4238]/70 font-medium max-w-sm">Never guess if two medicines are safe together. We cross-reference your active prescriptions instantly.</p>
+                </div>
+                
+                <div className="bg-white p-4 rounded-2xl border border-black/5 shadow-sm max-w-md w-full">
+                  <div className="flex items-center gap-3">
+                     <div className="bg-amber-50 text-amber-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center">
+                       <AlertTriangle className="w-3 h-3 mr-1.5" /> Timing Adjustment Required
+                     </div>
                   </div>
-               </div>
-            </div>
+                  <div className="mt-3 text-sm font-medium text-[#1C2A24]">
+                    Space out <span className="font-bold">Atenolol</span> and <span className="font-bold">Antacid</span> by 2 hours.
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
-            {/* AI Chat Assistant */}
-            <div className="bg-[#f8fafc] border-2 border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden">
-               <h3 className="font-bold text-slate-800 text-sm mb-4 uppercase tracking-wider">AI Chat Assistant</h3>
-               <div className="bg-white rounded-xl p-3 border border-slate-200 shadow-sm ml-4 mb-2 relative">
-                 <div className="absolute -left-3 top-3 w-4 h-4 bg-white border-l border-b border-slate-200 transform rotate-45"></div>
-                 <p className="text-sm text-slate-700 font-medium">Ask: "What is HbA1c?"</p>
+            {/* Cell 2: Lab Reports (Tall) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-[#133E2B] rounded-3xl p-8 lg:p-12 text-[#F8F7F4] flex flex-col"
+            >
+              <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mb-6">
+                <Activity className="w-6 h-6 text-emerald-400" />
+              </div>
+              <h3 className="text-2xl font-bold tracking-tight mb-3">Decode Lab Reports</h3>
+              <p className="text-emerald-100/70 font-medium text-sm leading-relaxed mb-8 flex-1">
+                Stop googling test names. We highlight what's normal, what's high, and what to ask your doctor.
+              </p>
+              
+              <div className="space-y-3">
+                <div className="bg-white/10 p-3 rounded-xl flex items-center">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3"></div>
+                  <span className="text-sm font-bold">Lipid Profile: Normal</span>
+                </div>
+                <div className="bg-white/10 p-3 rounded-xl flex items-center">
+                  <div className="w-2 h-2 rounded-full bg-red-400 mr-3"></div>
+                  <span className="text-sm font-bold">Sugar: Slightly Elevated</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Cell 3: Simplify */}
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="bg-[#F8F7F4] rounded-3xl p-8 border border-[#1C2A24]/5 flex flex-col"
+            >
+              <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-5 shadow-sm">
+                <Clock className="w-5 h-5 text-[#133E2B]" />
+              </div>
+              <h3 className="text-xl font-bold text-[#133E2B] tracking-tight mb-2">Simplify Dosages</h3>
+              <p className="text-[#2D4238]/70 font-medium text-sm">Clear instructions on when and how to take your medication.</p>
+            </motion.div>
+
+            {/* Cell 4: AI Chat */}
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="bg-[#F8F7F4] rounded-3xl p-8 border border-[#1C2A24]/5 flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-5 shadow-sm">
+                  <MessageSquare className="w-5 h-5 text-[#133E2B]" />
+                </div>
+                <h3 className="text-xl font-bold text-[#133E2B] tracking-tight mb-2">AI Chat Assistant</h3>
+                <p className="text-[#2D4238]/70 font-medium text-sm mb-6">Ask direct questions about your uploaded reports.</p>
+              </div>
+              <div className="bg-white p-3 rounded-xl border border-black/5 text-xs font-medium text-[#1C2A24] self-end rounded-br-none shadow-sm">
+                "What is HbA1c?"
+              </div>
+            </motion.div>
+
+            {/* Cell 5: Regional */}
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="bg-[#F8F7F4] rounded-3xl p-8 border border-[#1C2A24]/5 flex items-center justify-center relative overflow-hidden"
+            >
+               <div className="text-center z-10">
+                 <div className="text-4xl font-extrabold text-[#133E2B] mb-2 tracking-tighter">हिन्दी</div>
+                 <div className="text-sm font-bold text-[#2D4238]/60 uppercase tracking-widest">Available Now</div>
                </div>
-               <div className="bg-blue-50 text-blue-800 rounded-xl p-3 border border-blue-100 shadow-sm mr-4 mt-2">
-                 <p className="text-sm font-medium">Get immediate, report-aware answers.</p>
-               </div>
-               <div className="absolute top-6 right-6 w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
-                 <MessageSquare className="w-5 h-5" />
-               </div>
-            </div>
+               <div className="absolute -bottom-6 -right-6 text-[120px] font-bold text-[#133E2B]/5 select-none pointer-events-none">A</div>
+            </motion.div>
+
           </div>
         </div>
       </section>
       
+      {/* Quick Action Footer / CTA */}
+      <section className="py-24 bg-[#F8F7F4] text-center border-t border-[#1C2A24]/5">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="max-w-2xl mx-auto px-4 flex flex-col items-center"
+        >
+          <div className="w-16 h-16 bg-[#133E2B] rounded-2xl flex items-center justify-center mb-8 shadow-lg">
+            <CloudUpload className="w-8 h-8 text-[#F8F7F4]" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-[#133E2B] tracking-tighter mb-6">Ready to upload?</h2>
+          <button 
+            onClick={() => navigate('/login')}
+            className="bg-[#133E2B] text-[#F8F7F4] px-8 py-4 rounded-full font-bold hover:bg-[#0f3223] transition-colors text-base active:scale-[0.98]"
+          >
+            Create Free Account
+          </button>
+        </motion.div>
+      </section>
+
       <Footer />
     </div>
   );
