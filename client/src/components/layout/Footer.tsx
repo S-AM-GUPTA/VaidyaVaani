@@ -27,7 +27,7 @@ const Footer = () => {
           {/* Logo & Socials */}
           <div className="flex flex-col">
             <Link to="/" className="mb-8">
-              <img src="/logo/complete logo.png" alt="VaidyaVaani Logo" className="h-8 w-auto opacity-90" />
+              <img src="/logo/complete logo.png" alt="VaidyaVaani Logo" className="h-12 md:h-16 w-auto opacity-90" />
             </Link>
             <div className="flex items-center space-x-4 text-[#1C2A24]/50">
               {/* Social icons placeholder */}

@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-24">
           {/* Logo */}
           <Link to={isAuthenticated ? "/home" : "/"} className="flex items-center group">
-            <img src="/logo/complete logo.png" alt="VaidyaVaani Logo" className="h-8 md:h-10 w-auto group-hover:scale-105 transition-transform" />
+            <img src="/logo/complete logo.png" alt="VaidyaVaani Logo" className="h-12 md:h-16 w-auto group-hover:scale-105 transition-transform" />
           </Link>
 
           {/* Links */}
