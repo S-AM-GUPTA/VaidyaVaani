@@ -31,7 +31,7 @@ const PrescriptionDetails: React.FC<PrescriptionDetailsProps> = ({ prescriptionI
 
   if (loading) return (
     <div className="p-8 text-center text-[#9a9a9a] animate-pulse flex flex-col items-center">
-      <div className="w-8 h-8 border-2 border-[#8052ff] border-t-transparent rounded-full animate-spin mb-4"></div>
+      <div className="w-8 h-8 border-2 border-[#15846e] border-t-transparent rounded-full animate-spin mb-4"></div>
       <p className="text-xs font-light tracking-wide">Deciphering handwritten prescription...</p>
     </div>
   );
@@ -46,7 +46,7 @@ const PrescriptionDetails: React.FC<PrescriptionDetailsProps> = ({ prescriptionI
   return (
     <div className="mt-4 space-y-6">
       <div className="flex items-center gap-2">
-        <Pill className="w-4 h-4 text-[#8052ff]" />
+        <Pill className="w-4 h-4 text-[#15846e]" />
         <h3 className="text-sm font-semibold uppercase tracking-wider text-[#ffffff]">Deciphered Medications</h3>
       </div>
       
@@ -60,14 +60,14 @@ const PrescriptionDetails: React.FC<PrescriptionDetailsProps> = ({ prescriptionI
           return (
             <div 
               key={med._id} 
-              className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-[#8052ff]/40 transition-all flex flex-col justify-between"
+              className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-[#15846e]/40 transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-normal text-[#ffffff] text-base">
                     {med.name}
                   </h4>
-                  <span className="text-xs font-mono text-[#8052ff] bg-[#8052ff]/10 px-2.5 py-1 rounded-full border border-[#8052ff]/20">
+                  <span className="text-xs font-mono text-[#15846e] bg-[#15846e]/10 px-2.5 py-1 rounded-full border border-[#15846e]/20">
                     {med.dosage || 'Standard'}
                   </span>
                 </div>
@@ -99,7 +99,7 @@ const PrescriptionDetails: React.FC<PrescriptionDetailsProps> = ({ prescriptionI
               <div className="space-y-2 pt-3 border-t border-white/[0.06] text-xs font-light text-[#9a9a9a]">
                 {med.timing && (
                   <div className="flex items-center gap-2">
-                    <Clock className="w-3.5 h-3.5 text-[#8052ff]" />
+                    <Clock className="w-3.5 h-3.5 text-[#15846e]" />
                     <span>{med.timing}</span>
                   </div>
                 )}

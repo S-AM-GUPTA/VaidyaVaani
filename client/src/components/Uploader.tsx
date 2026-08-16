@@ -64,7 +64,7 @@ const Uploader: React.FC<UploaderProps> = ({ type, onUploadComplete }) => {
 
   return (
     <div className="relative">
-      <div className="border border-dashed border-white/20 hover:border-[#8052ff]/60 rounded-3xl p-10 text-center bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-300">
+      <div className="border border-dashed border-white/20 hover:border-[#15846e]/60 rounded-3xl p-10 text-center bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-300">
         <input 
           type="file" 
           ref={fileInputRef}
@@ -75,16 +75,16 @@ const Uploader: React.FC<UploaderProps> = ({ type, onUploadComplete }) => {
         
         {!file ? (
           <div className="flex flex-col items-center cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-            <div className="w-16 h-16 bg-[#8052ff]/15 border border-[#8052ff]/30 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(128,82,255,0.2)]">
-              <UploadCloud className="w-8 h-8 text-[#8052ff]" />
+            <div className="w-16 h-16 bg-[#15846e]/15 border border-[#15846e]/30 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(21,132,110,0.25)]">
+              <UploadCloud className="w-8 h-8 text-[#15846e]" />
             </div>
             <p className="text-base font-normal text-[#ffffff]">Drag and drop or click to browse</p>
             <p className="text-xs font-light text-[#9a9a9a] mt-2">Supports PDF, JPG, PNG (Zero-Knowledge Encrypted)</p>
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-[#ffb829]/15 border border-[#ffb829]/30 rounded-full flex items-center justify-center mb-4">
-              <FileText className="w-8 h-8 text-[#ffb829]" />
+            <div className="w-16 h-16 bg-[#15846e]/15 border border-[#15846e]/30 rounded-full flex items-center justify-center mb-4">
+              <FileText className="w-8 h-8 text-[#15846e]" />
             </div>
             <p className="text-sm font-normal text-[#ffffff]">{file.name}</p>
             <p className="text-xs font-light text-[#9a9a9a] mt-1">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
@@ -97,7 +97,7 @@ const Uploader: React.FC<UploaderProps> = ({ type, onUploadComplete }) => {
                 </div>
                 <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-[#8052ff] transition-all duration-300"
+                    className="h-full bg-[#15846e] transition-all duration-300"
                     style={{ width: `${progress}%` }}
                   ></div>
                 </div>
@@ -112,7 +112,7 @@ const Uploader: React.FC<UploaderProps> = ({ type, onUploadComplete }) => {
                 </button>
                 <button 
                   onClick={handleUpload}
-                  className="px-6 py-2.5 bg-[#8052ff] hover:bg-[#6c3df5] text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(128,82,255,0.3)] active:scale-95"
+                  className="px-6 py-2.5 bg-[#15846e] hover:bg-[#116e5c] text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(21,132,110,0.35)] active:scale-95"
                 >
                   Process Document
                 </button>

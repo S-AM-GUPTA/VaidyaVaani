@@ -21,22 +21,22 @@ const ReportSummary: React.FC<ReportSummaryProps> = ({ summaryJson }) => {
       {/* Header */}
       <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#8052ff]/20 border border-[#8052ff]/40 flex items-center justify-center">
-            <Activity className="w-4 h-4 text-[#8052ff]" />
+          <div className="w-9 h-9 rounded-full bg-[#15846e]/20 border border-[#15846e]/40 flex items-center justify-center">
+            <Activity className="w-4 h-4 text-[#15846e]" />
           </div>
           <div>
             <h3 className="text-base font-normal tracking-tight text-[#ffffff]">Neural Diagnostic Analysis</h3>
             <p className="text-xs font-light text-[#9a9a9a]">Deconstructed by VaidyaVaani Engine</p>
           </div>
         </div>
-        <span className="text-[10px] font-mono text-[#ffb829] uppercase tracking-wider">Zero-Knowledge Sealed</span>
+        <span className="text-[10px] font-mono text-[#15846e] uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#15846e]/10 border border-[#15846e]/20">Zero-Knowledge Sealed</span>
       </div>
       
       {/* Plain Language Explanation */}
       {explanation && (
         <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08]">
-          <div className="flex items-center gap-2 text-xs font-semibold text-[#8052ff] uppercase tracking-wider mb-2">
-            <Info className="w-4 h-4 text-[#8052ff]" />
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#15846e] uppercase tracking-wider mb-2">
+            <Info className="w-4 h-4 text-[#15846e]" />
             Clinical Translation
           </div>
           <p className="text-sm font-light text-[#bdbdbd] leading-relaxed whitespace-pre-wrap">{explanation}</p>
@@ -91,7 +91,7 @@ const ReportSummary: React.FC<ReportSummaryProps> = ({ summaryJson }) => {
       {recommendations && recommendations.length > 0 && (
         <div className="pt-4 border-t border-white/[0.06]">
           <div className="text-xs font-semibold text-[#ffffff] uppercase tracking-wider mb-3 flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-[#8052ff]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#15846e]" />
             Physician Talking Points
           </div>
           <div className="flex flex-wrap gap-2.5">
