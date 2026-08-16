@@ -37,25 +37,20 @@ const Login = () => {
   const { loginWithGoogle, loginWithEmail, signupWithEmail, sendPhoneOtp, verifyPhoneOtp } = useAuth();
   const navigate = useNavigate();
 
-  // Google Sign In via Firebase Auth
+  // Real Google Sign-In via Firebase Auth
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
     setError('');
-    try {
-      const res = await loginWithGoogle();
-      if (res.success) {
-        navigate('/home');
-      } else {
-        setError(res.error || 'Google Authentication encountered an issue.');
-      }
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign in with Google');
-    } finally {
-      setGoogleLoading(false);
+    const res = await loginWithGoogle();
+    if (res.success) {
+      navigate('/home');
+    } else {
+      setError(res.error || 'Google Authentication failed.');
     }
+    setGoogleLoading(false);
   };
 
-  // Email & Password Auth via Firebase
+  // Real Email & Password Auth via Firebase
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -65,30 +60,25 @@ const Login = () => {
 
     setLoading(true);
     setError('');
-    try {
-      if (authMode === 'login') {
-        const res = await loginWithEmail(email, password);
-        if (res.success) {
-          navigate('/home');
-        } else {
-          setError(res.error || 'Invalid email or password.');
-        }
+    if (authMode === 'login') {
+      const res = await loginWithEmail(email, password);
+      if (res.success) {
+        navigate('/home');
       } else {
-        const res = await signupWithEmail(email, password);
-        if (res.success) {
-          navigate('/home');
-        } else {
-          setError(res.error || 'Could not create account.');
-        }
+        setError(res.error || 'Invalid email or password.');
       }
-    } catch (err: any) {
-      setError(err.message || 'Authentication error.');
-    } finally {
-      setLoading(false);
+    } else {
+      const res = await signupWithEmail(email, password);
+      if (res.success) {
+        navigate('/home');
+      } else {
+        setError(res.error || 'Could not create account.');
+      }
     }
+    setLoading(false);
   };
 
-  // Phone OTP Flow via Firebase
+  // Real Phone OTP Flow via Firebase
   const handleSendPhoneOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneNumber.trim()) {
@@ -98,18 +88,13 @@ const Login = () => {
 
     setLoading(true);
     setError('');
-    try {
-      const res = await sendPhoneOtp(phoneNumber, 'recaptcha-container');
-      if (res.success) {
-        setPhoneStep('otp');
-      } else {
-        setError(res.error || 'Failed to dispatch SMS verification code.');
-      }
-    } catch (err: any) {
-      setError(err.message || 'Phone verification error.');
-    } finally {
-      setLoading(false);
+    const res = await sendPhoneOtp(phoneNumber, 'recaptcha-container');
+    if (res.success) {
+      setPhoneStep('otp');
+    } else {
+      setError(res.error || 'Failed to dispatch SMS verification code.');
     }
+    setLoading(false);
   };
 
   const handleVerifyPhoneOtp = async (e: React.FormEvent) => {
@@ -121,25 +106,13 @@ const Login = () => {
 
     setLoading(true);
     setError('');
-    try {
-      const res = await verifyPhoneOtp(otpCode);
-      if (res.success) {
-        navigate('/home');
-      } else {
-        setError(res.error || 'Invalid OTP code.');
-      }
-    } catch (err: any) {
-      setError(err.message || 'Verification error.');
-    } finally {
-      setLoading(false);
+    const res = await verifyPhoneOtp(otpCode);
+    if (res.success) {
+      navigate('/home');
+    } else {
+      setError(res.error || 'Invalid verification code.');
     }
-  };
-
-  // Instant Quick Demo Access
-  const handleQuickDemoAccess = async () => {
-    setLoading(true);
-    await loginWithEmail('demo.patient@vaidyavaani.health', 'demo123456');
-    navigate('/home');
+    setLoading(false);
   };
 
   return (
@@ -181,14 +154,14 @@ const Login = () => {
         >
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-4">
             <Sparkles className="w-3.5 h-3.5 text-[#004fdc]" />
-            Firebase Verified Health Vault
+            Real Firebase Cloud Vault
           </div>
           
           <h1 className="text-4xl font-normal text-[#ffffff] tracking-[-0.04em] leading-[1.08] mb-4">
             Command your clinical records in one space.
           </h1>
           <p className="text-sm font-light text-[#bdbdbd] leading-relaxed">
-            Decipher lab biomarkers, review prescription timelines, and ask questions through private, zero-knowledge inference.
+            Decipher lab biomarkers, review prescription timelines, and ask questions through private, real Firebase authenticated inference.
           </p>
         </motion.div>
       </div>
@@ -211,13 +184,13 @@ const Login = () => {
           <div className="mb-6 text-left">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-2 flex items-center gap-2">
               <ShieldCheck className="w-3.5 h-3.5 text-[#004fdc]" />
-              Firebase Authentication (vaidyavaani0)
+              Real Firebase Authentication (vaidyavaani0)
             </div>
             <h2 className="text-3xl sm:text-4xl font-normal text-[#ffffff] tracking-[-0.04em] mb-2">
               {authMode === 'login' ? 'Sign in to Vault.' : 'Create your Vault.'}
             </h2>
             <p className="text-sm font-light text-[#9a9a9a]">
-              Authenticate to sync and access your encrypted Firestore clinical records.
+              Authenticate live to access and synchronize your real Cloud Firestore records.
             </p>
           </div>
 
@@ -255,7 +228,7 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Google Sign In Button (Firebase) */}
+          {/* Google Sign In Button (Real Firebase Auth) */}
           <button
             type="button"
             onClick={handleGoogleSignIn}
@@ -272,14 +245,14 @@ const Login = () => {
                 <path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.3L1.9 16.4C3.7 20.2 7.5 23.5 12 23.5z"/>
               </svg>
             )}
-            <span>Continue with Google (Firebase)</span>
+            <span>Sign In with Google (Firebase)</span>
           </button>
 
           {/* Divider */}
           <div className="flex items-center my-6">
             <div className="flex-1 border-t border-white/[0.08]"></div>
             <span className="px-3 text-[10px] uppercase font-mono text-[#9a9a9a] tracking-widest">
-              {authMethod === 'email' ? 'or email authentication' : 'or phone number verification'}
+              {authMethod === 'email' ? 'or real email authentication' : 'or real phone verification'}
             </span>
             <div className="flex-1 border-t border-white/[0.08]"></div>
           </div>
@@ -301,14 +274,17 @@ const Login = () => {
               {/* Sign In vs Create Account mode toggle */}
               <div className="flex justify-between items-center mb-4 text-xs">
                 <span className="text-[#9a9a9a]">
-                  {authMode === 'login' ? "Don't have a Vault account?" : "Already have an account?"}
+                  {authMode === 'login' ? "Don't have an account yet?" : "Already have an account?"}
                 </span>
                 <button
                   type="button"
-                  onClick={() => setAuthMode(authMode === 'login' ? 'signup' : 'login')}
+                  onClick={() => {
+                    setAuthMode(authMode === 'login' ? 'signup' : 'login');
+                    setError('');
+                  }}
                   className="text-[#004fdc] hover:underline font-semibold"
                 >
-                  {authMode === 'login' ? 'Create Account' : 'Sign In'}
+                  {authMode === 'login' ? 'Create Real Account' : 'Sign In'}
                 </button>
               </div>
 
@@ -327,7 +303,7 @@ const Login = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
-                      placeholder="name@example.com"
+                      placeholder="your.email@gmail.com"
                     />
                   </div>
                 </div>
@@ -363,7 +339,7 @@ const Login = () => {
                     </>
                   ) : (
                     <>
-                      {authMode === 'login' ? 'Sign In with Firebase' : 'Create Encrypted Account'}
+                      {authMode === 'login' ? 'Sign In with Firebase' : 'Create Real Account'}
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
                     </>
                   )}
@@ -391,7 +367,7 @@ const Login = () => {
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 9876543210"
                       />
                     </div>
                   </div>
@@ -404,11 +380,11 @@ const Login = () => {
                     {loading ? (
                       <>
                         <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
-                        Sending SMS Code...
+                        Sending Real SMS Code...
                       </>
                     ) : (
                       <>
-                        Send Verification Code
+                        Send SMS Verification Code
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
                       </>
                     )}
@@ -452,7 +428,7 @@ const Login = () => {
                     {loading ? (
                       <>
                         <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
-                        Verifying Code...
+                        Verifying Real SMS Code...
                       </>
                     ) : 'Verify Code & Sign In'}
                   </button>
@@ -461,19 +437,8 @@ const Login = () => {
             </div>
           )}
 
-          {/* Quick Demo Sandbox Access */}
-          <div className="mt-6 pt-6 border-t border-white/[0.06] text-center">
-            <button
-              type="button"
-              onClick={handleQuickDemoAccess}
-              className="text-xs text-[#ffb829] hover:underline font-light"
-            >
-              🚀 Instant Sandbox Access (1-Click Demo Login)
-            </button>
-          </div>
-
           <div className="mt-8 text-center text-xs font-light text-[#9a9a9a]">
-            Protected by Zero-Knowledge Encryption • <Link to="/" className="text-[#004fdc] hover:underline">Return to Home</Link>
+            Protected by Cloud Firestore & Firebase Auth • <Link to="/" className="text-[#004fdc] hover:underline">Return to Home</Link>
           </div>
 
         </motion.div>

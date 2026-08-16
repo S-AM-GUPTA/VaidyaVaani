@@ -4,13 +4,13 @@ import {
   googleProvider, 
   signInWithPopup, 
   signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  type FirebaseUser,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  type ConfirmationResult
+  createUserWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged, 
+  type FirebaseUser, 
+  RecaptchaVerifier, 
+  signInWithPhoneNumber, 
+  type ConfirmationResult 
 } from '../services/firebase';
 import { saveUserProfile } from '../services/firestoreService';
 
@@ -36,6 +36,39 @@ interface AuthContextType {
   loading: boolean;
 }
 
+const formatFirebaseAuthError = (error: any): string => {
+  const code = error?.code || '';
+  switch (code) {
+    case 'auth/invalid-email':
+      return 'Invalid email address format.';
+    case 'auth/user-not-found':
+    case 'auth/wrong-password':
+    case 'auth/invalid-credential':
+      return 'Invalid email or password. Please verify your credentials.';
+    case 'auth/email-already-in-use':
+      return 'An account already exists with this email address. Please sign in instead.';
+    case 'auth/weak-password':
+      return 'Password should be at least 6 characters long.';
+    case 'auth/popup-closed-by-user':
+      return 'Google sign-in was canceled before completion.';
+    case 'auth/unauthorized-domain':
+      return 'This domain is not authorized for OAuth operations in Firebase Console.';
+    case 'auth/invalid-phone-number':
+      return 'Please enter a valid phone number with country code (e.g. +91 9876543210).';
+    case 'auth/invalid-verification-code':
+      return 'Invalid 6-digit SMS verification code.';
+    case 'auth/code-expired':
+      return 'Verification code has expired. Please request a new code.';
+    case 'auth/too-many-requests':
+      return 'Too many attempts. Access temporarily blocked. Please try again later.';
+    case 'auth/api-key-not-valid':
+    case 'auth/invalid-api-key':
+      return 'Invalid Firebase API Key. Please verify your web credentials in client/.env.';
+    default:
+      return error?.message || 'Authentication failed. Please check your credentials and try again.';
+  }
+};
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -47,16 +80,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [phoneConfirmation, setPhoneConfirmation] = useState<ConfirmationResult | null>(null);
 
-  // Sync Firebase auth state & Firestore profile
+  // Sync real Firebase auth state & Firestore profile
   useEffect(() => {
-    try {
-      const unsubscribe = onAuthStateChanged(auth, async (fbUser: FirebaseUser | null) => {
-        if (fbUser) {
+    const unsubscribe = onAuthStateChanged(auth, async (fbUser: FirebaseUser | null) => {
+      if (fbUser) {
+        try {
           const userToken = await fbUser.getIdToken();
           const profile: UserProfile = {
             uid: fbUser.uid,
             email: fbUser.email,
-            displayName: fbUser.displayName || 'VaidyaVaani Member',
+            displayName: fbUser.displayName || (fbUser.email ? fbUser.email.split('@')[0] : 'Patient'),
             photoURL: fbUser.photoURL,
             phoneNumber: fbUser.phoneNumber
           };
@@ -65,20 +98,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           localStorage.setItem('token', userToken);
           localStorage.setItem('vv_user', JSON.stringify(profile));
 
-          // Sync to Firestore
+          // Real Firestore sync
           await saveUserProfile({
             uid: fbUser.uid,
             email: fbUser.email,
-            displayName: fbUser.displayName || 'VaidyaVaani Member',
+            displayName: profile.displayName,
             phoneNumber: fbUser.phoneNumber
           });
+        } catch (e) {
+          console.error('Error syncing real Firebase user profile:', e);
         }
-        setLoading(false);
-      });
-      return () => unsubscribe();
-    } catch {
+      } else {
+        setToken(null);
+        setUser(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('vv_user');
+      }
       setLoading(false);
-    }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const login = (newToken: string, profile?: UserProfile) => {
@@ -87,12 +126,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (profile) {
       setUser(profile);
       localStorage.setItem('vv_user', JSON.stringify(profile));
-      saveUserProfile({
-        uid: profile.uid,
-        email: profile.email,
-        displayName: profile.displayName,
-        phoneNumber: profile.phoneNumber
-      });
     }
   };
 
@@ -100,7 +133,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       await signOut(auth);
     } catch (e) {
-      console.warn('Firebase signout fallback', e);
+      console.error('Firebase signOut error:', e);
     }
     setToken(null);
     setUser(null);
@@ -108,7 +141,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('vv_user');
   };
 
-  // Google Sign In via Firebase
+  // Real Google Sign-In via Firebase Auth
   const loginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
@@ -124,20 +157,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       login(idToken, profile);
       return { success: true, user: profile };
     } catch (err: any) {
-      console.warn('Firebase Google Auth fallback triggered:', err.message);
-      const demoProfile: UserProfile = {
-        uid: 'google-demo-' + Date.now(),
-        email: 'user.google@vaidyavaani.health',
-        displayName: 'Google Verified Member',
-        photoURL: null,
-      };
-      const demoToken = 'vv_google_jwt_' + Date.now();
-      login(demoToken, demoProfile);
-      return { success: true, user: demoProfile };
+      console.error('Real Firebase Google Auth error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
-  // Email/Password Login
+  // Real Email & Password Login
   const loginWithEmail = async (email: string, pass: string) => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, pass);
@@ -147,25 +172,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         uid: fbUser.uid,
         email: fbUser.email,
         displayName: fbUser.displayName || email.split('@')[0],
-        photoURL: fbUser.photoURL
+        photoURL: fbUser.photoURL,
+        phoneNumber: fbUser.phoneNumber
       };
       login(idToken, profile);
       return { success: true, user: profile };
     } catch (err: any) {
-      console.warn('Firebase Email Login fallback triggered:', err.message);
-      const demoProfile: UserProfile = {
-        uid: 'email-demo-' + Date.now(),
-        email: email,
-        displayName: email.split('@')[0],
-        photoURL: null
-      };
-      const demoToken = 'vv_email_jwt_' + Date.now();
-      login(demoToken, demoProfile);
-      return { success: true, user: demoProfile };
+      console.error('Real Firebase Email Login error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
-  // Email Signup
+  // Real Email & Password Registration
   const signupWithEmail = async (email: string, pass: string) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, pass);
@@ -175,25 +193,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         uid: fbUser.uid,
         email: fbUser.email,
         displayName: email.split('@')[0],
-        photoURL: fbUser.photoURL
+        photoURL: fbUser.photoURL,
+        phoneNumber: fbUser.phoneNumber
       };
       login(idToken, profile);
       return { success: true, user: profile };
     } catch (err: any) {
-      console.warn('Firebase Signup fallback triggered:', err.message);
-      const demoProfile: UserProfile = {
-        uid: 'signup-demo-' + Date.now(),
-        email: email,
-        displayName: email.split('@')[0],
-        photoURL: null
-      };
-      const demoToken = 'vv_signup_jwt_' + Date.now();
-      login(demoToken, demoProfile);
-      return { success: true, user: demoProfile };
+      console.error('Real Firebase Signup error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
-  // Phone OTP Authentication via Firebase
+  // Real Phone Number OTP Auth
   const sendPhoneOtp = async (phoneNumber: string, appVerifierContainerId: string) => {
     try {
       let recaptchaVerifier = (window as any).recaptchaVerifier;
@@ -208,51 +219,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setPhoneConfirmation(confirmation);
       return { success: true };
     } catch (err: any) {
-      console.warn('Firebase Phone OTP fallback triggered:', err.message);
-      return { success: true }; // Proceed to mock verification in demo mode
+      console.error('Real Firebase Phone OTP dispatch error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
   const verifyPhoneOtp = async (verificationCode: string) => {
+    if (!phoneConfirmation) {
+      return { success: false, error: 'No active SMS verification session. Please request a new code.' };
+    }
+
     try {
-      if (phoneConfirmation) {
-        const res = await phoneConfirmation.confirm(verificationCode);
-        const fbUser = res.user;
-        const idToken = await fbUser.getIdToken();
-        const profile: UserProfile = {
-          uid: fbUser.uid,
-          email: null,
-          displayName: 'Phone User (' + (fbUser.phoneNumber || 'Verified') + ')',
-          photoURL: null,
-          phoneNumber: fbUser.phoneNumber
-        };
-        login(idToken, profile);
-        return { success: true, user: profile };
-      } else {
-        // Demo fallback
-        const demoProfile: UserProfile = {
-          uid: 'phone-demo-' + Date.now(),
-          email: null,
-          displayName: 'Phone Verified Member',
-          photoURL: null,
-          phoneNumber: '+91 98765 43210'
-        };
-        const demoToken = 'vv_phone_jwt_' + Date.now();
-        login(demoToken, demoProfile);
-        return { success: true, user: demoProfile };
-      }
-    } catch (err: any) {
-      console.warn('Phone OTP verification fallback:', err.message);
-      const demoProfile: UserProfile = {
-        uid: 'phone-demo-' + Date.now(),
+      const res = await phoneConfirmation.confirm(verificationCode);
+      const fbUser = res.user;
+      const idToken = await fbUser.getIdToken();
+      const profile: UserProfile = {
+        uid: fbUser.uid,
         email: null,
-        displayName: 'Phone Verified Member',
+        displayName: 'Phone User (' + (fbUser.phoneNumber || 'Verified') + ')',
         photoURL: null,
-        phoneNumber: '+91 98765 43210'
+        phoneNumber: fbUser.phoneNumber
       };
-      const demoToken = 'vv_phone_jwt_' + Date.now();
-      login(demoToken, demoProfile);
-      return { success: true, user: demoProfile };
+      login(idToken, profile);
+      return { success: true, user: profile };
+    } catch (err: any) {
+      console.error('Real Firebase Phone OTP verification error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
@@ -266,8 +258,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loginWithGoogle, 
         loginWithEmail, 
         signupWithEmail, 
-        sendPhoneOtp,
-        verifyPhoneOtp,
+        sendPhoneOtp, 
+        verifyPhoneOtp, 
         isAuthenticated: !!token, 
         loading 
       }}
