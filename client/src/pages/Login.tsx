@@ -2,19 +2,39 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Lock, Mail, Loader2, Sparkles, KeyRound, ShieldCheck } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Lock, 
+  Mail, 
+  Loader2, 
+  Sparkles, 
+  KeyRound, 
+  ShieldCheck, 
+  Phone, 
+  Smartphone 
+} from 'lucide-react';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
 import Logo from '../components/Logo';
 
 const Login = () => {
+  const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('email');
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  
+  // Email states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // Phone states
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [otpCode, setOtpCode] = useState('');
+  const [phoneStep, setPhoneStep] = useState<'number' | 'otp'>('number');
+
+  // Loading & Error states
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  const { loginWithGoogle, loginWithEmail, signupWithEmail } = useAuth();
+  const { loginWithGoogle, loginWithEmail, signupWithEmail, sendPhoneOtp, verifyPhoneOtp } = useAuth();
   const navigate = useNavigate();
 
   // Google Sign In via Firebase Auth
@@ -68,6 +88,53 @@ const Login = () => {
     }
   };
 
+  // Phone OTP Flow via Firebase
+  const handleSendPhoneOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!phoneNumber.trim()) {
+      setError('Please enter a valid phone number with country code (e.g. +91 9876543210).');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    try {
+      const res = await sendPhoneOtp(phoneNumber, 'recaptcha-container');
+      if (res.success) {
+        setPhoneStep('otp');
+      } else {
+        setError(res.error || 'Failed to dispatch SMS verification code.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Phone verification error.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyPhoneOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!otpCode.trim()) {
+      setError('Please enter the 6-digit SMS verification code.');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    try {
+      const res = await verifyPhoneOtp(otpCode);
+      if (res.success) {
+        navigate('/home');
+      } else {
+        setError(res.error || 'Invalid OTP code.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Verification error.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Instant Quick Demo Access
   const handleQuickDemoAccess = async () => {
     setLoading(true);
@@ -78,6 +145,9 @@ const Login = () => {
   return (
     <div className="min-h-screen flex bg-[#000000] text-[#ffffff] font-sans selection:bg-[#004fdc] selection:text-[#ffffff] relative overflow-hidden">
       
+      {/* Invisible container for Firebase Phone reCAPTCHA */}
+      <div id="recaptcha-container"></div>
+
       {/* Background 3D Ambient Constellation */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
         <ConstellationCanvas variant="ambient" particleCount={90} interactive={false} />
@@ -138,50 +208,50 @@ const Login = () => {
           className="w-full max-w-md mx-auto"
         >
           {/* Header */}
-          <div className="mb-8 text-left">
+          <div className="mb-6 text-left">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-2 flex items-center gap-2">
               <ShieldCheck className="w-3.5 h-3.5 text-[#004fdc]" />
-              Firebase Authentication
+              Firebase Authentication (vaidyavaani0)
             </div>
             <h2 className="text-3xl sm:text-4xl font-normal text-[#ffffff] tracking-[-0.04em] mb-2">
               {authMode === 'login' ? 'Sign in to Vault.' : 'Create your Vault.'}
             </h2>
             <p className="text-sm font-light text-[#9a9a9a]">
-              {authMode === 'login' 
-                ? 'Authenticate to access your encrypted clinical records.' 
-                : 'Set up your zero-knowledge medical identity.'}
+              Authenticate to sync and access your encrypted Firestore clinical records.
             </p>
           </div>
 
-          {/* Mode Switcher Tabs */}
+          {/* Primary Method Switcher (Email vs Phone) */}
           <div className="flex p-1 bg-white/[0.04] border border-white/10 rounded-full mb-6 w-full">
             <button
               type="button"
               onClick={() => {
-                setAuthMode('login');
+                setAuthMethod('email');
                 setError('');
               }}
-              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all ${
-                authMode === 'login' 
+              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all flex items-center justify-center gap-1.5 ${
+                authMethod === 'email' 
                   ? 'bg-[#004fdc] text-white shadow-[0_0_15px_rgba(0,79,220,0.35)]' 
                   : 'text-[#9a9a9a] hover:text-white'
               }`}
             >
-              Sign In
+              <Mail className="w-3.5 h-3.5" />
+              Email & Password
             </button>
             <button
               type="button"
               onClick={() => {
-                setAuthMode('signup');
+                setAuthMethod('phone');
                 setError('');
               }}
-              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all ${
-                authMode === 'signup' 
+              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all flex items-center justify-center gap-1.5 ${
+                authMethod === 'phone' 
                   ? 'bg-[#004fdc] text-white shadow-[0_0_15px_rgba(0,79,220,0.35)]' 
                   : 'text-[#9a9a9a] hover:text-white'
               }`}
             >
-              Create Account
+              <Smartphone className="w-3.5 h-3.5" />
+              Phone SMS OTP
             </button>
           </div>
 
@@ -208,7 +278,9 @@ const Login = () => {
           {/* Divider */}
           <div className="flex items-center my-6">
             <div className="flex-1 border-t border-white/[0.08]"></div>
-            <span className="px-3 text-[10px] uppercase font-mono text-[#9a9a9a] tracking-widest">or email authentication</span>
+            <span className="px-3 text-[10px] uppercase font-mono text-[#9a9a9a] tracking-widest">
+              {authMethod === 'email' ? 'or email authentication' : 'or phone number verification'}
+            </span>
             <div className="flex-1 border-t border-white/[0.08]"></div>
           </div>
 
@@ -223,64 +295,171 @@ const Login = () => {
             </motion.div>
           )}
 
-          {/* Email / Password Form */}
-          <form onSubmit={handleEmailAuth} className="space-y-4">
+          {/* METHOD 1: EMAIL & PASSWORD AUTH */}
+          {authMethod === 'email' && (
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="h-4 w-4 text-[#9a9a9a]" />
-                </div>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
-                  placeholder="name@example.com"
-                />
+              {/* Sign In vs Create Account mode toggle */}
+              <div className="flex justify-between items-center mb-4 text-xs">
+                <span className="text-[#9a9a9a]">
+                  {authMode === 'login' ? "Don't have a Vault account?" : "Already have an account?"}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setAuthMode(authMode === 'login' ? 'signup' : 'login')}
+                  className="text-[#004fdc] hover:underline font-semibold"
+                >
+                  {authMode === 'login' ? 'Create Account' : 'Sign In'}
+                </button>
               </div>
-            </div>
 
+              <form onSubmit={handleEmailAuth} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <Mail className="h-4 w-4 text-[#9a9a9a]" />
+                    </div>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                      placeholder="name@example.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <KeyRound className="h-4 w-4 text-[#9a9a9a]" />
+                    </div>
+                    <input
+                      type="password"
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                      placeholder="••••••••"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98] mt-2"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
+                      Authenticating Firebase...
+                    </>
+                  ) : (
+                    <>
+                      {authMode === 'login' ? 'Sign In with Firebase' : 'Create Encrypted Account'}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* METHOD 2: PHONE SMS OTP AUTH */}
+          {authMethod === 'phone' && (
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <KeyRound className="h-4 w-4 text-[#9a9a9a]" />
-                </div>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
-                  placeholder="••••••••"
-                />
-              </div>
-            </div>
+              {phoneStep === 'number' ? (
+                <form onSubmit={handleSendPhoneOtp} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
+                      Phone Number with Country Code
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <Phone className="h-4 w-4 text-[#9a9a9a]" />
+                      </div>
+                      <input
+                        type="tel"
+                        required
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                        placeholder="+91 98765 43210"
+                      />
+                    </div>
+                  </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98] mt-2"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
-                  Authenticating Firebase...
-                </>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98]"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
+                        Sending SMS Code...
+                      </>
+                    ) : (
+                      <>
+                        Send Verification Code
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
+                      </>
+                    )}
+                  </button>
+                </form>
               ) : (
-                <>
-                  {authMode === 'login' ? 'Sign In with Firebase' : 'Create Encrypted Account'}
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
-                </>
+                <form onSubmit={handleVerifyPhoneOtp} className="space-y-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="text-xs font-semibold uppercase tracking-wider text-[#9a9a9a]">
+                      6-Digit SMS Code
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setPhoneStep('number')}
+                      className="text-xs text-[#ffb829] hover:underline"
+                    >
+                      Change Number
+                    </button>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <KeyRound className="h-4 w-4 text-[#9a9a9a]" />
+                    </div>
+                    <input
+                      type="text"
+                      required
+                      maxLength={6}
+                      value={otpCode}
+                      onChange={(e) => setOtpCode(e.target.value)}
+                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-mono tracking-widest text-center text-lg text-[#ffffff] placeholder:text-[#9a9a9a]/60 placeholder:text-xs placeholder:font-sans placeholder:tracking-normal"
+                      placeholder="123456"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center active:scale-[0.98]"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
+                        Verifying Code...
+                      </>
+                    ) : 'Verify Code & Sign In'}
+                  </button>
+                </form>
               )}
-            </button>
-          </form>
+            </div>
+          )}
 
           {/* Quick Demo Sandbox Access */}
           <div className="mt-6 pt-6 border-t border-white/[0.06] text-center">

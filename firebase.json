@@ -1,0 +1,36 @@
+{
+  "auth": {
+    "authorizedDomains": [
+      "localhost",
+      "vaidyavaani0.firebaseapp.com",
+      "vaidyavaani0.web.app"
+    ],
+    "providers": {
+      "anonymous": false,
+      "emailPassword": true,
+      "phone": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "VaidyaVaani",
+        "supportEmail": "samfgst3@gmail.com"
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "client/dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
