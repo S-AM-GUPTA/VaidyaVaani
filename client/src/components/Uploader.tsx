@@ -48,24 +48,23 @@ const Uploader: React.FC<UploaderProps> = ({ type, onUploadComplete }) => {
         }
       });
       setStatus('success');
-      setMessage('File uploaded successfully. AI processing will begin shortly.');
+      setMessage('Document encrypted & uploaded successfully.');
       setFile(null);
       if (fileInputRef.current) fileInputRef.current.value = '';
-      onUploadComplete();
+      setTimeout(() => {
+        onUploadComplete();
+      }, 800);
     } catch (err: any) {
       setStatus('error');
-      setMessage(err.response?.data?.error || 'Failed to upload file');
+      setMessage(err.response?.data?.error || 'Failed to upload document');
     } finally {
       setUploading(false);
     }
   };
 
   return (
-    <div className="relative group">
-      {/* Animated gradient border effect behind the uploader */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-teal-400 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-      
-      <div className="relative border-2 border-dashed border-indigo-200/50 rounded-2xl p-10 text-center bg-white/60 backdrop-blur-sm hover:bg-white/80 transition-all duration-300">
+    <div className="relative">
+      <div className="border border-dashed border-white/20 hover:border-[#8052ff]/60 rounded-3xl p-10 text-center bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-300">
         <input 
           type="file" 
           ref={fileInputRef}
@@ -76,48 +75,46 @@ const Uploader: React.FC<UploaderProps> = ({ type, onUploadComplete }) => {
         
         {!file ? (
           <div className="flex flex-col items-center cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-            <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-sm shadow-indigo-100">
-              <UploadCloud className="w-8 h-8 text-indigo-500" />
+            <div className="w-16 h-16 bg-[#8052ff]/15 border border-[#8052ff]/30 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(128,82,255,0.2)]">
+              <UploadCloud className="w-8 h-8 text-[#8052ff]" />
             </div>
-            <p className="text-lg font-display font-semibold text-[var(--color-text-primary)]">Drag & drop or click to upload</p>
-            <p className="text-sm font-medium text-[var(--color-text-secondary)] mt-2">Support PDF, JPG, PNG (Max 5MB)</p>
+            <p className="text-base font-normal text-[#ffffff]">Drag and drop or click to browse</p>
+            <p className="text-xs font-light text-[#9a9a9a] mt-2">Supports PDF, JPG, PNG (Zero-Knowledge Encrypted)</p>
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center mb-5 shadow-sm shadow-teal-100">
-              <FileText className="w-8 h-8 text-teal-500" />
+            <div className="w-16 h-16 bg-[#ffb829]/15 border border-[#ffb829]/30 rounded-full flex items-center justify-center mb-4">
+              <FileText className="w-8 h-8 text-[#ffb829]" />
             </div>
-            <p className="text-lg font-display font-semibold text-[var(--color-text-primary)]">{file.name}</p>
-            <p className="text-sm font-medium text-[var(--color-text-secondary)] mt-1">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+            <p className="text-sm font-normal text-[#ffffff]">{file.name}</p>
+            <p className="text-xs font-light text-[#9a9a9a] mt-1">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
             
             {uploading ? (
-              <div className="w-full max-w-sm mt-8">
-                <div className="flex justify-between text-xs font-medium text-[var(--color-text-secondary)] mb-2">
-                  <span>Uploading securely...</span>
+              <div className="w-full max-w-sm mt-6">
+                <div className="flex justify-between text-xs font-mono text-[#9a9a9a] mb-2">
+                  <span>Encrypting & Ingesting...</span>
                   <span>{progress}%</span>
                 </div>
-                <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-gradient-primary transition-all duration-300 relative"
+                    className="h-full bg-[#8052ff] transition-all duration-300"
                     style={{ width: `${progress}%` }}
-                  >
-                    <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
-                  </div>
+                  ></div>
                 </div>
               </div>
             ) : (
-              <div className="flex space-x-4 mt-8">
+              <div className="flex space-x-4 mt-6">
                 <button 
                   onClick={() => setFile(null)}
-                  className="px-6 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors shadow-sm"
+                  className="px-6 py-2.5 bg-white/[0.04] border border-white/10 rounded-full text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] hover:text-[#ffffff] hover:bg-white/10 transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   onClick={handleUpload}
-                  className="px-6 py-2.5 bg-gradient-primary text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-105 transition-all duration-300"
+                  className="px-6 py-2.5 bg-[#8052ff] hover:bg-[#6c3df5] text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(128,82,255,0.3)] active:scale-95"
                 >
-                  Confirm Upload
+                  Process Document
                 </button>
               </div>
             )}
@@ -125,16 +122,16 @@ const Uploader: React.FC<UploaderProps> = ({ type, onUploadComplete }) => {
         )}
 
         {status === 'success' && (
-          <div className="absolute -bottom-16 left-0 right-0 flex items-center justify-center text-[var(--color-status-success)] p-3.5 bg-[var(--color-status-success-bg)] rounded-xl shadow-sm border border-emerald-200 animate-fade-in-up">
-            <CheckCircle2 className="w-5 h-5 mr-2.5" />
-            <span className="text-sm font-medium tracking-wide">{message}</span>
+          <div className="mt-6 flex items-center justify-center text-[#15846e] p-3 bg-[#15846e]/10 border border-[#15846e]/20 rounded-full">
+            <CheckCircle2 className="w-4 h-4 mr-2" />
+            <span className="text-xs font-light">{message}</span>
           </div>
         )}
 
         {status === 'error' && (
-          <div className="absolute -bottom-16 left-0 right-0 flex items-center justify-center text-[var(--color-status-error)] p-3.5 bg-[var(--color-status-error-bg)] rounded-xl shadow-sm border border-red-200 animate-fade-in-up">
-            <AlertCircle className="w-5 h-5 mr-2.5" />
-            <span className="text-sm font-medium tracking-wide">{message}</span>
+          <div className="mt-6 flex items-center justify-center text-red-400 p-3 bg-red-950/40 border border-red-500/20 rounded-full">
+            <AlertCircle className="w-4 h-4 mr-2" />
+            <span className="text-xs font-light">{message}</span>
           </div>
         )}
       </div>

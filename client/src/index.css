@@ -1,93 +1,77 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Outfit', system-ui, sans-serif;
-  
-  --color-medical-blue: #4F46E5; /* Indigo 600 */
-  --color-medical-blue-hover: #4338CA; /* Indigo 700 */
-  --color-medical-blue-light: #EEF2FF; /* Indigo 50 */
-  
-  --color-medical-teal: #0D9488; /* Teal 600 */
-  --color-medical-teal-light: #F0FDFA; /* Teal 50 */
-  
-  --color-healthcare-green: #10B981; /* Emerald 500 */
-  --color-soft-sky: #F8FAFC;
-  --color-light-mint: #ECFDF5;
-  
-  --color-background: #F1F5F9; /* Slate 100 */
-  --color-surface: rgba(255, 255, 255, 0.85); /* Glass surface */
-  --color-border: #E2E8F0; /* Slate 200 */
-  
-  --color-text-primary: #0F172A; /* Slate 900 */
-  --color-text-secondary: #64748B; /* Slate 500 */
-  
-  --color-status-success: #059669; /* Emerald 600 */
-  --color-status-success-bg: #D1FAE5; /* Emerald 100 */
-  
-  --color-status-warning: #D97706; /* Amber 600 */
-  --color-status-warning-bg: #FEF3C7; /* Amber 100 */
-  
-  --color-status-error: #DC2626; /* Red 600 */
-  --color-status-error-bg: #FEE2E2; /* Red 100 */
-  
-  --color-status-info: #2563EB; /* Blue 600 */
-  --color-status-info-bg: #DBEAFE; /* Blue 100 */
+  --color-void: #000000;
+  --color-bone-white: #ffffff;
+  --color-ash-gray: #9a9a9a;
+  --color-silver-mist: #bdbdbd;
+  --color-electric-iris: #8052ff;
+  --color-saffron-spark: #ffb829;
+  --color-deep-verdant: #15846e;
 
-  --drop-shadow-glass: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+  --color-void: #000000;
+  --color-bone-white: #ffffff;
+  --color-ash-gray: #9a9a9a;
+  --color-silver-mist: #bdbdbd;
+  --color-electric-iris: #8052ff;
+  --color-saffron-spark: #ffb829;
+  --color-deep-verdant: #15846e;
+
+  --radius-pill: 22.5px;
+  --radius-card: 24px;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #000000;
+  }
+
   body {
-    @apply bg-[var(--color-background)] text-[var(--color-text-primary)] font-sans antialiased;
-    /* Soft background gradient */
-    background-image: 
-      radial-gradient(at 0% 0%, hsla(253,16%,7%,0) 0, transparent 50%), 
-      radial-gradient(at 50% 0%, hsla(225,39%,30%,0) 0, transparent 50%), 
-      radial-gradient(at 100% 0%, hsla(339,49%,30%,0) 0, transparent 50%);
-    background-attachment: fixed;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    letter-spacing: -0.02em;
+
+  ::selection {
+    background-color: #8052ff;
+    color: #ffffff;
   }
 }
 
-@layer utilities {
-  .glass-panel {
-    @apply bg-[var(--color-surface)] backdrop-blur-xl border border-white/40 shadow-[var(--drop-shadow-glass)];
-  }
-  
-  .glass-card {
-    @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-sm transition-all duration-300;
-  }
-  
-  .glass-card:hover {
-    @apply bg-white/90 shadow-md transform -translate-y-1;
-  }
-  
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-teal-500;
-  }
-
-  .bg-gradient-primary {
-    @apply bg-gradient-to-r from-indigo-600 to-teal-500;
-  }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .animate-fade-in-up {
-    animation: fadeInUp 0.4s ease-out forwards;
-  }
+/* Custom Dala/VaidyaVaani Pill Button */
+.btn-pill-primary {
+  background-color: #8052ff;
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 14.4px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
 }
 
+.btn-pill-primary:hover {
+  background-color: #6c3df5;
+  transform: scale(1.02);
+}
+
+.btn-pill-primary:active {
+  transform: scale(0.98);
+}

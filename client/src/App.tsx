@@ -11,6 +11,8 @@ import Home from './pages/Home';
 import TopBanner from './components/layout/TopBanner';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import { ConstellationCanvas } from './components/ConstellationCanvas';
+import { FileText, Activity, ChevronDown } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -50,139 +52,168 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-[#000000] text-[#ffffff] font-sans overflow-x-hidden flex flex-col selection:bg-[#8052ff] selection:text-[#ffffff] relative">
       <TopBanner />
       <Navbar />
-      
-      <main className="flex-grow w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-        <div className="mb-8">
-          <h1 className="text-3xl font-display font-bold text-[#0B1B3D] tracking-tight">My Dashboard</h1>
-          <p className="text-slate-500 font-medium">Your secure medical intelligence hub</p>
-        </div>
 
-        <div className="glass-panel rounded-3xl overflow-hidden">
-          <div className="flex p-2 gap-2 bg-slate-50/50 border-b border-[var(--color-border)]/50 backdrop-blur-sm">
-            <button 
+      {/* Ambient background particle dust */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-25">
+        <ConstellationCanvas variant="ambient" particleCount={60} interactive={false} />
+      </div>
+      
+      <main className="relative z-10 flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-12">
+        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-white/[0.06]">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] mb-2">
+              Clinical Telemetry Vault
+            </div>
+            <h1 className="text-4xl font-normal text-[#ffffff] tracking-[-0.04em]">
+              Diagnostic Records
+            </h1>
+            <p className="text-sm font-light text-[#9a9a9a] mt-1">
+              Zero-knowledge sealed medical history and AI deconstructions
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
               onClick={() => setViewMode('upload')}
-              className={`flex-1 py-3 px-4 text-center font-bold rounded-xl transition-all duration-300 ${viewMode === 'upload' ? 'bg-white shadow-sm text-indigo-600' : 'text-[var(--color-text-secondary)] hover:bg-slate-100/50 hover:text-[var(--color-text-primary)]'}`}
+              className={`px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+                viewMode === 'upload'
+                  ? 'bg-[#8052ff] text-white shadow-[0_0_20px_rgba(128,82,255,0.35)]'
+                  : 'bg-white/[0.04] text-[#9a9a9a] hover:text-[#ffffff] border border-white/10'
+              }`}
             >
-              <div className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
-                Upload New
-              </div>
+              Upload Document
             </button>
-            <button 
+            <button
               onClick={() => setViewMode('history')}
-              className={`flex-1 py-3 px-4 text-center font-bold rounded-xl transition-all duration-300 ${viewMode === 'history' ? 'bg-white shadow-sm text-indigo-600' : 'text-[var(--color-text-secondary)] hover:bg-slate-100/50 hover:text-[var(--color-text-primary)]'}`}
+              className={`px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+                viewMode === 'history'
+                  ? 'bg-[#8052ff] text-white shadow-[0_0_20px_rgba(128,82,255,0.35)]'
+                  : 'bg-white/[0.04] text-[#9a9a9a] hover:text-[#ffffff] border border-white/10'
+              }`}
             >
-              <div className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                My History
-              </div>
+              History Vault
             </button>
           </div>
-          
-          <div className="p-8 sm:p-10">
-            {/* Sub-tabs for Reports vs Prescriptions */}
-            <div className="flex p-1.5 gap-2 bg-slate-100/80 rounded-2xl mb-8 w-fit mx-auto border border-slate-200/50 shadow-inner">
-              <button 
-                onClick={() => setActiveTab('reports')}
-                className={`py-2 px-6 text-sm font-semibold rounded-xl transition-all duration-300 ${activeTab === 'reports' ? 'bg-white shadow text-indigo-600' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'}`}
-              >
-                Lab Reports
-              </button>
-              <button 
-                onClick={() => setActiveTab('prescriptions')}
-                className={`py-2 px-6 text-sm font-semibold rounded-xl transition-all duration-300 ${activeTab === 'prescriptions' ? 'bg-white shadow text-teal-600' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'}`}
-              >
-                Prescriptions
-              </button>
-            </div>
+        </div>
 
-            {viewMode === 'upload' ? (
-              <>
-                <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-6 flex items-center">
-                  <span className="bg-indigo-50 text-indigo-500 w-8 h-8 rounded-lg flex items-center justify-center mr-3 text-sm">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-                  </span>
-                  Upload New {activeTab === 'reports' ? 'Report' : 'Prescription'}
-                </h2>
-                <Uploader type={activeTab} onUploadComplete={() => {
+        <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+          
+          {/* Sub-tabs for Reports vs Prescriptions */}
+          <div className="flex p-1.5 gap-2 bg-white/[0.03] rounded-full mb-10 w-fit mx-auto border border-white/10">
+            <button 
+              onClick={() => setActiveTab('reports')}
+              className={`py-2 px-6 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-300 ${
+                activeTab === 'reports' 
+                  ? 'bg-[#8052ff] text-white shadow-[0_0_20px_rgba(128,82,255,0.35)]' 
+                  : 'text-[#9a9a9a] hover:text-white'
+              }`}
+            >
+              Clinical Lab Reports
+            </button>
+            <button 
+              onClick={() => setActiveTab('prescriptions')}
+              className={`py-2 px-6 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-300 ${
+                activeTab === 'prescriptions' 
+                  ? 'bg-[#8052ff] text-white shadow-[0_0_20px_rgba(128,82,255,0.35)]' 
+                  : 'text-[#9a9a9a] hover:text-white'
+              }`}
+            >
+              Doctor Prescriptions
+            </button>
+          </div>
+
+          {viewMode === 'upload' ? (
+            <div className="max-w-2xl mx-auto py-4">
+              <h2 className="text-xl font-normal text-[#ffffff] tracking-tight mb-2 text-center">
+                Ingest New {activeTab === 'reports' ? 'Clinical Report' : 'Prescription'}
+              </h2>
+              <p className="text-xs font-light text-[#9a9a9a] text-center mb-8">
+                Processed with client-side zero-knowledge security
+              </p>
+              <Uploader 
+                type={activeTab} 
+                onUploadComplete={() => {
                   fetchItems();
-                  setViewMode('history'); // Switch to history view automatically after successful upload
-                }} />
-              </>
-            ) : (
-              <>
-                <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-6 flex items-center">
-                  <span className="bg-indigo-50 text-indigo-500 w-8 h-8 rounded-lg flex items-center justify-center mr-3 text-sm">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-                  </span>
-                  Past {activeTab === 'reports' ? 'Reports' : 'Prescriptions'}
+                  setViewMode('history');
+                }} 
+              />
+            </div>
+          ) : (
+            <div>
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.06]">
+                <h2 className="text-lg font-normal text-[#ffffff] tracking-tight">
+                  Archived {activeTab === 'reports' ? 'Lab Biomarkers' : 'Prescription Records'}
                 </h2>
-                
-                {reports.length === 0 ? (
-                  <div className="text-center py-16 px-4 bg-slate-50/50 rounded-2xl border-2 border-dashed border-slate-200">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-slate-100 rounded-full flex items-center justify-center">
-                      <span className="text-2xl opacity-50">📄</span>
-                    </div>
-                    <h3 className="text-lg font-medium text-slate-700">No records found</h3>
-                    <p className="text-[var(--color-text-secondary)] mt-1">Upload your first document to get started.</p>
+                <span className="text-xs font-mono text-[#9a9a9a]">
+                  Total: {reports.length}
+                </span>
+              </div>
+              
+              {reports.length === 0 ? (
+                <div className="text-center py-20 px-4 bg-white/[0.01] rounded-3xl border border-dashed border-white/10">
+                  <div className="w-14 h-14 mx-auto mb-4 bg-white/[0.04] rounded-full flex items-center justify-center border border-white/10">
+                    <FileText className="w-6 h-6 text-[#9a9a9a]" />
                   </div>
-                ) : (
-                  <div className="space-y-4">
-                    {reports.map((item) => (
-                      <div key={item._id} className="glass-card rounded-2xl overflow-hidden group">
-                        <div 
-                          className="flex items-center justify-between p-5 cursor-pointer"
-                          onClick={() => toggleExpand(item._id)}
-                        >
-                          <div className="flex items-center space-x-4">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${activeTab === 'reports' ? 'bg-indigo-50 text-indigo-500' : 'bg-teal-50 text-teal-500'}`}>
-                              {activeTab === 'reports' ? (
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                              ) : (
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                              )}
-                            </div>
-                            <div>
-                              <h3 className="font-semibold text-[var(--color-text-primary)] group-hover:text-indigo-600 transition-colors">{item.originalName || 'Untitled Document'}</h3>
-                              <p className="text-sm text-[var(--color-text-secondary)] font-medium">Uploaded on {new Date(item.createdAt).toLocaleDateString()}</p>
-                            </div>
+                  <h3 className="text-base font-normal text-[#ffffff]">No archived records yet</h3>
+                  <p className="text-xs font-light text-[#9a9a9a] mt-1 mb-6">Upload your first diagnostic sheet to start tracking.</p>
+                  <button
+                    onClick={() => setViewMode('upload')}
+                    className="bg-[#8052ff] hover:bg-[#6c3df5] text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all"
+                  >
+                    Upload Now
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {reports.map((item) => (
+                    <div key={item._id} className="rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-[#8052ff]/40 transition-all overflow-hidden">
+                      <div 
+                        className="flex items-center justify-between p-5 cursor-pointer"
+                        onClick={() => toggleExpand(item._id)}
+                      >
+                        <div className="flex items-center space-x-4">
+                          <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#8052ff]/15 border border-[#8052ff]/30 text-[#8052ff]">
+                            {activeTab === 'reports' ? <Activity className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
                           </div>
-                          <div className="flex items-center space-x-4">
-                            <span className={`px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide uppercase ${
-                              item.status === 'COMPLETED' ? 'bg-[var(--color-status-success-bg)] text-[var(--color-status-success)]' :
-                              item.status === 'PROCESSING' ? 'bg-[var(--color-status-info-bg)] text-[var(--color-status-info)]' :
-                              item.status === 'FAILED' ? 'bg-[var(--color-status-error-bg)] text-[var(--color-status-error)]' :
-                              'bg-[var(--color-status-warning-bg)] text-[var(--color-status-warning)]'
-                            }`}>
-                              {item.status}
-                            </span>
-                            <span className={`text-slate-400 transition-transform duration-300 ${expandedId === item._id ? 'rotate-180' : ''}`}>
-                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                            </span>
+                          <div>
+                            <h3 className="font-normal text-sm text-[#ffffff] hover:text-[#8052ff] transition-colors">{item.originalName || 'Diagnostic Document'}</h3>
+                            <p className="text-xs font-light text-[#9a9a9a]">Uploaded on {new Date(item.createdAt).toLocaleDateString()}</p>
                           </div>
                         </div>
-                        
-                        {expandedId === item._id && item.status === 'COMPLETED' && (
-                          <div className="p-6 bg-slate-50/50 border-t border-[var(--color-border)]/50">
-                            {activeTab === 'reports' ? (
-                              <ReportSummary summaryJson={item.summary} />
-                            ) : (
-                              <PrescriptionDetails prescriptionId={item._id} token={token} />
-                            )}
-                          </div>
-                        )}
+
+                        <div className="flex items-center space-x-4">
+                          <span className={`px-3 py-1 rounded-full text-[10px] font-mono tracking-wider uppercase ${
+                            item.status === 'COMPLETED' ? 'bg-[#15846e]/20 text-[#15846e] border border-[#15846e]/40' :
+                            item.status === 'PROCESSING' ? 'bg-[#8052ff]/20 text-[#8052ff] border border-[#8052ff]/40' :
+                            'bg-[#ffb829]/20 text-[#ffb829] border border-[#ffb829]/40'
+                          }`}>
+                            {item.status}
+                          </span>
+                          <ChevronDown className={`w-4 h-4 text-[#9a9a9a] transition-transform duration-300 ${expandedId === item._id ? 'rotate-180 text-[#ffffff]' : ''}`} />
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+                      
+                      {expandedId === item._id && item.status === 'COMPLETED' && (
+                        <div className="p-6 border-t border-white/[0.06] bg-black/40">
+                          {activeTab === 'reports' ? (
+                            <ReportSummary summaryJson={item.summary} />
+                          ) : (
+                            <PrescriptionDetails prescriptionId={item._id} token={token} />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </main>
+
       <Footer />
     </div>
   );
@@ -216,4 +247,3 @@ function App() {
 }
 
 export default App;
-
