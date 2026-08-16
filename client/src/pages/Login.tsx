@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Lock, Mail, KeyRound, Loader2, Sparkles } from 'lucide-react';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
+import Logo from '../components/Logo';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -61,30 +62,18 @@ const Login = () => {
         
         {/* Top Logo Lockup */}
         <div className="w-full">
-          <Link to="/" className="inline-flex items-center gap-3 group">
-            <div className="relative w-7 h-7 flex items-center justify-center">
-              <svg viewBox="0 0 28 28" fill="none" className="w-7 h-7 transform group-hover:rotate-12 transition-transform duration-300">
-                <defs>
-                  <linearGradient id="loginLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#8052ff" />
-                    <stop offset="100%" stopColor="#15846e" />
-                  </linearGradient>
-                </defs>
-                <polygon points="14,2 26,24 2,24" fill="url(#loginLogoGrad)" stroke="#8052ff" strokeWidth="0.5" />
-                <polygon points="14,9 21,22 7,22" fill="#000000" />
-                <circle cx="14" cy="17" r="2.5" fill="#ffb829" />
-              </svg>
-            </div>
-            <span className="text-xl font-normal tracking-tight text-[#ffffff]">
-              Vaidya<span className="text-[#8052ff] font-medium">Vaani</span>
-            </span>
-          </Link>
+          <Logo size="lg" />
         </div>
 
-        {/* Center Live Mini 3D Constellation */}
-        <div className="my-auto w-full h-[360px] relative flex items-center justify-center">
-          <div className="absolute w-[240px] h-[240px] rounded-full bg-[#8052ff]/15 blur-[100px] pointer-events-none"></div>
-          <ConstellationCanvas variant="cluster" particleCount={380} interactive={true} />
+        {/* Center Live 3D Neural Brain Graphic */}
+        <div className="my-auto w-full max-w-md mx-auto relative flex items-center justify-center p-4">
+          <div className="absolute w-[260px] h-[260px] rounded-full bg-[#8052ff]/20 blur-[100px] pointer-events-none"></div>
+          <div className="absolute w-[200px] h-[200px] rounded-full bg-[#00d2d3]/20 blur-[90px] pointer-events-none"></div>
+          <img 
+            src="/images/brain-neural-model.png" 
+            alt="3D Neural Brain Intelligence" 
+            className="w-full h-auto object-contain rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(128,82,255,0.25)]"
+          />
         </div>
 
         {/* Bottom Headline & Tag */}
@@ -94,8 +83,8 @@ const Login = () => {
           transition={{ duration: 0.8 }}
           className="max-w-md"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#ffb829]" />
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#00d2d3] mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-[#00d2d3]" />
             Encrypted Knowledge Vault
           </div>
           
@@ -113,11 +102,7 @@ const Login = () => {
         
         {/* Mobile Header */}
         <div className="absolute top-8 left-8 lg:hidden">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-lg font-normal text-[#ffffff]">
-              Vaidya<span className="text-[#8052ff]">Vaani</span>
-            </span>
-          </Link>
+          <Logo size="sm" />
         </div>
 
         <motion.div 

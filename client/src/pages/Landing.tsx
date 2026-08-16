@@ -21,6 +21,7 @@ import {
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
+import HeroNeuralBrain from '../components/HeroNeuralBrain';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -49,111 +50,98 @@ const Landing = () => {
       <Navbar />
 
       {/* Ambient background particle field */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-30">
-        <ConstellationCanvas variant="ambient" particleCount={80} interactive={false} />
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-25">
+        <ConstellationCanvas variant="ambient" particleCount={70} interactive={false} />
       </div>
 
       {/* =========================================================
-          HERO SECTION: Viewport-Fitted Asymmetric 2-Column with 3D Neural Constellation
+          HERO SECTION: Headline + 3D Neural Brain Model Component
           ========================================================= */}
-      <section className="relative z-10 min-h-[calc(100vh-80px)] max-w-[1280px] mx-auto px-6 lg:px-12 pt-8 lg:pt-12 pb-16 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
+      <section className="relative z-10 max-w-[1280px] mx-auto px-6 lg:px-12 pt-10 lg:pt-14 pb-20">
         
-        {/* Left Column (Sculptural Display Typography & Pill CTA) */}
+        {/* Top Header Text & CTA Header */}
         <motion.div 
-          className="lg:w-1/2 text-left z-10 w-full"
+          className="text-center max-w-3xl mx-auto mb-12"
           variants={containerVariants}
           initial="hidden"
           animate="show"
         >
           {/* Saffron Spark Uppercase Label */}
           <motion.div variants={itemVariants} className="inline-flex items-center gap-2 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ffb829] animate-pulse"></span>
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00d2d3] animate-pulse"></span>
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#00d2d3]">
               Distributed Medical Intelligence
             </span>
           </motion.div>
           
-          {/* Monolithic Weight-400 Display Headline with -0.04em Tracking */}
+          {/* Monolithic Weight-400 Display Headline */}
           <motion.h1 
             variants={itemVariants}
-            className="text-4xl sm:text-5xl lg:text-[64px] xl:text-[72px] font-normal text-[#ffffff] leading-[1.05] tracking-[-0.04em] mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-normal text-[#ffffff] leading-[1.06] tracking-[-0.04em] mb-5"
           >
             Understand your health. <br />
-            <span className="text-[#8052ff]">Weightless & instant.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8052ff] via-[#a855f7] to-[#00d2d3]">
+              Weightless, unified & instant.
+            </span>
           </motion.h1>
           
-          {/* Signature Ultra-light (Weight 200/300) 18px Body Copy */}
+          {/* Body Copy */}
           <motion.p 
             variants={itemVariants}
-            className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-8 max-w-[460px]"
+            className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-8 max-w-xl mx-auto"
           >
-            Upload prescriptions and clinical lab reports. Decode complex medical biomarkers, simulate drug interactions across doctors, and receive spoken regional explanations in seconds.
+            Upload prescriptions and clinical lab reports. Decode biomarkers, cross-reference drug contraindications across doctors, and receive spoken regional guidance.
           </motion.p>
           
-          {/* Primary Action Button: Electric Iris (#8052ff) Pill */}
-          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-5">
+          {/* Action Button */}
+          <motion.div variants={itemVariants} className="flex items-center justify-center gap-4">
             <button 
               onClick={() => navigate('/login')}
-              className="bg-[#8052ff] hover:bg-[#6c3df5] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 flex items-center group active:scale-[0.98] shadow-[0_0_30px_rgba(128,82,255,0.35)]"
+              className="bg-[#8052ff] hover:bg-[#6c3df5] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 flex items-center group active:scale-[0.98] shadow-[0_0_35px_rgba(128,82,255,0.4)]"
             >
-              Start Exploring Now
+              Get Started Now
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
             </button>
 
             <a 
               href="#pipeline" 
-              className="text-xs font-normal text-[#9a9a9a] hover:text-[#ffffff] tracking-[0.02em] transition-colors flex items-center gap-1.5"
+              className="text-xs font-normal text-[#9a9a9a] hover:text-[#ffffff] tracking-[0.02em] transition-colors flex items-center gap-1.5 px-4 py-4"
             >
-              How It Works <span className="text-[#8052ff]">↓</span>
+              View Pipeline <span className="text-[#8052ff]">↓</span>
             </a>
           </motion.div>
-
-          {/* Micro Stats floating on black */}
-          <motion.div 
-            variants={itemVariants}
-            className="mt-10 pt-6 border-t border-white/[0.08] flex items-center gap-6 sm:gap-8"
-          >
-            <div>
-              <div className="text-xl sm:text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">95.4%</div>
-              <div className="text-[10px] font-medium text-[#9a9a9a] uppercase tracking-wider mt-0.5">OCR Extraction</div>
-            </div>
-            <div className="w-px h-7 bg-white/10"></div>
-            <div>
-              <div className="text-xl sm:text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">&lt; 4.8s</div>
-              <div className="text-[10px] font-medium text-[#9a9a9a] uppercase tracking-wider mt-0.5">Neural Synthesis</div>
-            </div>
-            <div className="w-px h-7 bg-white/10"></div>
-            <div>
-              <div className="text-xl sm:text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">100%</div>
-              <div className="text-[10px] font-medium text-[#9a9a9a] uppercase tracking-wider mt-0.5">Client Encrypted</div>
-            </div>
-          </motion.div>
         </motion.div>
 
-        {/* Right Column: 3D Animated Brain Constellation Visualization */}
-        <motion.div 
-          className="lg:w-1/2 w-full h-[360px] sm:h-[460px] lg:h-[520px] xl:h-[560px] relative flex items-center justify-center"
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        {/* 3D Neural Brain Model Visual Showcase */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full"
         >
-          {/* Glow backdrop */}
-          <div className="absolute w-[280px] h-[280px] rounded-full bg-[#8052ff]/15 blur-[100px] pointer-events-none"></div>
-          <div className="absolute w-[200px] h-[200px] rounded-full bg-[#15846e]/20 blur-[90px] pointer-events-none"></div>
-
-          {/* Live 3D Canvas */}
-          <div className="relative w-full h-full">
-            <ConstellationCanvas variant="brain" particleCount={680} interactive={true} />
-          </div>
-
-          {/* Floating Minimalist Telemetry Pill */}
-          <div className="absolute bottom-4 right-4 hidden sm:flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-[#8052ff] animate-ping"></span>
-            <span className="text-[10px] font-mono text-[#bdbdbd] tracking-wider uppercase">
-              Neural Constellation / Active
-            </span>
-          </div>
+          <HeroNeuralBrain />
         </motion.div>
+
+        {/* Floating Telemetry Stats Bar */}
+        <div className="mt-12 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-white/[0.08]">
+          <div className="pt-2 md:pt-0">
+            <div className="text-2xl font-normal text-[#ffffff] tracking-tight">95.4%</div>
+            <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">OCR Extraction</div>
+          </div>
+          <div className="pt-4 md:pt-0">
+            <div className="text-2xl font-normal text-[#8052ff] tracking-tight">&lt; 4.8s</div>
+            <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Neural Synthesis</div>
+          </div>
+          <div className="pt-4 md:pt-0">
+            <div className="text-2xl font-normal text-[#00d2d3] tracking-tight">100%</div>
+            <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Zero-Knowledge Encrypted</div>
+          </div>
+          <div className="pt-4 md:pt-0">
+            <div className="text-2xl font-normal text-[#ffb829] tracking-tight">6+</div>
+            <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Indian Regional Dialects</div>
+          </div>
+        </div>
+
       </section>
 
 
@@ -200,7 +188,7 @@ const Landing = () => {
 
             {/* Step 3 */}
             <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-colors">
-              <div className="w-9 h-9 rounded-full bg-[#15846e]/20 border border-[#15846e]/40 flex items-center justify-center text-xs font-mono text-[#15846e] mb-5">
+              <div className="w-9 h-9 rounded-full bg-[#00d2d3]/20 border border-[#00d2d3]/40 flex items-center justify-center text-xs font-mono text-[#00d2d3] mb-5">
                 03
               </div>
               <Layers className="w-5 h-5 text-[#ffffff] mb-3" />
@@ -303,7 +291,7 @@ const Landing = () => {
               </div>
             </motion.div>
 
-            {/* Right Visual Simulation (Floating on black void) */}
+            {/* Right Visual Simulation */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
