@@ -265,12 +265,24 @@ const Navbar = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-48 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-2 z-50 backdrop-blur-2xl"
+                        className="absolute right-0 mt-2 w-52 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-2 z-50 backdrop-blur-2xl"
                       >
                         <div className="px-3 py-2 border-b border-white/[0.06] mb-1">
                           <div className="text-xs font-medium text-white">{t('member')}</div>
                           <div className="text-[10px] text-[#15846e] font-mono">{t('zeroKnowledgeVault')}</div>
                         </div>
+
+                        <button 
+                          onClick={() => {
+                            setIsProfileOpen(false);
+                            navigate('/profile');
+                          }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs text-white hover:bg-white/[0.06] flex items-center gap-2 transition-colors mb-1"
+                        >
+                          <User className="w-3.5 h-3.5 text-[#15846e]" />
+                          <span>Health Profile & SOS</span>
+                        </button>
+
                         <button 
                           onClick={() => {
                             logout();
