@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { 
   ArrowRight, 
@@ -9,19 +9,22 @@ import {
   AlertTriangle, 
   CheckCircle2, 
   Cpu, 
-  Lock,
-  Globe2,
-  Volume2,
-  VolumeX,
-  ScanLine,
-  FileSpreadsheet,
-  Layers,
-  HeartPulse
+  Lock, 
+  Globe2, 
+  Volume2, 
+  VolumeX, 
+  ScanLine, 
+  FileSpreadsheet, 
+  Layers, 
+  HeartPulse,
+  X,
+  UploadCloud
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
 import HeroNeuralBrain from '../components/HeroNeuralBrain';
+import { useAuth } from '../context/AuthContext';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -38,11 +41,49 @@ const itemVariants: Variants = {
 
 const Landing = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [activeSeverityTab, setActiveSeverityTab] = useState<'low' | 'mod' | 'crit'>('mod');
+  const [isDemoUploadOpen, setIsDemoUploadOpen] = useState(false);
 
+  // Web Speech API Hindi Voice Synthesis Demonstration
   const toggleVoiceDemo = () => {
-    setIsPlayingAudio(!isPlayingAudio);
+    if (isPlayingAudio) {
+      window.speechSynthesis?.cancel();
+      setIsPlayingAudio(false);
+      return;
+    }
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const hindiText = "नमस्ते। आपकी लैब रिपोर्ट के अनुसार रक्त शर्करा 108 mg/dL है। एटेनोलॉल दवा को भोजन के 30 मिनट बाद लेना सर्वोत्तम है।";
+      const utterance = new SpeechSynthesisUtterance(hindiText);
+      utterance.lang = 'hi-IN';
+      utterance.rate = 0.9;
+      
+      utterance.onstart = () => setIsPlayingAudio(true);
+      utterance.onend = () => setIsPlayingAudio(false);
+      utterance.onerror = () => setIsPlayingAudio(false);
+
+      window.speechSynthesis.speak(utterance);
+    } else {
+      setIsPlayingAudio(true);
+      setTimeout(() => setIsPlayingAudio(false), 4000);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis?.cancel();
+    };
+  }, []);
+
+  const handleCtaClick = () => {
+    if (isAuthenticated) {
+      navigate('/home');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -96,10 +137,10 @@ const Landing = () => {
           {/* Primary Action Button: Electric Blue (#004fdc) Pill */}
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-5">
             <button 
-              onClick={() => navigate('/login')}
+              onClick={handleCtaClick}
               className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 flex items-center group active:scale-[0.98] shadow-[0_0_30px_rgba(0,79,220,0.35)]"
             >
-              Start Exploring Now
+              {isAuthenticated ? 'Open Dashboard Vault' : 'Start Exploring Now'}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
             </button>
 
@@ -163,19 +204,22 @@ const Landing = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             
             {/* Step 1 */}
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-colors">
-              <div className="w-9 h-9 rounded-full bg-[#004fdc]/20 border border-[#004fdc]/40 flex items-center justify-center text-xs font-mono text-[#004fdc] mb-5">
+            <div 
+              onClick={() => setIsDemoUploadOpen(true)}
+              className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-[#004fdc]/60 transition-all cursor-pointer group"
+            >
+              <div className="w-9 h-9 rounded-full bg-[#004fdc]/20 border border-[#004fdc]/40 flex items-center justify-center text-xs font-mono text-[#004fdc] mb-5 group-hover:scale-110 transition-transform">
                 01
               </div>
               <ScanLine className="w-5 h-5 text-[#ffffff] mb-3" />
-              <h3 className="text-base font-normal text-[#ffffff] mb-2">Multimodal Ingestion</h3>
+              <h3 className="text-base font-normal text-[#ffffff] mb-2 group-hover:text-[#004fdc] transition-colors">Multimodal Ingestion</h3>
               <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
                 Accepts camera scans, PDF lab printouts, and photo gallery uploads with client-side sanitization.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-colors">
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-[#ffb829]/60 transition-all">
               <div className="w-9 h-9 rounded-full bg-[#ffb829]/20 border border-[#ffb829]/40 flex items-center justify-center text-xs font-mono text-[#ffb829] mb-5">
                 02
               </div>
@@ -187,7 +231,7 @@ const Landing = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-colors">
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-[#00d2d3]/60 transition-all">
               <div className="w-9 h-9 rounded-full bg-[#00d2d3]/20 border border-[#00d2d3]/40 flex items-center justify-center text-xs font-mono text-[#00d2d3] mb-5">
                 03
               </div>
@@ -199,12 +243,15 @@ const Landing = () => {
             </div>
 
             {/* Step 4 */}
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-colors">
-              <div className="w-9 h-9 rounded-full bg-[#004fdc]/20 border border-[#004fdc]/40 flex items-center justify-center text-xs font-mono text-[#004fdc] mb-5">
+            <div 
+              onClick={toggleVoiceDemo}
+              className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-[#004fdc]/60 transition-all cursor-pointer group"
+            >
+              <div className="w-9 h-9 rounded-full bg-[#004fdc]/20 border border-[#004fdc]/40 flex items-center justify-center text-xs font-mono text-[#004fdc] mb-5 group-hover:scale-110 transition-transform">
                 04
               </div>
               <Volume2 className="w-5 h-5 text-[#ffffff] mb-3" />
-              <h3 className="text-base font-normal text-[#ffffff] mb-2">Voice & Dialect Audio</h3>
+              <h3 className="text-base font-normal text-[#ffffff] mb-2 group-hover:text-[#004fdc] transition-colors">Voice & Dialect Audio</h3>
               <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
                 Generates spoken summaries in Hindi & regional languages so elderly and rural patients stay safe.
               </p>
@@ -240,12 +287,12 @@ const Landing = () => {
                 Eliminate uncertainty when managing multi-drug schedules across different doctors. Our neural engine checks contraindications, dosage spacing, and food interactions across international pharmacology databases.
               </p>
 
-              {/* Severity Tab Selector */}
+              {/* Functional Severity Tab Selector */}
               <div className="flex gap-2 p-1 bg-white/[0.04] rounded-full border border-white/10 w-fit mb-6">
                 <button 
                   onClick={() => setActiveSeverityTab('low')}
                   className={`px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-                    activeSeverityTab === 'low' ? 'bg-[#15846e] text-white' : 'text-[#9a9a9a]'
+                    activeSeverityTab === 'low' ? 'bg-[#15846e] text-white shadow-[0_0_15px_rgba(21,132,110,0.4)]' : 'text-[#9a9a9a] hover:text-white'
                   }`}
                 >
                   Low Risk
@@ -253,7 +300,7 @@ const Landing = () => {
                 <button 
                   onClick={() => setActiveSeverityTab('mod')}
                   className={`px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-                    activeSeverityTab === 'mod' ? 'bg-[#ffb829] text-black font-bold' : 'text-[#9a9a9a]'
+                    activeSeverityTab === 'mod' ? 'bg-[#ffb829] text-black font-bold shadow-[0_0_15px_rgba(255,184,41,0.4)]' : 'text-[#9a9a9a] hover:text-white'
                   }`}
                 >
                   Moderate
@@ -261,7 +308,7 @@ const Landing = () => {
                 <button 
                   onClick={() => setActiveSeverityTab('crit')}
                   className={`px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-                    activeSeverityTab === 'crit' ? 'bg-red-500 text-white' : 'text-[#9a9a9a]'
+                    activeSeverityTab === 'crit' ? 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)]' : 'text-[#9a9a9a] hover:text-white'
                   }`}
                 >
                   Critical Risk
@@ -463,8 +510,8 @@ const Landing = () => {
 
               <div className="flex flex-wrap items-center gap-4">
                 <button 
-                  onClick={() => navigate('/login')}
-                  className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 shadow-[0_0_20px_rgba(0,79,220,0.3)]"
+                  onClick={() => setIsDemoUploadOpen(true)}
+                  className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 shadow-[0_0_20px_rgba(0,79,220,0.3)] active:scale-95"
                 >
                   Upload Lab Report
                 </button>
@@ -501,24 +548,24 @@ const Landing = () => {
                 Healthcare belongs to everyone. Our natural language pipeline reads complex reports aloud and translates doctor prescriptions into clear audio guidance for elderly and rural caregivers.
               </p>
 
-              {/* Interactive Voice Player Pill */}
-              <div className="p-4 rounded-3xl bg-white/[0.03] border border-white/10 flex items-center justify-between max-w-md mb-6">
+              {/* Functional Voice Player Pill with SpeechSynthesis */}
+              <div className="p-4 rounded-3xl bg-white/[0.03] border border-white/10 flex items-center justify-between max-w-md mb-6 hover:border-[#004fdc]/50 transition-colors">
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={toggleVoiceDemo}
-                    className="w-9 h-9 rounded-full bg-[#004fdc] text-white flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,79,220,0.4)]"
+                    className="w-10 h-10 rounded-full bg-[#004fdc] hover:bg-[#003eb0] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,79,220,0.4)]"
                   >
-                    {isPlayingAudio ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    {isPlayingAudio ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                   </button>
                   <div>
                     <div className="text-xs font-normal text-[#ffffff]">Hindi Voice Synthesis Demo</div>
                     <div className="text-[10px] font-light text-[#9a9a9a]">
-                      {isPlayingAudio ? 'Playing synthetic audio...' : 'Click to hear audio report summary'}
+                      {isPlayingAudio ? 'Speaking aloud now...' : 'Click to hear audio report summary'}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 cursor-pointer" onClick={toggleVoiceDemo}>
                   {[40, 70, 30, 90, 50, 80, 45].map((height, i) => (
                     <div 
                       key={i} 
@@ -550,9 +597,13 @@ const Landing = () => {
                 <p className="text-xs sm:text-sm font-light text-[#bdbdbd] max-w-xs mx-auto">
                   "आपकी रिपोर्ट के अनुसार रक्त शर्करा 108 mg/dL है। दवा को भोजन के 30 मिनट बाद लेना सर्वोत्तम है।"
                 </p>
-                <div className="inline-block px-3 py-1 rounded-full bg-[#004fdc]/20 text-[#004fdc] font-mono text-[10px] uppercase tracking-wider">
-                  Real-Time Hindi Narration Ready
-                </div>
+                <button 
+                  onClick={toggleVoiceDemo}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#004fdc]/20 hover:bg-[#004fdc]/30 text-[#004fdc] font-mono text-[10px] uppercase tracking-wider border border-[#004fdc]/30 transition-colors"
+                >
+                  <Volume2 className="w-3 h-3" />
+                  {isPlayingAudio ? 'Listening...' : 'Play Synthetic Voice'}
+                </button>
               </div>
             </motion.div>
 
@@ -642,15 +693,72 @@ const Landing = () => {
             </p>
 
             <button 
-              onClick={() => navigate('/login')}
+              onClick={handleCtaClick}
               className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-9 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 shadow-[0_0_35px_rgba(0,79,220,0.4)] active:scale-[0.98]"
             >
-              Request Access Free
+              {isAuthenticated ? 'Open Dashboard Workspace' : 'Request Access Free'}
             </button>
           </motion.div>
 
         </div>
       </section>
+
+      {/* Demo Modal for Lab Report / Upload */}
+      <AnimatePresence>
+        {isDemoUploadOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" onClick={() => setIsDemoUploadOpen(false)}></div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-[#0c0c0c] rounded-[32px] w-full max-w-lg overflow-hidden shadow-[0_0_80px_rgba(0,79,220,0.3)] relative z-10 border border-white/10 p-8"
+            >
+              <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
+                <div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#004fdc]">
+                    Quick Document Ingestion
+                  </div>
+                  <h3 className="text-xl font-normal text-white">Upload Diagnostic Record</h3>
+                </div>
+                <button 
+                  onClick={() => setIsDemoUploadOpen(false)}
+                  className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div 
+                onClick={() => {
+                  if (isAuthenticated) {
+                    navigate('/home');
+                  } else {
+                    navigate('/login');
+                  }
+                }}
+                className="border border-dashed border-white/20 hover:border-[#004fdc] rounded-2xl p-8 text-center cursor-pointer bg-white/[0.02] hover:bg-white/[0.04] transition-all"
+              >
+                <UploadCloud className="w-10 h-10 text-[#004fdc] mx-auto mb-3" />
+                <div className="text-sm font-normal text-white">Select PDF or Image</div>
+                <p className="text-xs text-[#9a9a9a] mt-1">Click to sign in and process through the Neural Engine</p>
+              </div>
+
+              <div className="mt-6 flex justify-end">
+                <button 
+                  onClick={() => {
+                    setIsDemoUploadOpen(false);
+                    navigate('/login');
+                  }}
+                  className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider"
+                >
+                  Continue to Vault
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
