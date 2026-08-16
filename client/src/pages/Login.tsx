@@ -1,52 +1,78 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Lock, Mail, KeyRound, Loader2, Sparkles } from 'lucide-react';
+import { ArrowRight, Lock, Mail, Loader2, Sparkles, KeyRound, ShieldCheck } from 'lucide-react';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
 import Logo from '../components/Logo';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
 const Login = () => {
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
-  const [sessionId, setSessionId] = useState('');
-  const [step, setStep] = useState<1 | 2>(1);
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const { loginWithGoogle, loginWithEmail, signupWithEmail } = useAuth();
   const navigate = useNavigate();
 
-  const requestOTP = async (e: React.FormEvent) => {
+  // Google Sign In via Firebase Auth
+  const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
+    setError('');
+    try {
+      const res = await loginWithGoogle();
+      if (res.success) {
+        navigate('/home');
+      } else {
+        setError(res.error || 'Google Authentication encountered an issue.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign in with Google');
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  // Email & Password Auth via Firebase
+  const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      setError('Please enter both email and password.');
+      return;
+    }
+
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post(`${API_URL}/auth/login`, { email });
-      setSessionId(res.data.sessionId);
-      setStep(2);
+      if (authMode === 'login') {
+        const res = await loginWithEmail(email, password);
+        if (res.success) {
+          navigate('/home');
+        } else {
+          setError(res.error || 'Invalid email or password.');
+        }
+      } else {
+        const res = await signupWithEmail(email, password);
+        if (res.success) {
+          navigate('/home');
+        } else {
+          setError(res.error || 'Could not create account.');
+        }
+      }
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to request security code');
+      setError(err.message || 'Authentication error.');
     } finally {
       setLoading(false);
     }
   };
 
-  const verifyOTP = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Instant Quick Demo Access
+  const handleQuickDemoAccess = async () => {
     setLoading(true);
-    setError('');
-    try {
-      const res = await axios.post(`${API_URL}/auth/verify`, { sessionId, otp });
-      login(res.data.token);
-      navigate('/home');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Invalid verification code');
-    } finally {
-      setLoading(false);
-    }
+    await loginWithEmail('demo.patient@vaidyavaani.health', 'demo123456');
+    navigate('/home');
   };
 
   return (
@@ -85,7 +111,7 @@ const Login = () => {
         >
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-4">
             <Sparkles className="w-3.5 h-3.5 text-[#004fdc]" />
-            Encrypted Knowledge Vault
+            Firebase Verified Health Vault
           </div>
           
           <h1 className="text-4xl font-normal text-[#ffffff] tracking-[-0.04em] leading-[1.08] mb-4">
@@ -111,16 +137,79 @@ const Login = () => {
           transition={{ duration: 0.6 }}
           className="w-full max-w-md mx-auto"
         >
-          <div className="mb-10 text-left">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-2">
-              Authentication
+          {/* Header */}
+          <div className="mb-8 text-left">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-2 flex items-center gap-2">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#004fdc]" />
+              Firebase Authentication
             </div>
             <h2 className="text-3xl sm:text-4xl font-normal text-[#ffffff] tracking-[-0.04em] mb-2">
-              Welcome back.
+              {authMode === 'login' ? 'Sign in to Vault.' : 'Create your Vault.'}
             </h2>
             <p className="text-sm font-light text-[#9a9a9a]">
-              Enter your email to receive an instant authentication key.
+              {authMode === 'login' 
+                ? 'Authenticate to access your encrypted clinical records.' 
+                : 'Set up your zero-knowledge medical identity.'}
             </p>
+          </div>
+
+          {/* Mode Switcher Tabs */}
+          <div className="flex p-1 bg-white/[0.04] border border-white/10 rounded-full mb-6 w-full">
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMode('login');
+                setError('');
+              }}
+              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all ${
+                authMode === 'login' 
+                  ? 'bg-[#004fdc] text-white shadow-[0_0_15px_rgba(0,79,220,0.35)]' 
+                  : 'text-[#9a9a9a] hover:text-white'
+              }`}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMode('signup');
+                setError('');
+              }}
+              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all ${
+                authMode === 'signup' 
+                  ? 'bg-[#004fdc] text-white shadow-[0_0_15px_rgba(0,79,220,0.35)]' 
+                  : 'text-[#9a9a9a] hover:text-white'
+              }`}
+            >
+              Create Account
+            </button>
+          </div>
+
+          {/* Google Sign In Button (Firebase) */}
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={googleLoading}
+            className="w-full py-3.5 px-6 rounded-full bg-white/[0.05] hover:bg-white/[0.08] text-white border border-white/15 hover:border-white/30 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-sm mb-6 disabled:opacity-60"
+          >
+            {googleLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin text-[#004fdc]" />
+            ) : (
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.4l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+                <path fill="#FBBC05" d="M5.6 14.7c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.4C.7 9.8 0 12.4 0 15.3s.7 5.5 1.9 7.9l3.7-2.9c0-.2 0-.4 0-.6z"/>
+                <path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.3L1.9 16.4C3.7 20.2 7.5 23.5 12 23.5z"/>
+              </svg>
+            )}
+            <span>Continue with Google (Firebase)</span>
+          </button>
+
+          {/* Divider */}
+          <div className="flex items-center my-6">
+            <div className="flex-1 border-t border-white/[0.08]"></div>
+            <span className="px-3 text-[10px] uppercase font-mono text-[#9a9a9a] tracking-widest">or email authentication</span>
+            <div className="flex-1 border-t border-white/[0.08]"></div>
           </div>
 
           {error && (
@@ -134,102 +223,77 @@ const Login = () => {
             </motion.div>
           )}
 
-          {step === 1 ? (
-            <form onSubmit={requestOTP} className="space-y-6">
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2.5">
-                  Email Address
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Mail className="h-4 w-4 text-[#9a9a9a]" />
-                  </div>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-11 pr-5 py-4 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
-                    placeholder="name@example.com"
-                  />
+          {/* Email / Password Form */}
+          <form onSubmit={handleEmailAuth} className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
+                Email Address
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Mail className="h-4 w-4 text-[#9a9a9a]" />
                 </div>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                  placeholder="name@example.com"
+                />
               </div>
+            </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98]"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
-                    Dispatching Code...
-                  </>
-                ) : (
-                  <>
-                    Continue with Email
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
-                  </>
-                )}
-              </button>
-            </form>
-          ) : (
-            <motion.form 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              onSubmit={verifyOTP} 
-              className="space-y-6"
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <KeyRound className="h-4 w-4 text-[#9a9a9a]" />
+                </div>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98] mt-2"
             >
-              <div>
-                <div className="flex justify-between items-center mb-2.5">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-[#9a9a9a]">
-                    Security Code
-                  </label>
-                  <button 
-                    type="button"
-                    className="text-xs font-light text-[#ffb829] hover:underline" 
-                    onClick={() => setStep(1)}
-                  >
-                    Change email
-                  </button>
-                </div>
-                
-                <p className="text-xs font-light text-[#9a9a9a] mb-4">
-                  Sent to <span className="font-normal text-[#ffffff]">{email}</span>
-                </p>
+              {loading ? (
+                <>
+                  <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
+                  Authenticating Firebase...
+                </>
+              ) : (
+                <>
+                  {authMode === 'login' ? 'Sign In with Firebase' : 'Create Encrypted Account'}
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
+                </>
+              )}
+            </button>
+          </form>
 
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <KeyRound className="h-4 w-4 text-[#9a9a9a]" />
-                  </div>
-                  <input
-                    type="text"
-                    required
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    className="w-full pl-11 pr-5 py-4 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all text-center tracking-[0.5em] text-xl font-normal text-[#ffffff] uppercase placeholder:tracking-normal placeholder:font-light placeholder:text-xs"
-                    placeholder="Enter 6-digit code"
-                    maxLength={6}
-                  />
-                </div>
-              </div>
+          {/* Quick Demo Sandbox Access */}
+          <div className="mt-6 pt-6 border-t border-white/[0.06] text-center">
+            <button
+              type="button"
+              onClick={handleQuickDemoAccess}
+              className="text-xs text-[#ffb829] hover:underline font-light"
+            >
+              🚀 Instant Sandbox Access (1-Click Demo Login)
+            </button>
+          </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center active:scale-[0.98]"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
-                    Authenticating...
-                  </>
-                ) : 'Verify Code & Enter'}
-              </button>
-            </motion.form>
-          )}
-
-          <div className="mt-12 text-center text-xs font-light text-[#9a9a9a]">
+          <div className="mt-8 text-center text-xs font-light text-[#9a9a9a]">
             Protected by Zero-Knowledge Encryption • <Link to="/" className="text-[#004fdc] hover:underline">Return to Home</Link>
           </div>
 
