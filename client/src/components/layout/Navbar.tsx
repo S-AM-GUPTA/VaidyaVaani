@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, ChevronDown, Bell, User, LogOut, Check } from 'lucide-react';
+import { Globe, ChevronDown, Bell, User, LogOut, Check, Menu, X, Pill, Activity, ShieldCheck, MessageSquare } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Logo from '../Logo';
 
@@ -23,66 +23,118 @@ const NOTIFICATIONS = [
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated, logout } = useAuth();
+  
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(LANGUAGES[0]);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [notifs, setNotifs] = useState(NOTIFICATIONS);
 
   const langRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
 
+  const isHome = location.pathname === '/' || location.pathname === '';
+  const isDashboard = location.pathname === '/home';
+
   const markAllNotifsRead = () => {
     setNotifs(prev => prev.map(n => ({ ...n, unread: false })));
   };
 
+  const handleNavClick = (anchorId: string) => {
+    setIsMobileMenuOpen(false);
+    if (!isHome && !isDashboard) {
+      navigate('/' + anchorId);
+      return;
+    }
+    const element = document.querySelector(anchorId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <nav className="bg-[#000000] border-b border-white/[0.06] sticky top-0 z-50 transition-colors backdrop-blur-md">
+    <nav className="bg-[#000000]/90 border-b border-white/[0.08] sticky top-0 z-50 transition-colors backdrop-blur-xl">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center h-20">
           
-          {/* Logo */}
+          {/* Brand Logo */}
           <Logo to={isAuthenticated ? "/home" : "/"} size="md" />
 
-          {/* Nav Links */}
-          <div className="hidden md:flex items-center space-x-9">
+          {/* Desktop Nav Links */}
+          <div className="hidden lg:flex items-center space-x-1 p-1 bg-white/[0.03] border border-white/[0.06] rounded-full">
             {isAuthenticated ? (
               <>
-                <LinkTo to="/home" label="Workspace" active />
-                <a href="#timeline" className="text-xs uppercase font-semibold tracking-[0.05em] text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-                  Timeline
-                </a>
-                <a href="#interactions" className="text-xs uppercase font-semibold tracking-[0.05em] text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-                  Interactions
-                </a>
-                <a href="#labs" className="text-xs uppercase font-semibold tracking-[0.05em] text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
+                <button
+                  onClick={() => navigate('/home')}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.05em] transition-all flex items-center gap-1.5 ${
+                    isDashboard 
+                      ? 'bg-[#15846e] text-white shadow-[0_0_15px_rgba(21,132,110,0.4)]' 
+                      : 'text-[#9a9a9a] hover:text-white'
+                  }`}
+                >
+                  <Activity className="w-3.5 h-3.5" />
+                  Workspace
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('#section-prescriptions')}
+                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.05em] text-[#9a9a9a] hover:text-white transition-colors flex items-center gap-1.5"
+                >
+                  <Pill className="w-3.5 h-3.5 text-[#15846e]" />
+                  Prescriptions
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('#section-diagnostics')}
+                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.05em] text-[#9a9a9a] hover:text-white transition-colors flex items-center gap-1.5"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#004fdc]" />
                   Lab Diagnostics
-                </a>
-                <a href="#chat" className="text-xs uppercase font-semibold tracking-[0.05em] text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-                  AI Neural Chat
-                </a>
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('#chat')}
+                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.05em] text-[#9a9a9a] hover:text-white transition-colors flex items-center gap-1.5"
+                >
+                  <MessageSquare className="w-3.5 h-3.5 text-[#ffb829]" />
+                  AI Chat
+                </button>
               </>
             ) : (
               <>
-                <a href="#intelligence" className="text-xs uppercase font-semibold tracking-[0.05em] text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
+                <button
+                  onClick={() => handleNavClick('#intelligence')}
+                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.05em] text-[#9a9a9a] hover:text-white transition-colors"
+                >
                   Intelligence
-                </a>
-                <a href="#features" className="text-xs uppercase font-semibold tracking-[0.05em] text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-                  Capabilities
-                </a>
-                <a href="#lab-decoder" className="text-xs uppercase font-semibold tracking-[0.05em] text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
+                </button>
+                <button
+                  onClick={() => handleNavClick('#features')}
+                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.05em] text-[#9a9a9a] hover:text-white transition-colors"
+                >
+                  Safety Matrix
+                </button>
+                <button
+                  onClick={() => handleNavClick('#lab-decoder')}
+                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.05em] text-[#9a9a9a] hover:text-white transition-colors"
+                >
                   Lab Decoding
-                </a>
-                <a href="#pipeline" className="text-xs uppercase font-semibold tracking-[0.05em] text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
+                </button>
+                <button
+                  onClick={() => handleNavClick('#pipeline')}
+                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.05em] text-[#9a9a9a] hover:text-white transition-colors"
+                >
                   Pipeline
-                </a>
+                </button>
               </>
             )}
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             
             {/* Language Switcher Dropdown */}
             <div className="relative" ref={langRef}>
@@ -106,7 +158,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-2 w-48 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-2 z-50"
+                    className="absolute right-0 mt-2 w-48 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-2 z-50 backdrop-blur-2xl"
                   >
                     <div className="text-[10px] font-semibold uppercase tracking-wider text-[#9a9a9a] px-3 py-1.5 border-b border-white/[0.06] mb-1">
                       Select Dialect
@@ -134,7 +186,7 @@ const Navbar = () => {
             </div>
 
             {isAuthenticated ? (
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
                 
                 {/* Notifications Bell */}
                 <div className="relative" ref={notifRef}>
@@ -148,10 +200,10 @@ const Navbar = () => {
                   >
                     <Bell className="w-4 h-4" />
                     {notifs.some(n => n.unread) && (
-                      <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#004fdc] rounded-full animate-ping"></span>
+                      <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#15846e] rounded-full animate-ping"></span>
                     )}
                     {notifs.some(n => n.unread) && (
-                      <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#004fdc] rounded-full"></span>
+                      <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#15846e] rounded-full"></span>
                     )}
                   </button>
 
@@ -162,13 +214,13 @@ const Navbar = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-80 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-3 z-50"
+                        className="absolute right-0 mt-2 w-80 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-3 z-50 backdrop-blur-2xl"
                       >
                         <div className="flex items-center justify-between pb-2 border-b border-white/[0.06] mb-2 px-1">
                           <span className="text-xs font-semibold uppercase tracking-wider text-white">Notifications</span>
                           <button 
                             onClick={markAllNotifsRead} 
-                            className="text-[10px] text-[#004fdc] hover:underline"
+                            className="text-[10px] text-[#15846e] hover:underline"
                           >
                             Mark all read
                           </button>
@@ -194,23 +246,21 @@ const Navbar = () => {
                   </AnimatePresence>
                 </div>
 
-                {/* Profile & Logout Trigger */}
+                {/* Profile Session Menu */}
                 <div className="relative">
                   <div 
-                    className="flex items-center space-x-3 cursor-pointer group" 
+                    className="flex items-center space-x-2.5 cursor-pointer group p-1 pr-2.5 rounded-full bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all" 
                     onClick={() => {
                       setIsProfileOpen(!isProfileOpen);
                       setIsLangOpen(false);
                       setIsNotifOpen(false);
                     }}
                   >
-                    <div className="hidden sm:flex flex-col text-right">
-                      <span className="text-[10px] font-semibold text-[#15846e] uppercase tracking-[0.08em] leading-none mb-1">Active</span>
-                      <span className="font-normal text-[#ffffff] text-xs leading-none group-hover:text-[#15846e] transition-colors">Member</span>
-                    </div>
-                    <div className="w-9 h-9 rounded-full bg-[#15846e]/20 border border-[#15846e]/40 flex items-center justify-center text-[#ffffff] shadow-[0_0_15px_rgba(21,132,110,0.3)]">
+                    <div className="w-8 h-8 rounded-full bg-[#15846e]/20 border border-[#15846e]/40 flex items-center justify-center text-[#ffffff] shadow-[0_0_15px_rgba(21,132,110,0.3)]">
                       <User className="w-4 h-4 text-[#15846e]" />
                     </div>
+                    <span className="font-normal text-[#ffffff] text-xs hidden sm:inline">Member</span>
+                    <ChevronDown className="w-3 h-3 text-[#9a9a9a]" />
                   </div>
 
                   <AnimatePresence>
@@ -220,10 +270,10 @@ const Navbar = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-48 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-2 z-50"
+                        className="absolute right-0 mt-2 w-48 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-2 z-50 backdrop-blur-2xl"
                       >
                         <div className="px-3 py-2 border-b border-white/[0.06] mb-1">
-                          <div className="text-xs font-medium text-white">Member Session</div>
+                          <div className="text-xs font-medium text-white">Active Member</div>
                           <div className="text-[10px] text-[#15846e] font-mono">Zero-Knowledge Sealed</div>
                         </div>
                         <button 
@@ -243,34 +293,102 @@ const Navbar = () => {
 
               </div>
             ) : (
-              <div className="flex items-center space-x-3">
-                <button 
-                  onClick={() => navigate('/login')}
-                  className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-200 active:scale-[0.98] shadow-[0_0_20px_rgba(0,79,220,0.35)]"
-                >
-                  Request Access
-                </button>
-              </div>
+              <button 
+                onClick={() => navigate('/login')}
+                className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-200 active:scale-[0.98] shadow-[0_0_20px_rgba(0,79,220,0.35)]"
+              >
+                Request Access
+              </button>
             )}
+
+            {/* Mobile Hamburger Toggle */}
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white"
+            >
+              {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
 
           </div>
         </div>
+
+        {/* Mobile Navigation Drawer */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden pb-6 border-t border-white/[0.06] pt-4 space-y-2 overflow-hidden"
+            >
+              {isAuthenticated ? (
+                <>
+                  <button
+                    onClick={() => {
+                      navigate('/home');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-white bg-[#15846e]/20 border border-[#15846e]/30 flex items-center gap-2"
+                  >
+                    <Activity className="w-4 h-4 text-[#15846e]" />
+                    Workspace
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('#section-prescriptions')}
+                    className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#bdbdbd] hover:bg-white/5 flex items-center gap-2"
+                  >
+                    <Pill className="w-4 h-4 text-[#15846e]" />
+                    Prescriptions & Safety
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('#section-diagnostics')}
+                    className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#bdbdbd] hover:bg-white/5 flex items-center gap-2"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-[#004fdc]" />
+                    Lab Diagnostics
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('#chat')}
+                    className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#bdbdbd] hover:bg-white/5 flex items-center gap-2"
+                  >
+                    <MessageSquare className="w-4 h-4 text-[#ffb829]" />
+                    AI Neural Chat
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => handleNavClick('#intelligence')}
+                    className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#bdbdbd] hover:bg-white/5"
+                  >
+                    Intelligence
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('#features')}
+                    className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#bdbdbd] hover:bg-white/5"
+                  >
+                    Safety Matrix
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('#lab-decoder')}
+                    className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#bdbdbd] hover:bg-white/5"
+                  >
+                    Lab Decoding
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('#pipeline')}
+                    className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#bdbdbd] hover:bg-white/5"
+                  >
+                    Pipeline
+                  </button>
+                </>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </div>
     </nav>
-  );
-};
-
-const LinkTo = ({ to, label, active = false }: { to: string; label: string; active?: boolean }) => {
-  const navigate = useNavigate();
-  return (
-    <button 
-      onClick={() => navigate(to)} 
-      className={`text-xs uppercase font-semibold tracking-[0.05em] transition-colors ${
-        active ? 'text-[#ffffff] border-b border-[#004fdc] pb-0.5' : 'text-[#9a9a9a] hover:text-[#ffffff]'
-      }`}
-    >
-      {label}
-    </button>
   );
 };
 

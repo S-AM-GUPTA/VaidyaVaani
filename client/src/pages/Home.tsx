@@ -4,13 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   CloudUpload, 
   Camera, 
-  FileText, 
   AlertTriangle, 
   X, 
-  Lock, 
   Sparkles, 
   Send,
   Plus,
+  Pill,
+  CheckCircle2,
+  Activity,
+  FileSpreadsheet,
   ChevronRight
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
@@ -23,37 +25,54 @@ interface TimelineDoc {
   date: string;
   month: string;
   title: string;
+  category: 'prescription' | 'lab';
   type: string;
   badgeColor: string;
   insights: string[];
 }
 
-const INITIAL_TIMELINE: TimelineDoc[] = [
+const INITIAL_PRESCRIPTIONS: TimelineDoc[] = [
   {
-    id: 'doc-1',
-    date: '15',
-    month: 'Jun',
-    title: 'CBC & Metabolic Panel',
-    type: 'Diagnostic Report',
-    badgeColor: '#15846e',
-    insights: ['• Fasting Glucose: 108 mg/dL (Slightly High)', '• Lipid Profile: Optimal (LDL 94 mg/dL)'],
-  },
-  {
-    id: 'doc-2',
+    id: 'rx-1',
     date: '10',
     month: 'Jun',
-    title: 'Cardiology Prescription',
-    type: 'Prescription',
+    title: 'Cardiology Prescription (Dr. Sharma)',
+    category: 'prescription',
+    type: 'Active Therapy',
     badgeColor: '#15846e',
     insights: ['• Atenolol 25mg 1-0-0 (30 Days)', '• Low sodium dietary guidance attached'],
   },
   {
-    id: 'doc-3',
+    id: 'rx-2',
+    date: '28',
+    month: 'May',
+    title: 'General Physician Rx (Dr. Verma)',
+    category: 'prescription',
+    type: 'Acute Care',
+    badgeColor: '#15846e',
+    insights: ['• Paracetamol 650mg SOS', '• Vitamin B Complex (Once Daily)'],
+  },
+];
+
+const INITIAL_LABS: TimelineDoc[] = [
+  {
+    id: 'lab-1',
+    date: '15',
+    month: 'Jun',
+    title: 'Complete Blood Count & Metabolic Panel',
+    category: 'lab',
+    type: 'Blood Pathology',
+    badgeColor: '#004fdc',
+    insights: ['• Fasting Glucose: 108 mg/dL (Slightly High)', '• Lipid Profile: Optimal (LDL 94 mg/dL)', '• Hemoglobin: 13.2 g/dL (Normal)'],
+  },
+  {
+    id: 'lab-2',
     date: '05',
     month: 'Jun',
     title: 'Radiology Scan Assessment',
-    type: 'Radiology',
-    badgeColor: '#15846e',
+    category: 'lab',
+    type: 'Radiology Imaging',
+    badgeColor: '#004fdc',
     insights: ['• Chest X-Ray Normal / No Infiltrates', '• Clear lung fields verified'],
   },
 ];
@@ -65,20 +84,24 @@ const Home = () => {
   const [isAddMedModalOpen, setIsAddMedModalOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<TimelineDoc | null>(null);
 
+  // Active section tab toggle: 'all' | 'prescriptions' | 'labs'
+  const [activeTaskSection, setActiveTaskSection] = useState<'all' | 'prescriptions' | 'labs'>('all');
+
   // Pharmacopeia List State
   const [meds, setMeds] = useState([
-    { name: 'Atenolol 25mg', timing: 'Morning' },
-    { name: 'Paracetamol 650mg', timing: 'As Needed' },
-    { name: 'Vitamin B Complex', timing: 'Afternoon' },
+    { name: 'Atenolol 25mg', timing: 'Morning', doctor: 'Dr. Sharma' },
+    { name: 'Paracetamol 650mg', timing: 'As Needed', doctor: 'Dr. Verma' },
+    { name: 'Vitamin B Complex', timing: 'Afternoon', doctor: 'Self' },
   ]);
   const [newMedName, setNewMedName] = useState('');
   const [newMedTiming, setNewMedTiming] = useState('Morning');
+  const [newMedDoctor, setNewMedDoctor] = useState('Prescribing Physician');
 
   // AI Chat State
   const [chatInput, setChatInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'ai', text: "Hello. I've decoded your latest CBC and prescription records. Your blood glucose is slightly elevated at 108 mg/dL. How can I assist with your regimen today?" },
+    { sender: 'ai', text: "Hello. I've decoded both your prescription regimen and your diagnostic lab records. Fasting glucose is at 108 mg/dL and Atenolol is scheduled for morning dosage. How can I assist?" },
   ]);
 
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -103,7 +126,7 @@ const Home = () => {
   const handleAddMedicine = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newMedName.trim()) return;
-    setMeds(prev => [...prev, { name: newMedName.trim(), timing: newMedTiming }]);
+    setMeds(prev => [...prev, { name: newMedName.trim(), timing: newMedTiming, doctor: newMedDoctor.trim() }]);
     setNewMedName('');
     setIsAddMedModalOpen(false);
   };
@@ -149,204 +172,346 @@ const Home = () => {
         <ConstellationCanvas variant="ambient" particleCount={70} interactive={false} />
       </div>
 
-      <main className="relative z-10 flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
-          
-          {/* =========================================================
-              LEFT COLUMN: Dashboard Telemetry & Action Hub
-              ========================================================= */}
-          <div className="lg:col-span-5 space-y-10">
-            
-            {/* Header & Stats */}
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-3 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#15846e] animate-pulse"></span>
-                Workspace Telemetry
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-normal text-[#ffffff] tracking-[-0.04em] leading-[1.08] mb-6">
-                Clinical Intelligence Vault
-              </h1>
-              
-              {/* Floating Stat metrics */}
-              <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] flex justify-between text-center divide-x divide-white/[0.08]">
-                <div className="px-2 w-1/3">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Encrypted Docs</div>
-                  <div className="text-2xl font-normal text-[#ffffff] tracking-tight">{INITIAL_TIMELINE.length}</div>
-                </div>
-                <div className="px-2 w-1/3">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Active Rx</div>
-                  <div className="text-2xl font-normal text-[#15846e] tracking-tight">{meds.length}</div>
-                </div>
-                <div className="px-2 w-1/3">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Interactions</div>
-                  <div className="text-2xl font-normal text-[#ffb829] tracking-tight">1</div>
-                </div>
-              </div>
+      <main className="relative z-10 flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
+        
+        {/* Workspace Top Header & Section Switcher */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 pb-8 border-b border-white/[0.08]">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-2 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#15846e] animate-pulse"></span>
+              Distributed Medical Intelligence
             </div>
-
-            {/* Circular Holographic Upload Hub in Verdant Green */}
-            <div className="flex items-center justify-center py-10 relative">
-               <div className="absolute w-52 h-52 rounded-full bg-[#15846e]/20 blur-[90px] pointer-events-none"></div>
-               
-               {/* 1. Camera Scan Button */}
-               <motion.div 
-                 whileHover={{ scale: 1.06 }}
-                 whileTap={{ scale: 0.95 }}
-                 className="flex flex-col items-center cursor-pointer mr-6 z-10" 
-                 onClick={handleCameraScan}
-               >
-                 <div className="w-12 h-12 bg-white/[0.04] border border-white/10 rounded-full text-[#ffffff] flex items-center justify-center mb-3 hover:border-[#15846e]/60 transition-colors shadow-[0_0_15px_rgba(21,132,110,0.2)]">
-                   <Camera className="w-5 h-5 text-[#15846e]" />
-                 </div>
-                 <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9a9a9a] text-center">Scan<br/>Camera</div>
-               </motion.div>
-
-               {/* 2. Main Upload Button */}
-               <motion.div 
-                 whileHover={{ scale: 1.04 }}
-                 whileTap={{ scale: 0.96 }}
-                 className="relative z-10 cursor-pointer group" 
-                 onClick={() => openUploadModal('reports')}
-               >
-                 <div className="w-32 h-32 bg-[#15846e] hover:bg-[#116e5c] rounded-full flex flex-col items-center justify-center shadow-[0_0_35px_rgba(21,132,110,0.45)] text-white transition-all duration-300 border border-[#15846e]/50">
-                    <FileText className="w-7 h-7 mb-1.5" />
-                    <div className="text-xs font-semibold uppercase tracking-wider text-center leading-tight">
-                      Upload<br/>Document
-                    </div>
-                 </div>
-               </motion.div>
-
-               {/* 3. PDF Upload Button */}
-               <motion.div 
-                 whileHover={{ scale: 1.06 }}
-                 whileTap={{ scale: 0.95 }}
-                 className="flex flex-col items-center cursor-pointer ml-6 z-10" 
-                 onClick={() => openUploadModal('reports')}
-               >
-                 <div className="w-12 h-12 bg-white/[0.04] border border-white/10 rounded-full text-[#ffffff] flex items-center justify-center mb-3 hover:border-[#15846e]/60 transition-colors shadow-[0_0_15px_rgba(21,132,110,0.2)]">
-                   <CloudUpload className="w-5 h-5 text-[#15846e]" />
-                 </div>
-                 <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9a9a9a] text-center">Upload<br/>PDF</div>
-               </motion.div>
-            </div>
-
-            {/* Interaction Checker Alert Card */}
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-               <div className="flex items-center justify-between mb-5">
-                 <h3 className="font-semibold text-[#ffffff] text-xs uppercase tracking-[0.1em]">Interaction Radar</h3>
-                 <span className="text-[10px] font-mono text-[#15846e] px-2 py-0.5 rounded-full bg-[#15846e]/15 border border-[#15846e]/30">Active System</span>
-               </div>
-               
-               <div className="p-4 rounded-2xl bg-[#ffb829]/10 border border-[#ffb829]/20 mb-5">
-                 <div className="flex items-center gap-2 text-xs font-semibold text-[#ffb829] uppercase tracking-wider mb-1">
-                   <AlertTriangle className="w-3.5 h-3.5" />
-                   Atenolol + Antacid Timing
-                 </div>
-                 <div className="text-xs font-light text-[#bdbdbd] leading-relaxed">
-                   Space administration by 2 hours to avoid up to 35% bioavailability loss.
-                 </div>
-               </div>
-
-               <div className="space-y-2 mb-6">
-                 <div className="flex justify-between items-center text-[10px] font-semibold text-[#9a9a9a] uppercase tracking-widest">
-                   <span>Active Pharmacopeia List</span>
-                   <span className="text-[#15846e]">{meds.length} Meds</span>
-                 </div>
-                 <ul className="text-xs font-light text-[#ffffff] space-y-1.5 max-h-40 overflow-y-auto">
-                   {meds.map((m, idx) => (
-                     <li key={idx} className="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                       <span className="flex items-center">
-                         <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] mr-2.5"></span> 
-                         {m.name}
-                       </span>
-                       <span className="text-[10px] text-[#9a9a9a] font-mono">{m.timing}</span>
-                     </li>
-                   ))}
-                 </ul>
-               </div>
-
-               {/* Button: Add Medicine */}
-               <button 
-                 onClick={() => setIsAddMedModalOpen(true)}
-                 className="w-full bg-[#15846e]/15 hover:bg-[#15846e]/25 text-[#15846e] border border-[#15846e]/30 py-3 rounded-full font-semibold transition-all text-xs uppercase tracking-wider active:scale-[0.98] flex items-center justify-center gap-2"
-               >
-                 <Plus className="w-3.5 h-3.5" />
-                 Add Medicine to Cross-Check
-               </button>
-            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] tracking-[-0.04em] leading-[1.06]">
+              Clinical Intelligence Vault
+            </h1>
           </div>
 
+          {/* Section Filter Pills */}
+          <div className="flex items-center gap-2 p-1.5 bg-white/[0.03] border border-white/10 rounded-full w-fit">
+            <button
+              onClick={() => setActiveTaskSection('all')}
+              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+                activeTaskSection === 'all' 
+                  ? 'bg-white/15 text-white shadow-sm' 
+                  : 'text-[#9a9a9a] hover:text-white'
+              }`}
+            >
+              Unified View
+            </button>
 
-          {/* =========================================================
-              MIDDLE COLUMN: Timeline of Deconstructed Reports
-              ========================================================= */}
-          <div id="timeline" className="lg:col-span-4 relative">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-3">
-              Diagnostic Feed
+            <button
+              onClick={() => setActiveTaskSection('prescriptions')}
+              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+                activeTaskSection === 'prescriptions' 
+                  ? 'bg-[#15846e] text-white shadow-[0_0_15px_rgba(21,132,110,0.4)]' 
+                  : 'text-[#9a9a9a] hover:text-white'
+              }`}
+            >
+              <Pill className="w-3.5 h-3.5" />
+              Prescriptions & Safety
+            </button>
+
+            <button
+              onClick={() => setActiveTaskSection('labs')}
+              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+                activeTaskSection === 'labs' 
+                  ? 'bg-[#004fdc] text-white shadow-[0_0_15px_rgba(0,79,220,0.4)]' 
+                  : 'text-[#9a9a9a] hover:text-white'
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5" />
+              Lab Diagnostics
+            </button>
+          </div>
+        </div>
+
+        {/* Global Summary Metric Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
+          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Active Prescriptions</div>
+            <div className="text-3xl font-normal text-[#15846e] tracking-tight">{meds.length}</div>
+            <div className="text-[11px] text-[#bdbdbd] font-light mt-1">Cross-checked safe</div>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Lab Biomarkers</div>
+            <div className="text-3xl font-normal text-[#004fdc] tracking-tight">14</div>
+            <div className="text-[11px] text-[#ffb829] font-light mt-1">1 mild elevation</div>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Contraindication Alert</div>
+            <div className="text-3xl font-normal text-[#ffb829] tracking-tight">1</div>
+            <div className="text-[11px] text-[#bdbdbd] font-light mt-1">Spacing required (2 hrs)</div>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Vault Privacy</div>
+            <div className="text-3xl font-normal text-[#ffffff] tracking-tight">100%</div>
+            <div className="text-[11px] text-[#15846e] font-light mt-1">Zero-Knowledge Sealed</div>
+          </div>
+        </div>
+
+        {/* =========================================================
+            TASK SECTION 1: PRESCRIPTIONS & DRUG SAFETY VAULT
+            ========================================================= */}
+        {(activeTaskSection === 'all' || activeTaskSection === 'prescriptions') && (
+          <section id="section-prescriptions" className="mb-20 pt-4 scroll-mt-28">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#15846e]/15 border border-[#15846e]/30 text-[#15846e] text-[11px] font-mono uppercase tracking-wider mb-2">
+                  <Pill className="w-3.5 h-3.5" />
+                  Task 01 — Pharmacopeia & Interaction Radar
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-normal text-[#ffffff] tracking-tight">
+                  Prescription & Drug Safety Vault
+                </h2>
+              </div>
+
+              {/* Prescription Action Buttons */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleCameraScan}
+                  className="px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/10 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-95 shadow-[0_0_15px_rgba(21,132,110,0.2)]"
+                >
+                  <Camera className="w-4 h-4 text-[#15846e]" />
+                  Scan Rx Photo
+                </button>
+
+                <button
+                  onClick={() => openUploadModal('prescriptions')}
+                  className="px-5 py-2.5 rounded-full bg-[#15846e] hover:bg-[#116e5c] text-white text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-95 shadow-[0_0_20px_rgba(21,132,110,0.4)]"
+                >
+                  <CloudUpload className="w-4 h-4" />
+                  Upload Prescription
+                </button>
+              </div>
             </div>
-            <h2 className="text-2xl font-normal text-[#ffffff] tracking-tight mb-8">Medical Timeline</h2>
-            
-            <div className="absolute left-[23px] top-24 bottom-0 w-px bg-white/[0.08]"></div>
 
-            <div className="space-y-8 relative z-10 pl-16">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               
-              {INITIAL_TIMELINE.map((item) => (
-                <div key={item.id} className="relative">
-                  <div className="absolute -left-16 w-12 h-12 bg-[#000000] border border-white/10 text-[#ffffff] rounded-full flex flex-col items-center justify-center shadow-sm">
-                    <span className="text-[9px] font-mono text-[#9a9a9a] uppercase tracking-widest">{item.month}</span>
-                    <span className="text-sm font-normal">{item.date}</span>
+              {/* Active Medication List */}
+              <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+                <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-5">
+                  <div>
+                    <h3 className="text-base font-normal text-white">Active Regimen Schedule</h3>
+                    <p className="text-xs text-[#9a9a9a] font-light">Cross-checked against contraindication databases</p>
                   </div>
-                  
-                  <div 
-                    className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-[#15846e]/50 transition-all cursor-pointer group hover:bg-white/[0.04]"
-                    onClick={() => setSelectedDoc(item)}
+                  <button
+                    onClick={() => setIsAddMedModalOpen(true)}
+                    className="px-3 py-1.5 rounded-full bg-[#15846e]/20 hover:bg-[#15846e]/30 text-[#15846e] text-xs font-semibold flex items-center gap-1.5 border border-[#15846e]/30 transition-colors"
                   >
-                     <div className="flex items-center justify-between mb-2">
-                       <div className="flex items-center space-x-3">
-                         <div className="w-2 h-2 rounded-full bg-[#15846e]"></div>
-                         <div className="font-normal text-sm text-[#ffffff] group-hover:text-[#15846e] transition-colors">{item.title}</div>
-                       </div>
-                       <ChevronRight className="w-4 h-4 text-[#9a9a9a] group-hover:text-white group-hover:translate-x-1 transition-all" />
-                     </div>
-                     <div className="text-[10px] font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">{item.type}</div>
-                     <ul className="text-xs font-light text-[#bdbdbd] space-y-1">
-                       {item.insights.map((ins, i) => (
-                         <li key={i}>{ins}</li>
-                       ))}
-                     </ul>
+                    <Plus className="w-3.5 h-3.5" />
+                    Add Rx
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {meds.map((m, idx) => (
+                    <div key={idx} className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-white/15 transition-colors flex items-center justify-between">
+                      <div className="flex items-center gap-3.5">
+                        <div className="w-9 h-9 rounded-xl bg-[#15846e]/15 border border-[#15846e]/30 flex items-center justify-center text-[#15846e]">
+                          <Pill className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-normal text-white">{m.name}</div>
+                          <div className="text-[11px] text-[#9a9a9a] font-light">Source: {m.doctor}</div>
+                        </div>
+                      </div>
+
+                      <div className="text-right">
+                        <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-[#15846e]/15 border border-[#15846e]/30 text-[#15846e]">
+                          {m.timing}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Interaction Warning Box */}
+                <div className="mt-5 p-4 rounded-2xl bg-[#ffb829]/10 border border-[#ffb829]/25 flex items-start gap-3">
+                  <AlertTriangle className="w-4 h-4 text-[#ffb829] shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-xs font-semibold text-[#ffb829] uppercase tracking-wider">Spacing Advice (Atenolol + Antacid)</div>
+                    <p className="text-xs text-[#bdbdbd] font-light mt-0.5">Space dosage by 2 hours to avoid up to 35% bioavailability loss.</p>
                   </div>
                 </div>
-              ))}
-
-            </div>
-          </div>
-
-
-          {/* =========================================================
-              RIGHT COLUMN: Neural AI Assistant Chat
-              ========================================================= */}
-          <div id="chat" className="lg:col-span-3 space-y-6">
-            
-            {/* Vault Encryption Info */}
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#15846e] mb-3">
-                <Lock className="w-3.5 h-3.5 text-[#15846e]" />
-                Zero-Knowledge Vault
               </div>
-              <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
-                All uploaded documents and chat histories are processed through transient neural inference without persistence.
-              </p>
+
+              {/* Prescription Documents Feed */}
+              <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+                <div className="pb-4 border-b border-white/[0.06] mb-5">
+                  <h3 className="text-base font-normal text-white">Prescription Documents Timeline</h3>
+                  <p className="text-xs text-[#9a9a9a] font-light">Deciphered doctor records and dosage orders</p>
+                </div>
+
+                <div className="space-y-4">
+                  {INITIAL_PRESCRIPTIONS.map((doc) => (
+                    <div 
+                      key={doc.id}
+                      onClick={() => setSelectedDoc(doc)}
+                      className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-[#15846e]/50 transition-all cursor-pointer group flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-11 h-11 rounded-2xl bg-black border border-white/10 flex flex-col items-center justify-center text-center">
+                          <span className="text-[8px] font-mono text-[#9a9a9a] uppercase">{doc.month}</span>
+                          <span className="text-sm font-normal text-white">{doc.date}</span>
+                        </div>
+                        <div>
+                          <div className="text-sm font-normal text-white group-hover:text-[#15846e] transition-colors">{doc.title}</div>
+                          <div className="text-xs text-[#9a9a9a] font-light">{doc.insights[0]}</div>
+                        </div>
+                      </div>
+
+                      <ChevronRight className="w-4 h-4 text-[#9a9a9a] group-hover:text-white group-hover:translate-x-1 transition-all" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </section>
+        )}
+
+        {/* =========================================================
+            TASK SECTION 2: CLINICAL LAB BIOMARKERS & DIAGNOSTICS
+            ========================================================= */}
+        {(activeTaskSection === 'all' || activeTaskSection === 'labs') && (
+          <section id="section-diagnostics" className="mb-20 pt-4 scroll-mt-28 border-t border-white/[0.06] pt-14">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#004fdc]/15 border border-[#004fdc]/30 text-[#004fdc] text-[11px] font-mono uppercase tracking-wider mb-2">
+                  <Activity className="w-3.5 h-3.5" />
+                  Task 02 — Diagnostic Biomarker Matrix
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-normal text-[#ffffff] tracking-tight">
+                  Clinical Lab Biomarkers & Diagnostics
+                </h2>
+              </div>
+
+              {/* Lab Action Buttons */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => openUploadModal('reports')}
+                  className="px-5 py-2.5 rounded-full bg-[#004fdc] hover:bg-[#003eb0] text-white text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-95 shadow-[0_0_20px_rgba(0,79,220,0.4)]"
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
+                  Upload Lab Report (PDF / Image)
+                </button>
+              </div>
             </div>
 
-            {/* Neural Chat Assistant Terminal */}
-            <div className="p-5 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] flex flex-col h-[460px]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              
+              {/* Extracted Biomarker Grid */}
+              <div className="lg:col-span-7 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+                <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-5">
+                  <div>
+                    <h3 className="text-base font-normal text-white">Extracted Biomarker Panels</h3>
+                    <p className="text-xs text-[#9a9a9a] font-light">Calculated against verified international reference ranges</p>
+                  </div>
+                  <span className="text-[10px] font-mono text-[#004fdc] px-2.5 py-1 rounded-full bg-[#004fdc]/10 border border-[#004fdc]/20">
+                    Latest CBC
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  
+                  {/* Biomarker 1 */}
+                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
+                    <div className="text-[10px] font-mono text-[#9a9a9a]">HEMOGLOBIN A1C</div>
+                    <div className="text-xl font-normal text-white mt-1">5.4%</div>
+                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1">
+                      <CheckCircle2 className="w-3 h-3" /> Normal (&lt; 5.7%)
+                    </div>
+                  </div>
+
+                  {/* Biomarker 2 */}
+                  <div className="p-4 rounded-2xl bg-[#ffb829]/5 border border-[#ffb829]/20">
+                    <div className="text-[10px] font-mono text-[#ffb829]">FASTING GLUCOSE</div>
+                    <div className="text-xl font-normal text-white mt-1">108 mg/dL</div>
+                    <div className="text-[11px] text-[#ffb829] flex items-center gap-1 mt-1">
+                      <AlertTriangle className="w-3 h-3" /> Slightly High (70–99)
+                    </div>
+                  </div>
+
+                  {/* Biomarker 3 */}
+                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
+                    <div className="text-[10px] font-mono text-[#9a9a9a]">LIPID PROFILE (LDL-C)</div>
+                    <div className="text-xl font-normal text-white mt-1">94 mg/dL</div>
+                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1">
+                      <CheckCircle2 className="w-3 h-3" /> Optimal (&lt; 100)
+                    </div>
+                  </div>
+
+                  {/* Biomarker 4 */}
+                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
+                    <div className="text-[10px] font-mono text-[#9a9a9a]">TOTAL LEUKOCYTES (WBC)</div>
+                    <div className="text-xl font-normal text-white mt-1">7,200 /µL</div>
+                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1">
+                      <CheckCircle2 className="w-3 h-3" /> Normal (4.5k–11k)
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Lab Reports Documents Timeline */}
+              <div className="lg:col-span-5 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+                <div className="pb-4 border-b border-white/[0.06] mb-5">
+                  <h3 className="text-base font-normal text-white">Diagnostic Reports Feed</h3>
+                  <p className="text-xs text-[#9a9a9a] font-light">Laboratory & radiology PDF assessments</p>
+                </div>
+
+                <div className="space-y-4">
+                  {INITIAL_LABS.map((doc) => (
+                    <div 
+                      key={doc.id}
+                      onClick={() => setSelectedDoc(doc)}
+                      className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-[#004fdc]/50 transition-all cursor-pointer group flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-11 h-11 rounded-2xl bg-black border border-white/10 flex flex-col items-center justify-center text-center">
+                          <span className="text-[8px] font-mono text-[#9a9a9a] uppercase">{doc.month}</span>
+                          <span className="text-sm font-normal text-white">{doc.date}</span>
+                        </div>
+                        <div>
+                          <div className="text-sm font-normal text-white group-hover:text-[#004fdc] transition-colors">{doc.title}</div>
+                          <div className="text-xs text-[#9a9a9a] font-light">{doc.insights[0]}</div>
+                        </div>
+                      </div>
+
+                      <ChevronRight className="w-4 h-4 text-[#9a9a9a] group-hover:text-white group-hover:translate-x-1 transition-all" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </section>
+        )}
+
+        {/* =========================================================
+            NEURAL AI CHAT ASSISTANT TERMINAL
+            ========================================================= */}
+        <section id="chat" className="scroll-mt-28 border-t border-white/[0.06] pt-14 mb-10">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ffb829]/15 border border-[#ffb829]/30 text-[#ffb829] text-[11px] font-mono uppercase tracking-wider mb-2">
+                <Sparkles className="w-3.5 h-3.5" />
+                Cross-Disciplinary AI Assistant
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-normal text-white">Ask Questions About Your Health Records</h2>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] flex flex-col h-[500px] shadow-2xl">
               
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-4">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#15846e] animate-pulse"></span>
-                  <h3 className="font-normal text-[#ffffff] text-xs uppercase tracking-widest">Neural Assistant</h3>
+                  <h3 className="font-normal text-[#ffffff] text-xs uppercase tracking-widest">Neural Assistant (Zero-Knowledge Inferred)</h3>
                 </div>
-                <Sparkles className="w-4 h-4 text-[#15846e]" />
+                <span className="text-[10px] font-mono text-[#9a9a9a]">Transient Memory</span>
               </div>
               
               {/* Message Feed */}
@@ -354,10 +519,10 @@ const Home = () => {
                 {messages.map((m, idx) => (
                   <div 
                     key={idx} 
-                    className={`p-3.5 rounded-2xl text-xs font-light leading-relaxed ${
+                    className={`p-4 rounded-2xl text-xs font-light leading-relaxed ${
                       m.sender === 'ai' 
-                        ? 'bg-white/[0.03] border border-white/10 text-[#ffffff] mr-4' 
-                        : 'bg-[#15846e] text-white ml-6 text-right shadow-[0_0_20px_rgba(21,132,110,0.3)]'
+                        ? 'bg-white/[0.03] border border-white/10 text-[#ffffff] mr-8' 
+                        : 'bg-[#15846e] text-white ml-8 text-right shadow-[0_0_20px_rgba(21,132,110,0.3)]'
                     }`}
                   >
                     {m.text}
@@ -368,38 +533,37 @@ const Home = () => {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce"></span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce [animation-delay:0.2s]"></span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce [animation-delay:0.4s]"></span>
-                    <span>Analyzing clinical context...</span>
+                    <span>Synthesizing clinical response...</span>
                   </div>
                 )}
               </div>
               
-              {/* Input Box */}
-              <form onSubmit={handleSendMessage} className="mt-2 flex items-center bg-white/[0.04] border border-white/10 rounded-full pl-4 pr-1.5 py-1.5 focus-within:border-[#15846e] transition-colors">
+              {/* Input Form */}
+              <form onSubmit={handleSendMessage} className="mt-2 flex items-center bg-white/[0.04] border border-white/10 rounded-full pl-5 pr-2 py-2 focus-within:border-[#15846e] transition-colors">
                 <input 
                   type="text" 
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
-                  placeholder="Ask about your reports..." 
+                  placeholder="Ask about medications, lab results, or meal timings..." 
                   className="flex-1 text-xs outline-none bg-transparent text-[#ffffff] placeholder:text-[#9a9a9a] font-light" 
                 />
                 <button 
                   type="submit"
-                  className="w-8 h-8 bg-[#15846e] hover:bg-[#116e5c] text-white rounded-full flex items-center justify-center transition-colors active:scale-95 shrink-0 shadow-[0_0_15px_rgba(21,132,110,0.4)]"
+                  className="w-9 h-9 bg-[#15846e] hover:bg-[#116e5c] text-white rounded-full flex items-center justify-center transition-colors active:scale-95 shrink-0 shadow-[0_0_15px_rgba(21,132,110,0.4)]"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-4 h-4" />
                 </button>
               </form>
 
             </div>
-
           </div>
+        </section>
 
-        </div>
       </main>
 
       <Footer />
 
-      {/* Upload Modal on Dark Void */}
+      {/* Modal: Document Ingestion */}
       <AnimatePresence>
         {isUploadModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -443,7 +607,7 @@ const Home = () => {
         )}
       </AnimatePresence>
 
-      {/* Modal: Add Medicine */}
+      {/* Modal: Add Medicine to Pharmacopeia */}
       <AnimatePresence>
         {isAddMedModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -456,8 +620,8 @@ const Home = () => {
             >
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#15846e]">Pharmacopeia</div>
-                  <h3 className="text-xl font-normal text-white">Add Medication</h3>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#15846e]">Task 01 Action</div>
+                  <h3 className="text-xl font-normal text-white">Add Prescription Item</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddMedModalOpen(false)}
@@ -476,6 +640,17 @@ const Home = () => {
                     value={newMedName}
                     onChange={(e) => setNewMedName(e.target.value)}
                     placeholder="e.g. Metformin 500mg"
+                    className="w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-sm text-white focus:outline-none focus:border-[#15846e]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">Prescribing Doctor / Source</label>
+                  <input 
+                    type="text" 
+                    value={newMedDoctor}
+                    onChange={(e) => setNewMedDoctor(e.target.value)}
+                    placeholder="e.g. Dr. Verma (Endocrinologist)"
                     className="w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-sm text-white focus:outline-none focus:border-[#15846e]"
                   />
                 </div>
@@ -509,7 +684,7 @@ const Home = () => {
         )}
       </AnimatePresence>
 
-      {/* Modal: Document Details View */}
+      {/* Modal: Document Detail Inspection */}
       <AnimatePresence>
         {selectedDoc && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -522,7 +697,9 @@ const Home = () => {
             >
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#15846e]">Deconstructed Record</div>
+                  <div className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${selectedDoc.category === 'prescription' ? 'text-[#15846e]' : 'text-[#004fdc]'}`}>
+                    {selectedDoc.category === 'prescription' ? 'Task 01 — Prescription Record' : 'Task 02 — Diagnostic Record'}
+                  </div>
                   <h3 className="text-xl font-normal text-white">{selectedDoc.title}</h3>
                 </div>
                 <button 
@@ -549,8 +726,9 @@ const Home = () => {
                 <div className="flex justify-end gap-3 pt-4">
                   <button 
                     onClick={() => {
+                      const typeToUpload = selectedDoc.category === 'prescription' ? 'prescriptions' : 'reports';
                       setSelectedDoc(null);
-                      openUploadModal('reports');
+                      openUploadModal(typeToUpload);
                     }}
                     className="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-xs font-semibold uppercase tracking-wider text-white border border-white/10"
                   >
