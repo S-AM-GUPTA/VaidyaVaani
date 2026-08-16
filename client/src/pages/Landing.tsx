@@ -55,49 +55,49 @@ const Landing = () => {
       </div>
 
       {/* =========================================================
-          HERO SECTION: Centered Headline + Fully Stretched 3D Model Below
+          HERO SECTION: Asymmetric 2-Column with 3D Neural Brain Visual
           ========================================================= */}
-      <section className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-14 pb-20">
+      <section className="relative z-10 min-h-[calc(100vh-80px)] max-w-[1280px] mx-auto px-6 lg:px-12 pt-8 lg:pt-12 pb-16 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14">
         
-        {/* Top Centered Header & Headline */}
+        {/* Left Column (Display Typography, Pill CTA & Micro Stats) */}
         <motion.div 
-          className="text-center max-w-3xl mx-auto mb-12 sm:mb-14"
+          className="lg:w-1/2 text-left z-10 w-full"
           variants={containerVariants}
           initial="hidden"
           animate="show"
         >
           {/* Saffron Spark Uppercase Label */}
           <motion.div variants={itemVariants} className="inline-flex items-center gap-2 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00d2d3] animate-pulse"></span>
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#00d2d3]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#ffb829] animate-pulse"></span>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829]">
               Distributed Medical Intelligence
             </span>
           </motion.div>
           
-          {/* Monolithic Display Headline */}
+          {/* Monolithic Weight-400 Display Headline */}
           <motion.h1 
             variants={itemVariants}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-normal text-[#ffffff] leading-[1.06] tracking-[-0.04em] mb-5"
+            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-normal text-[#ffffff] leading-[1.06] tracking-[-0.04em] mb-6"
           >
             Understand your health. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8052ff] via-[#a855f7] to-[#00d2d3]">
-              Weightless, unified & instant.
+              Weightless & instant.
             </span>
           </motion.h1>
           
-          {/* Body Copy */}
+          {/* Ultra-light Body Copy */}
           <motion.p 
             variants={itemVariants}
-            className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-8 max-w-xl mx-auto"
+            className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-8 max-w-[480px]"
           >
-            Upload prescriptions and clinical lab reports. Decode biomarkers, cross-reference drug contraindications across doctors, and receive spoken regional guidance.
+            Upload prescriptions and clinical lab reports. Decode complex medical biomarkers, simulate drug interactions across doctors, and receive spoken regional explanations in seconds.
           </motion.p>
           
-          {/* Action Button & Jump Link */}
-          <motion.div variants={itemVariants} className="flex items-center justify-center gap-4">
+          {/* Primary Action Button: Electric Iris (#8052ff) Pill */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-5">
             <button 
               onClick={() => navigate('/login')}
-              className="bg-[#8052ff] hover:bg-[#6c3df5] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 flex items-center group active:scale-[0.98] shadow-[0_0_35px_rgba(128,82,255,0.4)]"
+              className="bg-[#8052ff] hover:bg-[#6c3df5] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 flex items-center group active:scale-[0.98] shadow-[0_0_30px_rgba(128,82,255,0.35)]"
             >
               Start Exploring Now
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
@@ -105,48 +105,48 @@ const Landing = () => {
 
             <a 
               href="#pipeline" 
-              className="text-xs font-normal text-[#9a9a9a] hover:text-[#ffffff] tracking-[0.02em] transition-colors flex items-center gap-1.5 px-4 py-4"
+              className="text-xs font-normal text-[#9a9a9a] hover:text-[#ffffff] tracking-[0.02em] transition-colors flex items-center gap-1.5"
             >
-              View Pipeline <span className="text-[#8052ff]">↓</span>
+              How It Works <span className="text-[#8052ff]">↓</span>
             </a>
+          </motion.div>
+
+          {/* Micro Stats floating on black */}
+          <motion.div 
+            variants={itemVariants}
+            className="mt-10 pt-6 border-t border-white/[0.08] flex items-center gap-6 sm:gap-8"
+          >
+            <div>
+              <div className="text-xl sm:text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">95.4%</div>
+              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">OCR Extraction</div>
+            </div>
+            <div className="w-px h-7 bg-white/10"></div>
+            <div>
+              <div className="text-xl sm:text-2xl font-normal text-[#8052ff] tracking-[-0.03em]">&lt; 4.8s</div>
+              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Neural Synthesis</div>
+            </div>
+            <div className="w-px h-7 bg-white/10"></div>
+            <div>
+              <div className="text-xl sm:text-2xl font-normal text-[#00d2d3] tracking-[-0.03em]">100%</div>
+              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Client Encrypted</div>
+            </div>
           </motion.div>
         </motion.div>
 
-        {/* Fully Stretched 3D Interactive Sagittal Constellation Model Showcase */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 30 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
+        {/* Right Column: 3D Neural Brain Visual Model */}
+        <motion.div 
+          className="lg:w-1/2 w-full z-10"
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full"
         >
           <HeroNeuralBrain />
         </motion.div>
-
-        {/* Micro Telemetry Stats Bar */}
-        <div className="mt-12 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-white/[0.08]">
-          <div className="pt-2 md:pt-0">
-            <div className="text-2xl font-normal text-[#ffffff] tracking-tight">95.4%</div>
-            <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">OCR Extraction</div>
-          </div>
-          <div className="pt-4 md:pt-0">
-            <div className="text-2xl font-normal text-[#8052ff] tracking-tight">&lt; 4.8s</div>
-            <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Neural Synthesis</div>
-          </div>
-          <div className="pt-4 md:pt-0">
-            <div className="text-2xl font-normal text-[#00d2d3] tracking-tight">100%</div>
-            <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Client Encrypted</div>
-          </div>
-          <div className="pt-4 md:pt-0">
-            <div className="text-2xl font-normal text-[#ffb829] tracking-tight">6+</div>
-            <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Indian Regional Dialects</div>
-          </div>
-        </div>
-
       </section>
 
 
       {/* =========================================================
-          PIPELINE SECTION: 4-Stage Connected Workflow
+          PIPELINE PUZZLE SECTION: 4-Stage Connected Workflow
           ========================================================= */}
       <section id="pipeline" className="relative z-10 py-20 lg:py-24 border-t border-white/[0.06]">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
@@ -216,7 +216,7 @@ const Landing = () => {
 
 
       {/* =========================================================
-          SECTION 1: Interaction Intelligence
+          SECTION 1: Two-Column Zigzag — Interaction Intelligence
           ========================================================= */}
       <section id="features" className="relative z-10 py-20 lg:py-24 border-t border-white/[0.06]">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
@@ -379,7 +379,7 @@ const Landing = () => {
 
 
       {/* =========================================================
-          SECTION 2: Lab Report Deconstruction
+          SECTION 2: Two-Column Zigzag — Lab Report Deconstruction
           ========================================================= */}
       <section id="lab-decoder" className="relative z-10 py-20 lg:py-24 border-t border-white/[0.06]">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">

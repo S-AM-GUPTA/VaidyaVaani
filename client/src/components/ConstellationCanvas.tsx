@@ -8,27 +8,34 @@ interface Particle {
   baseY: number;
   baseZ: number;
   size: number;
-  baseColor: string;
-  isHub: boolean;
-  pulseOffset: number;
-  region: 'frontal' | 'parietal' | 'occipital' | 'temporal' | 'cerebellum' | 'brainstem' | 'tracts' | 'stream' | 'ambient';
-  streamIndex?: number;
-  streamProgress?: number;
-  streamSpeed?: number;
+  color: string;
+  angle: number;
+  speed: number;
+  cluster: number;
 }
+
+const PALETTE = [
+  '#8052ff', // Electric Iris
+  '#ffb829', // Saffron Spark
+  '#15846e', // Deep Verdant
+  '#a855f7', // Vivid Purple
+  '#00d2d3', // Cyan
+  '#ff6b81', // Coral Spark
+  '#ffffff', // Bone White
+];
 
 interface ConstellationCanvasProps {
   className?: string;
   interactive?: boolean;
-  variant?: 'brain' | 'ambient';
   particleCount?: number;
+  variant?: 'brain' | 'ambient' | 'cluster';
 }
 
 export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
   className = '',
   interactive = true,
+  particleCount = 650,
   variant = 'brain',
-  particleCount = 1100,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -39,15 +46,15 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
     if (!ctx) return;
 
     let animationFrameId: number;
-    let width = 800;
-    let height = 550;
+    let width = 600;
+    let height = 600;
 
     const resizeCanvas = () => {
       if (!canvas || !canvas.parentElement) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = canvas.parentElement.getBoundingClientRect();
-      width = rect.width || 800;
-      height = rect.height || 550;
+      width = rect.width || 600;
+      height = rect.height || 600;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -64,259 +71,141 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
       resizeObserver.observe(canvas.parentElement);
     }
 
-    // Mouse interaction tracking
-    let targetRotY = 0;
+    // Mouse rotation
     let targetRotX = 0;
-    let currentRotY = 0;
+    let targetRotY = 0;
     let currentRotX = 0;
+    let currentRotY = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!interactive || !canvas) return;
       const rect = canvas.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      targetRotY = x * 0.7;
-      targetRotX = -y * 0.45;
+      targetRotY = x * 1.6;
+      targetRotX = -y * 1.4;
     };
 
     if (interactive) {
       window.addEventListener('mousemove', handleMouseMove, { passive: true });
     }
 
-    // High-Fidelity Anatomical Sagittal Brain Modeling
+    // Generate 3D Brain/Organic Neural cloud coordinates
     const particles: Particle[] = [];
+    const count = variant === 'ambient' ? 90 : particleCount;
 
-    if (variant === 'brain') {
-      
-      // Helper function to color map by X position: Violet on Left (-X) to Cyan on Right (+X)
-      const getColor = (x: number, isHub = false) => {
-        // normalized X: -180 to +180 -> 0 to 1
-        const t = Math.max(0, Math.min(1, (x + 160) / 320));
-        if (isHub && Math.random() < 0.3) return '#ffffff';
-        if (t > 0.62) return '#00d2d3'; // Cyan
-        if (t > 0.42) return '#38bdf8'; // Electric Blue
-        if (t > 0.22) return '#a855f7'; // Purple
-        return '#8052ff'; // Deep Violet
-      };
+    for (let i = 0; i < count; i++) {
+      let x = 0, y = 0, z = 0;
 
-      // 1. Cerebral Cortex Dome (Frontal, Parietal, Occipital, Temporal)
-      const cortexCount = 700;
-      for (let i = 0; i < cortexCount; i++) {
-        // Parametric hemisphere mapping
+      if (variant === 'brain') {
+        // Dual hemisphere brain structure
+        const hemisphere = Math.random() > 0.5 ? 1 : -1;
         const u = Math.random();
         const v = Math.random();
-        const theta = u * Math.PI * 2;
-        const phi = Math.acos(2 * v - 1);
+        const theta = u * 2.0 * Math.PI;
+        const phi = Math.acos(2.0 * v - 1.0);
+        
+        // Ellipsoidal brain lobes
+        const r = 145 + (Math.random() - 0.5) * 40;
+        const xOffset = hemisphere * 48;
+        const lobeYScale = 0.82;
+        const lobeZScale = 1.12;
+        
+        // Gyri/sulci organic wave
+        const wave = Math.sin(theta * 5) * Math.cos(phi * 4) * 20;
 
-        // Base Anatomical Dimensions
-        const rx = 160;
-        const ry = 105;
-        const rz = 70;
+        x = (r + wave) * Math.sin(phi) * Math.cos(theta) * 0.75 + xOffset;
+        y = (r + wave) * Math.sin(phi) * Math.sin(theta) * lobeYScale;
+        z = (r + wave) * Math.cos(phi) * lobeZScale;
 
-        let x = rx * Math.sin(phi) * Math.cos(theta);
-        let y = ry * Math.sin(phi) * Math.sin(theta) - 20;
-        let z = rz * Math.cos(phi);
-
-        // Gyri and Sulci organic brain ripples
-        const wave = Math.sin(theta * 6.5) * Math.cos(phi * 5.2) * 12;
-        x += wave * Math.sin(phi) * Math.cos(theta);
-        y += wave * Math.sin(phi) * Math.sin(theta);
-        z += wave * Math.cos(phi);
-
-        // Anatomical lateral brain shape tuning:
-        if (x > 30) {
-          // Frontal Lobe: Anterior curvature & downward rounded nose
-          y += (x / 160) * 8;
-        } else if (x < -40) {
-          // Occipital Lobe: Tapered posterior protrusion
-          y -= ((x + 40) / 120) * 10;
+        // Indent longitudinal fissure
+        if (Math.abs(x) < 22) {
+          x *= 0.45;
+          z *= 0.9;
         }
-
-        // Sylvian Fissure / Temporal Lobe shaping
-        if (x > -30 && x < 70 && y > 15) {
-          // Temporal lobe bulge
-          y += 12;
-          z *= 1.1;
-        }
-
-        // Cut out bottom-left space for Cerebellum and Brainstem
-        if (y > 45 && x < 10) {
-          y = 45 - Math.random() * 15;
-        }
-
-        const isHub = Math.random() < 0.09;
-        const color = getColor(x, isHub);
-
-        particles.push({
-          x,
-          y,
-          z,
-          baseX: x,
-          baseY: y,
-          baseZ: z,
-          size: isHub ? Math.random() * 3.4 + 2.2 : Math.random() * 1.8 + 1.0,
-          baseColor: color,
-          isHub,
-          pulseOffset: Math.random() * Math.PI * 2,
-          region: x > 30 ? 'frontal' : x < -40 ? 'occipital' : 'parietal',
-        });
-      }
-
-      // 2. Cerebellum (Dense cauliflower structure below occipital lobe)
-      const cerebellumCount = 220;
-      for (let i = 0; i < cerebellumCount; i++) {
+      } else if (variant === 'cluster') {
         const u = Math.random() * Math.PI * 2;
-        const v = Math.random() * Math.PI;
-        const crx = 65;
-        const cry = 36;
-        const crz = 45;
-
-        // Positioned at X: -85, Y: +65
-        let x = -85 + crx * Math.sin(v) * Math.cos(u) * 0.95;
-        let y = 65 + cry * Math.sin(v) * Math.sin(u) * 0.85;
-        let z = crz * Math.cos(v);
-
-        // Layered folia ripples
-        const folia = Math.sin(y * 0.4) * 4;
-        x += folia;
-
-        const isHub = Math.random() < 0.08;
-
-        particles.push({
-          x,
-          y,
-          z,
-          baseX: x,
-          baseY: y,
-          baseZ: z,
-          size: isHub ? 3.0 : Math.random() * 1.5 + 0.9,
-          baseColor: isHub ? '#ffffff' : '#8052ff',
-          isHub,
-          pulseOffset: Math.random() * Math.PI * 2,
-          region: 'cerebellum',
-        });
+        const v = Math.random() * Math.PI * 2;
+        const R = 120;
+        const r = 50 + (Math.random() - 0.5) * 25;
+        x = (R + r * Math.cos(v)) * Math.cos(u);
+        y = (R + r * Math.cos(v)) * Math.sin(u) * 0.6;
+        z = r * Math.sin(v);
+      } else {
+        // Ambient dust
+        x = (Math.random() - 0.5) * (width || 1200);
+        y = (Math.random() - 0.5) * (height || 800);
+        z = (Math.random() - 0.5) * 400;
       }
 
-      // 3. Brainstem & Spinal Cord (Curved stalk descending vertically)
-      const stemCount = 140;
-      for (let i = 0; i < stemCount; i++) {
-        const progress = i / stemCount;
-        const y = 45 + progress * 125;
-        const radius = (1 - progress * 0.55) * 20;
-        const angle = Math.random() * Math.PI * 2;
-
-        // Graceful S-curve stalk
-        const curveX = -5 + Math.sin(progress * Math.PI * 0.9) * 14;
-        const x = curveX + Math.cos(angle) * radius * Math.random();
-        const z = Math.sin(angle) * radius * Math.random() * 0.75;
-
-        const isHub = Math.random() < 0.06;
-
-        particles.push({
-          x,
-          y,
-          z,
-          baseX: x,
-          baseY: y,
-          baseZ: z,
-          size: isHub ? 2.8 : Math.random() * 1.4 + 0.8,
-          baseColor: isHub ? '#ffffff' : progress > 0.4 ? '#8052ff' : '#a855f7',
-          isHub,
-          pulseOffset: Math.random() * Math.PI * 2,
-          region: 'brainstem',
-        });
-      }
-
-      // 4. Internal Radiating White Matter Neural Tracts (Corpus Callosum & Internal Capsule)
-      const tractCount = 120;
-      for (let i = 0; i < tractCount; i++) {
-        const t = Math.random();
-        const angle = t * Math.PI;
-        // Inner arc bridging brainstem to cortex
-        const rx = 100 * t;
-        const ry = 60 * t;
-        const x = -30 + Math.cos(angle) * rx;
-        const y = 20 - Math.sin(angle) * ry;
-        const z = (Math.random() - 0.5) * 35;
-
-        particles.push({
-          x,
-          y,
-          z,
-          baseX: x,
-          baseY: y,
-          baseZ: z,
-          size: Math.random() * 1.6 + 0.8,
-          baseColor: getColor(x),
-          isHub: Math.random() < 0.05,
-          pulseOffset: Math.random() * Math.PI * 2,
-          region: 'tracts',
-        });
-      }
-
-      // 5. Inflow Data Stream Particles (Entering from left cards)
-      const streamCount = 90;
-      for (let i = 0; i < streamCount; i++) {
-        const streamIndex = i % 3;
-        particles.push({
-          x: 0,
-          y: 0,
-          z: 0,
-          baseX: 0,
-          baseY: 0,
-          baseZ: 0,
-          size: Math.random() * 2.2 + 1.2,
-          baseColor: streamIndex === 0 ? '#a855f7' : streamIndex === 1 ? '#00d2d3' : '#8052ff',
-          isHub: Math.random() < 0.12,
-          pulseOffset: Math.random() * Math.PI * 2,
-          region: 'stream',
-          streamIndex,
-          streamProgress: Math.random(),
-          streamSpeed: 0.003 + Math.random() * 0.004,
-        });
-      }
-
-    } else {
-      // Ambient field
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: (Math.random() - 0.5) * 900,
-          y: (Math.random() - 0.5) * 600,
-          z: (Math.random() - 0.5) * 350,
-          baseX: 0,
-          baseY: 0,
-          baseZ: 0,
-          size: Math.random() * 2.4 + 1.0,
-          baseColor: Math.random() > 0.5 ? '#8052ff' : '#00d2d3',
-          isHub: false,
-          pulseOffset: Math.random() * Math.PI * 2,
-          region: 'ambient',
-        });
-      }
+      particles.push({
+        x,
+        y,
+        z,
+        baseX: x,
+        baseY: y,
+        baseZ: z,
+        size: Math.random() * 3.2 + 1.8,
+        color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+        angle: Math.random() * Math.PI * 2,
+        speed: (Math.random() - 0.5) * 0.015,
+        cluster: Math.floor(Math.random() * 4),
+      });
     }
 
-    let time = 0;
-    const fov = 480;
+    // Draw an outlined equilateral triangle glyph
+    const drawTriangle = (
+      c: CanvasRenderingContext2D,
+      x: number,
+      y: number,
+      size: number,
+      angle: number,
+      color: string,
+      alpha: number
+    ) => {
+      c.save();
+      c.translate(x, y);
+      c.rotate(angle);
+      c.beginPath();
+      
+      const height = size * 1.5;
+      c.moveTo(0, -height / 2);
+      c.lineTo(size, height / 2);
+      c.lineTo(-size, height / 2);
+      c.closePath();
+
+      c.strokeStyle = color;
+      c.lineWidth = 1.1;
+      c.globalAlpha = alpha;
+      c.stroke();
+
+      if (color === '#8052ff' || color === '#ffb829') {
+        c.fillStyle = color;
+        c.globalAlpha = alpha * 0.35;
+        c.fill();
+      }
+
+      c.restore();
+    };
+
+    let baseAngle = 0;
+    const fov = 400;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      time += 0.014;
-
       // Smooth camera interpolation
-      currentRotX += (targetRotX - currentRotX) * 0.06;
-      currentRotY += (targetRotY - currentRotY) * 0.06;
+      currentRotX += (targetRotX - currentRotX) * 0.05;
+      currentRotY += (targetRotY - currentRotY) * 0.05;
+      baseAngle += 0.004;
 
-      const orbitY = currentRotY + Math.sin(time * 0.35) * 0.05;
-      const orbitX = currentRotX + Math.cos(time * 0.28) * 0.03;
+      const rotY = baseAngle + currentRotY;
+      const rotX = currentRotX * 0.6;
 
-      const cosY = Math.cos(orbitY);
-      const sinY = Math.sin(orbitY);
-      const cosX = Math.cos(orbitX);
-      const sinX = Math.sin(orbitX);
-
-      const centerX = width / 2;
-      const centerY = height / 2 - 10;
+      const cosY = Math.cos(rotY);
+      const sinY = Math.sin(rotY);
+      const cosX = Math.cos(rotX);
+      const sinX = Math.sin(rotX);
 
       const projectedPoints: {
         px: number;
@@ -325,39 +214,21 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
         scale: number;
         p: Particle;
         alpha: number;
-        color: string;
       }[] = [];
 
-      // Project particles to 2D
+      const centerX = width / 2;
+      const centerY = height / 2;
+
+      // Project particles to 2D screen space
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        let x = p.baseX;
-        let y = p.baseY;
-        let z = p.baseZ;
-
-        if (p.region === 'stream') {
-          p.streamProgress = ((p.streamProgress || 0) + (p.streamSpeed || 0.003)) % 1;
-          const prog = p.streamProgress;
-          
-          let startY = -75; // Rx
-          if (p.streamIndex === 1) startY = 10; // Lab
-          if (p.streamIndex === 2) startY = 95; // Path
-
-          const startX = -270;
-          const endX = -135;
-          const endY = startY * 0.55;
-
-          const waveY = Math.sin(prog * Math.PI * 3 + time * 2) * 10;
-          x = startX + (endX - startX) * prog;
-          y = startY + (endY - startY) * prog + waveY;
-          z = (Math.sin(prog * Math.PI * 4) * 20) + (Math.random() - 0.5) * 6;
-        } else {
-          const pulse = 1 + Math.sin(time * 2 + p.pulseOffset) * 0.018;
-          x *= pulse;
-          y *= pulse;
-          z *= pulse;
-        }
+        p.angle += p.speed;
+        const pulse = 1 + Math.sin(baseAngle * 2.5 + p.baseZ * 0.02) * 0.035;
+        
+        let x = p.baseX * pulse;
+        let y = p.baseY * pulse;
+        let z = p.baseZ * pulse;
 
         // 3D rotation Y
         const x1 = x * cosY - z * sinY;
@@ -365,16 +236,15 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
 
         // 3D rotation X
         const y2 = y * cosX - z1 * sinX;
-        const z2 = z1 * cosX + y * sinX + 490;
+        const z2 = z1 * cosX + y * sinX + 440; // Camera distance
 
         if (z2 <= 10) continue;
 
         const scale = fov / z2;
         const px = centerX + x1 * scale;
         const py = centerY + y2 * scale;
-
-        const depthFactor = Math.max(0.2, Math.min(1.0, (z2 - 240) / 460));
-        const alpha = Math.max(0.18, Math.min(1.0, 1.22 - depthFactor));
+        const depthAlpha = Math.max(0.1, Math.min(1.0, (z2 - 150) / 440));
+        const alpha = (1 - depthAlpha * 0.75);
 
         projectedPoints.push({
           px,
@@ -382,8 +252,7 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
           pz: z2,
           scale,
           p,
-          alpha,
-          color: p.baseColor,
+          alpha: Math.min(1, Math.max(0.15, alpha)),
         });
       }
 
@@ -391,83 +260,34 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
       projectedPoints.sort((a, b) => b.pz - a.pz);
 
       // Draw neural connections
-      if (variant === 'brain') {
-        ctx.lineWidth = 0.65;
-        const maxDist = 30 * Math.min(1.2, Math.max(0.7, width / 700));
+      ctx.lineWidth = 0.55;
+      const maxDist = 36 * Math.min(1.2, Math.max(0.7, width / 600));
 
-        for (let i = 0; i < projectedPoints.length; i += 2) {
-          const p1 = projectedPoints[i];
-          if (p1.p.region === 'stream') continue;
+      for (let i = 0; i < projectedPoints.length; i += 2) {
+        const p1 = projectedPoints[i];
+        for (let j = i + 1; j < projectedPoints.length; j += 3) {
+          const p2 = projectedPoints[j];
+          const dx = p1.px - p2.px;
+          const dy = p1.py - p2.py;
+          const dist = Math.sqrt(dx * dx + dy * dy);
 
-          for (let j = i + 1; j < projectedPoints.length; j += 3) {
-            const p2 = projectedPoints[j];
-            if (p2.p.region === 'stream') continue;
-
-            const dx = p1.px - p2.px;
-            const dy = p1.py - p2.py;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < maxDist) {
-              const lineAlpha = (1 - dist / maxDist) * 0.28 * Math.min(p1.alpha, p2.alpha);
-              ctx.beginPath();
-              ctx.moveTo(p1.px, p1.py);
-              ctx.lineTo(p2.px, p2.py);
-              
-              const grad = ctx.createLinearGradient(p1.px, p1.py, p2.px, p2.py);
-              grad.addColorStop(0, p1.color);
-              grad.addColorStop(1, p2.color);
-
-              ctx.strokeStyle = grad;
-              ctx.globalAlpha = lineAlpha;
-              ctx.stroke();
-            }
+          if (dist < maxDist) {
+            const lineAlpha = (1 - dist / maxDist) * 0.22 * Math.min(p1.alpha, p2.alpha);
+            ctx.beginPath();
+            ctx.moveTo(p1.px, p1.py);
+            ctx.lineTo(p2.px, p2.py);
+            ctx.strokeStyle = p1.p.color;
+            ctx.globalAlpha = lineAlpha;
+            ctx.stroke();
           }
         }
       }
 
-      // Draw glowing nodes and triangle glyphs
+      // Draw triangle glyphs
       for (let i = 0; i < projectedPoints.length; i++) {
-        const { px, py, scale, p, alpha, color } = projectedPoints[i];
-        const size = Math.max(1.0, p.size * scale);
-
-        ctx.save();
-        ctx.translate(px, py);
-
-        if (p.isHub) {
-          ctx.beginPath();
-          ctx.arc(0, 0, size * 1.35, 0, Math.PI * 2);
-          ctx.fillStyle = color;
-          ctx.globalAlpha = alpha * 0.85;
-          ctx.shadowColor = color;
-          ctx.shadowBlur = 12;
-          ctx.fill();
-
-          ctx.beginPath();
-          ctx.arc(0, 0, size * 0.65, 0, Math.PI * 2);
-          ctx.fillStyle = '#ffffff';
-          ctx.globalAlpha = alpha;
-          ctx.fill();
-        } else {
-          ctx.beginPath();
-          const h = size * 1.4;
-          ctx.moveTo(0, -h / 2);
-          ctx.lineTo(size, h / 2);
-          ctx.lineTo(-size, h / 2);
-          ctx.closePath();
-
-          ctx.strokeStyle = color;
-          ctx.lineWidth = 1.0;
-          ctx.globalAlpha = alpha;
-          ctx.stroke();
-
-          if (Math.random() < 0.12) {
-            ctx.fillStyle = color;
-            ctx.globalAlpha = alpha * 0.35;
-            ctx.fill();
-          }
-        }
-
-        ctx.restore();
+        const { px, py, scale, p, alpha } = projectedPoints[i];
+        const glyphSize = Math.max(1.1, p.size * scale * 0.85);
+        drawTriangle(ctx, px, py, glyphSize, p.angle, p.color, alpha);
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -482,7 +302,7 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
       }
       cancelAnimationFrame(animationFrameId);
     };
-  }, [interactive, variant, particleCount]);
+  }, [interactive, particleCount, variant]);
 
   return (
     <canvas
@@ -491,5 +311,3 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
     />
   );
 };
-
-export default ConstellationCanvas;
