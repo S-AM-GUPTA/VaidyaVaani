@@ -25,6 +25,7 @@ import Footer from '../components/layout/Footer';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
 import HeroNeuralBrain from '../components/HeroNeuralBrain';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -42,39 +43,22 @@ const itemVariants: Variants = {
 const Landing = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const { currentLanguage, t, speakText, stopSpeaking, isSpeaking } = useLanguage();
+
   const [activeSeverityTab, setActiveSeverityTab] = useState<'low' | 'mod' | 'crit'>('mod');
   const [isDemoUploadOpen, setIsDemoUploadOpen] = useState(false);
 
-  // Web Speech API Hindi Voice Synthesis Demonstration
   const toggleVoiceDemo = () => {
-    if (isPlayingAudio) {
-      window.speechSynthesis?.cancel();
-      setIsPlayingAudio(false);
-      return;
-    }
-
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const hindiText = "नमस्ते। आपकी लैब रिपोर्ट के अनुसार रक्त शर्करा 108 mg/dL है। एटेनोलॉल दवा को भोजन के 30 मिनट बाद लेना सर्वोत्तम है।";
-      const utterance = new SpeechSynthesisUtterance(hindiText);
-      utterance.lang = 'hi-IN';
-      utterance.rate = 0.9;
-      
-      utterance.onstart = () => setIsPlayingAudio(true);
-      utterance.onend = () => setIsPlayingAudio(false);
-      utterance.onerror = () => setIsPlayingAudio(false);
-
-      window.speechSynthesis.speak(utterance);
+    if (isSpeaking) {
+      stopSpeaking();
     } else {
-      setIsPlayingAudio(true);
-      setTimeout(() => setIsPlayingAudio(false), 4000);
+      speakText();
     }
   };
 
   useEffect(() => {
     return () => {
-      window.speechSynthesis?.cancel();
+      stopSpeaking();
     };
   }, []);
 
@@ -111,7 +95,7 @@ const Landing = () => {
           <motion.div variants={itemVariants} className="inline-flex items-center gap-2 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#ffb829] animate-pulse"></span>
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829]">
-              Distributed Medical Intelligence
+              {t('distributedIntel')}
             </span>
           </motion.div>
           
@@ -120,9 +104,9 @@ const Landing = () => {
             variants={itemVariants}
             className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-normal text-[#ffffff] leading-[1.06] tracking-[-0.04em] mb-6"
           >
-            Understand your health. <br />
+            {t('heroHeadline')} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#004fdc] via-[#2563eb] to-[#00d2d3]">
-              Weightless & instant.
+              {t('heroSubHeadline')}
             </span>
           </motion.h1>
           
@@ -131,7 +115,7 @@ const Landing = () => {
             variants={itemVariants}
             className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-8 max-w-[480px]"
           >
-            Upload prescriptions and clinical lab reports. Decode complex medical biomarkers, simulate drug interactions across doctors, and receive spoken regional explanations in seconds.
+            {t('heroDesc')}
           </motion.p>
           
           {/* Primary Action Button: Electric Blue (#004fdc) Pill */}
@@ -140,7 +124,7 @@ const Landing = () => {
               onClick={handleCtaClick}
               className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 flex items-center group active:scale-[0.98] shadow-[0_0_30px_rgba(0,79,220,0.35)]"
             >
-              {isAuthenticated ? 'Open Dashboard Vault' : 'Start Exploring Now'}
+              {isAuthenticated ? t('openDashboard') : t('startExploring')}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
             </button>
 
@@ -148,7 +132,7 @@ const Landing = () => {
               href="#pipeline" 
               className="text-xs font-normal text-[#9a9a9a] hover:text-[#ffffff] tracking-[0.02em] transition-colors flex items-center gap-1.5"
             >
-              How It Works <span className="text-[#004fdc]">↓</span>
+              {t('howItWorks')} <span className="text-[#004fdc]">↓</span>
             </a>
           </motion.div>
 
@@ -159,17 +143,17 @@ const Landing = () => {
           >
             <div>
               <div className="text-xl sm:text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">95.4%</div>
-              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">OCR Extraction</div>
+              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">{t('ocrExtraction')}</div>
             </div>
             <div className="w-px h-7 bg-white/10"></div>
             <div>
               <div className="text-xl sm:text-2xl font-normal text-[#004fdc] tracking-[-0.03em]">&lt; 4.8s</div>
-              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Neural Synthesis</div>
+              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">{t('neuralSynthesis')}</div>
             </div>
             <div className="w-px h-7 bg-white/10"></div>
             <div>
               <div className="text-xl sm:text-2xl font-normal text-[#00d2d3] tracking-[-0.03em]">100%</div>
-              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Client Encrypted</div>
+              <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">{t('clientEncrypted')}</div>
             </div>
           </motion.div>
         </motion.div>
@@ -194,10 +178,10 @@ const Landing = () => {
           
           <div className="mb-14">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] mb-3">
-              Processing Pipeline
+              {t('pipeline')}
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] tracking-[-0.04em]">
-              From prescription to crystal clarity in four stages.
+              {t('pipelineTitle')}
             </h2>
           </div>
 
@@ -212,9 +196,9 @@ const Landing = () => {
                 01
               </div>
               <ScanLine className="w-5 h-5 text-[#ffffff] mb-3" />
-              <h3 className="text-base font-normal text-[#ffffff] mb-2 group-hover:text-[#004fdc] transition-colors">Multimodal Ingestion</h3>
+              <h3 className="text-base font-normal text-[#ffffff] mb-2 group-hover:text-[#004fdc] transition-colors">{t('step1Title')}</h3>
               <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
-                Accepts camera scans, PDF lab printouts, and photo gallery uploads with client-side sanitization.
+                {t('step1Desc')}
               </p>
             </div>
 
@@ -224,9 +208,9 @@ const Landing = () => {
                 02
               </div>
               <FileSpreadsheet className="w-5 h-5 text-[#ffffff] mb-3" />
-              <h3 className="text-base font-normal text-[#ffffff] mb-2">Neural OCR Extraction</h3>
+              <h3 className="text-base font-normal text-[#ffffff] mb-2">{t('step2Title')}</h3>
               <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
-                Deciphers doctor handwriting, tabular biomarker ranges, and dosage abbreviations with high precision.
+                {t('step2Desc')}
               </p>
             </div>
 
@@ -236,9 +220,9 @@ const Landing = () => {
                 03
               </div>
               <Layers className="w-5 h-5 text-[#ffffff] mb-3" />
-              <h3 className="text-base font-normal text-[#ffffff] mb-2">Pharmacopeia Analysis</h3>
+              <h3 className="text-base font-normal text-[#ffffff] mb-2">{t('step3Title')}</h3>
               <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
-                Cross-references active prescriptions against contraindication databases to detect lethal interactions.
+                {t('step3Desc')}
               </p>
             </div>
 
@@ -251,9 +235,9 @@ const Landing = () => {
                 04
               </div>
               <Volume2 className="w-5 h-5 text-[#ffffff] mb-3" />
-              <h3 className="text-base font-normal text-[#ffffff] mb-2 group-hover:text-[#004fdc] transition-colors">Voice & Dialect Audio</h3>
+              <h3 className="text-base font-normal text-[#ffffff] mb-2 group-hover:text-[#004fdc] transition-colors">{t('step4Title')}</h3>
               <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
-                Generates spoken summaries in Hindi & regional languages so elderly and rural patients stay safe.
+                {t('step4Desc')}
               </p>
             </div>
 
@@ -278,13 +262,13 @@ const Landing = () => {
               transition={{ duration: 0.7 }}
             >
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] mb-3">
-                Safety Matrix & Interaction Radar
+                {t('safetyMatrix')}
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] leading-[1.08] tracking-[-0.04em] mb-5">
-                Cross-reference active prescriptions in milliseconds.
+                {t('interactionTitle')}
               </h2>
               <p className="text-base text-[#bdbdbd] font-light leading-relaxed mb-6 max-w-[480px]">
-                Eliminate uncertainty when managing multi-drug schedules across different doctors. Our neural engine checks contraindications, dosage spacing, and food interactions across international pharmacology databases.
+                {t('interactionDesc')}
               </p>
 
               {/* Functional Severity Tab Selector */}
@@ -295,7 +279,7 @@ const Landing = () => {
                     activeSeverityTab === 'low' ? 'bg-[#15846e] text-white shadow-[0_0_15px_rgba(21,132,110,0.4)]' : 'text-[#9a9a9a] hover:text-white'
                   }`}
                 >
-                  Low Risk
+                  {t('lowRisk')}
                 </button>
                 <button 
                   onClick={() => setActiveSeverityTab('mod')}
@@ -303,7 +287,7 @@ const Landing = () => {
                     activeSeverityTab === 'mod' ? 'bg-[#ffb829] text-black font-bold shadow-[0_0_15px_rgba(255,184,41,0.4)]' : 'text-[#9a9a9a] hover:text-white'
                   }`}
                 >
-                  Moderate
+                  {t('moderateRisk')}
                 </button>
                 <button 
                   onClick={() => setActiveSeverityTab('crit')}
@@ -311,7 +295,7 @@ const Landing = () => {
                     activeSeverityTab === 'crit' ? 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)]' : 'text-[#9a9a9a] hover:text-white'
                   }`}
                 >
-                  Critical Risk
+                  {t('criticalRisk')}
                 </button>
               </div>
 
@@ -321,7 +305,7 @@ const Landing = () => {
                     <ShieldCheck className="w-3.5 h-3.5 text-[#004fdc]" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-normal text-[#ffffff] tracking-tight">Contraindication Radar</h3>
+                    <h3 className="text-sm font-normal text-[#ffffff] tracking-tight">{t('contraindicationRadar')}</h3>
                     <p className="text-xs font-light text-[#9a9a9a] leading-relaxed mt-0.5">Instant alerts on antagonistic drug pairings before administration.</p>
                   </div>
                 </div>
@@ -331,7 +315,7 @@ const Landing = () => {
                     <AlertTriangle className="w-3.5 h-3.5 text-[#ffb829]" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-normal text-[#ffffff] tracking-tight">Pharmacokinetic Spacing</h3>
+                    <h3 className="text-sm font-normal text-[#ffffff] tracking-tight">{t('pharmacokineticSpacing')}</h3>
                     <p className="text-xs font-light text-[#9a9a9a] leading-relaxed mt-0.5">Automated interval scheduling to prevent absorption degradation.</p>
                   </div>
                 </div>
@@ -499,13 +483,13 @@ const Landing = () => {
               className="order-1 lg:order-2"
             >
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-3">
-                Precision Analysis
+                {t('labDecoding')}
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] leading-[1.08] tracking-[-0.04em] mb-5">
-                Decode lab reports without the confusing jargon.
+                {t('labDecoderTitle')}
               </h2>
               <p className="text-base text-[#bdbdbd] font-light leading-relaxed mb-6 max-w-[480px]">
-                Stop cross-referencing obscure acronyms. VaidyaVaani contextualizes complete metabolic panels, lipid panels, thyroid markers, and radiology notes into crisp, plain-language summaries with actionable doctor talking points.
+                {t('labDecoderDesc')}
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
@@ -513,7 +497,7 @@ const Landing = () => {
                   onClick={() => setIsDemoUploadOpen(true)}
                   className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 shadow-[0_0_20px_rgba(0,79,220,0.3)] active:scale-95"
                 >
-                  Upload Lab Report
+                  {t('uploadLabReport')}
                 </button>
               </div>
             </motion.div>
@@ -524,7 +508,7 @@ const Landing = () => {
 
 
       {/* =========================================================
-          SECTION 3: Linguistic & Voice Narration (हिन्दी & Regional)
+          SECTION 3: Linguistic & Live Multi-Language Voice Narration
           ========================================================= */}
       <section id="intelligence" className="relative z-10 py-20 lg:py-24 border-t border-white/[0.06]">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
@@ -539,28 +523,31 @@ const Landing = () => {
               transition={{ duration: 0.7 }}
             >
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] mb-3">
-                Regional Cognition & Voice Narration
+                {currentLanguage.native} • {t('intelligence')}
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] leading-[1.08] tracking-[-0.04em] mb-5">
-                Native voice intelligence in हिन्दी and regional languages.
+                {t('voiceTitle')}
               </h2>
               <p className="text-base text-[#bdbdbd] font-light leading-relaxed mb-6 max-w-[480px]">
-                Healthcare belongs to everyone. Our natural language pipeline reads complex reports aloud and translates doctor prescriptions into clear audio guidance for elderly and rural caregivers.
+                {t('voiceDesc')}
               </p>
 
-              {/* Functional Voice Player Pill with SpeechSynthesis */}
+              {/* Functional Voice Player Pill with Live Multilingual SpeechSynthesis */}
               <div className="p-4 rounded-3xl bg-white/[0.03] border border-white/10 flex items-center justify-between max-w-md mb-6 hover:border-[#004fdc]/50 transition-colors">
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={toggleVoiceDemo}
                     className="w-10 h-10 rounded-full bg-[#004fdc] hover:bg-[#003eb0] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,79,220,0.4)]"
                   >
-                    {isPlayingAudio ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                    {isSpeaking ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                   </button>
                   <div>
-                    <div className="text-xs font-normal text-[#ffffff]">Hindi Voice Synthesis Demo</div>
+                    <div className="text-xs font-normal text-[#ffffff] flex items-center gap-2">
+                      <span>{currentLanguage.native} {t('voiceDemoTitle')}</span>
+                      <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#004fdc]/20 text-[#004fdc] border border-[#004fdc]/30">LIVE</span>
+                    </div>
                     <div className="text-[10px] font-light text-[#9a9a9a]">
-                      {isPlayingAudio ? 'Speaking aloud now...' : 'Click to hear audio report summary'}
+                      {isSpeaking ? t('speakingNow') : t('clickToHear')}
                     </div>
                   </div>
                 </div>
@@ -569,8 +556,8 @@ const Landing = () => {
                   {[40, 70, 30, 90, 50, 80, 45].map((height, i) => (
                     <div 
                       key={i} 
-                      className={`w-1 bg-[#004fdc] rounded-full transition-all duration-300 ${isPlayingAudio ? 'animate-pulse' : 'opacity-40'}`}
-                      style={{ height: `${isPlayingAudio ? height * 0.35 : 8}px` }}
+                      className={`w-1 bg-[#004fdc] rounded-full transition-all duration-300 ${isSpeaking ? 'animate-pulse' : 'opacity-40'}`}
+                      style={{ height: `${isSpeaking ? height * 0.35 : 8}px` }}
                     />
                   ))}
                 </div>
@@ -578,7 +565,7 @@ const Landing = () => {
 
               <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03]">
                 <Globe2 className="w-3.5 h-3.5 text-[#ffb829]" />
-                <span className="text-[11px] font-mono text-[#ffffff]">Hindi • Bengali • Tamil • Telugu • Marathi • Gujarati</span>
+                <span className="text-[11px] font-mono text-[#ffffff]">English • हिन्दी • বাংলা • தமிழ் • తెలుగు • मराठी • ગુજરાતી</span>
               </div>
             </motion.div>
 
@@ -591,18 +578,24 @@ const Landing = () => {
               className="relative flex items-center justify-center p-10 sm:p-14 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08]"
             >
               <div className="text-center z-10 space-y-3">
-                <div className="text-5xl sm:text-6xl font-light text-[#ffffff] tracking-[-0.04em]">
-                  स्वास्थ्य ज्ञान
+                <div className="text-4xl sm:text-5xl font-light text-[#ffffff] tracking-[-0.03em]">
+                  {currentLanguage.code === 'hi' ? 'स्वास्थ्य ज्ञान' :
+                   currentLanguage.code === 'bn' ? 'স্বাস্থ্য সচেতনতা' :
+                   currentLanguage.code === 'ta' ? 'ஆரோக்கிய அறிவு' :
+                   currentLanguage.code === 'te' ? 'ఆరోగ్య స్పష్టత' :
+                   currentLanguage.code === 'mr' ? 'आरोग्य मार्गदर्शन' :
+                   currentLanguage.code === 'gu' ? 'સ્વાસ્થ્ય જ્ઞાન' :
+                   'Clinical Clarity'}
                 </div>
-                <p className="text-xs sm:text-sm font-light text-[#bdbdbd] max-w-xs mx-auto">
-                  "आपकी रिपोर्ट के अनुसार रक्त शर्करा 108 mg/dL है। दवा को भोजन के 30 मिनट बाद लेना सर्वोत्तम है।"
+                <p className="text-xs sm:text-sm font-light text-[#bdbdbd] max-w-xs mx-auto italic leading-relaxed">
+                  "{currentLanguage.demoSpeechText}"
                 </p>
                 <button 
                   onClick={toggleVoiceDemo}
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#004fdc]/20 hover:bg-[#004fdc]/30 text-[#004fdc] font-mono text-[10px] uppercase tracking-wider border border-[#004fdc]/30 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#004fdc]/20 hover:bg-[#004fdc]/30 text-[#004fdc] font-mono text-xs uppercase tracking-wider border border-[#004fdc]/30 transition-colors shadow-[0_0_15px_rgba(0,79,220,0.2)]"
                 >
-                  <Volume2 className="w-3 h-3" />
-                  {isPlayingAudio ? 'Listening...' : 'Play Synthetic Voice'}
+                  <Volume2 className="w-3.5 h-3.5" />
+                  {isSpeaking ? t('speakingNow') : `${t('playVoice')} (${currentLanguage.native})`}
                 </button>
               </div>
             </motion.div>
@@ -634,7 +627,7 @@ const Landing = () => {
               <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-5">
                 <Lock className="w-4 h-4 text-[#004fdc]" />
               </div>
-              <h3 className="text-lg font-normal text-[#ffffff] tracking-tight mb-2">Zero-Knowledge Vault</h3>
+              <h3 className="text-lg font-normal text-[#ffffff] tracking-tight mb-2">{t('zeroKnowledgeVault')}</h3>
               <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
                 Medical records are cryptographically sealed in client-side vaults. Your diagnostic data is processed in transient memory and never indexed for advertising.
               </p>
@@ -696,7 +689,7 @@ const Landing = () => {
               onClick={handleCtaClick}
               className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-9 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 shadow-[0_0_35px_rgba(0,79,220,0.4)] active:scale-[0.98]"
             >
-              {isAuthenticated ? 'Open Dashboard Workspace' : 'Request Access Free'}
+              {isAuthenticated ? t('openDashboard') : t('requestAccess')}
             </button>
           </motion.div>
 
@@ -719,7 +712,7 @@ const Landing = () => {
                   <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#004fdc]">
                     Quick Document Ingestion
                   </div>
-                  <h3 className="text-xl font-normal text-white">Upload Diagnostic Record</h3>
+                  <h3 className="text-xl font-normal text-white">{t('uploadLabReport')}</h3>
                 </div>
                 <button 
                   onClick={() => setIsDemoUploadOpen(false)}

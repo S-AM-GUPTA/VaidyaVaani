@@ -13,12 +13,14 @@ import {
   CheckCircle2,
   Activity,
   FileSpreadsheet,
-  ChevronRight
+  ChevronRight,
+  Volume2
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Uploader from '../components/Uploader';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
+import { useLanguage } from '../context/LanguageContext';
 
 interface TimelineDoc {
   id: string;
@@ -77,8 +79,20 @@ const INITIAL_LABS: TimelineDoc[] = [
   },
 ];
 
+const AI_GREETINGS: Record<string, string> = {
+  en: "Hello. I've decoded both your prescription regimen and your diagnostic lab records. Fasting glucose is at 108 mg/dL and Atenolol is scheduled for morning dosage. How can I assist?",
+  hi: "नमस्ते। मैंने आपकी दवाओं और लैब रिपोर्ट दोनों का विश्लेषण कर लिया है। आपका ब्लड ग्लूकोज 108 mg/dL है और एटेनोलॉल सुबह के लिए निर्धारित है। मैं आपकी क्या सहायता कर सकता हूँ?",
+  bn: "নমস্কার। আমি আপনার প্রেসক্রিপশন এবং ল্যাব রিপোর্ট বিশ্লেষণ করেছি। আপনার ব্লাড সুগার ১০৮ mg/dL এবং অ্যাটেনোলল সকালে নেওয়ার পরামর্শ দেওয়া হয়েছে। আমি কীভাবে সাহায্য করতে পারি?",
+  ta: "வணக்கம். உங்கள் மருந்துச் சீட்டு மற்றும் ஆய்வக அறிக்கைகளை நான் ஆய்வு செய்துவிட்டேன். இரத்த சர்க்கரை 108 mg/dL உள்ளது. நான் உங்களுக்கு எவ்வாறு உதவ முடியும்?",
+  te: "నమస్కారం. మీ ప్రిస్క్రిప్షన్ మరియు ల్యాబ్ నివేదికలు పరిశీలించబడ్డాయి. రక్తంలో చక్కెర 108 mg/dL ఉంది. నేను మీకు ఎలా సహాయపడగలను?",
+  mr: "नमस्कार. मी आपले प्रिस्क्रिप्शन आणि लॅब अहवाल तपासले आहेत. रक्तातील साखर 108 mg/dL आहे आणि अ‍ॅटेनोलॉल सकाळी घ्यायचे आहे. मी काय मदत करू शकतो?",
+  gu: "નમસ્તે. મેં તમારા પ્રિસ્ક્રિપ્શન અને લેબ રિપોર્ટ તપાસ્યા છે. બ્લડ સુગર 108 mg/dL છે. હું તમને કેવી રીતે મદદ કરી શકું?",
+};
+
 const Home = () => {
   const navigate = useNavigate();
+  const { currentLanguage, t, speakText } = useLanguage();
+
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [uploadType, setUploadType] = useState<'reports' | 'prescriptions'>('reports');
   const [isAddMedModalOpen, setIsAddMedModalOpen] = useState(false);
@@ -101,7 +115,7 @@ const Home = () => {
   const [chatInput, setChatInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'ai', text: "Hello. I've decoded both your prescription regimen and your diagnostic lab records. Fasting glucose is at 108 mg/dL and Atenolol is scheduled for morning dosage. How can I assist?" },
+    { sender: 'ai', text: AI_GREETINGS[currentLanguage.code] || AI_GREETINGS.en },
   ]);
 
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -143,10 +157,18 @@ const Home = () => {
       setIsTyping(false);
       let reply = `Based on your active medications (${meds.map(m => m.name).join(', ')}), no adverse pharmacokinetic antagonism was identified. Maintain regular blood pressure monitoring and schedule dosage at least 2 hours apart from antacids.`;
       
-      if (userMsg.toLowerCase().includes('glucose') || userMsg.toLowerCase().includes('sugar')) {
-        reply = "Your fasting glucose was measured at 108 mg/dL (Reference: 70–99 mg/dL). This is mildly elevated. Consider monitoring carbohydrate intake and discussing an HbA1c test with your doctor.";
-      } else if (userMsg.toLowerCase().includes('atenolol') || userMsg.toLowerCase().includes('heart')) {
-        reply = "Atenolol is a beta-blocker prescribed for cardiovascular control. Take consistently in the morning with water. Do not stop abruptly without medical consultation.";
+      if (currentLanguage.code === 'hi') {
+        reply = `आपकी सक्रिय दवाओं (${meds.map(m => m.name).join(', ')}) के आधार पर कोई हानिकारक दुष्प्रभाव नहीं पाया गया है। कृपया एंटासिड दवा से 2 घंटे का अंतर रखें।`;
+      } else if (currentLanguage.code === 'bn') {
+        reply = `আপনার বর্তমান ওষুধ (${meds.map(m => m.name).join(', ')}) অনুযায়ী কোনো ক্ষতিকর প্রতিক্রিয়া নেই। অ্যান্টাসিড থেকে ২ ঘণ্টা ব্যবধানে খান।`;
+      } else if (currentLanguage.code === 'ta') {
+        reply = `உங்கள் மருந்துகளில் (${meds.map(m => m.name).join(', ')}) எந்தவித முரண்பாடும் இல்லை. என்டாசிட் மாத்திரையிலிருந்து 2 மணி நேரம் இடைவெளி விடவும்.`;
+      } else if (currentLanguage.code === 'te') {
+        reply = `మీ మందులలో (${meds.map(m => m.name).join(', ')}) ఎటువంటి సమస్యలు లేవు. యాంటాసిడ్ మందుల నుండి 2 గంటల వ్యవధి పాటించండి.`;
+      } else if (currentLanguage.code === 'mr') {
+        reply = `आपल्या चालू औषधांमध्ये (${meds.map(m => m.name).join(', ')}) कोणताही दुष्परिणाम आढळला नाही. अ‍ॅसिडिटीच्या गोळीपासून २ तासांचे अंतर ठेवा.`;
+      } else if (currentLanguage.code === 'gu') {
+        reply = `તમારી ચાલુ દવાઓમાં (${meds.map(m => m.name).join(', ')}) કોઈ આડઅસર જણાઈ નથી. એન્ટાસિડથી 2 કલાકનું અંતર રાખો.`;
       }
 
       setMessages(prev => [...prev, { sender: 'ai', text: reply }]);
@@ -179,10 +201,10 @@ const Home = () => {
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-2 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#15846e] animate-pulse"></span>
-              Distributed Medical Intelligence
+              {currentLanguage.native} • {t('distributedIntel')}
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] tracking-[-0.04em] leading-[1.06]">
-              Clinical Intelligence Vault
+              {t('vaultTitle')}
             </h1>
           </div>
 
@@ -196,7 +218,7 @@ const Home = () => {
                   : 'text-[#9a9a9a] hover:text-white'
               }`}
             >
-              Unified View
+              {t('unifiedView')}
             </button>
 
             <button
@@ -208,7 +230,7 @@ const Home = () => {
               }`}
             >
               <Pill className="w-3.5 h-3.5" />
-              Prescriptions & Safety
+              {t('rxSafetyTab')}
             </button>
 
             <button
@@ -220,7 +242,7 @@ const Home = () => {
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
-              Lab Diagnostics
+              {t('labDiagTab')}
             </button>
           </div>
         </div>
@@ -228,27 +250,27 @@ const Home = () => {
         {/* Global Summary Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
           <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Active Prescriptions</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">{t('activeRx')}</div>
             <div className="text-3xl font-normal text-[#15846e] tracking-tight">{meds.length}</div>
             <div className="text-[11px] text-[#bdbdbd] font-light mt-1">Cross-checked safe</div>
           </div>
 
           <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Lab Biomarkers</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">{t('labBiomarkers')}</div>
             <div className="text-3xl font-normal text-[#004fdc] tracking-tight">14</div>
             <div className="text-[11px] text-[#ffb829] font-light mt-1">1 mild elevation</div>
           </div>
 
           <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Contraindication Alert</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">{t('contraindicationRadar')}</div>
             <div className="text-3xl font-normal text-[#ffb829] tracking-tight">1</div>
-            <div className="text-[11px] text-[#bdbdbd] font-light mt-1">Spacing required (2 hrs)</div>
+            <div className="text-[11px] text-[#bdbdbd] font-light mt-1">{t('pharmacokineticSpacing')}</div>
           </div>
 
           <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">Vault Privacy</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">{t('zeroKnowledgeVault')}</div>
             <div className="text-3xl font-normal text-[#ffffff] tracking-tight">100%</div>
-            <div className="text-[11px] text-[#15846e] font-light mt-1">Zero-Knowledge Sealed</div>
+            <div className="text-[11px] text-[#15846e] font-light mt-1">Client Encrypted</div>
           </div>
         </div>
 
@@ -261,10 +283,10 @@ const Home = () => {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#15846e]/15 border border-[#15846e]/30 text-[#15846e] text-[11px] font-mono uppercase tracking-wider mb-2">
                   <Pill className="w-3.5 h-3.5" />
-                  Task 01 — Pharmacopeia & Interaction Radar
+                  Task 01 — {t('rxSafetyTab')}
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-normal text-[#ffffff] tracking-tight">
-                  Prescription & Drug Safety Vault
+                  {t('rxSafetyTab')}
                 </h2>
               </div>
 
@@ -275,7 +297,7 @@ const Home = () => {
                   className="px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/10 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-95 shadow-[0_0_15px_rgba(21,132,110,0.2)]"
                 >
                   <Camera className="w-4 h-4 text-[#15846e]" />
-                  Scan Rx Photo
+                  {t('scanRxPhoto')}
                 </button>
 
                 <button
@@ -283,7 +305,7 @@ const Home = () => {
                   className="px-5 py-2.5 rounded-full bg-[#15846e] hover:bg-[#116e5c] text-white text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-95 shadow-[0_0_20px_rgba(21,132,110,0.4)]"
                 >
                   <CloudUpload className="w-4 h-4" />
-                  Upload Prescription
+                  {t('uploadPrescription')}
                 </button>
               </div>
             </div>
@@ -294,7 +316,7 @@ const Home = () => {
               <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
                 <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-5">
                   <div>
-                    <h3 className="text-base font-normal text-white">Active Regimen Schedule</h3>
+                    <h3 className="text-base font-normal text-white">{t('activeSchedule')}</h3>
                     <p className="text-xs text-[#9a9a9a] font-light">Cross-checked against contraindication databases</p>
                   </div>
                   <button
@@ -302,7 +324,7 @@ const Home = () => {
                     className="px-3 py-1.5 rounded-full bg-[#15846e]/20 hover:bg-[#15846e]/30 text-[#15846e] text-xs font-semibold flex items-center gap-1.5 border border-[#15846e]/30 transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5" />
-                    Add Rx
+                    {t('addRx')}
                   </button>
                 </div>
 
@@ -332,7 +354,7 @@ const Home = () => {
                 <div className="mt-5 p-4 rounded-2xl bg-[#ffb829]/10 border border-[#ffb829]/25 flex items-start gap-3">
                   <AlertTriangle className="w-4 h-4 text-[#ffb829] shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-xs font-semibold text-[#ffb829] uppercase tracking-wider">Spacing Advice (Atenolol + Antacid)</div>
+                    <div className="text-xs font-semibold text-[#ffb829] uppercase tracking-wider">{t('pharmacokineticSpacing')}</div>
                     <p className="text-xs text-[#bdbdbd] font-light mt-0.5">Space dosage by 2 hours to avoid up to 35% bioavailability loss.</p>
                   </div>
                 </div>
@@ -341,7 +363,7 @@ const Home = () => {
               {/* Prescription Documents Feed */}
               <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
                 <div className="pb-4 border-b border-white/[0.06] mb-5">
-                  <h3 className="text-base font-normal text-white">Prescription Documents Timeline</h3>
+                  <h3 className="text-base font-normal text-white">{t('rxTimeline')}</h3>
                   <p className="text-xs text-[#9a9a9a] font-light">Deciphered doctor records and dosage orders</p>
                 </div>
 
@@ -382,10 +404,10 @@ const Home = () => {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#004fdc]/15 border border-[#004fdc]/30 text-[#004fdc] text-[11px] font-mono uppercase tracking-wider mb-2">
                   <Activity className="w-3.5 h-3.5" />
-                  Task 02 — Diagnostic Biomarker Matrix
+                  Task 02 — {t('labDiagTab')}
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-normal text-[#ffffff] tracking-tight">
-                  Clinical Lab Biomarkers & Diagnostics
+                  {t('labDiagTab')}
                 </h2>
               </div>
 
@@ -396,7 +418,7 @@ const Home = () => {
                   className="px-5 py-2.5 rounded-full bg-[#004fdc] hover:bg-[#003eb0] text-white text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-95 shadow-[0_0_20px_rgba(0,79,220,0.4)]"
                 >
                   <FileSpreadsheet className="w-4 h-4" />
-                  Upload Lab Report (PDF / Image)
+                  {t('uploadLabReport')}
                 </button>
               </div>
             </div>
@@ -407,7 +429,7 @@ const Home = () => {
               <div className="lg:col-span-7 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
                 <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-5">
                   <div>
-                    <h3 className="text-base font-normal text-white">Extracted Biomarker Panels</h3>
+                    <h3 className="text-base font-normal text-white">{t('extractedPanels')}</h3>
                     <p className="text-xs text-[#9a9a9a] font-light">Calculated against verified international reference ranges</p>
                   </div>
                   <span className="text-[10px] font-mono text-[#004fdc] px-2.5 py-1 rounded-full bg-[#004fdc]/10 border border-[#004fdc]/20">
@@ -459,7 +481,7 @@ const Home = () => {
               {/* Lab Reports Documents Timeline */}
               <div className="lg:col-span-5 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
                 <div className="pb-4 border-b border-white/[0.06] mb-5">
-                  <h3 className="text-base font-normal text-white">Diagnostic Reports Feed</h3>
+                  <h3 className="text-base font-normal text-white">{t('diagFeed')}</h3>
                   <p className="text-xs text-[#9a9a9a] font-light">Laboratory & radiology PDF assessments</p>
                 </div>
 
@@ -499,9 +521,9 @@ const Home = () => {
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ffb829]/15 border border-[#ffb829]/30 text-[#ffb829] text-[11px] font-mono uppercase tracking-wider mb-2">
                 <Sparkles className="w-3.5 h-3.5" />
-                Cross-Disciplinary AI Assistant
+                {currentLanguage.native} • {t('aiChat')}
               </div>
-              <h2 className="text-2xl sm:text-3xl font-normal text-white">Ask Questions About Your Health Records</h2>
+              <h2 className="text-2xl sm:text-3xl font-normal text-white">{t('askQuestionsTitle')}</h2>
             </div>
 
             <div className="p-6 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] flex flex-col h-[500px] shadow-2xl">
@@ -509,9 +531,9 @@ const Home = () => {
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-4">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#15846e] animate-pulse"></span>
-                  <h3 className="font-normal text-[#ffffff] text-xs uppercase tracking-widest">Neural Assistant (Zero-Knowledge Inferred)</h3>
+                  <h3 className="font-normal text-[#ffffff] text-xs uppercase tracking-widest">{t('aiChat')} ({currentLanguage.native})</h3>
                 </div>
-                <span className="text-[10px] font-mono text-[#9a9a9a]">Transient Memory</span>
+                <span className="text-[10px] font-mono text-[#9a9a9a]">{t('zeroKnowledgeVault')}</span>
               </div>
               
               {/* Message Feed */}
@@ -519,13 +541,22 @@ const Home = () => {
                 {messages.map((m, idx) => (
                   <div 
                     key={idx} 
-                    className={`p-4 rounded-2xl text-xs font-light leading-relaxed ${
+                    className={`p-4 rounded-2xl text-xs font-light leading-relaxed flex items-start justify-between gap-3 ${
                       m.sender === 'ai' 
                         ? 'bg-white/[0.03] border border-white/10 text-[#ffffff] mr-8' 
                         : 'bg-[#15846e] text-white ml-8 text-right shadow-[0_0_20px_rgba(21,132,110,0.3)]'
                     }`}
                   >
-                    {m.text}
+                    <div>{m.text}</div>
+                    {m.sender === 'ai' && (
+                      <button 
+                        onClick={() => speakText(m.text)}
+                        className="p-1 rounded-full hover:bg-white/10 text-[#9a9a9a] hover:text-[#15846e] transition-colors shrink-0"
+                        title="Listen to this response"
+                      >
+                        <Volume2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
                 ))}
                 {isTyping && (
@@ -533,7 +564,7 @@ const Home = () => {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce"></span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce [animation-delay:0.2s]"></span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce [animation-delay:0.4s]"></span>
-                    <span>Synthesizing clinical response...</span>
+                    <span>Synthesizing clinical response in {currentLanguage.native}...</span>
                   </div>
                 )}
               </div>
@@ -544,7 +575,7 @@ const Home = () => {
                   type="text" 
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
-                  placeholder="Ask about medications, lab results, or meal timings..." 
+                  placeholder={t('askAi')} 
                   className="flex-1 text-xs outline-none bg-transparent text-[#ffffff] placeholder:text-[#9a9a9a] font-light" 
                 />
                 <button 
@@ -585,10 +616,10 @@ const Home = () => {
                
                <div className="p-8 md:p-12">
                  <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-2">
-                   Zero-Knowledge Ingestion
+                   {t('zeroKnowledgeVault')}
                  </div>
                  <h2 className="text-3xl font-normal text-[#ffffff] tracking-tight mb-2">
-                   Upload {uploadType === 'reports' ? 'Clinical Lab Report' : 'Doctor Prescription'}
+                   {uploadType === 'reports' ? t('uploadLabReport') : t('uploadPrescription')}
                  </h2>
                  <p className="text-sm font-light text-[#9a9a9a] mb-8">
                    Your document will be encrypted and instantly deciphered by our distributed neural intelligence engine.
@@ -621,7 +652,7 @@ const Home = () => {
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
                 <div>
                   <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#15846e]">Task 01 Action</div>
-                  <h3 className="text-xl font-normal text-white">Add Prescription Item</h3>
+                  <h3 className="text-xl font-normal text-white">{t('addRx')}</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddMedModalOpen(false)}
