@@ -50,11 +50,11 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#000000] text-[#ffffff] font-sans selection:bg-[#8052ff] selection:text-[#ffffff] relative overflow-hidden">
+    <div className="min-h-screen flex bg-[#000000] text-[#ffffff] font-sans selection:bg-[#004fdc] selection:text-[#ffffff] relative overflow-hidden">
       
       {/* Background 3D Ambient Constellation */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-50">
-        <ConstellationCanvas variant="ambient" particleCount={110} interactive={false} />
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
+        <ConstellationCanvas variant="ambient" particleCount={90} interactive={false} />
       </div>
 
       {/* Left Side — 3D Visual & Brand Manifesto */}
@@ -67,12 +67,12 @@ const Login = () => {
 
         {/* Center Live 3D Neural Brain Graphic */}
         <div className="my-auto w-full max-w-md mx-auto relative flex items-center justify-center p-4">
-          <div className="absolute w-[260px] h-[260px] rounded-full bg-[#8052ff]/20 blur-[100px] pointer-events-none"></div>
+          <div className="absolute w-[260px] h-[260px] rounded-full bg-[#004fdc]/25 blur-[100px] pointer-events-none"></div>
           <div className="absolute w-[200px] h-[200px] rounded-full bg-[#00d2d3]/20 blur-[90px] pointer-events-none"></div>
           <img 
             src="/images/brain-neural-model.png" 
             alt="3D Neural Brain Intelligence" 
-            className="w-full h-auto object-contain rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(128,82,255,0.25)]"
+            className="w-full h-auto object-contain rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(0,79,220,0.3)]"
           />
         </div>
 
@@ -83,8 +83,8 @@ const Login = () => {
           transition={{ duration: 0.8 }}
           className="max-w-md"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#00d2d3] mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#00d2d3]" />
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-[#004fdc]" />
             Encrypted Knowledge Vault
           </div>
           
@@ -112,7 +112,7 @@ const Login = () => {
           className="w-full max-w-md mx-auto"
         >
           <div className="mb-10 text-left">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8052ff] mb-2">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-2">
               Authentication
             </div>
             <h2 className="text-3xl sm:text-4xl font-normal text-[#ffffff] tracking-[-0.04em] mb-2">
@@ -149,7 +149,7 @@ const Login = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-11 pr-5 py-4 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#8052ff] focus:ring-1 focus:ring-[#8052ff] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                    className="w-full pl-11 pr-5 py-4 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
                     placeholder="name@example.com"
                   />
                 </div>
@@ -158,7 +158,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 bg-[#8052ff] hover:bg-[#6c3df5] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(128,82,255,0.3)] flex items-center justify-center group active:scale-[0.98]"
+                className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98]"
               >
                 {loading ? (
                   <>
@@ -207,7 +207,7 @@ const Login = () => {
                     required
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
-                    className="w-full pl-11 pr-5 py-4 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#8052ff] focus:ring-1 focus:ring-[#8052ff] focus:outline-none transition-all text-center tracking-[0.5em] text-xl font-normal text-[#ffffff] uppercase placeholder:tracking-normal placeholder:font-light placeholder:text-xs"
+                    className="w-full pl-11 pr-5 py-4 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all text-center tracking-[0.5em] text-xl font-normal text-[#ffffff] uppercase placeholder:tracking-normal placeholder:font-light placeholder:text-xs"
                     placeholder="Enter 6-digit code"
                     maxLength={6}
                   />
@@ -217,7 +217,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 bg-[#8052ff] hover:bg-[#6c3df5] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(128,82,255,0.3)] flex items-center justify-center active:scale-[0.98]"
+                className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center active:scale-[0.98]"
               >
                 {loading ? (
                   <>
@@ -230,7 +230,7 @@ const Login = () => {
           )}
 
           <div className="mt-12 text-center text-xs font-light text-[#9a9a9a]">
-            Protected by Zero-Knowledge Encryption • <Link to="/" className="text-[#8052ff] hover:underline">Return to Home</Link>
+            Protected by Zero-Knowledge Encryption • <Link to="/" className="text-[#004fdc] hover:underline">Return to Home</Link>
           </div>
 
         </motion.div>

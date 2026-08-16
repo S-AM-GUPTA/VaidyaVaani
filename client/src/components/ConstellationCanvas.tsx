@@ -15,12 +15,12 @@ interface Particle {
 }
 
 const PALETTE = [
-  '#8052ff', // Electric Iris
+  '#004fdc', // Electric Cobalt Blue
+  '#2563eb', // Vivid Blue
+  '#38bdf8', // Sky Cyan
   '#ffb829', // Saffron Spark
   '#15846e', // Deep Verdant
-  '#a855f7', // Vivid Purple
-  '#00d2d3', // Cyan
-  '#ff6b81', // Coral Spark
+  '#00d2d3', // Neon Teal
   '#ffffff', // Bone White
 ];
 
@@ -179,7 +179,7 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
       c.globalAlpha = alpha;
       c.stroke();
 
-      if (color === '#8052ff' || color === '#ffb829') {
+      if (color === '#004fdc' || color === '#ffb829') {
         c.fillStyle = color;
         c.globalAlpha = alpha * 0.35;
         c.fill();
@@ -236,7 +236,7 @@ export const ConstellationCanvas: React.FC<ConstellationCanvasProps> = ({
 
         // 3D rotation X
         const y2 = y * cosX - z1 * sinX;
-        const z2 = z1 * cosX + y * sinX + 440; // Camera distance
+        const z2 = z1 * cosX + y * sinX + 440;
 
         if (z2 <= 10) continue;
 

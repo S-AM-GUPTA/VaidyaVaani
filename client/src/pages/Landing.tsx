@@ -46,7 +46,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#ffffff] font-sans overflow-x-hidden selection:bg-[#8052ff] selection:text-[#ffffff]">
+    <div className="min-h-screen bg-[#000000] text-[#ffffff] font-sans overflow-x-hidden selection:bg-[#004fdc] selection:text-[#ffffff]">
       <Navbar />
 
       {/* Ambient background particle field */}
@@ -80,7 +80,7 @@ const Landing = () => {
             className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-normal text-[#ffffff] leading-[1.06] tracking-[-0.04em] mb-6"
           >
             Understand your health. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8052ff] via-[#a855f7] to-[#00d2d3]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#004fdc] via-[#2563eb] to-[#00d2d3]">
               Weightless & instant.
             </span>
           </motion.h1>
@@ -93,11 +93,11 @@ const Landing = () => {
             Upload prescriptions and clinical lab reports. Decode complex medical biomarkers, simulate drug interactions across doctors, and receive spoken regional explanations in seconds.
           </motion.p>
           
-          {/* Primary Action Button: Electric Iris (#8052ff) Pill */}
+          {/* Primary Action Button: Electric Blue (#004fdc) Pill */}
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-5">
             <button 
               onClick={() => navigate('/login')}
-              className="bg-[#8052ff] hover:bg-[#6c3df5] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 flex items-center group active:scale-[0.98] shadow-[0_0_30px_rgba(128,82,255,0.35)]"
+              className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 flex items-center group active:scale-[0.98] shadow-[0_0_30px_rgba(0,79,220,0.35)]"
             >
               Start Exploring Now
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
@@ -107,7 +107,7 @@ const Landing = () => {
               href="#pipeline" 
               className="text-xs font-normal text-[#9a9a9a] hover:text-[#ffffff] tracking-[0.02em] transition-colors flex items-center gap-1.5"
             >
-              How It Works <span className="text-[#8052ff]">↓</span>
+              How It Works <span className="text-[#004fdc]">↓</span>
             </a>
           </motion.div>
 
@@ -122,7 +122,7 @@ const Landing = () => {
             </div>
             <div className="w-px h-7 bg-white/10"></div>
             <div>
-              <div className="text-xl sm:text-2xl font-normal text-[#8052ff] tracking-[-0.03em]">&lt; 4.8s</div>
+              <div className="text-xl sm:text-2xl font-normal text-[#004fdc] tracking-[-0.03em]">&lt; 4.8s</div>
               <div className="text-[10px] font-mono text-[#9a9a9a] uppercase tracking-wider mt-0.5">Neural Synthesis</div>
             </div>
             <div className="w-px h-7 bg-white/10"></div>
@@ -146,7 +146,7 @@ const Landing = () => {
 
 
       {/* =========================================================
-          PIPELINE PUZZLE SECTION: 4-Stage Connected Workflow
+          PIPELINE SECTION: 4-Stage Connected Workflow
           ========================================================= */}
       <section id="pipeline" className="relative z-10 py-20 lg:py-24 border-t border-white/[0.06]">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
@@ -164,7 +164,7 @@ const Landing = () => {
             
             {/* Step 1 */}
             <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-colors">
-              <div className="w-9 h-9 rounded-full bg-[#8052ff]/20 border border-[#8052ff]/40 flex items-center justify-center text-xs font-mono text-[#8052ff] mb-5">
+              <div className="w-9 h-9 rounded-full bg-[#004fdc]/20 border border-[#004fdc]/40 flex items-center justify-center text-xs font-mono text-[#004fdc] mb-5">
                 01
               </div>
               <ScanLine className="w-5 h-5 text-[#ffffff] mb-3" />
@@ -200,7 +200,7 @@ const Landing = () => {
 
             {/* Step 4 */}
             <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-colors">
-              <div className="w-9 h-9 rounded-full bg-[#8052ff]/20 border border-[#8052ff]/40 flex items-center justify-center text-xs font-mono text-[#8052ff] mb-5">
+              <div className="w-9 h-9 rounded-full bg-[#004fdc]/20 border border-[#004fdc]/40 flex items-center justify-center text-xs font-mono text-[#004fdc] mb-5">
                 04
               </div>
               <Volume2 className="w-5 h-5 text-[#ffffff] mb-3" />
@@ -270,8 +270,8 @@ const Landing = () => {
 
               <div className="space-y-3.5">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-7 h-7 rounded-full bg-[#8052ff]/15 border border-[#8052ff]/30 flex items-center justify-center shrink-0 mt-0.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#8052ff]" />
+                  <div className="w-7 h-7 rounded-full bg-[#004fdc]/15 border border-[#004fdc]/30 flex items-center justify-center shrink-0 mt-0.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#004fdc]" />
                   </div>
                   <div>
                     <h3 className="text-sm font-normal text-[#ffffff] tracking-tight">Contraindication Radar</h3>
@@ -319,7 +319,7 @@ const Landing = () => {
                 <div className="space-y-3.5 mb-6">
                   <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-[#8052ff]/20 flex items-center justify-center text-[#8052ff] font-mono text-xs font-semibold">
+                      <div className="w-8 h-8 rounded-xl bg-[#004fdc]/20 flex items-center justify-center text-[#004fdc] font-mono text-xs font-semibold">
                         Rx1
                       </div>
                       <div>
@@ -331,7 +331,7 @@ const Landing = () => {
                         </div>
                       </div>
                     </div>
-                    <span className="text-xs font-mono text-[#8052ff]">Doctor A</span>
+                    <span className="text-xs font-mono text-[#004fdc]">Doctor A</span>
                   </div>
 
                   <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
@@ -401,7 +401,7 @@ const Landing = () => {
                     <Activity className="w-4 h-4 text-[#15846e]" />
                     <span className="text-xs font-mono text-[#ffffff] uppercase tracking-widest">Biomarker Diagnostic Mesh</span>
                   </div>
-                  <span className="text-[11px] font-mono text-[#8052ff]">Verified Reference Ranges</span>
+                  <span className="text-[11px] font-mono text-[#004fdc]">Verified Reference Ranges</span>
                 </div>
 
                 {/* Biomarker Items */}
@@ -451,7 +451,7 @@ const Landing = () => {
               transition={{ duration: 0.7 }}
               className="order-1 lg:order-2"
             >
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8052ff] mb-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-3">
                 Precision Analysis
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] leading-[1.08] tracking-[-0.04em] mb-5">
@@ -464,7 +464,7 @@ const Landing = () => {
               <div className="flex flex-wrap items-center gap-4">
                 <button 
                   onClick={() => navigate('/login')}
-                  className="bg-[#8052ff] hover:bg-[#6c3df5] text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300"
+                  className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 shadow-[0_0_20px_rgba(0,79,220,0.3)]"
                 >
                   Upload Lab Report
                 </button>
@@ -506,7 +506,7 @@ const Landing = () => {
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={toggleVoiceDemo}
-                    className="w-9 h-9 rounded-full bg-[#8052ff] text-white flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(128,82,255,0.4)]"
+                    className="w-9 h-9 rounded-full bg-[#004fdc] text-white flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,79,220,0.4)]"
                   >
                     {isPlayingAudio ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                   </button>
@@ -522,7 +522,7 @@ const Landing = () => {
                   {[40, 70, 30, 90, 50, 80, 45].map((height, i) => (
                     <div 
                       key={i} 
-                      className={`w-1 bg-[#8052ff] rounded-full transition-all duration-300 ${isPlayingAudio ? 'animate-pulse' : 'opacity-40'}`}
+                      className={`w-1 bg-[#004fdc] rounded-full transition-all duration-300 ${isPlayingAudio ? 'animate-pulse' : 'opacity-40'}`}
                       style={{ height: `${isPlayingAudio ? height * 0.35 : 8}px` }}
                     />
                   ))}
@@ -550,7 +550,7 @@ const Landing = () => {
                 <p className="text-xs sm:text-sm font-light text-[#bdbdbd] max-w-xs mx-auto">
                   "आपकी रिपोर्ट के अनुसार रक्त शर्करा 108 mg/dL है। दवा को भोजन के 30 मिनट बाद लेना सर्वोत्तम है।"
                 </p>
-                <div className="inline-block px-3 py-1 rounded-full bg-[#8052ff]/20 text-[#8052ff] font-mono text-[10px] uppercase tracking-wider">
+                <div className="inline-block px-3 py-1 rounded-full bg-[#004fdc]/20 text-[#004fdc] font-mono text-[10px] uppercase tracking-wider">
                   Real-Time Hindi Narration Ready
                 </div>
               </div>
@@ -568,7 +568,7 @@ const Landing = () => {
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
           
           <div className="mb-14">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8052ff] mb-3">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-3">
               Architectural Principles
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] tracking-[-0.04em]">
@@ -581,7 +581,7 @@ const Landing = () => {
             {/* Principle 1 */}
             <div>
               <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-5">
-                <Lock className="w-4 h-4 text-[#8052ff]" />
+                <Lock className="w-4 h-4 text-[#004fdc]" />
               </div>
               <h3 className="text-lg font-normal text-[#ffffff] tracking-tight mb-2">Zero-Knowledge Vault</h3>
               <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
@@ -634,7 +634,7 @@ const Landing = () => {
 
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-normal text-[#ffffff] leading-[1.06] tracking-[-0.04em] mb-6">
               Your health has the answer. <br />
-              <span className="text-[#8052ff]">Just ask VaidyaVaani.</span>
+              <span className="text-[#004fdc]">Just ask VaidyaVaani.</span>
             </h2>
 
             <p className="text-base text-[#bdbdbd] font-light leading-relaxed mb-10 max-w-lg mx-auto">
@@ -643,7 +643,7 @@ const Landing = () => {
 
             <button 
               onClick={() => navigate('/login')}
-              className="bg-[#8052ff] hover:bg-[#6c3df5] text-white px-9 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 shadow-[0_0_35px_rgba(128,82,255,0.4)] active:scale-[0.98]"
+              className="bg-[#004fdc] hover:bg-[#003eb0] text-white px-9 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.025em] transition-all duration-300 shadow-[0_0_35px_rgba(0,79,220,0.4)] active:scale-[0.98]"
             >
               Request Access Free
             </button>

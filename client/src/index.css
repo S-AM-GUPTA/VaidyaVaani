@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   Dala / VaidyaVaani Design Tokens from tokens.json & theme.css
+   Dala / VaidyaVaani Design Tokens — Palette: #004fdc (Electric Cobalt Blue)
    ========================================================================== */
 
 @theme {
@@ -10,7 +10,8 @@
   --color-bone-white: #ffffff;
   --color-ash-gray: #9a9a9a;
   --color-silver-mist: #bdbdbd;
-  --color-electric-iris: #8052ff;
+  --color-brand-blue: #004fdc;
+  --color-electric-iris: #004fdc;
   --color-saffron-spark: #ffb829;
   --color-deep-verdant: #15846e;
 
@@ -69,7 +70,8 @@
   --color-bone-white: #ffffff;
   --color-ash-gray: #9a9a9a;
   --color-silver-mist: #bdbdbd;
-  --color-electric-iris: #8052ff;
+  --color-brand-blue: #004fdc;
+  --color-electric-iris: #004fdc;
   --color-saffron-spark: #ffb829;
   --color-deep-verdant: #15846e;
 
@@ -141,7 +143,7 @@
   /* Surfaces */
   --surface-void-canvas: #000000;
   --surface-deep-verdant-tint: #15846e;
-  --surface-electric-iris: #8052ff;
+  --surface-brand-blue: #004fdc;
 }
 
 @layer base {
@@ -163,14 +165,14 @@
   }
 
   ::selection {
-    background-color: #8052ff;
+    background-color: #004fdc;
     color: #ffffff;
   }
 }
 
 /* Custom Dala/VaidyaVaani Pill Button */
 .btn-pill-primary {
-  background-color: #8052ff;
+  background-color: #004fdc;
   color: #ffffff;
   border-radius: 9999px;
   padding: 14.4px 24px;
@@ -188,9 +190,9 @@
 }
 
 .btn-pill-primary:hover {
-  background-color: #6c3df5;
+  background-color: #003eb0;
   transform: scale(1.02);
-  box-shadow: 0 0 30px rgba(128, 82, 255, 0.4);
+  box-shadow: 0 0 30px rgba(0, 79, 220, 0.45);
 }
 
 .btn-pill-primary:active {

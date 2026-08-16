@@ -27,13 +27,13 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setMousePos({ x: 0, y: 0 })}
     >
-      {/* Background Volumetric Glow */}
-      <div className="absolute top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full bg-[#8052ff]/20 blur-[90px] pointer-events-none"></div>
+      {/* Background Volumetric Glow in #004fdc */}
+      <div className="absolute top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full bg-[#004fdc]/25 blur-[95px] pointer-events-none"></div>
       <div className="absolute top-1/2 left-[65%] -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#00d2d3]/20 blur-[85px] pointer-events-none"></div>
 
       {/* Main Container */}
       <motion.div 
-        className="relative w-full rounded-3xl overflow-hidden border border-white/[0.08] bg-black/60 backdrop-blur-md p-2 sm:p-4 shadow-[0_0_50px_rgba(128,82,255,0.15)] group"
+        className="relative w-full rounded-3xl overflow-hidden border border-white/[0.08] bg-black/60 backdrop-blur-md p-2 sm:p-4 shadow-[0_0_50px_rgba(0,79,220,0.2)] group"
         animate={{
           rotateX: -mousePos.y * 0.5,
           rotateY: mousePos.x * 0.5,
@@ -42,7 +42,7 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({
         style={{ perspective: 1000 }}
       >
         
-        {/* Layer 1: High-Resolution 3D Neural Model Image (Unobstructed, zero double-text) */}
+        {/* Layer 1: High-Resolution 3D Neural Model Image */}
         <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] flex items-center justify-center overflow-hidden rounded-2xl">
           <img 
             src="/images/brain-neural-model.png" 
@@ -56,8 +56,8 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({
           </div>
 
           {/* Layer 3: Subtle Holographic Corner HUD Indicators */}
-          <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 border border-[#8052ff]/40 backdrop-blur-md flex items-center gap-2 pointer-events-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8052ff] animate-pulse"></span>
+          <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 border border-[#004fdc]/40 backdrop-blur-md flex items-center gap-2 pointer-events-none">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#004fdc] animate-pulse"></span>
             <span className="text-[9px] font-mono text-[#ffffff] uppercase tracking-wider">
               Neural Core / 3D Model
             </span>
