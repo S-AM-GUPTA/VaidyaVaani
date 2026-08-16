@@ -16,30 +16,48 @@ interface HeroNeuralBrainProps {
 }
 
 export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({ className = '' }) => {
-  const [hoveredFeature, setHoveredFeature] = useState<string | null>(null);
+  const [activeNode, setActiveNode] = useState<string | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setMousePos({ x: x * 15, y: y * 15 });
+  };
 
   return (
-    <div className={`relative w-full max-w-[1360px] mx-auto select-none ${className}`}>
+    <div 
+      className={`relative w-full max-w-[1380px] mx-auto select-none ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setMousePos({ x: 0, y: 0 })}
+    >
       
-      {/* Volumetric Glowing Backlights */}
-      <div className="absolute top-1/2 left-[30%] -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full bg-[#8052ff]/20 blur-[130px] pointer-events-none"></div>
-      <div className="absolute top-1/2 left-[70%] -translate-x-1/2 -translate-y-1/2 w-[440px] h-[440px] rounded-full bg-[#00d2d3]/20 blur-[120px] pointer-events-none"></div>
+      {/* Background Volumetric Neural Lighting */}
+      <div className="absolute top-1/2 left-[32%] -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full bg-[#8052ff]/20 blur-[130px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-[68%] -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full bg-[#00d2d3]/20 blur-[120px] pointer-events-none"></div>
 
-      {/* Main Glass Showcase Container */}
-      <div className="relative rounded-3xl overflow-hidden border border-white/[0.08] bg-black/75 backdrop-blur-xl p-6 sm:p-8 lg:p-10 shadow-[0_0_80px_rgba(128,82,255,0.15)]">
+      {/* Main Glass Stage Showcase */}
+      <div className="relative rounded-3xl overflow-hidden border border-white/[0.08] bg-black/80 backdrop-blur-2xl p-6 sm:p-8 lg:p-10 shadow-[0_0_80px_rgba(128,82,255,0.18)]">
         
-        {/* Fully Stretched Flex Grid: Left Stream Cards | Center 3D Interactive Sagittal Canvas | Right Features */}
-        <div className="relative w-full min-h-[480px] sm:min-h-[540px] lg:min-h-[580px] flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-6">
+        {/* Responsive Grid: Left Inflow Cards (26%) | Center Anatomical 3D Brain (48%) | Right Outflow Features (26%) */}
+        <div className="relative w-full min-h-[500px] sm:min-h-[560px] lg:min-h-[600px] flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-4">
           
           {/* =========================================================
-              LEFT COLUMN: Holographic Ingestion Cards
+              LEFT COLUMN: Holographic Clinical Inflow Cards
               ========================================================= */}
           <div className="w-full lg:w-[26%] flex flex-col justify-between gap-4 z-20">
             
             {/* Card 1: ℞ Prescription */}
             <motion.div 
-              whileHover={{ scale: 1.025, x: 5 }}
-              className="p-4 rounded-2xl bg-white/[0.02] border border-[#8052ff]/40 hover:border-[#8052ff] backdrop-blur-md shadow-[0_0_25px_rgba(128,82,255,0.18)] transition-all cursor-pointer group"
+              whileHover={{ scale: 1.03, x: 6 }}
+              onHoverStart={() => setActiveNode('rx')}
+              onHoverEnd={() => setActiveNode(null)}
+              className={`p-4 rounded-2xl bg-black/60 border backdrop-blur-md transition-all cursor-pointer ${
+                activeNode === 'rx' 
+                  ? 'border-[#8052ff] shadow-[0_0_30px_rgba(128,82,255,0.4)]' 
+                  : 'border-[#8052ff]/30 hover:border-[#8052ff]/60'
+              }`}
             >
               <div className="flex items-center justify-between pb-2 border-b border-[#8052ff]/20 mb-2.5">
                 <div className="flex items-center gap-1.5 text-xs font-mono text-[#ffffff]">
@@ -57,8 +75,14 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({ className = ''
 
             {/* Card 2: Lab Report */}
             <motion.div 
-              whileHover={{ scale: 1.025, x: 5 }}
-              className="p-4 rounded-2xl bg-white/[0.02] border border-[#00d2d3]/40 hover:border-[#00d2d3] backdrop-blur-md shadow-[0_0_25px_rgba(0,210,211,0.18)] transition-all cursor-pointer group"
+              whileHover={{ scale: 1.03, x: 6 }}
+              onHoverStart={() => setActiveNode('lab')}
+              onHoverEnd={() => setActiveNode(null)}
+              className={`p-4 rounded-2xl bg-black/60 border backdrop-blur-md transition-all cursor-pointer ${
+                activeNode === 'lab' 
+                  ? 'border-[#00d2d3] shadow-[0_0_30px_rgba(0,210,211,0.4)]' 
+                  : 'border-[#00d2d3]/30 hover:border-[#00d2d3]/60'
+              }`}
             >
               <div className="flex items-center justify-between pb-2 border-b border-[#00d2d3]/20 mb-2.5">
                 <div className="flex items-center gap-1.5 text-xs font-mono text-[#ffffff]">
@@ -77,8 +101,14 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({ className = ''
 
             {/* Card 3: Pathology */}
             <motion.div 
-              whileHover={{ scale: 1.025, x: 5 }}
-              className="p-4 rounded-2xl bg-white/[0.02] border border-[#a855f7]/40 hover:border-[#a855f7] backdrop-blur-md shadow-[0_0_25px_rgba(168,85,247,0.18)] transition-all cursor-pointer group"
+              whileHover={{ scale: 1.03, x: 6 }}
+              onHoverStart={() => setActiveNode('path')}
+              onHoverEnd={() => setActiveNode(null)}
+              className={`p-4 rounded-2xl bg-black/60 border backdrop-blur-md transition-all cursor-pointer ${
+                activeNode === 'path' 
+                  ? 'border-[#a855f7] shadow-[0_0_30px_rgba(168,85,247,0.4)]' 
+                  : 'border-[#a855f7]/30 hover:border-[#a855f7]/60'
+              }`}
             >
               <div className="flex items-center justify-between pb-2 border-b border-[#a855f7]/20 mb-2.5">
                 <div className="flex items-center gap-1.5 text-xs font-mono text-[#ffffff]">
@@ -97,67 +127,87 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({ className = ''
 
 
           {/* =========================================================
-              CENTER: Live 3D Interactive Sagittal Constellation Canvas
+              CENTER: 100% Anatomically Accurate 3D Glowing Neural Brain Model
               ========================================================= */}
           <div className="w-full lg:w-[48%] h-[380px] sm:h-[460px] lg:h-[540px] relative flex items-center justify-center">
             
-            {/* SVG Connecting Bezier Inflow & Outflow Streams */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-60">
+            {/* SVG Connecting Bezier Inflow & Outflow Data Lines */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
               <defs>
-                <linearGradient id="streamGradL1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="glowInflow" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#8052ff" stopOpacity="0.9" />
                   <stop offset="100%" stopColor="#8052ff" stopOpacity="0.1" />
                 </linearGradient>
-                <linearGradient id="streamGradL2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="glowInflowCyan" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#00d2d3" stopOpacity="0.9" />
                   <stop offset="100%" stopColor="#00d2d3" stopOpacity="0.1" />
                 </linearGradient>
-                <linearGradient id="streamGradR" x1="0%" y1="50%" x2="100%" y2="50%">
+                <linearGradient id="glowOutflow" x1="0%" y1="50%" x2="100%" y2="50%">
                   <stop offset="0%" stopColor="#00d2d3" stopOpacity="0.1" />
                   <stop offset="100%" stopColor="#00d2d3" stopOpacity="0.9" />
                 </linearGradient>
               </defs>
 
               {/* Inflow paths from left */}
-              <path d="M 0,120 C 70,120 120,200 190,200" stroke="url(#streamGradL1)" strokeWidth="1.4" fill="none" strokeDasharray="3,3" />
-              <path d="M 0,270 C 80,270 120,250 190,240" stroke="url(#streamGradL2)" strokeWidth="1.4" fill="none" strokeDasharray="3,3" />
-              <path d="M 0,420 C 70,420 130,320 190,300" stroke="url(#streamGradL1)" strokeWidth="1.4" fill="none" strokeDasharray="3,3" />
+              <path d="M 0,110 C 80,110 130,200 200,200" stroke="url(#glowInflow)" strokeWidth={activeNode === 'rx' ? "2.5" : "1.2"} fill="none" strokeDasharray="3,3" className="transition-all duration-300" />
+              <path d="M 0,260 C 90,260 140,240 200,240" stroke="url(#glowInflowCyan)" strokeWidth={activeNode === 'lab' ? "2.5" : "1.2"} fill="none" strokeDasharray="3,3" className="transition-all duration-300" />
+              <path d="M 0,410 C 80,410 140,310 200,290" stroke="url(#glowInflow)" strokeWidth={activeNode === 'path' ? "2.5" : "1.2"} fill="none" strokeDasharray="3,3" className="transition-all duration-300" />
 
               {/* Outflow paths to right */}
-              <path d="M 370,170 C 420,170 460,95 530,95" stroke="url(#streamGradR)" strokeWidth="1.4" fill="none" strokeDasharray="3,3" />
-              <path d="M 380,220 C 430,220 460,180 530,180" stroke="url(#streamGradR)" strokeWidth="1.4" fill="none" strokeDasharray="3,3" />
-              <path d="M 390,270 C 440,270 460,270 530,270" stroke="url(#streamGradR)" strokeWidth="1.4" fill="none" strokeDasharray="3,3" />
-              <path d="M 380,320 C 430,320 460,360 530,360" stroke="url(#streamGradR)" strokeWidth="1.4" fill="none" strokeDasharray="3,3" />
-              <path d="M 370,360 C 420,360 460,445 530,445" stroke="url(#streamGradR)" strokeWidth="1.4" fill="none" strokeDasharray="3,3" />
+              <path d="M 370,160 C 430,160 470,85 540,85" stroke="url(#glowOutflow)" strokeWidth={activeNode === 'safety' ? "2.5" : "1.2"} fill="none" strokeDasharray="3,3" className="transition-all duration-300" />
+              <path d="M 380,210 C 440,210 470,170 540,170" stroke="url(#glowOutflow)" strokeWidth={activeNode === 'summary' ? "2.5" : "1.2"} fill="none" strokeDasharray="3,3" className="transition-all duration-300" />
+              <path d="M 390,260 C 450,260 470,260 540,260" stroke="url(#glowOutflow)" strokeWidth={activeNode === 'voice' ? "2.5" : "1.2"} fill="none" strokeDasharray="3,3" className="transition-all duration-300" />
+              <path d="M 380,310 C 440,310 470,350 540,350" stroke="url(#glowOutflow)" strokeWidth={activeNode === 'alerts' ? "2.5" : "1.2"} fill="none" strokeDasharray="3,3" className="transition-all duration-300" />
+              <path d="M 370,350 C 430,350 470,430 540,430" stroke="url(#glowOutflow)" strokeWidth={activeNode === 'health' ? "2.5" : "1.2"} fill="none" strokeDasharray="3,3" className="transition-all duration-300" />
             </svg>
 
-            {/* The Live Interactive 3D Sagittal Particle Constellation */}
-            <div className="relative w-full h-full z-10">
-              <ConstellationCanvas variant="brain" interactive={true} />
-            </div>
+            {/* Central 3D Interactive Glowing Brain with Mouse Tilt Parallax */}
+            <motion.div 
+              className="relative w-full h-full flex items-center justify-center"
+              animate={{
+                rotateX: -mousePos.y * 0.4,
+                rotateY: mousePos.x * 0.4,
+              }}
+              transition={{ type: 'spring', damping: 25, stiffness: 120 }}
+              style={{ perspective: 1000 }}
+            >
+              {/* High-Resolution Glowing Anatomical Sagittal Brain Image */}
+              <img 
+                src="/images/neural-brain-center.png" 
+                alt="VaidyaVaani 3D Neural Brain Model" 
+                className="w-full h-full max-h-[460px] object-contain pointer-events-none select-none drop-shadow-[0_0_45px_rgba(128,82,255,0.4)]"
+              />
 
-            {/* Central HUD Pill */}
-            <div className="absolute bottom-2 px-3.5 py-1.5 rounded-full bg-black/80 border border-white/10 backdrop-blur-md flex items-center gap-2 pointer-events-none z-20">
+              {/* Ambient Micro Particle Spark Overlay */}
+              <div className="absolute inset-0 pointer-events-none mix-blend-screen opacity-30">
+                <ConstellationCanvas variant="ambient" particleCount={50} interactive={false} />
+              </div>
+            </motion.div>
+
+            {/* Central Holographic HUD Indicator */}
+            <div className="absolute bottom-2 px-4 py-1.5 rounded-full bg-black/80 border border-white/10 backdrop-blur-md flex items-center gap-2 pointer-events-none z-20 shadow-[0_0_20px_rgba(0,0,0,0.8)]">
               <span className="w-2 h-2 rounded-full bg-[#8052ff] animate-ping"></span>
               <span className="text-[10px] font-mono text-[#bdbdbd] tracking-wider uppercase">
-                3D Sagittal Neural Constellation / Active
+                3D Neural Brain Constellation / Active
               </span>
             </div>
           </div>
 
 
           {/* =========================================================
-              RIGHT COLUMN: Interactive Feature Anchor Nodes
+              RIGHT COLUMN: Interactive Clinical Feature Nodes
               ========================================================= */}
           <div className="w-full lg:w-[26%] flex flex-col justify-between gap-3 z-20">
             
             {/* Feature 1: Medicine Safety */}
             <motion.div 
-              whileHover={{ scale: 1.03, x: -5 }}
-              onHoverStart={() => setHoveredFeature('safety')}
-              onHoverEnd={() => setHoveredFeature(null)}
-              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-white/[0.02] border backdrop-blur-md transition-all cursor-pointer ${
-                hoveredFeature === 'safety' ? 'border-[#00d2d3] shadow-[0_0_25px_rgba(0,210,211,0.3)]' : 'border-white/[0.08]'
+              whileHover={{ scale: 1.03, x: -6 }}
+              onHoverStart={() => setActiveNode('safety')}
+              onHoverEnd={() => setActiveNode(null)}
+              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-black/60 border backdrop-blur-md transition-all cursor-pointer ${
+                activeNode === 'safety' 
+                  ? 'border-[#00d2d3] shadow-[0_0_30px_rgba(0,210,211,0.4)]' 
+                  : 'border-white/[0.08] hover:border-[#00d2d3]/50'
               }`}
             >
               <div className="w-9 h-9 rounded-full bg-[#00d2d3]/15 border border-[#00d2d3]/40 flex items-center justify-center text-[#00d2d3] shrink-0">
@@ -175,11 +225,13 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({ className = ''
 
             {/* Feature 2: Report Summary */}
             <motion.div 
-              whileHover={{ scale: 1.03, x: -5 }}
-              onHoverStart={() => setHoveredFeature('summary')}
-              onHoverEnd={() => setHoveredFeature(null)}
-              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-white/[0.02] border backdrop-blur-md transition-all cursor-pointer ${
-                hoveredFeature === 'summary' ? 'border-[#8052ff] shadow-[0_0_25px_rgba(128,82,255,0.3)]' : 'border-white/[0.08]'
+              whileHover={{ scale: 1.03, x: -6 }}
+              onHoverStart={() => setActiveNode('summary')}
+              onHoverEnd={() => setActiveNode(null)}
+              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-black/60 border backdrop-blur-md transition-all cursor-pointer ${
+                activeNode === 'summary' 
+                  ? 'border-[#8052ff] shadow-[0_0_30px_rgba(128,82,255,0.4)]' 
+                  : 'border-white/[0.08] hover:border-[#8052ff]/50'
               }`}
             >
               <div className="w-9 h-9 rounded-full bg-[#8052ff]/15 border border-[#8052ff]/40 flex items-center justify-center text-[#8052ff] shrink-0">
@@ -197,11 +249,13 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({ className = ''
 
             {/* Feature 3: Voice Assistant */}
             <motion.div 
-              whileHover={{ scale: 1.03, x: -5 }}
-              onHoverStart={() => setHoveredFeature('voice')}
-              onHoverEnd={() => setHoveredFeature(null)}
-              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-white/[0.02] border backdrop-blur-md transition-all cursor-pointer ${
-                hoveredFeature === 'voice' ? 'border-[#00d2d3] shadow-[0_0_25px_rgba(0,210,211,0.3)]' : 'border-white/[0.08]'
+              whileHover={{ scale: 1.03, x: -6 }}
+              onHoverStart={() => setActiveNode('voice')}
+              onHoverEnd={() => setActiveNode(null)}
+              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-black/60 border backdrop-blur-md transition-all cursor-pointer ${
+                activeNode === 'voice' 
+                  ? 'border-[#00d2d3] shadow-[0_0_30px_rgba(0,210,211,0.4)]' 
+                  : 'border-white/[0.08] hover:border-[#00d2d3]/50'
               }`}
             >
               <div className="w-9 h-9 rounded-full bg-[#00d2d3]/15 border border-[#00d2d3]/40 flex items-center justify-center text-[#00d2d3] shrink-0">
@@ -219,11 +273,13 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({ className = ''
 
             {/* Feature 4: Smart Alerts */}
             <motion.div 
-              whileHover={{ scale: 1.03, x: -5 }}
-              onHoverStart={() => setHoveredFeature('alerts')}
-              onHoverEnd={() => setHoveredFeature(null)}
-              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-white/[0.02] border backdrop-blur-md transition-all cursor-pointer ${
-                hoveredFeature === 'alerts' ? 'border-[#a855f7] shadow-[0_0_25px_rgba(168,85,247,0.3)]' : 'border-white/[0.08]'
+              whileHover={{ scale: 1.03, x: -6 }}
+              onHoverStart={() => setActiveNode('alerts')}
+              onHoverEnd={() => setActiveNode(null)}
+              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-black/60 border backdrop-blur-md transition-all cursor-pointer ${
+                activeNode === 'alerts' 
+                  ? 'border-[#a855f7] shadow-[0_0_30px_rgba(168,85,247,0.4)]' 
+                  : 'border-white/[0.08] hover:border-[#a855f7]/50'
               }`}
             >
               <div className="w-9 h-9 rounded-full bg-[#a855f7]/15 border border-[#a855f7]/40 flex items-center justify-center text-[#a855f7] shrink-0">
@@ -241,11 +297,13 @@ export const HeroNeuralBrain: React.FC<HeroNeuralBrainProps> = ({ className = ''
 
             {/* Feature 5: Better Health */}
             <motion.div 
-              whileHover={{ scale: 1.03, x: -5 }}
-              onHoverStart={() => setHoveredFeature('health')}
-              onHoverEnd={() => setHoveredFeature(null)}
-              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-white/[0.02] border backdrop-blur-md transition-all cursor-pointer ${
-                hoveredFeature === 'health' ? 'border-[#ff6b81] shadow-[0_0_25px_rgba(255,107,129,0.3)]' : 'border-white/[0.08]'
+              whileHover={{ scale: 1.03, x: -6 }}
+              onHoverStart={() => setActiveNode('health')}
+              onHoverEnd={() => setActiveNode(null)}
+              className={`flex items-center gap-3.5 p-3 rounded-2xl bg-black/60 border backdrop-blur-md transition-all cursor-pointer ${
+                activeNode === 'health' 
+                  ? 'border-[#ff6b81] shadow-[0_0_30px_rgba(255,107,129,0.4)]' 
+                  : 'border-white/[0.08] hover:border-[#ff6b81]/50'
               }`}
             >
               <div className="w-9 h-9 rounded-full bg-[#ff6b81]/15 border border-[#ff6b81]/40 flex items-center justify-center text-[#ff6b81] shrink-0">
