@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
@@ -8,9 +9,14 @@ import {
   AlertTriangle, 
   CheckCircle2, 
   Cpu, 
-  Sparkles,
   Lock,
-  Globe2
+  Globe2,
+  Volume2,
+  VolumeX,
+  ScanLine,
+  FileSpreadsheet,
+  Layers,
+  HeartPulse
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -31,6 +37,12 @@ const itemVariants: Variants = {
 
 const Landing = () => {
   const navigate = useNavigate();
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [activeSeverityTab, setActiveSeverityTab] = useState<'low' | 'mod' | 'crit'>('mod');
+
+  const toggleVoiceDemo = () => {
+    setIsPlayingAudio(!isPlayingAudio);
+  };
 
   return (
     <div className="min-h-screen bg-[#000000] text-[#ffffff] font-sans overflow-x-hidden selection:bg-[#8052ff] selection:text-[#ffffff]">
@@ -75,7 +87,7 @@ const Landing = () => {
             variants={itemVariants}
             className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-10 max-w-[480px]"
           >
-            Upload prescriptions and clinical lab reports. Decode complex medical biomarkers, simulate drug-drug interactions, and command your health data on a single unified canvas.
+            Upload prescriptions and clinical lab reports. Decode complex medical biomarkers, simulate drug-drug interactions across prescriptions, and receive spoken regional explanations in seconds.
           </motion.p>
           
           {/* Primary Action Button: Electric Iris (#8052ff) Pill */}
@@ -89,10 +101,10 @@ const Landing = () => {
             </button>
 
             <a 
-              href="#features" 
+              href="#pipeline" 
               className="text-sm font-normal text-[#9a9a9a] hover:text-[#ffffff] tracking-[0.02em] transition-colors flex items-center gap-1.5"
             >
-              Explore Capabilities <span className="text-[#8052ff]">↓</span>
+              How It Works <span className="text-[#8052ff]">↓</span>
             </a>
           </motion.div>
 
@@ -102,18 +114,18 @@ const Landing = () => {
             className="mt-14 pt-8 border-t border-white/[0.08] flex items-center gap-8"
           >
             <div>
-              <div className="text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">99.4%</div>
-              <div className="text-[11px] font-medium text-[#9a9a9a] uppercase tracking-wider mt-0.5">Extraction Accuracy</div>
+              <div className="text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">95.4%</div>
+              <div className="text-[11px] font-medium text-[#9a9a9a] uppercase tracking-wider mt-0.5">OCR Extraction</div>
             </div>
             <div className="w-px h-8 bg-white/10"></div>
             <div>
-              <div className="text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">&lt; 3.2s</div>
+              <div className="text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">&lt; 4.8s</div>
               <div className="text-[11px] font-medium text-[#9a9a9a] uppercase tracking-wider mt-0.5">Neural Synthesis</div>
             </div>
             <div className="w-px h-8 bg-white/10"></div>
             <div>
               <div className="text-2xl font-normal text-[#ffffff] tracking-[-0.03em]">100%</div>
-              <div className="text-[11px] font-medium text-[#9a9a9a] uppercase tracking-wider mt-0.5">Client Encrypted</div>
+              <div className="text-[11px] font-medium text-[#9a9a9a] uppercase tracking-wider mt-0.5">HIPAA Client Encrypted</div>
             </div>
           </motion.div>
         </motion.div>
@@ -146,6 +158,76 @@ const Landing = () => {
 
 
       {/* =========================================================
+          PIPELINE SECTION: Upload → OCR → AI Analysis → Storage
+          ========================================================= */}
+      <section id="pipeline" className="relative z-10 py-24 border-t border-white/[0.06]">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+          
+          <div className="mb-16">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] mb-3">
+              Processing Pipeline (PRD Architecture)
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-normal text-[#ffffff] tracking-[-0.04em]">
+              From messy prescription to crystal clarity in four stages.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            
+            {/* Step 1 */}
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+              <div className="w-10 h-10 rounded-full bg-[#8052ff]/20 border border-[#8052ff]/40 flex items-center justify-center text-xs font-mono text-[#8052ff] mb-6">
+                01
+              </div>
+              <ScanLine className="w-5 h-5 text-[#ffffff] mb-3" />
+              <h3 className="text-base font-normal text-[#ffffff] mb-2">Multimodal Ingestion</h3>
+              <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
+                Accepts camera scans, PDF lab printouts, and photo gallery uploads with client-side sanitization.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+              <div className="w-10 h-10 rounded-full bg-[#ffb829]/20 border border-[#ffb829]/40 flex items-center justify-center text-xs font-mono text-[#ffb829] mb-6">
+                02
+              </div>
+              <FileSpreadsheet className="w-5 h-5 text-[#ffffff] mb-3" />
+              <h3 className="text-base font-normal text-[#ffffff] mb-2">Neural OCR Extraction</h3>
+              <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
+                Deciphers doctor handwriting, tabular biomarker ranges, and dosage abbreviations with high precision.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+              <div className="w-10 h-10 rounded-full bg-[#15846e]/20 border border-[#15846e]/40 flex items-center justify-center text-xs font-mono text-[#15846e] mb-6">
+                03
+              </div>
+              <Layers className="w-5 h-5 text-[#ffffff] mb-3" />
+              <h3 className="text-base font-normal text-[#ffffff] mb-2">Pharmacopeia Analysis</h3>
+              <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
+                Cross-references active prescriptions against contraindication databases to detect lethal interactions.
+              </p>
+            </div>
+
+            {/* Step 4 */}
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+              <div className="w-10 h-10 rounded-full bg-[#8052ff]/20 border border-[#8052ff]/40 flex items-center justify-center text-xs font-mono text-[#8052ff] mb-6">
+                04
+              </div>
+              <Volume2 className="w-5 h-5 text-[#ffffff] mb-3" />
+              <h3 className="text-base font-normal text-[#ffffff] mb-2">Voice & Dialect Audio</h3>
+              <p className="text-xs font-light text-[#9a9a9a] leading-relaxed">
+                Generates spoken summaries in Hindi & regional languages so elderly and rural patients stay safe.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* =========================================================
           SECTION 1: Two-Column Zigzag — Interaction Intelligence
           ========================================================= */}
       <section id="features" className="relative z-10 py-24 border-t border-white/[0.06]">
@@ -161,14 +243,42 @@ const Landing = () => {
               transition={{ duration: 0.7 }}
             >
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] mb-4">
-                Safety Intelligence
+                Safety Matrix & Interaction Radar
               </div>
               <h2 className="text-4xl sm:text-5xl lg:text-[56px] font-normal text-[#ffffff] leading-[1.06] tracking-[-0.04em] mb-6">
                 Cross-reference active prescriptions in milliseconds.
               </h2>
               <p className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-8 max-w-[500px]">
-                Eliminate uncertainty when managing multi-drug schedules. Our neural engine cross-checks contraindications, dosage spacing, and food interactions across international pharmacology databases.
+                Eliminate uncertainty when managing multi-drug schedules across different doctors. Our neural engine checks contraindications, dosage spacing, and food interactions across international pharmacology databases.
               </p>
+
+              {/* Severity Tab Selector */}
+              <div className="flex gap-2 p-1 bg-white/[0.04] rounded-full border border-white/10 w-fit mb-6">
+                <button 
+                  onClick={() => setActiveSeverityTab('low')}
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+                    activeSeverityTab === 'low' ? 'bg-[#15846e] text-white' : 'text-[#9a9a9a]'
+                  }`}
+                >
+                  Low Risk
+                </button>
+                <button 
+                  onClick={() => setActiveSeverityTab('mod')}
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+                    activeSeverityTab === 'mod' ? 'bg-[#ffb829] text-black font-bold' : 'text-[#9a9a9a]'
+                  }`}
+                >
+                  Moderate
+                </button>
+                <button 
+                  onClick={() => setActiveSeverityTab('crit')}
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+                    activeSeverityTab === 'crit' ? 'bg-red-500 text-white' : 'text-[#9a9a9a]'
+                  }`}
+                >
+                  Critical Risk
+                </button>
+              </div>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
@@ -193,7 +303,7 @@ const Landing = () => {
               </div>
             </motion.div>
 
-            {/* Right Visual Simulation (Floating on black void, no heavy containers) */}
+            {/* Right Visual Simulation (Floating on black void) */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -201,13 +311,18 @@ const Landing = () => {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              {/* Interaction Matrix Visual Card floating */}
               <div className="relative p-8 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] backdrop-blur-xl">
                 
                 <div className="flex items-center justify-between pb-6 border-b border-white/[0.06] mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full bg-[#ffb829] animate-pulse"></div>
-                    <span className="text-xs font-mono text-[#ffffff] uppercase tracking-widest">Active Interaction Warning</span>
+                    <div className={`w-3 h-3 rounded-full ${
+                      activeSeverityTab === 'low' ? 'bg-[#15846e]' :
+                      activeSeverityTab === 'mod' ? 'bg-[#ffb829] animate-pulse' : 'bg-red-500 animate-ping'
+                    }`}></div>
+                    <span className="text-xs font-mono text-[#ffffff] uppercase tracking-widest">
+                      {activeSeverityTab === 'low' ? 'Low Risk: Food Timing' :
+                       activeSeverityTab === 'mod' ? 'Moderate: Spacing Adjustment' : 'Critical: Adverse Interaction'}
+                    </span>
                   </div>
                   <span className="text-[11px] font-mono text-[#9a9a9a]">Confidence: 99.8%</span>
                 </div>
@@ -217,38 +332,53 @@ const Landing = () => {
                   <div className="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-xl bg-[#8052ff]/20 flex items-center justify-center text-[#8052ff] font-mono text-xs font-semibold">
-                        A1
+                        Rx1
                       </div>
                       <div>
-                        <div className="text-sm font-normal text-[#ffffff]">Atenolol — 50mg</div>
-                        <div className="text-[11px] font-light text-[#9a9a9a]">Beta-blocker (Hypertension)</div>
+                        <div className="text-sm font-normal text-[#ffffff]">
+                          {activeSeverityTab === 'crit' ? 'Warfarin — 5mg' : 'Atenolol — 50mg'}
+                        </div>
+                        <div className="text-[11px] font-light text-[#9a9a9a]">
+                          {activeSeverityTab === 'crit' ? 'Anticoagulant (Blood Thinner)' : 'Beta-blocker (Cardiovascular)'}
+                        </div>
                       </div>
                     </div>
-                    <span className="text-xs font-mono text-[#8052ff]">Primary Rx</span>
+                    <span className="text-xs font-mono text-[#8052ff]">Doctor A</span>
                   </div>
 
                   <div className="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-xl bg-[#ffb829]/20 flex items-center justify-center text-[#ffb829] font-mono text-xs font-semibold">
-                        M2
+                        Rx2
                       </div>
                       <div>
-                        <div className="text-sm font-normal text-[#ffffff]">Magnesium Hydroxide</div>
-                        <div className="text-[11px] font-light text-[#9a9a9a]">Antacid Compound</div>
+                        <div className="text-sm font-normal text-[#ffffff]">
+                          {activeSeverityTab === 'crit' ? 'Aspirin — 325mg' : 'Magnesium Hydroxide'}
+                        </div>
+                        <div className="text-[11px] font-light text-[#9a9a9a]">
+                          {activeSeverityTab === 'crit' ? 'NSAID (Pain / Inflammation)' : 'Antacid Compound'}
+                        </div>
                       </div>
                     </div>
-                    <span className="text-xs font-mono text-[#ffb829]">Over-the-Counter</span>
+                    <span className="text-xs font-mono text-[#ffb829]">Doctor B</span>
                   </div>
                 </div>
 
-                {/* Saffron Action Recommendation */}
-                <div className="p-4 rounded-2xl bg-[#ffb829]/10 border border-[#ffb829]/20">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-[#ffb829] uppercase tracking-wider mb-1">
-                    <AlertTriangle className="w-3.5 h-3.5" />
-                    Recommended Protocol
+                {/* Action Recommendation Box */}
+                <div className={`p-4 rounded-2xl border ${
+                  activeSeverityTab === 'crit' ? 'bg-red-950/40 border-red-500/30' :
+                  activeSeverityTab === 'low' ? 'bg-[#15846e]/10 border-[#15846e]/20' : 'bg-[#ffb829]/10 border-[#ffb829]/20'
+                }`}>
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-1">
+                    <AlertTriangle className={`w-3.5 h-3.5 ${activeSeverityTab === 'crit' ? 'text-red-400' : 'text-[#ffb829]'}`} />
+                    <span className={activeSeverityTab === 'crit' ? 'text-red-400' : 'text-[#ffb829]'}>
+                      Clinical Safety Recommendation
+                    </span>
                   </div>
                   <div className="text-xs font-light text-[#ffffff]/90 leading-relaxed">
-                    Space dosage by at least <span className="font-normal text-[#ffb829]">2 hours</span>. Antacids can reduce oral absorption of Atenolol by up to 35%.
+                    {activeSeverityTab === 'crit' && 'High hemorrhagic risk. Concomitant use increases severe internal bleeding incidence. Consult prescribing physician immediately.'}
+                    {activeSeverityTab === 'mod' && 'Space dosage by at least 2 hours. Antacids reduce Atenolol bioavailability by up to 35%.'}
+                    {activeSeverityTab === 'low' && 'Take with food to minimize gastric irritation. No pharmacokinetic antagonism detected.'}
                   </div>
                 </div>
 
@@ -288,7 +418,6 @@ const Landing = () => {
 
                 {/* Biomarker Items */}
                 <div className="space-y-4">
-                  {/* Item 1 */}
                   <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between">
                     <div>
                       <div className="text-xs font-mono text-[#9a9a9a]">HEMOGLOBIN A1C</div>
@@ -300,7 +429,6 @@ const Landing = () => {
                     </div>
                   </div>
 
-                  {/* Item 2 */}
                   <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between">
                     <div>
                       <div className="text-xs font-mono text-[#9a9a9a]">FASTING BLOOD GLUCOSE</div>
@@ -312,7 +440,6 @@ const Landing = () => {
                     </div>
                   </div>
 
-                  {/* Item 3 */}
                   <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between">
                     <div>
                       <div className="text-xs font-mono text-[#9a9a9a]">LIPID PROFILE (LDL-C)</div>
@@ -343,7 +470,7 @@ const Landing = () => {
                 Decode lab reports without the confusing jargon.
               </h2>
               <p className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-8 max-w-[500px]">
-                Stop cross-referencing obscure acronyms. VaidyaVaani contextualizes complete metabolic panels, lipid panels, and hormonal assays into crisp, plain-language summaries with actionable doctor talking points.
+                Stop cross-referencing obscure acronyms. VaidyaVaani contextualizes complete metabolic panels, lipid panels, thyroid markers, and radiology notes into crisp, plain-language summaries with actionable doctor talking points.
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
@@ -362,7 +489,7 @@ const Landing = () => {
 
 
       {/* =========================================================
-          SECTION 3: Linguistic & Neural Dialects (हिन्दी & Regional)
+          SECTION 3: Linguistic & Voice Narration (हिन्दी & Regional)
           ========================================================= */}
       <section id="intelligence" className="relative z-10 py-24 border-t border-white/[0.06]">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
@@ -377,18 +504,46 @@ const Landing = () => {
               transition={{ duration: 0.7 }}
             >
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] mb-4">
-                Multi-Lingual Cognition
+                Regional Cognition & Voice Narration
               </div>
               <h2 className="text-4xl sm:text-5xl lg:text-[56px] font-normal text-[#ffffff] leading-[1.06] tracking-[-0.04em] mb-6">
-                Native intelligence in हिन्दी and regional languages.
+                Native voice intelligence in हिन्दी and regional languages.
               </h2>
               <p className="text-base sm:text-lg text-[#bdbdbd] font-light leading-relaxed mb-8 max-w-[500px]">
-                Healthcare belongs to everyone. Our natural language pipeline translates and synthesizes doctor prescriptions into clear audio and visual summaries in regional Indian dialects.
+                Healthcare belongs to everyone. Our natural language pipeline reads complex reports aloud and translates doctor prescriptions into clear audio guidance for elderly and rural caregivers.
               </p>
+
+              {/* Interactive Voice Player Pill */}
+              <div className="p-4 rounded-3xl bg-white/[0.03] border border-white/10 flex items-center justify-between max-w-md mb-6">
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={toggleVoiceDemo}
+                    className="w-10 h-10 rounded-full bg-[#8052ff] text-white flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(128,82,255,0.4)]"
+                  >
+                    {isPlayingAudio ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                  </button>
+                  <div>
+                    <div className="text-xs font-normal text-[#ffffff]">Hindi Voice Synthesis Demo</div>
+                    <div className="text-[11px] font-light text-[#9a9a9a]">
+                      {isPlayingAudio ? 'Playing synthetic audio...' : 'Click to hear audio report summary'}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1">
+                  {[40, 70, 30, 90, 50, 80, 45].map((height, i) => (
+                    <div 
+                      key={i} 
+                      className={`w-1 bg-[#8052ff] rounded-full transition-all duration-300 ${isPlayingAudio ? 'animate-pulse' : 'opacity-40'}`}
+                      style={{ height: `${isPlayingAudio ? height * 0.35 : 8}px` }}
+                    />
+                  ))}
+                </div>
+              </div>
 
               <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03]">
                 <Globe2 className="w-4 h-4 text-[#ffb829]" />
-                <span className="text-xs font-mono text-[#ffffff]">Hindi • Bengali • Tamil • Telugu • Marathi</span>
+                <span className="text-xs font-mono text-[#ffffff]">Hindi • Bengali • Tamil • Telugu • Marathi • Gujarati</span>
               </div>
             </motion.div>
 
@@ -405,10 +560,10 @@ const Landing = () => {
                   स्वास्थ्य ज्ञान
                 </div>
                 <p className="text-sm font-light text-[#bdbdbd] max-w-xs mx-auto">
-                  "आपकी रिपोर्ट के अनुसार दवा को भोजन के 30 मिनट बाद लेना सर्वोत्तम है।"
+                  "आपकी रिपोर्ट के अनुसार रक्त शर्करा 108 mg/dL है। दवा को भोजन के 30 मिनट बाद लेना सर्वोत्तम है।"
                 </p>
                 <div className="inline-block px-3 py-1 rounded-full bg-[#8052ff]/20 text-[#8052ff] font-mono text-[11px] uppercase tracking-wider">
-                  Neural Dialect Pipeline Active
+                  Real-Time Hindi Narration Ready
                 </div>
               </div>
             </motion.div>
@@ -426,10 +581,10 @@ const Landing = () => {
           
           <div className="mb-16">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8052ff] mb-4">
-              Architectural Principles
+              Architectural Principles (PRD Compliance)
             </div>
             <h2 className="text-4xl sm:text-5xl font-normal text-[#ffffff] tracking-[-0.04em]">
-              Designed for absolute privacy & rigor.
+              Built for absolute privacy, precision & universal access.
             </h2>
           </div>
 
@@ -440,9 +595,9 @@ const Landing = () => {
               <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6">
                 <Lock className="w-4 h-4 text-[#8052ff]" />
               </div>
-              <h3 className="text-xl font-normal text-[#ffffff] tracking-tight mb-3">Zero Knowledge Encryption</h3>
+              <h3 className="text-xl font-normal text-[#ffffff] tracking-tight mb-3">Zero-Knowledge Vault</h3>
               <p className="text-sm font-light text-[#9a9a9a] leading-relaxed">
-                Medical records are cryptographically sealed in client-side vaults. Your private diagnostic data is never indexed or used for third-party training.
+                Medical records are cryptographically sealed in client-side vaults. Your diagnostic data is processed in transient memory and never indexed for advertising.
               </p>
             </div>
 
@@ -453,18 +608,18 @@ const Landing = () => {
               </div>
               <h3 className="text-xl font-normal text-[#ffffff] tracking-tight mb-3">Pharmacopeia Verification</h3>
               <p className="text-sm font-light text-[#9a9a9a] leading-relaxed">
-                Every medication interaction check is cross-referenced with accredited medical monographs, dosage guidelines, and international registries.
+                Every drug interaction check is cross-referenced with accredited medical monographs, dosage schedules, and international pharmaceutical registries.
               </p>
             </div>
 
             {/* Principle 3 */}
             <div>
               <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6">
-                <Sparkles className="w-4 h-4 text-[#15846e]" />
+                <HeartPulse className="w-4 h-4 text-[#15846e]" />
               </div>
-              <h3 className="text-xl font-normal text-[#ffffff] tracking-tight mb-3">Weightless Clarity</h3>
+              <h3 className="text-xl font-normal text-[#ffffff] tracking-tight mb-3">Empowering Caregivers</h3>
               <p className="text-sm font-light text-[#9a9a9a] leading-relaxed">
-                Stripped of extraneous visual noise. We believe cognitive clarity in personal health is achieved through minimal, focused typographic hierarchy.
+                Designed to eliminate anxiety for chronic disease patients and family members managing multi-doctor prescriptions simultaneously.
               </p>
             </div>
 
