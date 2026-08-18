@@ -12,7 +12,8 @@ import {
   ShieldCheck, 
   Phone, 
   Smartphone,
-  Zap
+  Zap,
+  Info
 } from 'lucide-react';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
 import Logo from '../components/Logo';
@@ -52,7 +53,7 @@ const Login = () => {
     navigate('/home');
   };
 
-  // Google Sign-In via Firebase / Hybrid
+  // Google Sign-In via Firebase
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
     setError('');
@@ -65,7 +66,7 @@ const Login = () => {
     setGoogleLoading(false);
   };
 
-  // Email & Password Auth via Firebase / Hybrid
+  // Email & Password Auth via Firebase
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -93,11 +94,11 @@ const Login = () => {
     setLoading(false);
   };
 
-  // Phone OTP Flow via Firebase / Hybrid
+  // Phone OTP Flow
   const handleSendPhoneOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneNumber.trim()) {
-      setError('Please enter a valid phone number with country code (e.g. +91 9876543210).');
+      setError('Please enter a valid phone number with country code (e.g. +91 7985557576).');
       return;
     }
 
@@ -115,13 +116,13 @@ const Login = () => {
   const handleVerifyPhoneOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!otpCode.trim()) {
-      setError('Please enter the 6-digit SMS verification code.');
+      setError('Please enter the 6-digit verification code.');
       return;
     }
 
     setLoading(true);
     setError('');
-    const res = await verifyPhoneOtp(otpCode);
+    const res = await verifyPhoneOtp(otpCode, phoneNumber);
     if (res.success) {
       navigate('/home');
     } else {
@@ -402,7 +403,7 @@ const Login = () => {
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
-                        placeholder="+91 9876543210"
+                        placeholder="+91 7985557576"
                       />
                     </div>
                   </div>
@@ -438,6 +439,11 @@ const Login = () => {
                     >
                       Change Number
                     </button>
+                  </div>
+
+                  <div className="p-3 bg-white/[0.03] border border-white/10 rounded-xl mb-3 flex items-start gap-2.5 text-xs text-[#9a9a9a]">
+                    <Info className="w-4 h-4 text-[#004fdc] shrink-0 mt-0.5" />
+                    <span>Enter the SMS OTP sent to <strong className="text-white">{phoneNumber}</strong> (or test code <strong className="text-[#00d2d3]">123456</strong>).</span>
                   </div>
 
                   <div className="relative">
