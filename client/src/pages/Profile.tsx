@@ -22,6 +22,7 @@ import {
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
+import { useAuth } from '../context/AuthContext';
 
 interface MemberData {
   id: string;
@@ -97,9 +98,22 @@ const INITIAL_PROFILES: MemberData[] = [
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
-  // Multi-Patient / Family Profiles
-  const [profiles, setProfiles] = useState<MemberData[]>(INITIAL_PROFILES);
+  const userAccountName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? `Patient (${user.phoneNumber})` : 'Primary Patient'));
+
+  // Multi-Patient / Family Profiles initialized with active user's name
+  const [profiles, setProfiles] = useState<MemberData[]>(() => {
+    return INITIAL_PROFILES.map((p, idx) => {
+      if (idx === 0) {
+        return {
+          ...p,
+          name: userAccountName
+        };
+      }
+      return p;
+    });
+  });
   const activeProfile = profiles.find(p => p.active) || profiles[0];
 
   // Editable vitals toggle
@@ -304,9 +318,21 @@ const Profile = () => {
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-1">
                 {activeProfile.relation}
               </div>
-              <h1 className="text-3xl sm:text-4xl font-normal text-white tracking-tight">
-                {activeProfile.name}
-              </h1>
+              {isEditingVitals ? (
+                <div className="flex items-center gap-2 mb-1">
+                  <input
+                    type="text"
+                    value={activeProfile.name}
+                    onChange={(e) => handleUpdateActiveVitals('name', e.target.value)}
+                    className="bg-[#111115] border border-white/20 rounded-xl px-3 py-1 text-xl font-normal text-white outline-none focus:border-[#15846e]"
+                    placeholder="Patient Name"
+                  />
+                </div>
+              ) : (
+                <h1 className="text-3xl sm:text-4xl font-normal text-white tracking-tight">
+                  {activeProfile.name}
+                </h1>
+              )}
               <p className="text-xs font-light text-[#9a9a9a] mt-1">
                 Age: {activeProfile.age} • Gender: {activeProfile.gender} • Blood Group: <span className="text-white font-medium">{activeProfile.bloodGroup}</span>
               </p>

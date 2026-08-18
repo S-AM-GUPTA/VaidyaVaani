@@ -15,8 +15,10 @@ const NOTIFICATIONS = [
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
   const { currentLanguage, setLanguage, t } = useLanguage();
+  
+  const userDisplayName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : t('member')));
   
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -254,7 +256,7 @@ const Navbar = () => {
                     <div className="w-8 h-8 rounded-full bg-[#15846e]/20 border border-[#15846e]/40 flex items-center justify-center text-[#ffffff] shadow-[0_0_15px_rgba(21,132,110,0.3)]">
                       <User className="w-4 h-4 text-[#15846e]" />
                     </div>
-                    <span className="font-normal text-[#ffffff] text-xs hidden sm:inline">{t('member')}</span>
+                    <span className="font-normal text-[#ffffff] text-xs hidden sm:inline max-w-[120px] truncate">{userDisplayName}</span>
                     <ChevronDown className="w-3 h-3 text-[#9a9a9a]" />
                   </div>
 
@@ -268,7 +270,7 @@ const Navbar = () => {
                         className="absolute right-0 mt-2 w-52 rounded-2xl bg-[#0d0d12] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] p-2 z-50 backdrop-blur-2xl"
                       >
                         <div className="px-3 py-2 border-b border-white/[0.06] mb-1">
-                          <div className="text-xs font-medium text-white">{t('member')}</div>
+                          <div className="text-xs font-medium text-white truncate">{userDisplayName}</div>
                           <div className="text-[10px] text-[#15846e] font-mono">{t('zeroKnowledgeVault')}</div>
                         </div>
 
