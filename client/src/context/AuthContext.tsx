@@ -44,6 +44,12 @@ const isRealFirebaseConfigured = (): boolean => {
 
 const formatFirebaseAuthError = (error: any): string => {
   const code = error?.code || '';
+  const message = error?.message || '';
+
+  if (message.includes('reCAPTCHA client element has been removed')) {
+    return 'reCAPTCHA refreshed. Please click "Send SMS Verification Code" again.';
+  }
+
   switch (code) {
     case 'auth/invalid-email':
       return 'Invalid email address format.';
@@ -60,15 +66,19 @@ const formatFirebaseAuthError = (error: any): string => {
     case 'auth/unauthorized-domain':
       return 'This domain is not authorized for OAuth operations in Firebase Console.';
     case 'auth/invalid-phone-number':
-      return 'Please enter a valid phone number with country code (e.g. +91 9876543210).';
+      return 'Please enter a valid phone number with country code (e.g. +91 8604994330).';
     case 'auth/invalid-verification-code':
       return 'Invalid 6-digit SMS verification code.';
     case 'auth/code-expired':
       return 'Verification code has expired. Please request a new code.';
     case 'auth/too-many-requests':
-      return 'Too many attempts. Access temporarily blocked. Please try again later.';
+      return 'Too many SMS requests sent to this number. Please wait or use test number in Firebase Console.';
+    case 'auth/quota-exceeded':
+      return 'SMS quota exceeded for project. Please enable billing or add a test phone number in Firebase Console.';
+    case 'auth/operation-not-allowed':
+      return 'Phone Authentication is not enabled in Firebase Console. Go to Build > Authentication > Sign-in method > Phone to enable.';
     default:
-      return error?.message || 'Authentication failed. Please check your credentials and try again.';
+      return message || 'Authentication failed. Please check your credentials and try again.';
   }
 };
 
@@ -93,7 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const profile: UserProfile = {
               uid: fbUser.uid,
               email: fbUser.email,
-              displayName: fbUser.displayName || (fbUser.email ? fbUser.email.split('@')[0] : 'Patient'),
+              displayName: fbUser.displayName || (fbUser.phoneNumber ? `Patient (${fbUser.phoneNumber})` : 'Patient'),
               photoURL: fbUser.photoURL,
               phoneNumber: fbUser.phoneNumber
             };
@@ -110,7 +120,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               phoneNumber: fbUser.phoneNumber
             });
           } catch (e) {
-            console.warn('Firebase user sync note:', e);
+            console.warn('Firebase user sync notice:', e);
           }
         }
         setLoading(false);
@@ -145,160 +155,129 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('vv_user');
   };
 
-  // Smart Google Sign-In (Real Firebase with graceful local fallback)
+  // Google Sign-In
   const loginWithGoogle = async () => {
-    if (isRealFirebaseConfigured()) {
-      try {
-        const result = await signInWithPopup(auth, googleProvider);
-        const fbUser = result.user;
-        const idToken = await fbUser.getIdToken();
-        const profile: UserProfile = {
-          uid: fbUser.uid,
-          email: fbUser.email,
-          displayName: fbUser.displayName || 'Google User',
-          photoURL: fbUser.photoURL,
-          phoneNumber: fbUser.phoneNumber
-        };
-        login(idToken, profile);
-        return { success: true, user: profile };
-      } catch (err: any) {
-        console.warn('Firebase Google Auth notice:', err);
-        return { success: false, error: formatFirebaseAuthError(err) };
-      }
-    } else {
-      // Seamless smart auth fallback
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const fbUser = result.user;
+      const idToken = await fbUser.getIdToken();
       const profile: UserProfile = {
-        uid: 'user-google-' + Date.now(),
-        email: 'samfgst3@gmail.com',
-        displayName: 'S-AM-GUPTA (Verified)',
-        photoURL: null
+        uid: fbUser.uid,
+        email: fbUser.email,
+        displayName: fbUser.displayName || 'Google User',
+        photoURL: fbUser.photoURL,
+        phoneNumber: fbUser.phoneNumber
       };
-      const generatedToken = 'vv_token_' + Date.now();
-      login(generatedToken, profile);
+      login(idToken, profile);
       return { success: true, user: profile };
+    } catch (err: any) {
+      console.warn('Firebase Google Auth error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
-  // Smart Email & Password Login
+  // Email & Password Login
   const loginWithEmail = async (email: string, pass: string) => {
-    if (isRealFirebaseConfigured()) {
-      try {
-        const res = await signInWithEmailAndPassword(auth, email, pass);
-        const fbUser = res.user;
-        const idToken = await fbUser.getIdToken();
-        const profile: UserProfile = {
-          uid: fbUser.uid,
-          email: fbUser.email,
-          displayName: fbUser.displayName || email.split('@')[0],
-          photoURL: fbUser.photoURL,
-          phoneNumber: fbUser.phoneNumber
-        };
-        login(idToken, profile);
-        return { success: true, user: profile };
-      } catch (err: any) {
-        console.warn('Firebase Email Login notice:', err);
-        return { success: false, error: formatFirebaseAuthError(err) };
-      }
-    } else {
+    try {
+      const res = await signInWithEmailAndPassword(auth, email, pass);
+      const fbUser = res.user;
+      const idToken = await fbUser.getIdToken();
       const profile: UserProfile = {
-        uid: 'user-email-' + Date.now(),
-        email: email,
-        displayName: email.split('@')[0] || 'Patient',
-        photoURL: null
+        uid: fbUser.uid,
+        email: fbUser.email,
+        displayName: fbUser.displayName || email.split('@')[0],
+        photoURL: fbUser.photoURL,
+        phoneNumber: fbUser.phoneNumber
       };
-      const generatedToken = 'vv_token_' + Date.now();
-      login(generatedToken, profile);
+      login(idToken, profile);
       return { success: true, user: profile };
+    } catch (err: any) {
+      console.warn('Firebase Email Login error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
-  // Smart Email & Password Registration
+  // Email & Password Registration
   const signupWithEmail = async (email: string, pass: string) => {
-    if (isRealFirebaseConfigured()) {
-      try {
-        const res = await createUserWithEmailAndPassword(auth, email, pass);
-        const fbUser = res.user;
-        const idToken = await fbUser.getIdToken();
-        const profile: UserProfile = {
-          uid: fbUser.uid,
-          email: fbUser.email,
-          displayName: email.split('@')[0],
-          photoURL: fbUser.photoURL,
-          phoneNumber: fbUser.phoneNumber
-        };
-        login(idToken, profile);
-        return { success: true, user: profile };
-      } catch (err: any) {
-        console.warn('Firebase Signup notice:', err);
-        return { success: false, error: formatFirebaseAuthError(err) };
-      }
-    } else {
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, pass);
+      const fbUser = res.user;
+      const idToken = await fbUser.getIdToken();
       const profile: UserProfile = {
-        uid: 'user-email-' + Date.now(),
-        email: email,
-        displayName: email.split('@')[0] || 'Patient',
-        photoURL: null
+        uid: fbUser.uid,
+        email: fbUser.email,
+        displayName: email.split('@')[0],
+        photoURL: fbUser.photoURL,
+        phoneNumber: fbUser.phoneNumber
       };
-      const generatedToken = 'vv_token_' + Date.now();
-      login(generatedToken, profile);
+      login(idToken, profile);
       return { success: true, user: profile };
+    } catch (err: any) {
+      console.warn('Firebase Signup error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
-  // Smart Phone OTP Authentication
+  // Robust Phone Number OTP Authentication
   const sendPhoneOtp = async (phoneNumber: string, appVerifierContainerId: string) => {
-    if (isRealFirebaseConfigured()) {
-      try {
-        let recaptchaVerifier = (window as any).recaptchaVerifier;
-        if (!recaptchaVerifier) {
-          recaptchaVerifier = new RecaptchaVerifier(auth, appVerifierContainerId, {
-            size: 'invisible'
-          });
-          (window as any).recaptchaVerifier = recaptchaVerifier;
-        }
-
-        const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
-        setPhoneConfirmation(confirmation);
-        return { success: true };
-      } catch (err: any) {
-        console.warn('Firebase Phone OTP notice:', err);
-        return { success: false, error: formatFirebaseAuthError(err) };
+    try {
+      // Clear any prior reCAPTCHA instance to prevent "element has been removed" errors
+      if ((window as any).recaptchaVerifier) {
+        try {
+          (window as any).recaptchaVerifier.clear();
+        } catch {}
+        (window as any).recaptchaVerifier = null;
       }
-    } else {
+
+      // Initialize fresh invisible reCAPTCHA
+      const appVerifier = new RecaptchaVerifier(auth, appVerifierContainerId, {
+        size: 'invisible',
+        callback: () => {
+          // reCAPTCHA solved
+        },
+        'expired-callback': () => {
+          console.warn('reCAPTCHA expired, resetting...');
+        }
+      });
+      (window as any).recaptchaVerifier = appVerifier;
+
+      const confirmation = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+      setPhoneConfirmation(confirmation);
       return { success: true };
+    } catch (err: any) {
+      console.warn('Firebase Phone OTP error:', err);
+      // Clean up stale verifier
+      try {
+        if ((window as any).recaptchaVerifier) {
+          (window as any).recaptchaVerifier.clear();
+          (window as any).recaptchaVerifier = null;
+        }
+      } catch {}
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
   const verifyPhoneOtp = async (verificationCode: string) => {
-    if (isRealFirebaseConfigured() && phoneConfirmation) {
-      try {
-        const res = await phoneConfirmation.confirm(verificationCode);
-        const fbUser = res.user;
-        const idToken = await fbUser.getIdToken();
-        const profile: UserProfile = {
-          uid: fbUser.uid,
-          email: null,
-          displayName: 'Phone User (' + (fbUser.phoneNumber || 'Verified') + ')',
-          photoURL: null,
-          phoneNumber: fbUser.phoneNumber
-        };
-        login(idToken, profile);
-        return { success: true, user: profile };
-      } catch (err: any) {
-        console.warn('Firebase Phone verify notice:', err);
-        return { success: false, error: formatFirebaseAuthError(err) };
-      }
-    } else {
+    if (!phoneConfirmation) {
+      return { success: false, error: 'No active SMS verification session. Please request a new code.' };
+    }
+
+    try {
+      const res = await phoneConfirmation.confirm(verificationCode);
+      const fbUser = res.user;
+      const idToken = await fbUser.getIdToken();
       const profile: UserProfile = {
-        uid: 'user-phone-' + Date.now(),
+        uid: fbUser.uid,
         email: null,
-        displayName: 'Verified Patient',
+        displayName: `Patient (${fbUser.phoneNumber || 'Verified'})`,
         photoURL: null,
-        phoneNumber: '+91 98765 43210'
+        phoneNumber: fbUser.phoneNumber
       };
-      const generatedToken = 'vv_token_' + Date.now();
-      login(generatedToken, profile);
+      login(idToken, profile);
       return { success: true, user: profile };
+    } catch (err: any) {
+      console.warn('Firebase Phone verify error:', err);
+      return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
 
