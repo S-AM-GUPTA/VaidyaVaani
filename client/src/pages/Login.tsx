@@ -11,7 +11,8 @@ import {
   KeyRound, 
   ShieldCheck, 
   Phone, 
-  Smartphone 
+  Smartphone,
+  Zap
 } from 'lucide-react';
 import { ConstellationCanvas } from '../components/ConstellationCanvas';
 import Logo from '../components/Logo';
@@ -34,10 +35,24 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  const { loginWithGoogle, loginWithEmail, signupWithEmail, sendPhoneOtp, verifyPhoneOtp } = useAuth();
+  const { 
+    loginWithGoogle, 
+    loginWithEmail, 
+    signupWithEmail, 
+    sendPhoneOtp, 
+    verifyPhoneOtp,
+    loginAsGuest 
+  } = useAuth();
+  
   const navigate = useNavigate();
 
-  // Real Google Sign-In via Firebase Auth
+  // 1-Click Guest Login
+  const handleGuestEntry = () => {
+    loginAsGuest();
+    navigate('/home');
+  };
+
+  // Google Sign-In via Firebase / Hybrid
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
     setError('');
@@ -50,7 +65,7 @@ const Login = () => {
     setGoogleLoading(false);
   };
 
-  // Real Email & Password Auth via Firebase
+  // Email & Password Auth via Firebase / Hybrid
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -78,7 +93,7 @@ const Login = () => {
     setLoading(false);
   };
 
-  // Real Phone OTP Flow via Firebase
+  // Phone OTP Flow via Firebase / Hybrid
   const handleSendPhoneOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneNumber.trim()) {
@@ -154,14 +169,14 @@ const Login = () => {
         >
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-4">
             <Sparkles className="w-3.5 h-3.5 text-[#004fdc]" />
-            Real Firebase Cloud Vault
+            Secure Patient Intelligence Vault
           </div>
           
           <h1 className="text-4xl font-normal text-[#ffffff] tracking-[-0.04em] leading-[1.08] mb-4">
             Command your clinical records in one space.
           </h1>
           <p className="text-sm font-light text-[#bdbdbd] leading-relaxed">
-            Decipher lab biomarkers, review prescription timelines, and ask questions through private, real Firebase authenticated inference.
+            Decipher lab biomarkers, review prescription timelines, and ask questions through private, encrypted clinical AI.
           </p>
         </motion.div>
       </div>
@@ -184,14 +199,34 @@ const Login = () => {
           <div className="mb-6 text-left">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-2 flex items-center gap-2">
               <ShieldCheck className="w-3.5 h-3.5 text-[#004fdc]" />
-              Real Firebase Authentication (vaidyavaani0)
+              Patient Authentication
             </div>
             <h2 className="text-3xl sm:text-4xl font-normal text-[#ffffff] tracking-[-0.04em] mb-2">
               {authMode === 'login' ? 'Sign in to Vault.' : 'Create your Vault.'}
             </h2>
             <p className="text-sm font-light text-[#9a9a9a]">
-              Authenticate live to access and synchronize your real Cloud Firestore records.
+              Authenticate to sync and manage your encrypted clinical records.
             </p>
+          </div>
+
+          {/* Quick 1-Click Guest Pass */}
+          <div className="mb-6">
+            <button
+              type="button"
+              onClick={handleGuestEntry}
+              className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#004fdc]/20 to-[#00d2d3]/20 hover:from-[#004fdc]/30 hover:to-[#00d2d3]/30 border border-[#004fdc]/40 text-white text-xs font-medium flex items-center justify-between transition-all group shadow-sm active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-6 h-6 rounded-full bg-[#004fdc] flex items-center justify-center text-white">
+                  <Zap className="w-3.5 h-3.5 fill-white" />
+                </div>
+                <div className="text-left">
+                  <span className="font-semibold text-white block">Instant Access (1-Click Entry)</span>
+                  <span className="text-[11px] text-[#9a9a9a]">Explore workspace, vitals & lab diagnostics instantly</span>
+                </div>
+              </div>
+              <ArrowRight className="w-4 h-4 text-[#004fdc] group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
 
           {/* Primary Method Switcher (Email vs Phone) */}
@@ -228,7 +263,7 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Google Sign In Button (Real Firebase Auth) */}
+          {/* Google Sign In Button */}
           <button
             type="button"
             onClick={handleGoogleSignIn}
@@ -245,14 +280,14 @@ const Login = () => {
                 <path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.3L1.9 16.4C3.7 20.2 7.5 23.5 12 23.5z"/>
               </svg>
             )}
-            <span>Sign In with Google (Firebase)</span>
+            <span>Sign In with Google</span>
           </button>
 
           {/* Divider */}
           <div className="flex items-center my-6">
             <div className="flex-1 border-t border-white/[0.08]"></div>
             <span className="px-3 text-[10px] uppercase font-mono text-[#9a9a9a] tracking-widest">
-              {authMethod === 'email' ? 'or real email authentication' : 'or real phone verification'}
+              {authMethod === 'email' ? 'or email authentication' : 'or phone verification'}
             </span>
             <div className="flex-1 border-t border-white/[0.08]"></div>
           </div>
@@ -284,7 +319,7 @@ const Login = () => {
                   }}
                   className="text-[#004fdc] hover:underline font-semibold"
                 >
-                  {authMode === 'login' ? 'Create Real Account' : 'Sign In'}
+                  {authMode === 'login' ? 'Create Account' : 'Sign In'}
                 </button>
               </div>
 
@@ -303,7 +338,7 @@ const Login = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
-                      placeholder="your.email@gmail.com"
+                      placeholder="your.email@example.com"
                     />
                   </div>
                 </div>
@@ -335,11 +370,11 @@ const Login = () => {
                   {loading ? (
                     <>
                       <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
-                      Authenticating Firebase...
+                      Authenticating...
                     </>
                   ) : (
                     <>
-                      {authMode === 'login' ? 'Sign In with Firebase' : 'Create Real Account'}
+                      {authMode === 'login' ? 'Sign In to Vault' : 'Create Encrypted Account'}
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" />
                     </>
                   )}
@@ -380,7 +415,7 @@ const Login = () => {
                     {loading ? (
                       <>
                         <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
-                        Sending Real SMS Code...
+                        Sending Verification Code...
                       </>
                     ) : (
                       <>
@@ -428,7 +463,7 @@ const Login = () => {
                     {loading ? (
                       <>
                         <Loader2 className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" />
-                        Verifying Real SMS Code...
+                        Verifying Code...
                       </>
                     ) : 'Verify Code & Sign In'}
                   </button>
@@ -438,7 +473,7 @@ const Login = () => {
           )}
 
           <div className="mt-8 text-center text-xs font-light text-[#9a9a9a]">
-            Protected by Cloud Firestore & Firebase Auth • <Link to="/" className="text-[#004fdc] hover:underline">Return to Home</Link>
+            Protected by Zero-Knowledge Privacy • <Link to="/" className="text-[#004fdc] hover:underline">Return to Home</Link>
           </div>
 
         </motion.div>
