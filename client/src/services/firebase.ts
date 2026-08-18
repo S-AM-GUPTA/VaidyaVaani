@@ -19,25 +19,20 @@ import {
   setDoc, 
   getDoc, 
   getDocs, 
-  query, 
-  where, 
-  orderBy, 
   addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  onSnapshot,
   serverTimestamp,
   type Timestamp
 } from 'firebase/firestore';
 
-// Firebase configuration for project: vaidyavaani0
+// Real Firebase configuration for project: vaidyavaani0
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyDummyKeyForVaidyaVaani0Project01",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyCU-XVN7P9XLMvp7d6xwFN_saKOdYKFKoo",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "vaidyavaani0.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "vaidyavaani0",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "vaidyavaani0.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "108920192831",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:108920192831:web:vaidyavaani0webapp"
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "151435989509",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:151435989509:web:3be60110c216460539c26c",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-2FERK4QY7G"
 };
 
 // Initialize Firebase App
@@ -68,13 +63,7 @@ export {
   setDoc, 
   getDoc, 
   getDocs, 
-  query, 
-  where, 
-  orderBy, 
   addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  onSnapshot,
   serverTimestamp
 };
 
