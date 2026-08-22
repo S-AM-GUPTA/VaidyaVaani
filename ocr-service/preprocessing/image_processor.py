@@ -1,23 +1,44 @@
 import cv2
 import numpy as np
 import os
+from PIL import Image
 import fitz  # PyMuPDF
 from typing import Dict, List, Tuple, Optional, Union
 
-def load_image(image_input: Union[str, bytes, np.ndarray]) -> Optional[np.ndarray]:
+def load_image(image_input: Union[str, bytes, np.ndarray, Image.Image]) -> Optional[np.ndarray]:
     """
-    Safely loads an image from a file path, raw bytes, or existing numpy array.
+    Robustly loads an image from a file path, raw bytes, PIL Image, or numpy array.
+    Automatically handles RGBA, Palette ('P'), Grayscale ('L'), and standard RGB formats.
     """
     try:
         if isinstance(image_input, np.ndarray):
+            if len(image_input.shape) == 2:
+                return cv2.cvtColor(image_input, cv2.COLOR_GRAY2BGR)
+            elif len(image_input.shape) == 3 and image_input.shape[2] == 4:
+                return cv2.cvtColor(image_input, cv2.COLOR_BGRA2BGR)
             return image_input
+        elif isinstance(image_input, Image.Image):
+            rgb_img = image_input.convert("RGB")
+            return cv2.cvtColor(np.array(rgb_img), cv2.COLOR_RGB2BGR)
         elif isinstance(image_input, bytes):
             nparr = np.frombuffer(image_input, np.uint8)
-            return cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            if img is None:
+                # Fallback to PIL buffer decode
+                import io
+                pil_img = Image.open(io.BytesIO(image_input)).convert("RGB")
+                return cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
+            return img
         elif isinstance(image_input, str):
             if not os.path.exists(image_input):
                 return None
-            return cv2.imread(image_input)
+            try:
+                # Use PIL to safely open all image modes and convert to RGB
+                with Image.open(image_input) as pil_img:
+                    rgb_img = pil_img.convert("RGB")
+                    return cv2.cvtColor(np.array(rgb_img), cv2.COLOR_RGB2BGR)
+            except Exception:
+                return cv2.imread(image_input)
     except Exception as e:
         print(f"[Preprocessing] Failed to load image: {e}")
         return None
@@ -62,21 +83,21 @@ def generate_variants(img: np.ndarray) -> Dict[str, np.ndarray]:
         # 1. CLAHE Enhancement (High Local Contrast for light ink/pencil)
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
         clahe_enhanced = clahe.apply(gray)
-        variants['clahe'] = clahe_enhanced
+        variants['clahe'] = cv2.cvtColor(clahe_enhanced, cv2.COLOR_GRAY2BGR)
         
         # 2. Mild Denoised (Removes scanner paper noise while preserving thin strokes)
         denoised = cv2.fastNlMeansDenoising(clahe_enhanced, None, h=10, templateWindowSize=7, searchWindowSize=21)
-        variants['denoised'] = denoised
+        variants['denoised'] = cv2.cvtColor(denoised, cv2.COLOR_GRAY2BGR)
         
         # 3. Adaptive Threshold (Good for faded background prescription pads)
         adaptive_thresh = cv2.adaptiveThreshold(
             denoised, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 11
         )
-        variants['threshold'] = adaptive_thresh
+        variants['threshold'] = cv2.cvtColor(adaptive_thresh, cv2.COLOR_GRAY2BGR)
         
         # 4. Deskewed
         deskewed = deskew_image(gray)
-        variants['deskewed'] = deskewed
+        variants['deskewed'] = cv2.cvtColor(deskewed, cv2.COLOR_GRAY2BGR)
         
     except Exception as e:
         print(f"[Preprocessing] Error generating variants: {e}")
