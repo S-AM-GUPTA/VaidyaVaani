@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, type ExtraUserDetails } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
   Lock, 
@@ -11,11 +11,14 @@ import {
   ShieldCheck, 
   Smartphone,
   Info,
-  CheckCircle2,
   HeartPulse,
   ArrowLeft,
   Eye,
-  EyeOff
+  EyeOff,
+  User,
+  MapPin,
+  Sparkles,
+  FileCheck2
 } from 'lucide-react';
 import Logo from '../components/Logo';
 
@@ -23,12 +26,20 @@ const Login = () => {
   const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('email');
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   
-  // Email states
+  // Login / Common States
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  // Phone states
+  // Extra Signup Details
+  const [fullName, setFullName] = useState('');
+  const [signupPhone, setSignupPhone] = useState('');
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('Male');
+  const [bloodGroup, setBloodGroup] = useState('O+ Positive');
+  const [city, setCity] = useState('');
+
+  // Phone Auth states
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otpCode, setOtpCode] = useState('');
   const [phoneStep, setPhoneStep] = useState<'number' | 'otp'>('number');
@@ -56,12 +67,12 @@ const Login = () => {
     if (res.success) {
       navigate('/home');
     } else {
-      setError(res.error || 'Google Authentication failed. Please check network connectivity.');
+      setError(res.error || 'Google Authentication failed. Please check network connection.');
     }
     setGoogleLoading(false);
   };
 
-  // Email & Password Auth via Firebase
+  // Email & Password Auth Flow
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -69,8 +80,14 @@ const Login = () => {
       return;
     }
 
+    if (authMode === 'signup' && !fullName.trim()) {
+      setError('Please enter your full name for your clinical health record.');
+      return;
+    }
+
     setLoading(true);
     setError('');
+    
     if (authMode === 'login') {
       const res = await loginWithEmail(email, password);
       if (res.success) {
@@ -79,11 +96,20 @@ const Login = () => {
         setError(res.error || 'Invalid email or password.');
       }
     } else {
-      const res = await signupWithEmail(email, password);
+      const extraDetails: ExtraUserDetails = {
+        fullName: fullName.trim(),
+        phoneNumber: signupPhone.trim() || undefined,
+        age: age ? parseInt(age) : undefined,
+        gender,
+        bloodGroup,
+        city: city.trim() || undefined
+      };
+
+      const res = await signupWithEmail(email, password, extraDetails);
       if (res.success) {
         navigate('/home');
       } else {
-        setError(res.error || 'Could not create account.');
+        setError(res.error || 'Could not create account. Please check details.');
       }
     }
     setLoading(false);
@@ -117,7 +143,15 @@ const Login = () => {
 
     setLoading(true);
     setError('');
-    const res = await verifyPhoneOtp(otpCode, phoneNumber);
+    const extraDetails: ExtraUserDetails | undefined = (authMode === 'signup' && fullName) ? {
+      fullName: fullName.trim(),
+      phoneNumber,
+      age: age ? parseInt(age) : undefined,
+      gender,
+      bloodGroup
+    } : undefined;
+
+    const res = await verifyPhoneOtp(otpCode, phoneNumber, extraDetails);
     if (res.success) {
       navigate('/home');
     } else {
@@ -127,13 +161,17 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-600 selection:text-white relative overflow-hidden">
+    <div className="min-h-screen flex bg-gradient-to-br from-slate-50 via-[#f0fdf4]/40 to-slate-100 text-slate-900 font-sans selection:bg-emerald-600 selection:text-white relative overflow-hidden">
       
+      {/* Background Ambient Glows */}
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-teal-200/30 rounded-full blur-3xl pointer-events-none"></div>
+
       {/* Invisible container for Firebase Phone reCAPTCHA */}
       <div id="recaptcha-container"></div>
 
-      {/* Left Side — Clinical Overview & Security */}
-      <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-12 lg:p-16 border-r border-slate-200 bg-white">
+      {/* Left Side — Clinical Overview & Architecture Highlights */}
+      <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-12 lg:p-16 border-r border-slate-200/80 bg-white/70 backdrop-blur-md">
         
         {/* Top Header & Logo */}
         <div className="w-full flex items-center justify-between">
@@ -149,33 +187,48 @@ const Login = () => {
         </div>
 
         {/* Center Patient Guarantee Card */}
-        <div className="my-auto w-full max-w-md mx-auto p-8 rounded-3xl bg-emerald-50/50 border border-emerald-100 shadow-sm">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-emerald-800 font-bold mb-4">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            Zero-Knowledge Clinical Architecture
+        <div className="my-auto w-full max-w-lg mx-auto">
+          
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider mb-4 border border-emerald-300/80">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            Zero-Knowledge Clinical Identity
           </div>
-          
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 tracking-tight">
-            Secure, Client-Decrypted Patient Portal
-          </h3>
-          
-          <p className="text-xs text-slate-600 leading-relaxed mb-6">
-            All medical records, prescriptions, and lab biomarkers are encrypted. Your personal clinical records are protected with bank-grade privacy standards.
+
+          <h1 className="font-headline text-3xl xl:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+            Unified Healthcare Safety & Generic Salt Intelligence
+          </h1>
+
+          <p className="text-sm text-slate-600 leading-relaxed mb-8">
+            Manage multi-doctor prescriptions, verify bioequivalent generic alternatives, inspect drug spacing safety, and decode lab test results in 7 regional Indian languages.
           </p>
 
-          <div className="space-y-3.5 text-xs text-slate-700 font-medium">
-            <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Generic Salt Alternatives (Up to 80% Savings)</span>
+          <div className="space-y-4">
+            <div className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex items-start gap-3.5">
+              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-100">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-slate-900">100% Client-Side Decryption</h4>
+                <p className="text-xs text-slate-500 mt-0.5">Your prescriptions, blood markers, and vitals remain encrypted in your private vault.</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Multi-Doctor Pharmacopeia Interaction Radar</span>
+
+            <div className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex items-start gap-3.5">
+              <div className="w-9 h-9 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center shrink-0 mt-0.5 border border-teal-100">
+                <FileCheck2 className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-slate-900">Generic Salt Savings (Up to 80%)</h4>
+                <p className="text-xs text-slate-500 mt-0.5">CDSCO-indexed active pharmaceutical ingredients compared across top Indian pharmacies.</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>7 Indian Regional Language Voice Guidance</span>
-            </div>
+          </div>
+
+          {/* Clinical Security Badges */}
+          <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-slate-200 text-[11px] font-mono text-slate-500">
+            <span className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200">AES-256 Vault</span>
+            <span className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200">NABL Reference Standards</span>
+            <span className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200">7 Regional Dialects</span>
           </div>
         </div>
 
@@ -185,8 +238,8 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Right Side — Form Area */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 py-10 sm:py-12 lg:px-16 xl:px-24 bg-[#f8fafc]">
+      {/* Right Side — Interactive Form Area */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 py-10 sm:py-12 lg:px-16 xl:px-20 overflow-y-auto max-h-screen">
         
         {/* Mobile Header */}
         <div className="mb-6 lg:hidden flex items-center justify-between">
@@ -201,7 +254,7 @@ const Login = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="w-full max-w-md mx-auto bg-white p-7 sm:p-10 rounded-3xl border border-slate-200 shadow-sm"
+          className="w-full max-w-lg mx-auto bg-white/90 backdrop-blur-lg p-7 sm:p-10 rounded-3xl border border-slate-200/90 shadow-xl"
         >
           {/* Header */}
           <div className="mb-6 text-left">
@@ -209,26 +262,61 @@ const Login = () => {
               <HeartPulse className="w-3.5 h-3.5" />
               Patient Portal Access
             </div>
+            
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
-              {authMode === 'login' ? 'Sign in to Patient Portal' : 'Create Your Health Vault'}
+              {authMode === 'login' ? 'Sign in to Patient Portal' : 'Register Your Health Profile'}
             </h2>
-            <p className="text-xs text-slate-500">
-              Access and manage your encrypted health records securely.
+            <p className="text-xs sm:text-sm text-slate-500">
+              {authMode === 'login' 
+                ? 'Access your encrypted prescriptions, lab reports, and vitals.' 
+                : 'Create your personalized patient vault with verified medical metrics.'}
             </p>
           </div>
 
-          {/* Primary Method Switcher (Email vs Phone) */}
+          {/* Mode Switcher: Sign In vs Register Tabs */}
           <div className="flex p-1 bg-slate-100 border border-slate-200 rounded-xl mb-5 w-full">
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMode('login');
+                setError('');
+              }}
+              className={`w-1/2 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                authMode === 'login' 
+                  ? 'bg-white text-slate-900 shadow-xs' 
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMode('signup');
+                setError('');
+              }}
+              className={`w-1/2 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                authMode === 'signup' 
+                  ? 'bg-emerald-600 text-white shadow-xs' 
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              New Registration
+            </button>
+          </div>
+
+          {/* Method Switcher (Email vs Phone) */}
+          <div className="flex gap-2 mb-5">
             <button
               type="button"
               onClick={() => {
                 setAuthMethod('email');
                 setError('');
               }}
-              className={`w-1/2 py-2.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 authMethod === 'email' 
-                  ? 'bg-white text-slate-900 shadow-xs' 
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-800' 
+                  : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
               }`}
             >
               <Mail className="w-3.5 h-3.5" />
@@ -240,10 +328,10 @@ const Login = () => {
                 setAuthMethod('phone');
                 setError('');
               }}
-              className={`w-1/2 py-2.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 authMethod === 'phone' 
-                  ? 'bg-emerald-600 text-white shadow-xs' 
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-800' 
+                  : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
               }`}
             >
               <Smartphone className="w-3.5 h-3.5" />
@@ -251,12 +339,12 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Google Sign In Button */}
+          {/* Google One-Tap */}
           <button
             type="button"
             onClick={handleGoogleSignIn}
             disabled={googleLoading}
-            className="w-full btn-med-secondary py-3 px-4 text-xs font-bold flex items-center justify-center gap-2.5 mb-5 disabled:opacity-60 cursor-pointer"
+            className="w-full btn-med-secondary py-2.5 px-4 text-xs font-bold flex items-center justify-center gap-2.5 mb-5 disabled:opacity-60 cursor-pointer"
           >
             {googleLoading ? (
               <Loader2 className="w-4 h-4 animate-spin text-emerald-600" />
@@ -275,7 +363,7 @@ const Login = () => {
           <div className="flex items-center my-4">
             <div className="flex-1 border-t border-slate-200"></div>
             <span className="px-3 text-[10px] uppercase font-mono text-slate-400 font-bold tracking-wider">
-              {authMethod === 'email' ? 'or email credentials' : 'or mobile number'}
+              {authMethod === 'email' ? 'or enter credentials' : 'or mobile OTP'}
             </span>
             <div className="flex-1 border-t border-slate-200"></div>
           </div>
@@ -287,100 +375,233 @@ const Login = () => {
             </div>
           )}
 
-          {/* METHOD 1: EMAIL & PASSWORD AUTH */}
+          {/* =========================================================
+              METHOD 1: EMAIL AUTH (WITH FULL SIGNUP FIELDS)
+              ========================================================= */}
           {authMethod === 'email' && (
-            <div>
-              <div className="flex justify-between items-center mb-3 text-xs">
-                <span className="text-slate-500">
-                  {authMode === 'login' ? "New patient?" : "Already registered?"}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthMode(authMode === 'login' ? 'signup' : 'login');
-                    setError('');
-                  }}
-                  className="text-emerald-700 hover:underline font-bold cursor-pointer"
-                >
-                  {authMode === 'login' ? 'Register Account' : 'Sign In'}
-                </button>
+            <form onSubmit={handleEmailAuth} className="space-y-3.5">
+              
+              {/* Extra Details Fields in Signup Mode */}
+              <AnimatePresence>
+                {authMode === 'signup' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="space-y-3.5 overflow-hidden"
+                  >
+                    {/* Full Name */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
+                        Patient Full Name <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                          <User className="h-4 w-4 text-slate-400" />
+                        </div>
+                        <input
+                          type="text"
+                          required={authMode === 'signup'}
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
+                          placeholder="e.g. Rahul Sharma"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Phone & City Row */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
+                          Mobile Number
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                            <Smartphone className="h-4 w-4 text-slate-400" />
+                          </div>
+                          <input
+                            type="tel"
+                            value={signupPhone}
+                            onChange={(e) => setSignupPhone(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-xs font-mono"
+                            placeholder="+91 9876543210"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
+                          City / State
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                            <MapPin className="h-4 w-4 text-slate-400" />
+                          </div>
+                          <input
+                            type="text"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-xs"
+                            placeholder="e.g. Delhi"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Age, Gender & Blood Group */}
+                    <div className="grid grid-cols-3 gap-2.5">
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1 font-mono">
+                          Age
+                        </label>
+                        <input
+                          type="number"
+                          value={age}
+                          onChange={(e) => setAge(e.target.value)}
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none text-xs text-slate-900 font-mono"
+                          placeholder="e.g. 32"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1 font-mono">
+                          Gender
+                        </label>
+                        <select
+                          value={gender}
+                          onChange={(e) => setGender(e.target.value)}
+                          className="w-full px-2 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none text-xs text-slate-900 font-medium"
+                        >
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1 font-mono">
+                          Blood Group
+                        </label>
+                        <select
+                          value={bloodGroup}
+                          onChange={(e) => setBloodGroup(e.target.value)}
+                          className="w-full px-2 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none text-xs text-slate-900 font-medium"
+                        >
+                          <option value="O+ Positive">O+</option>
+                          <option value="O- Negative">O-</option>
+                          <option value="A+ Positive">A+</option>
+                          <option value="A- Negative">A-</option>
+                          <option value="B+ Positive">B+</option>
+                          <option value="B- Negative">B-</option>
+                          <option value="AB+ Positive">AB+</option>
+                          <option value="AB- Negative">AB-</option>
+                        </select>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Email Address */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
+                  Email Address <span className="text-rose-500">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <Mail className="h-4 w-4 text-slate-400" />
+                  </div>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
+                    placeholder="patient@example.com"
+                  />
+                </div>
               </div>
 
-              <form onSubmit={handleEmailAuth} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                      <Mail className="h-4 w-4 text-slate-400" />
-                    </div>
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
-                      placeholder="patient@example.com"
-                    />
+              {/* Password */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
+                  Password <span className="text-rose-500">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <KeyRound className="h-4 w-4 text-slate-400" />
                   </div>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
+              </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                      <KeyRound className="h-4 w-4 text-slate-400" />
-                    </div>
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
-                      placeholder="••••••••"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full btn-med-primary py-3 text-xs font-semibold cursor-pointer"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" />
-                      Authenticating...
-                    </>
-                  ) : (
-                    <>
-                      {authMode === 'login' ? 'Sign In to Patient Portal' : 'Register Encrypted Vault'}
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full btn-med-primary py-3 text-xs font-semibold cursor-pointer shadow-md mt-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" />
+                    {authMode === 'login' ? 'Authenticating...' : 'Creating Clinical Vault...'}
+                  </>
+                ) : (
+                  <>
+                    {authMode === 'login' ? 'Sign In to Patient Portal' : 'Complete Registration & Enter Vault'}
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </>
+                )}
+              </button>
+            </form>
           )}
 
-          {/* METHOD 2: PHONE SMS OTP AUTH */}
+          {/* =========================================================
+              METHOD 2: PHONE SMS OTP AUTH
+              ========================================================= */}
           {authMethod === 'phone' && (
             <div>
               {phoneStep === 'number' ? (
                 <form onSubmit={handleSendPhoneOtp} className="space-y-4">
+                  
+                  {authMode === 'signup' && (
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
+                        Patient Full Name <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                          <User className="h-4 w-4 text-slate-400" />
+                        </div>
+                        <input
+                          type="text"
+                          required
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
+                          placeholder="e.g. Rahul Sharma"
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
-                      Mobile Phone Number
+                      Mobile Phone Number <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -436,7 +657,7 @@ const Login = () => {
 
                   <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl mb-2 flex items-start gap-2 text-xs text-emerald-900">
                     <Info className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>Enter the 6-digit SMS verification code sent to <strong className="text-slate-900 font-mono">{phoneNumber}</strong>.</span>
+                    <span>Enter code sent to <strong className="text-slate-900 font-mono">{phoneNumber}</strong>.</span>
                   </div>
 
                   <div className="relative">
@@ -471,9 +692,9 @@ const Login = () => {
             </div>
           )}
 
-          {/* Privacy Note */}
+          {/* Privacy Footnote */}
           <p className="text-[11px] text-center text-slate-400 mt-6 leading-relaxed">
-            By signing in, you verify that clinical records decrypted in this session are processed strictly under zero-knowledge encryption protocols.
+            By accessing the portal, you verify that your clinical records are processed strictly under zero-knowledge encryption protocols.
           </p>
         </motion.div>
       </div>

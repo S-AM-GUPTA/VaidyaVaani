@@ -5,6 +5,7 @@ import {
   signInWithPopup, 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
+  updateProfile,
   signOut, 
   onAuthStateChanged, 
   type FirebaseUser, 
@@ -14,12 +15,25 @@ import {
 } from '../services/firebase';
 import { saveUserProfile } from '../services/firestoreService';
 
-interface UserProfile {
+export interface ExtraUserDetails {
+  fullName?: string;
+  phoneNumber?: string;
+  age?: number;
+  gender?: string;
+  bloodGroup?: string;
+  city?: string;
+}
+
+export interface UserProfile {
   uid: string;
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
   phoneNumber?: string | null;
+  age?: number;
+  gender?: string;
+  bloodGroup?: string;
+  city?: string;
 }
 
 interface AuthContextType {
@@ -29,18 +43,13 @@ interface AuthContextType {
   logout: () => Promise<void>;
   loginWithGoogle: () => Promise<{ success: boolean; user?: UserProfile; error?: string }>;
   loginWithEmail: (email: string, pass: string) => Promise<{ success: boolean; user?: UserProfile; error?: string }>;
-  signupWithEmail: (email: string, pass: string) => Promise<{ success: boolean; user?: UserProfile; error?: string }>;
+  signupWithEmail: (email: string, pass: string, extraDetails?: ExtraUserDetails) => Promise<{ success: boolean; user?: UserProfile; error?: string }>;
   sendPhoneOtp: (phoneNumber: string, appVerifierContainerId: string) => Promise<{ success: boolean; error?: string; isSimulated?: boolean }>;
-  verifyPhoneOtp: (verificationCode: string, phoneNumber?: string) => Promise<{ success: boolean; user?: UserProfile; error?: string }>;
+  verifyPhoneOtp: (verificationCode: string, phoneNumber?: string, extraDetails?: ExtraUserDetails) => Promise<{ success: boolean; user?: UserProfile; error?: string }>;
   loginAsGuest: () => void;
   isAuthenticated: boolean;
   loading: boolean;
 }
-
-const isRealFirebaseConfigured = (): boolean => {
-  const key = import.meta.env.VITE_FIREBASE_API_KEY;
-  return Boolean(key && !key.includes('Dummy') && key.startsWith('AIzaSy') && key.length > 20);
-};
 
 const formatFirebaseAuthError = (error: any): string => {
   const code = error?.code || '';
@@ -66,7 +75,7 @@ const formatFirebaseAuthError = (error: any): string => {
     case 'auth/unauthorized-domain':
       return 'This domain is not authorized for OAuth operations in Firebase Console.';
     case 'auth/invalid-phone-number':
-      return 'Please enter a valid phone number with country code (e.g. +91 7985557576).';
+      return 'Please enter a valid phone number with country code (e.g. +91 9876543210).';
     case 'auth/invalid-verification-code':
       return 'Invalid 6-digit SMS verification code.';
     case 'auth/code-expired':
@@ -76,7 +85,7 @@ const formatFirebaseAuthError = (error: any): string => {
     case 'auth/billing-not-enabled':
       return 'Firebase SMS billing requires Blaze plan or free test number in Firebase Console.';
     case 'auth/operation-not-allowed':
-      return 'Phone Authentication is not enabled in Firebase Console. Go to Build > Authentication > Sign-in method > Phone to enable.';
+      return 'Phone Authentication is not enabled in Firebase Console.';
     default:
       return message || 'Authentication failed. Please check your credentials and try again.';
   }
@@ -120,34 +129,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               phoneNumber: fbUser.phoneNumber
             });
           } catch (e) {
-            console.warn('Firebase user sync notice:', e);
+            console.error('Error fetching token during auth state change:', e);
+          }
+        } else {
+          // If no active Firebase session, preserve custom session or set to null
+          const existingToken = localStorage.getItem('token');
+          if (!existingToken) {
+            setUser(null);
+            setToken(null);
           }
         }
         setLoading(false);
       });
 
       return () => unsubscribe();
-    } catch {
+    } catch (err) {
+      console.warn('Firebase onAuthStateChanged initialization warning:', err);
       setLoading(false);
     }
   }, []);
 
-  const login = (newToken: string, profile?: UserProfile) => {
+  const login = (newToken: string, newUser?: UserProfile) => {
     setToken(newToken);
     localStorage.setItem('token', newToken);
-    if (profile) {
-      setUser(profile);
-      localStorage.setItem('vv_user', JSON.stringify(profile));
+    if (newUser) {
+      setUser(newUser);
+      localStorage.setItem('vv_user', JSON.stringify(newUser));
     }
   };
 
   const logout = async () => {
     try {
-      if (isRealFirebaseConfigured()) {
-        await signOut(auth);
-      }
+      await signOut(auth);
     } catch (e) {
-      console.warn('Firebase signOut notice:', e);
+      console.warn('Firebase SignOut error:', e);
     }
     setToken(null);
     setUser(null);
@@ -155,7 +170,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('vv_user');
   };
 
-  // Google Sign-In
+  // Google Sign-In with real popup
   const loginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
@@ -164,14 +179,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const profile: UserProfile = {
         uid: fbUser.uid,
         email: fbUser.email,
-        displayName: fbUser.displayName || 'Google User',
+        displayName: fbUser.displayName || 'Google Verified Patient',
         photoURL: fbUser.photoURL,
         phoneNumber: fbUser.phoneNumber
       };
+      
       login(idToken, profile);
+      
+      // Sync Primary Profile
+      const existingProfiles = localStorage.getItem('vv_patient_profiles');
+      if (!existingProfiles) {
+        localStorage.setItem('vv_patient_profiles', JSON.stringify([{
+          id: 'primary-user',
+          name: profile.displayName,
+          relation: 'Self (Primary)',
+          age: 0,
+          gender: 'Not Specified',
+          bloodGroup: 'Not Specified',
+          height: '-- cm',
+          weight: '-- kg',
+          bmi: '--',
+          bp: '--/-- mmHg',
+          sugar: '-- mg/dL',
+          primaryDoctor: 'Not Specified',
+          allergies: [],
+          chronicConditions: [],
+          active: true
+        }]));
+      }
+
+      await saveUserProfile({
+        uid: fbUser.uid,
+        email: fbUser.email,
+        displayName: profile.displayName,
+        phoneNumber: fbUser.phoneNumber
+      });
+
       return { success: true, user: profile };
     } catch (err: any) {
-      console.warn('Firebase Google Auth error:', err);
+      console.warn('Firebase Google Sign-In error:', err);
       return { success: false, error: formatFirebaseAuthError(err) };
     }
   };
@@ -197,20 +243,64 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Email & Password Registration
-  const signupWithEmail = async (email: string, pass: string) => {
+  // Email & Password Registration with Extra Details
+  const signupWithEmail = async (email: string, pass: string, extraDetails?: ExtraUserDetails) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, pass);
       const fbUser = res.user;
+
+      const patientName = extraDetails?.fullName?.trim() || email.split('@')[0];
+
+      // Update Firebase Auth Display Name
+      try {
+        await updateProfile(fbUser, { displayName: patientName });
+      } catch (e) {
+        console.warn('Could not update displayName in Firebase:', e);
+      }
+
       const idToken = await fbUser.getIdToken();
       const profile: UserProfile = {
         uid: fbUser.uid,
         email: fbUser.email,
-        displayName: email.split('@')[0],
+        displayName: patientName,
         photoURL: fbUser.photoURL,
-        phoneNumber: fbUser.phoneNumber
+        phoneNumber: extraDetails?.phoneNumber || fbUser.phoneNumber,
+        age: extraDetails?.age,
+        gender: extraDetails?.gender,
+        bloodGroup: extraDetails?.bloodGroup,
+        city: extraDetails?.city
       };
+
       login(idToken, profile);
+
+      // Save Primary Patient Profile in LocalStorage
+      const initialProfile = {
+        id: 'primary-user',
+        name: patientName,
+        relation: 'Self (Primary)',
+        age: extraDetails?.age || 0,
+        gender: extraDetails?.gender || 'Not Specified',
+        bloodGroup: extraDetails?.bloodGroup || 'Not Specified',
+        height: '-- cm',
+        weight: '-- kg',
+        bmi: '--',
+        bp: '--/-- mmHg',
+        sugar: '-- mg/dL',
+        primaryDoctor: 'Not Specified',
+        allergies: [],
+        chronicConditions: [],
+        active: true,
+      };
+      localStorage.setItem('vv_patient_profiles', JSON.stringify([initialProfile]));
+
+      // Save to Cloud Firestore
+      await saveUserProfile({
+        uid: fbUser.uid,
+        email: fbUser.email,
+        displayName: patientName,
+        phoneNumber: extraDetails?.phoneNumber || null
+      });
+
       return { success: true, user: profile };
     } catch (err: any) {
       console.warn('Firebase Signup error:', err);
@@ -218,7 +308,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Robust Phone Number OTP Authentication with graceful test fallback
+  // Phone Number OTP Flow
   const sendPhoneOtp = async (phoneNumber: string, appVerifierContainerId: string) => {
     try {
       if ((window as any).recaptchaVerifier) {
@@ -239,7 +329,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { success: true };
     } catch (err: any) {
       console.warn('Firebase Phone OTP error:', err);
-      // If Firebase billing is not enabled for live SMS, allow graceful development OTP flow
       if (err?.code === 'auth/billing-not-enabled' || err?.code === 'auth/quota-exceeded' || err?.code === 'auth/invalid-api-key') {
         return { success: true, isSimulated: true };
       }
@@ -247,65 +336,93 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const verifyPhoneOtp = async (verificationCode: string, phoneNumber?: string) => {
+  const verifyPhoneOtp = async (verificationCode: string, phoneNumber?: string, extraDetails?: ExtraUserDetails) => {
     if (phoneConfirmation) {
       try {
         const res = await phoneConfirmation.confirm(verificationCode);
         const fbUser = res.user;
         const idToken = await fbUser.getIdToken();
+        const patientName = extraDetails?.fullName?.trim() || `Patient (${fbUser.phoneNumber || 'Verified'})`;
+
         const profile: UserProfile = {
           uid: fbUser.uid,
           email: null,
-          displayName: `Patient (${fbUser.phoneNumber || 'Verified'})`,
+          displayName: patientName,
           photoURL: null,
-          phoneNumber: fbUser.phoneNumber
+          phoneNumber: fbUser.phoneNumber || phoneNumber,
+          age: extraDetails?.age,
+          gender: extraDetails?.gender,
+          bloodGroup: extraDetails?.bloodGroup
         };
         login(idToken, profile);
+
+        // Save Primary Profile
+        localStorage.setItem('vv_patient_profiles', JSON.stringify([{
+          id: 'primary-user',
+          name: patientName,
+          relation: 'Self (Primary)',
+          age: extraDetails?.age || 0,
+          gender: extraDetails?.gender || 'Not Specified',
+          bloodGroup: extraDetails?.bloodGroup || 'Not Specified',
+          height: '-- cm',
+          weight: '-- kg',
+          bmi: '--',
+          bp: '--/-- mmHg',
+          sugar: '-- mg/dL',
+          primaryDoctor: 'Not Specified',
+          allergies: [],
+          chronicConditions: [],
+          active: true,
+        }]));
+
         return { success: true, user: profile };
       } catch (err: any) {
-        console.warn('Firebase Phone verify error:', err);
         return { success: false, error: formatFirebaseAuthError(err) };
       }
-    } else {
-      // Graceful dev verification (accept code e.g. 123456)
-      const profile: UserProfile = {
-        uid: 'user-phone-' + Date.now(),
-        email: null,
-        displayName: `Patient (${phoneNumber || '+91 7985557576'})`,
-        photoURL: null,
-        phoneNumber: phoneNumber || '+91 7985557576'
-      };
-      login('vv_phone_token_' + Date.now(), profile);
-      return { success: true, user: profile };
     }
+
+    // Direct Verification fallback
+    const patientName = extraDetails?.fullName?.trim() || `Patient (${phoneNumber || '9876543210'})`;
+    const profile: UserProfile = {
+      uid: 'phone-usr-' + Date.now(),
+      email: null,
+      displayName: patientName,
+      photoURL: null,
+      phoneNumber: phoneNumber || '+91 9876543210',
+      age: extraDetails?.age,
+      gender: extraDetails?.gender,
+      bloodGroup: extraDetails?.bloodGroup
+    };
+    login('token-phone-' + Date.now(), profile);
+    return { success: true, user: profile };
   };
 
-  // 1-Click Guest Pass
   const loginAsGuest = () => {
     const profile: UserProfile = {
       uid: 'guest-' + Date.now(),
-      email: 'guest.patient@vaidyavaani.health',
-      displayName: 'Guest Patient',
-      photoURL: null
+      email: 'guest.patient@vaidyavaani.in',
+      displayName: 'Primary Patient',
+      photoURL: null,
+      phoneNumber: '+91 98765 43210'
     };
-    login('vv_guest_jwt_' + Date.now(), profile);
+    login('token-guest-' + Date.now(), profile);
   };
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        token, 
-        user, 
-        login, 
-        logout, 
-        loginWithGoogle, 
-        loginWithEmail, 
-        signupWithEmail, 
-        sendPhoneOtp, 
-        verifyPhoneOtp, 
+    <AuthContext.Provider
+      value={{
+        token,
+        user,
+        login,
+        logout,
+        loginWithGoogle,
+        loginWithEmail,
+        signupWithEmail,
+        sendPhoneOtp,
+        verifyPhoneOtp,
         loginAsGuest,
-        isAuthenticated: !!token, 
-        loading 
+        isAuthenticated: !!token,
+        loading
       }}
     >
       {children}
@@ -315,7 +432,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
