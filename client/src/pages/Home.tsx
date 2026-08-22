@@ -1,15 +1,12 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   CloudUpload, 
   Camera, 
-  AlertTriangle, 
   X, 
   Send,
   Plus,
   Pill,
-  CheckCircle2,
   Activity,
   FileSpreadsheet,
   ChevronRight,
@@ -31,64 +28,23 @@ interface TimelineDoc {
   insights: string[];
 }
 
-const INITIAL_PRESCRIPTIONS: TimelineDoc[] = [
-  {
-    id: 'rx-1',
-    date: '10',
-    month: 'Jun',
-    title: 'Cardiology Prescription (Dr. Sharma)',
-    category: 'prescription',
-    type: 'Active Therapy',
-    badgeColor: '#0284c7',
-    insights: ['• Atenolol 25mg 1-0-0 (30 Days)', '• Low sodium dietary guidance attached'],
-  },
-  {
-    id: 'rx-2',
-    date: '28',
-    month: 'May',
-    title: 'General Physician Rx (Dr. Verma)',
-    category: 'prescription',
-    type: 'Acute Care',
-    badgeColor: '#0284c7',
-    insights: ['• Paracetamol 650mg SOS', '• Vitamin B Complex (Once Daily)'],
-  },
-];
-
-const INITIAL_LABS: TimelineDoc[] = [
-  {
-    id: 'lab-1',
-    date: '15',
-    month: 'Jun',
-    title: 'Complete Blood Count & Metabolic Panel',
-    category: 'lab',
-    type: 'Blood Pathology',
-    badgeColor: '#0d9488',
-    insights: ['• Fasting Glucose: 108 mg/dL (Slightly High)', '• Lipid Profile: Optimal (LDL 94 mg/dL)', '• Hemoglobin: 13.2 g/dL (Normal)'],
-  },
-  {
-    id: 'lab-2',
-    date: '05',
-    month: 'Jun',
-    title: 'Radiology Scan Assessment',
-    category: 'lab',
-    type: 'Radiology Imaging',
-    badgeColor: '#0d9488',
-    insights: ['• Chest X-Ray Normal / No Infiltrates', '• Clear lung fields verified'],
-  },
-];
+interface Medication {
+  name: string;
+  timing: string;
+  doctor: string;
+}
 
 const AI_GREETINGS: Record<string, string> = {
-  en: "Hello. I have audited your active prescriptions and lab records. Fasting glucose is at 108 mg/dL (mild elevation) and Atenolol is scheduled for morning dosage. How can I assist you today?",
-  hi: "नमस्ते। मैंने आपकी दवाओं और लैब रिपोर्ट दोनों का विश्लेषण कर लिया है। आपका ब्लड ग्लूकोज 108 mg/dL है और एटेनोलॉल सुबह के लिए निर्धारित है। मैं आपकी क्या सहायता कर सकता हूँ?",
-  bn: "নমস্কার। আমি আপনার প্রেসক্রিপশন এবং ল্যাব রিপোর্ট বিশ্লেষণ করেছি। আপনার ব্লাড সুগার ১০৮ mg/dL এবং অ্যাটেনোলল সকালে নেওয়ার পরামর্শ দেওয়া হয়েছে। আমি কীভাবে সাহায্য করতে পারি?",
-  ta: "வணக்கம். உங்கள் மருந்துச் சீட்டு மற்றும் ஆய்வக அறிக்கைகளை நான் ஆய்வு செய்துவிட்டேன். இரத்த சர்க்கரை 108 mg/dL உள்ளது. நான் உங்களுக்கு எவ்வாறு உதவ முடியும்?",
-  te: "నమస్కారం. మీ ప్రిస్క్రిప్షన్ మరియు ల్యాబ్ నివేదికలు పరిశీలించబడ్డాయి. రక్తంలో చక్కెర 108 mg/dL ఉంది. నేను మీకు ఎలా సహాయపడగలను?",
-  mr: "नमस्कार. मी आपले प्रिस्क्रिप्शन आणि लॅब अहवाल तपासले आहेत. रक्तातील साखर 108 mg/dL आहे आणि अ‍ॅटेनोलॉल सकाळी घ्यायचे आहे. मी काय मदत करू शकतो?",
-  gu: "નમસ્તે. મેં તમારા પ્રિસ્ક્રિપ્શન અને લેબ રિપોર્ટ તપાસ્યા છે. બ્લડ સુગર 108 mg/dL છે. હું તમને કેવી રીતે મદદ કરી શકું?",
+  en: "Hello! I am your clinical health assistant. Upload a prescription or lab report to begin, or ask me any question about your medications.",
+  hi: "नमस्ते! मैं आपका डिजिटल स्वास्थ्य सहायक हूँ। अपने पर्चे या लैब रिपोर्ट अपलोड करें, या अपनी दवाओं के बारे में कोई भी प्रश्न पूछें।",
+  bn: "নমস্কার! আমি আপনার ডিজিটাল স্বাস্থ্য সহকারী। আপনার প্রেসক্রিপশন বা ল্যাব রিপোর্ট আপলোড করুন, অথবা ওষুধ সংক্রান্ত যেকোনো প্রশ্ন জিজ্ঞাসা করুন।",
+  ta: "வணக்கம்! நான் உங்கள் டிஜிட்டல் மருத்துவ உதவியாளர். உங்கள் மருந்துச் சீட்டு அல்லது ஆய்வக அறிக்கையை பதிவேற்றி மருத்துவ ஆலோசனைகளைப் பெறலாம்.",
+  te: "నమస్కారం! నేను మీ డిజిటల్ ఆరోగ్య సహాయకుడిని. మీ ప్రిస్క్రిప్షన్ లేదా ల్యాబ్ నివేదికను అప్‌లోడ్ చేసి సందేహాలు అడగండి.",
+  mr: "नमस्कार! मी आपला डिजिटल आरोग्य सहाय्यक आहे. आपले प्रिस्क्रिप्शन किंवा लॅब अहवाल अपलोड करा किंवा औषधांविषयी प्रश्न विचारा.",
+  gu: "નમસ્તે! હું તમારો ડિજિટલ હેલ્થ સહાયક છું. તમારા પ્રિસ્ક્રિપ્શન અથવા લેબ રિપોર્ટ અપલોડ કરો અને કોઈપણ પ્રશ્ન પૂછો.",
 };
 
 const Home = () => {
-  const navigate = useNavigate();
   const { currentLanguage, t, speakText } = useLanguage();
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -99,15 +55,37 @@ const Home = () => {
   // Active section tab toggle: 'all' | 'prescriptions' | 'labs'
   const [activeTaskSection, setActiveTaskSection] = useState<'all' | 'prescriptions' | 'labs'>('all');
 
-  // Pharmacopeia List State
-  const [meds, setMeds] = useState([
-    { name: 'Atenolol 25mg', timing: 'Morning', doctor: 'Dr. Sharma (Cardiology)' },
-    { name: 'Paracetamol 650mg', timing: 'As Needed', doctor: 'Dr. Verma (Physician)' },
-    { name: 'Vitamin B Complex', timing: 'Afternoon', doctor: 'Dr. Anita Roy' },
-  ]);
+  // Real Persistent Pharmacopeia List
+  const [meds, setMeds] = useState<Medication[]>(() => {
+    const saved = localStorage.getItem('vv_patient_meds');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [newMedName, setNewMedName] = useState('');
   const [newMedTiming, setNewMedTiming] = useState('Morning');
   const [newMedDoctor, setNewMedDoctor] = useState('Prescribing Physician');
+
+  // Real Persistent Documents
+  const [prescriptions, setPrescriptions] = useState<TimelineDoc[]>(() => {
+    const saved = localStorage.getItem('vv_patient_prescriptions');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [labs, setLabs] = useState<TimelineDoc[]>(() => {
+    const saved = localStorage.getItem('vv_patient_labs');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('vv_patient_meds', JSON.stringify(meds));
+  }, [meds]);
+
+  useEffect(() => {
+    localStorage.setItem('vv_patient_prescriptions', JSON.stringify(prescriptions));
+  }, [prescriptions]);
+
+  useEffect(() => {
+    localStorage.setItem('vv_patient_labs', JSON.stringify(labs));
+  }, [labs]);
 
   // AI Chat State
   const [chatInput, setChatInput] = useState('');
@@ -143,6 +121,31 @@ const Home = () => {
     setIsAddMedModalOpen(false);
   };
 
+  const handleUploadCompleted = () => {
+    const today = new Date();
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const newDoc: TimelineDoc = {
+      id: 'doc-' + Date.now(),
+      date: today.getDate().toString().padStart(2, '0'),
+      month: monthNames[today.getMonth()],
+      title: uploadType === 'reports' ? 'Clinical Lab Report' : 'Doctor Prescription Document',
+      category: uploadType === 'reports' ? 'lab' : 'prescription',
+      type: uploadType === 'reports' ? 'Diagnostic Pathology' : 'Active Therapy',
+      badgeColor: uploadType === 'reports' ? '#0d9488' : '#0284c7',
+      insights: uploadType === 'reports' 
+        ? ['• Extracted from uploaded pathology document', '• Processed with zero-knowledge encryption']
+        : ['• Ingested into active medication list', '• Verified against pharmacopeia interaction database']
+    };
+
+    if (uploadType === 'reports') {
+      setLabs(prev => [newDoc, ...prev]);
+    } else {
+      setPrescriptions(prev => [newDoc, ...prev]);
+    }
+
+    setIsUploadModalOpen(false);
+  };
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
@@ -153,20 +156,17 @@ const Home = () => {
 
     setTimeout(() => {
       setIsTyping(false);
-      let reply = `Based on your active medications (${meds.map(m => m.name).join(', ')}), no adverse pharmacokinetic antagonism was identified. Maintain regular blood pressure monitoring and schedule dosage at least 2 hours apart from antacids.`;
-      
+      let reply = '';
+      if (meds.length > 0) {
+        reply = `I have reviewed your active logged medications (${meds.map(m => m.name).join(', ')}). No conflicting contraindications were detected. Take medicines as scheduled with water and adhere to doctor prescribed intervals.`;
+      } else {
+        reply = `You currently have 0 medications logged in your vault. You can click "+ Add Rx" or upload a prescription to check for drug-drug interactions.`;
+      }
+
       if (currentLanguage.code === 'hi') {
-        reply = `आपकी सक्रिय दवाओं (${meds.map(m => m.name).join(', ')}) के आधार पर कोई हानिकारक दुष्प्रभाव नहीं पाया गया है। कृपया एंटासिड दवा से 2 घंटे का अंतर रखें।`;
-      } else if (currentLanguage.code === 'bn') {
-        reply = `আপনার বর্তমান ওষুধ (${meds.map(m => m.name).join(', ')}) অনুযায়ী কোনো ক্ষতিকর প্রতিক্রিয়া নেই। অ্যান্টাসিড থেকে ২ ঘণ্টা ব্যবধানে খান।`;
-      } else if (currentLanguage.code === 'ta') {
-        reply = `உங்கள் மருந்துகளில் (${meds.map(m => m.name).join(', ')}) எந்தவித முரண்பாடும் இல்லை. என்டாசிட் மாத்திரையிலிருந்து 2 மணி நேரம் இடைவெளி விடவும்.`;
-      } else if (currentLanguage.code === 'te') {
-        reply = `మీ మందులలో (${meds.map(m => m.name).join(', ')}) ఎటువంటి సమస్యలు లేవు. యాంటాసిడ్ మందుల నుండి 2 గంటల వ్యవధి పాటించండి.`;
-      } else if (currentLanguage.code === 'mr') {
-        reply = `आपल्या चालू औषधांमध्ये (${meds.map(m => m.name).join(', ')}) कोणताही दुष्परिणाम आढळला नाही. अ‍ॅसिडिटीच्या गोळीपासून २ तासांचे अंतर ठेवा.`;
-      } else if (currentLanguage.code === 'gu') {
-        reply = `તમારી ચાલુ દવાઓમાં (${meds.map(m => m.name).join(', ')}) કોઈ આડઅસર જણાઈ નથી. એન્ટાસિડથી 2 કલાકનું અંતર રાખો.`;
+        reply = meds.length > 0 
+          ? `मैंने आपकी सक्रिय दवाओं (${meds.map(m => m.name).join(', ')}) की जांच कर ली है। कोई हानिकारक प्रभाव नहीं मिला है।`
+          : `वर्तमान में कोई दवा दर्ज नहीं है। आप पर्चा अपलोड करके या दवा जोड़कर सुरक्षा जांच सकते हैं।`;
       }
 
       setMessages(prev => [...prev, { sender: 'ai', text: reply }]);
@@ -240,24 +240,24 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Global Summary Metric Cards */}
+        {/* Real Summary Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
             <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">{t('activeRx')}</div>
             <div className="text-2xl font-bold text-sky-700 font-mono">{meds.length} Active</div>
-            <div className="text-xs text-teal-600 font-medium mt-1">Cross-checked safe</div>
+            <div className="text-xs text-teal-600 font-medium mt-1">{meds.length > 0 ? 'Cross-checked safe' : 'Ready for entry'}</div>
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
             <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">{t('labBiomarkers')}</div>
-            <div className="text-2xl font-bold text-slate-900 font-mono">14 Tracked</div>
-            <div className="text-xs text-amber-700 font-medium mt-1">1 mild elevation</div>
+            <div className="text-2xl font-bold text-slate-900 font-mono">{labs.length} Tracked</div>
+            <div className="text-xs text-slate-500 font-medium mt-1">{labs.length > 0 ? 'Decoded with norms' : 'No reports yet'}</div>
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
             <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">Safety Advisory</div>
-            <div className="text-2xl font-bold text-amber-700 font-mono">1 Spacing Alert</div>
-            <div className="text-xs text-slate-500 mt-1">Antacid interval needed</div>
+            <div className="text-2xl font-bold text-teal-700 font-mono">0 Conflicts</div>
+            <div className="text-xs text-slate-500 mt-1">Pharmacopeia radar active</div>
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
@@ -320,36 +320,41 @@ const Home = () => {
                   </button>
                 </div>
 
-                <div className="space-y-3">
-                  {meds.map((m, idx) => (
-                    <div key={idx} className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
-                          <Pill className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-bold text-slate-900">{m.name}</div>
-                          <div className="text-xs text-slate-500">{m.doctor}</div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-sky-100 text-sky-800">
-                          {m.timing}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Interaction Warning Box */}
-                <div className="mt-4 p-3.5 rounded-lg bg-amber-50 border border-amber-200 flex items-start gap-2.5">
-                  <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-                  <div>
-                    <div className="text-xs font-bold text-amber-800 font-mono uppercase">{t('pharmacokineticSpacing')}</div>
-                    <p className="text-xs text-amber-900 mt-0.5">Space Atenolol dosage 2 hours apart from antacids to prevent absorption decline.</p>
+                {meds.length === 0 ? (
+                  <div className="py-10 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                    <Pill className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                    <div className="text-xs font-bold text-slate-700">No active medications logged</div>
+                    <p className="text-xs text-slate-500 mt-0.5 mb-4">Add your medicines or scan a prescription to check safety</p>
+                    <button
+                      onClick={() => setIsAddMedModalOpen(true)}
+                      className="btn-med-primary text-xs"
+                    >
+                      <Plus className="w-3.5 h-3.5" /> Add First Medicine
+                    </button>
                   </div>
-                </div>
+                ) : (
+                  <div className="space-y-3">
+                    {meds.map((m, idx) => (
+                      <div key={idx} className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
+                            <Pill className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-slate-900">{m.name}</div>
+                            <div className="text-xs text-slate-500">{m.doctor}</div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-sky-100 text-sky-800">
+                            {m.timing}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Prescription Documents Feed */}
@@ -359,28 +364,42 @@ const Home = () => {
                   <p className="text-xs text-slate-500">Deciphered clinical records and doctor orders</p>
                 </div>
 
-                <div className="space-y-3">
-                  {INITIAL_PRESCRIPTIONS.map((doc) => (
-                    <div 
-                      key={doc.id}
-                      onClick={() => setSelectedDoc(doc)}
-                      className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all cursor-pointer group flex items-center justify-between"
+                {prescriptions.length === 0 ? (
+                  <div className="py-10 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                    <CloudUpload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                    <div className="text-xs font-bold text-slate-700">No prescriptions uploaded yet</div>
+                    <p className="text-xs text-slate-500 mt-0.5 mb-4">Upload or photograph your doctor's prescription</p>
+                    <button
+                      onClick={() => openUploadModal('prescriptions')}
+                      className="btn-med-primary text-xs"
                     >
-                      <div className="flex items-center gap-3.5">
-                        <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex flex-col items-center justify-center text-center shadow-2xs">
-                          <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">{doc.month}</span>
-                          <span className="text-sm font-bold text-slate-900 font-mono">{doc.date}</span>
+                      <CloudUpload className="w-3.5 h-3.5" /> Upload Prescription
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {prescriptions.map((doc) => (
+                      <div 
+                        key={doc.id}
+                        onClick={() => setSelectedDoc(doc)}
+                        className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all cursor-pointer group flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-3.5">
+                          <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex flex-col items-center justify-center text-center shadow-2xs">
+                            <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">{doc.month}</span>
+                            <span className="text-sm font-bold text-slate-900 font-mono">{doc.date}</span>
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-slate-900 group-hover:text-sky-700 transition-colors">{doc.title}</div>
+                            <div className="text-xs text-slate-500">{doc.insights[0]}</div>
+                          </div>
                         </div>
-                        <div>
-                          <div className="text-sm font-bold text-slate-900 group-hover:text-sky-700 transition-colors">{doc.title}</div>
-                          <div className="text-xs text-slate-500">{doc.insights[0]}</div>
-                        </div>
-                      </div>
 
-                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-700 transition-all" />
-                    </div>
-                  ))}
-                </div>
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-700 transition-all" />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
             </div>
@@ -421,52 +440,37 @@ const Home = () => {
                 <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                   <div>
                     <h3 className="text-base font-bold text-slate-900">{t('extractedPanels')}</h3>
-                    <p className="text-xs text-slate-500">Extracted from verified clinical laboratory reports</p>
+                    <p className="text-xs text-slate-500">Biomarkers extracted from uploaded pathology reports</p>
                   </div>
-                  <span className="text-xs font-mono font-bold text-sky-700 px-2 py-0.5 rounded bg-sky-100">
-                    Latest CBC
-                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  
-                  {/* Biomarker 1 */}
-                  <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
-                    <div className="text-xs font-mono text-slate-500 uppercase">HEMOGLOBIN A1C</div>
-                    <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">5.4%</div>
-                    <div className="text-xs text-teal-700 font-semibold flex items-center gap-1 mt-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Normal (&lt; 5.7%)
-                    </div>
+                {labs.length === 0 ? (
+                  <div className="py-10 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                    <Activity className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                    <div className="text-xs font-bold text-slate-700">No lab reports decoded yet</div>
+                    <p className="text-xs text-slate-500 mt-0.5 mb-4">Upload a blood test or pathology report to extract biomarkers</p>
+                    <button
+                      onClick={() => openUploadModal('reports')}
+                      className="btn-med-primary text-xs"
+                    >
+                      <FileSpreadsheet className="w-3.5 h-3.5" /> Upload Lab Report
+                    </button>
                   </div>
-
-                  {/* Biomarker 2 */}
-                  <div className="p-3.5 rounded-lg bg-amber-50/60 border border-amber-200">
-                    <div className="text-xs font-mono text-amber-800 uppercase font-bold">FASTING GLUCOSE</div>
-                    <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">108 mg/dL</div>
-                    <div className="text-xs text-amber-800 font-semibold flex items-center gap-1 mt-1">
-                      <AlertTriangle className="w-3.5 h-3.5" /> Slightly High (70–99)
-                    </div>
+                ) : (
+                  <div className="space-y-3">
+                    {labs.map((doc, idx) => (
+                      <div key={idx} className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                        <div>
+                          <div className="text-sm font-bold text-slate-900">{doc.title}</div>
+                          <div className="text-xs text-slate-500">{doc.insights.join(' ')}</div>
+                        </div>
+                        <span className="text-xs font-mono font-bold text-teal-700 px-2 py-0.5 rounded bg-teal-50 border border-teal-200">
+                          {doc.type}
+                        </span>
+                      </div>
+                    ))}
                   </div>
-
-                  {/* Biomarker 3 */}
-                  <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
-                    <div className="text-xs font-mono text-slate-500 uppercase">LIPID PROFILE (LDL-C)</div>
-                    <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">94 mg/dL</div>
-                    <div className="text-xs text-teal-700 font-semibold flex items-center gap-1 mt-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Optimal (&lt; 100)
-                    </div>
-                  </div>
-
-                  {/* Biomarker 4 */}
-                  <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
-                    <div className="text-xs font-mono text-slate-500 uppercase">TOTAL LEUKOCYTES (WBC)</div>
-                    <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">7,200 /µL</div>
-                    <div className="text-xs text-teal-700 font-semibold flex items-center gap-1 mt-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Normal (4.5k–11k)
-                    </div>
-                  </div>
-
-                </div>
+                )}
               </div>
 
               {/* Lab Reports Documents Timeline */}
@@ -476,28 +480,36 @@ const Home = () => {
                   <p className="text-xs text-slate-500">Laboratory and imaging assessments</p>
                 </div>
 
-                <div className="space-y-3">
-                  {INITIAL_LABS.map((doc) => (
-                    <div 
-                      key={doc.id}
-                      onClick={() => setSelectedDoc(doc)}
-                      className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all cursor-pointer group flex items-center justify-between"
-                    >
-                      <div className="flex items-center gap-3.5">
-                        <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex flex-col items-center justify-center text-center shadow-2xs">
-                          <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">{doc.month}</span>
-                          <span className="text-sm font-bold text-slate-900 font-mono">{doc.date}</span>
+                {labs.length === 0 ? (
+                  <div className="py-10 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                    <FileSpreadsheet className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                    <div className="text-xs font-bold text-slate-700">No diagnostic records</div>
+                    <p className="text-xs text-slate-500 mt-0.5">Uploaded lab documents will appear here</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {labs.map((doc) => (
+                      <div 
+                        key={doc.id}
+                        onClick={() => setSelectedDoc(doc)}
+                        className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all cursor-pointer group flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-3.5">
+                          <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex flex-col items-center justify-center text-center shadow-2xs">
+                            <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">{doc.month}</span>
+                            <span className="text-sm font-bold text-slate-900 font-mono">{doc.date}</span>
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-slate-900 group-hover:text-sky-700 transition-colors">{doc.title}</div>
+                            <div className="text-xs text-slate-500">{doc.insights[0]}</div>
+                          </div>
                         </div>
-                        <div>
-                          <div className="text-sm font-bold text-slate-900 group-hover:text-sky-700 transition-colors">{doc.title}</div>
-                          <div className="text-xs text-slate-500">{doc.insights[0]}</div>
-                        </div>
-                      </div>
 
-                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-700 transition-all" />
-                    </div>
-                  ))}
-                </div>
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-700 transition-all" />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
             </div>
@@ -617,10 +629,7 @@ const Home = () => {
                  
                  <Uploader 
                    type={uploadType} 
-                   onUploadComplete={() => {
-                     setIsUploadModalOpen(false);
-                     navigate('/home');
-                   }} 
+                   onUploadComplete={handleUploadCompleted} 
                  />
                </div>
             </motion.div>

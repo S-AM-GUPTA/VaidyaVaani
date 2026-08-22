@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -41,79 +41,70 @@ interface MemberData {
   active: boolean;
 }
 
-const INITIAL_PROFILES: MemberData[] = [
-  {
-    id: '1',
-    name: 'Sam Gupta',
-    relation: 'Self (Primary)',
-    age: 28,
-    gender: 'Male',
-    bloodGroup: 'O+ Positive',
-    height: '178 cm',
-    weight: '72 kg',
-    bmi: '22.7 (Normal)',
-    bp: '120/80 mmHg',
-    sugar: '108 mg/dL',
-    primaryDoctor: 'Dr. Sharma (Cardiologist)',
-    allergies: ['Penicillin (Mild Rash)', 'Peanuts (Anaphylaxis Risk)'],
-    chronicConditions: ['Mild Prediabetes Monitoring'],
-    active: true,
-  },
-  {
-    id: '2',
-    name: 'Rajesh Gupta',
-    relation: 'Father',
-    age: 62,
-    gender: 'Male',
-    bloodGroup: 'B+ Positive',
-    height: '172 cm',
-    weight: '78 kg',
-    bmi: '26.4 (Overweight)',
-    bp: '135/88 mmHg',
-    sugar: '142 mg/dL',
-    primaryDoctor: 'Dr. Verma (Endocrinologist)',
-    allergies: ['Sulfa Antibiotics'],
-    chronicConditions: ['Hypertension (Stage 1)', 'Type 2 Diabetes'],
-    active: false,
-  },
-  {
-    id: '3',
-    name: 'Sunita Gupta',
-    relation: 'Mother',
-    age: 58,
-    gender: 'Female',
-    bloodGroup: 'O+ Positive',
-    height: '160 cm',
-    weight: '64 kg',
-    bmi: '25.0 (Borderline)',
-    bp: '124/82 mmHg',
-    sugar: '112 mg/dL',
-    primaryDoctor: 'Dr. Anita Roy (General Physician)',
-    allergies: ['Aspirin (Gastric irritation)'],
-    chronicConditions: ['Osteoarthritis (Knee)'],
-    active: false,
-  },
-];
+interface SosContact {
+  id: string;
+  name: string;
+  phone: string;
+  relation: string;
+}
 
 const Profile = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const userAccountName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? `Patient (${user.phoneNumber})` : 'Primary Patient'));
+  const userAccountName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : 'Primary Patient'));
 
-  // Multi-Patient / Family Profiles initialized with active user's name
+  // Persistent Family Profiles
   const [profiles, setProfiles] = useState<MemberData[]>(() => {
-    return INITIAL_PROFILES.map((p, idx) => {
-      if (idx === 0) {
-        return {
-          ...p,
-          name: userAccountName
-        };
+    const saved = localStorage.getItem('vv_patient_profiles');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {}
+    }
+    return [
+      {
+        id: 'primary-user',
+        name: userAccountName,
+        relation: 'Self (Primary)',
+        age: 0,
+        gender: 'Not Specified',
+        bloodGroup: 'Not Specified',
+        height: '-- cm',
+        weight: '-- kg',
+        bmi: '--',
+        bp: '--/-- mmHg',
+        sugar: '-- mg/dL',
+        primaryDoctor: 'Not Specified',
+        allergies: [],
+        chronicConditions: [],
+        active: true,
       }
-      return p;
-    });
+    ];
   });
+
   const activeProfile = profiles.find(p => p.active) || profiles[0];
+
+  // Persistent Emergency SOS contacts
+  const [sosContacts, setSosContacts] = useState<SosContact[]>(() => {
+    const saved = localStorage.getItem('vv_patient_sos');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {}
+    }
+    return [
+      { id: 'sos-1', name: 'National Emergency Ambulance', phone: '108 / 102', relation: 'Emergency Medical Hotline' }
+    ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('vv_patient_profiles', JSON.stringify(profiles));
+  }, [profiles]);
+
+  useEffect(() => {
+    localStorage.setItem('vv_patient_sos', JSON.stringify(sosContacts));
+  }, [sosContacts]);
 
   // Editable vitals toggle
   const [isEditingVitals, setIsEditingVitals] = useState(false);
@@ -122,15 +113,11 @@ const Profile = () => {
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
   const [newMemberName, setNewMemberName] = useState('');
   const [newMemberRelation, setNewMemberRelation] = useState('Spouse');
-  const [newMemberAge, setNewMemberAge] = useState('30');
+  const [newMemberAge, setNewMemberAge] = useState('');
   const [newMemberGender, setNewMemberGender] = useState('Female');
   const [newMemberBlood, setNewMemberBlood] = useState('O+ Positive');
 
-  // Emergency SOS state
-  const [sosContacts, setSosContacts] = useState([
-    { id: 'c1', name: 'Dr. Sharma (Cardiologist)', phone: '+91 98765 43210', relation: 'Primary Physician' },
-    { id: 'c2', name: 'Emergency Ambulance Hotline', phone: '108 / 102', relation: 'National Medical Service' },
-  ]);
+  // Add SOS Contact State
   const [newSosName, setNewSosName] = useState('');
   const [newSosPhone, setNewSosPhone] = useState('');
   const [isAddingSos, setIsAddingSos] = useState(false);
@@ -154,20 +141,20 @@ const Profile = () => {
     e.preventDefault();
     if (!newMemberName.trim()) return;
 
-    const newId = Date.now().toString();
+    const newId = 'member-' + Date.now();
     const newMember: MemberData = {
       id: newId,
       name: newMemberName.trim(),
       relation: newMemberRelation,
-      age: parseInt(newMemberAge) || 30,
+      age: parseInt(newMemberAge) || 0,
       gender: newMemberGender,
       bloodGroup: newMemberBlood,
-      height: '170 cm',
-      weight: '68 kg',
-      bmi: '23.5 (Normal)',
-      bp: '120/80 mmHg',
-      sugar: '100 mg/dL',
-      primaryDoctor: 'Primary Physician',
+      height: '-- cm',
+      weight: '-- kg',
+      bmi: '--',
+      bp: '--/-- mmHg',
+      sugar: '-- mg/dL',
+      primaryDoctor: 'Not Specified',
       allergies: [],
       chronicConditions: [],
       active: false,
@@ -175,6 +162,7 @@ const Profile = () => {
 
     setProfiles(prev => [...prev, newMember]);
     setNewMemberName('');
+    setNewMemberAge('');
     setIsAddMemberModalOpen(false);
   };
 
@@ -262,7 +250,7 @@ const Profile = () => {
     e.preventDefault();
     if (!newSosName.trim() || !newSosPhone.trim()) return;
     setSosContacts(prev => [...prev, {
-      id: Date.now().toString(),
+      id: 'sos-' + Date.now(),
       name: newSosName.trim(),
       phone: newSosPhone.trim(),
       relation: 'Emergency Contact'
@@ -324,7 +312,7 @@ const Profile = () => {
                 </h1>
               )}
               <p className="text-xs text-slate-500 mt-0.5">
-                Age: {activeProfile.age} • Gender: {activeProfile.gender} • Blood Group: <span className="text-slate-900 font-bold">{activeProfile.bloodGroup}</span>
+                Age: {activeProfile.age > 0 ? activeProfile.age : 'Not specified'} • Gender: {activeProfile.gender} • Blood Group: <span className="text-slate-900 font-bold">{activeProfile.bloodGroup}</span>
               </p>
             </div>
           </div>
@@ -352,7 +340,7 @@ const Profile = () => {
                 </button>
 
                 {/* Delete icon for non-primary profiles */}
-                {profiles.length > 1 && p.id !== '1' && (
+                {profiles.length > 1 && p.id !== 'primary-user' && (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -411,6 +399,7 @@ const Profile = () => {
                     onChange={(e) => handleUpdateActiveVitals('bloodGroup', e.target.value)}
                     className="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 mt-1 outline-none" 
                   >
+                    <option value="Not Specified">Not Specified</option>
                     <option value="A+ Positive">A+ Positive</option>
                     <option value="A- Negative">A- Negative</option>
                     <option value="B+ Positive">B+ Positive</option>
@@ -436,12 +425,14 @@ const Profile = () => {
                       type="text" 
                       value={activeProfile.height} 
                       onChange={(e) => handleUpdateActiveVitals('height', e.target.value)}
+                      placeholder="e.g. 175 cm"
                       className="w-1/2 bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900" 
                     />
                     <input 
                       type="text" 
                       value={activeProfile.weight} 
                       onChange={(e) => handleUpdateActiveVitals('weight', e.target.value)}
+                      placeholder="e.g. 70 kg"
                       className="w-1/2 bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900" 
                     />
                   </div>
@@ -455,7 +446,7 @@ const Profile = () => {
               {/* BMI */}
               <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
                 <div className="text-xs font-mono text-slate-500 font-bold">BODY MASS INDEX</div>
-                <div className="text-sm font-bold text-teal-700 mt-1 font-mono">{activeProfile.bmi}</div>
+                <div className="text-sm font-bold text-slate-700 mt-1 font-mono">{activeProfile.bmi}</div>
               </div>
 
               {/* Blood Pressure */}
@@ -466,6 +457,7 @@ const Profile = () => {
                     type="text" 
                     value={activeProfile.bp} 
                     onChange={(e) => handleUpdateActiveVitals('bp', e.target.value)}
+                    placeholder="e.g. 120/80 mmHg"
                     className="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 mt-1" 
                   />
                 ) : (
@@ -481,10 +473,11 @@ const Profile = () => {
                     type="text" 
                     value={activeProfile.sugar} 
                     onChange={(e) => handleUpdateActiveVitals('sugar', e.target.value)}
+                    placeholder="e.g. 95 mg/dL"
                     className="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 mt-1" 
                   />
                 ) : (
-                  <div className="text-sm font-bold text-amber-700 mt-1 font-mono">{activeProfile.sugar}</div>
+                  <div className="text-sm font-bold text-slate-900 mt-1 font-mono">{activeProfile.sugar}</div>
                 )}
               </div>
 
@@ -496,6 +489,7 @@ const Profile = () => {
                     type="text" 
                     value={activeProfile.primaryDoctor} 
                     onChange={(e) => handleUpdateActiveVitals('primaryDoctor', e.target.value)}
+                    placeholder="e.g. Dr. Verma (Physician)"
                     className="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 mt-1" 
                   />
                 ) : (
@@ -593,7 +587,7 @@ const Profile = () => {
                 <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-2">Known Drug & Food Allergies:</div>
                 <div className="flex flex-wrap gap-2">
                   {activeProfile.allergies.length === 0 ? (
-                    <span className="text-xs text-slate-400">No allergies recorded for {activeProfile.name}.</span>
+                    <span className="text-xs text-slate-400">No allergies recorded. Click "+ Allergy" to add.</span>
                   ) : (
                     activeProfile.allergies.map((allergy, i) => (
                       <span key={i} className="px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-center gap-1.5 group">
@@ -615,7 +609,7 @@ const Profile = () => {
                 <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-2">Chronic Medical Conditions:</div>
                 <div className="flex flex-wrap gap-2">
                   {activeProfile.chronicConditions.length === 0 ? (
-                    <span className="text-xs text-slate-400">No chronic conditions recorded for {activeProfile.name}.</span>
+                    <span className="text-xs text-slate-400">No chronic conditions recorded. Click "+ Condition" to add.</span>
                   ) : (
                     activeProfile.chronicConditions.map((cond, i) => (
                       <span key={i} className="px-3 py-1 rounded-lg bg-teal-50 border border-teal-200 text-teal-800 text-xs font-medium flex items-center gap-1.5 group">
@@ -710,7 +704,7 @@ const Profile = () => {
                     required
                     value={newMemberName}
                     onChange={(e) => setNewMemberName(e.target.value)}
-                    placeholder="e.g. Priya Gupta"
+                    placeholder="e.g. Family Member Name"
                     className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                   />
                 </div>
@@ -736,9 +730,9 @@ const Profile = () => {
                     <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Age</label>
                     <input 
                       type="number" 
-                      required
                       value={newMemberAge}
                       onChange={(e) => setNewMemberAge(e.target.value)}
+                      placeholder="e.g. 30"
                       className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                     />
                   </div>
@@ -765,6 +759,7 @@ const Profile = () => {
                       onChange={(e) => setNewMemberBlood(e.target.value)}
                       className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                     >
+                      <option value="Not Specified">Not Specified</option>
                       <option value="O+ Positive">O+ Positive</option>
                       <option value="O- Negative">O- Negative</option>
                       <option value="A+ Positive">A+ Positive</option>
@@ -823,7 +818,7 @@ const Profile = () => {
                     required
                     value={newSosName}
                     onChange={(e) => setNewSosName(e.target.value)}
-                    placeholder="e.g. Dr. Verma (Physician)"
+                    placeholder="e.g. Dr. Primary Physician"
                     className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-rose-500 focus:bg-white"
                   />
                 </div>
@@ -835,7 +830,7 @@ const Profile = () => {
                     required
                     value={newSosPhone}
                     onChange={(e) => setNewSosPhone(e.target.value)}
-                    placeholder="e.g. +91 98123 45678"
+                    placeholder="e.g. +91 98765 43210"
                     className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-rose-500 focus:bg-white font-mono"
                   />
                 </div>
@@ -890,7 +885,7 @@ const Profile = () => {
                     required
                     value={newTagInput}
                     onChange={(e) => setNewTagInput(e.target.value)}
-                    placeholder={tagType === 'allergy' ? 'e.g. Aspirin (Asthma flare)' : 'e.g. Type 2 Diabetes'}
+                    placeholder={tagType === 'allergy' ? 'e.g. Penicillin Allergy' : 'e.g. Hypertension'}
                     className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white"
                   />
                 </div>

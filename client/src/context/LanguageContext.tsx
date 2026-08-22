@@ -16,59 +16,58 @@ export const LANGUAGES: LanguageOption[] = [
     label: 'English',
     native: 'English',
     speechCode: 'en-IN',
-    demoSpeechText: "Hello. According to your diagnostic report, fasting blood glucose is 108 mg/dL. It is recommended to take Atenolol 30 minutes after meals and space from antacids."
+    demoSpeechText: "Hello! VaidyaVaani is your encrypted clinical assistant. You can upload prescriptions and lab reports to check drug safety in your regional language."
   },
   {
     code: 'hi',
     label: 'Hindi',
     native: 'हिन्दी',
     speechCode: 'hi-IN',
-    demoSpeechText: "नमस्ते। आपकी लैब रिपोर्ट के अनुसार रक्त शर्करा 108 mg/dL है। एटेनोलॉल दवा को भोजन के 30 मिनट बाद लेना सर्वोत्तम है।"
+    demoSpeechText: "नमस्ते! वैद्यवाणी आपका सुरक्षित डिजिटल स्वास्थ्य सहायक है। आप अपनी दवाओं और लैब रिपोर्ट की जांच अपनी भाषा में कर सकते हैं।"
   },
   {
     code: 'bn',
     label: 'Bengali',
     native: 'বাংলা',
     speechCode: 'bn-IN',
-    demoSpeechText: "নমস্কার। আপনার ল্যাব রিপোর্ট অনুযায়ী রক্তের শর্করা ১০৮ mg/dL। খাওয়ার ৩০ মিনিট পর অ্যাটেনোলল ওষুধটি নেওয়া সর্বোত্তম।"
+    demoSpeechText: "নমস্কার! বৈদ্যবাণী আপনার সুরক্ষিত ডিজিটাল স্বাস্থ্য সহকারী। আপনি নিজের ভাষায় প্রেসক্রিপশন ও ল্যাব রিপোর্ট বুঝতে পারবেন।"
   },
   {
     code: 'ta',
     label: 'Tamil',
     native: 'தமிழ்',
     speechCode: 'ta-IN',
-    demoSpeechText: "வணக்கம். உங்கள் ஆய்வக அறிக்கையின்படி இரத்த சர்க்கரை 108 mg/dL உள்ளது. உணவுக்கு 30 நிமிடங்களுக்குப் பிறகு அட்டெனோலோல் மருந்தை உட்கொள்வது நல்லது."
+    demoSpeechText: "வணக்கம்! வைத்தியவாணி உங்கள் பாதுகாப்பான டிஜிட்டல் மருத்துவ உதவியாளர். உங்கள் மருந்துச் சீட்டு மற்றும் ஆய்வக அறிக்கைகளை தமிழில் எளிதாகப் புரிந்து கொள்ளலாம்."
   },
   {
     code: 'te',
     label: 'Telugu',
     native: 'తెలుగు',
     speechCode: 'te-IN',
-    demoSpeechText: "నమస్కారం. మీ ల్యాబ్ నివేదిక ప్రకారం రక్తంలో చక్కెర 108 mg/dL ఉంది. భోజనం చేసిన 30 నిమిషాల తర్వాత అటెనోలోల్ మందు తీసుకోవడం ఉత్తమం."
+    demoSpeechText: "నమస్కారం! వైద్యవాణి మీ సురక్షిత డిజిటల్ ఆరోగ్య సహాయకుడు. మీ ప్రిస్క్రిప్షన్లు మరియు ల్యాబ్ నివేదికలను తెలుగులో సులభంగా అర్థం చేసుకోండి."
   },
   {
     code: 'mr',
     label: 'Marathi',
     native: 'मराठी',
     speechCode: 'mr-IN',
-    demoSpeechText: "नमस्कार. आपल्या लॅब अहवालानुसार रक्तातील साखर 108 mg/dL आहे. जेवणानंतर ३० मिनिटांनी अ‍ॅटेनोलॉल औषध घेणे उत्तम आहे."
+    demoSpeechText: "नमस्कार! वैद्यवाणी आपले सुरक्षित डिजिटल आरोग्य सहाय्यक आहे. आपण आपले प्रिस्क्रिप्शन आणि लॅब अहवाल मराठीत सहज समजून घेऊ शकता."
   },
   {
     code: 'gu',
     label: 'Gujarati',
     native: 'ગુજરાતી',
     speechCode: 'gu-IN',
-    demoSpeechText: "નમસ્તે. તમારા લેબ રિપોર્ટ મુજબ બ્લડ સુગર 108 mg/dL છે. જમ્યા પછી 30 મિનિટ બાદ એટેનોલોલ દવા લેવી શ્રેષ્ઠ છે."
+    demoSpeechText: "નમસ્તે! વૈદ્યવાણી તમારું સુરક્ષિત ડિજિટલ હેલ્થ સહાયક છે. તમે તમારા પ્રિસ્ક્રિપ્શન અને લેબ રિપોર્ટ સરળ ગુજરાતીમાં સમજી શકો છો."
   },
 ];
 
 export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   en: {
-    // Nav
     workspace: 'Workspace',
     prescriptions: 'Prescriptions',
     labDiagnostics: 'Lab Diagnostics',
-    aiChat: 'AI Neural Chat',
+    aiChat: 'AI Clinical Chat',
     intelligence: 'Intelligence',
     safetyMatrix: 'Safety Matrix',
     labDecoding: 'Lab Decoding',
@@ -80,7 +79,6 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     notifications: 'Notifications',
     markAllRead: 'Mark all read',
 
-    // Hero
     distributedIntel: 'Distributed Medical Intelligence',
     heroHeadline: 'Understand your health.',
     heroSubHeadline: 'Weightless & instant.',
@@ -92,7 +90,6 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     neuralSynthesis: 'Neural Synthesis',
     clientEncrypted: 'Client Encrypted',
 
-    // Pipeline
     pipelineTitle: 'From prescription to crystal clarity in four stages.',
     step1Title: 'Multimodal Ingestion',
     step1Desc: 'Accepts camera scans, PDF lab printouts, and photo gallery uploads with client-side sanitization.',
@@ -103,7 +100,6 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     step4Title: 'Voice & Dialect Audio',
     step4Desc: 'Generates spoken summaries in Hindi & regional languages so elderly and rural patients stay safe.',
 
-    // Interaction Section
     interactionTitle: 'Cross-reference active prescriptions in milliseconds.',
     interactionDesc: 'Eliminate uncertainty when managing multi-drug schedules across different doctors. Our neural engine checks contraindications, dosage spacing, and food interactions across international pharmacology databases.',
     lowRisk: 'Low Risk',
@@ -112,12 +108,10 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     contraindicationRadar: 'Contraindication Radar',
     pharmacokineticSpacing: 'Pharmacokinetic Spacing',
 
-    // Lab Decoder
     labDecoderTitle: 'Decode lab reports without the confusing jargon.',
     labDecoderDesc: 'Stop cross-referencing obscure acronyms. VaidyaVaani contextualizes complete metabolic panels, lipid panels, thyroid markers, and radiology notes into crisp, plain-language summaries with actionable doctor talking points.',
     uploadLabReport: 'Upload Lab Report',
 
-    // Voice Section
     voiceTitle: 'Native voice intelligence in regional Indian languages.',
     voiceDesc: 'Healthcare belongs to everyone. Our natural language pipeline reads complex reports aloud and translates doctor prescriptions into clear audio guidance for elderly and rural caregivers.',
     voiceDemoTitle: 'Voice Synthesis Live Demo',
@@ -125,8 +119,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     speakingNow: 'Speaking aloud now...',
     playVoice: 'Play Synthetic Voice',
 
-    // Dashboard
-    vaultTitle: 'Clinical Intelligence Vault',
+    vaultTitle: 'Patient Health Dashboard',
     unifiedView: 'Unified View',
     rxSafetyTab: 'Prescriptions & Safety',
     labDiagTab: 'Lab Diagnostics',
@@ -145,7 +138,6 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   },
 
   hi: {
-    // Nav
     workspace: 'कार्यक्षेत्र',
     prescriptions: 'पर्चे एवं दवाएं',
     labDiagnostics: 'लैब जांच',
@@ -161,7 +153,6 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     notifications: 'सूचनाएं',
     markAllRead: 'सभी पढ़ें',
 
-    // Hero
     distributedIntel: 'वितरित चिकित्सा बुद्धिमत्ता',
     heroHeadline: 'अपने स्वास्थ्य को समझें।',
     heroSubHeadline: 'सरल, सटीक और तुरंत।',
@@ -173,7 +164,6 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     neuralSynthesis: 'त्वरित विश्लेषण',
     clientEncrypted: 'पूर्णतः एन्क्रिप्टेड',
 
-    // Pipeline
     pipelineTitle: 'पर्चे से लेकर स्पष्ट समझ तक केवल चार चरणों में।',
     step1Title: 'मल्टीमॉडल इनपुट',
     step1Desc: 'कैमरा स्कैन, पीडीएफ प्रिंटआउट और फोटो का सुरक्षित विश्लेषण।',
@@ -184,7 +174,6 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     step4Title: 'मातृभाषा में आवाज़',
     step4Desc: 'बुजुर्गों और देखभालकर्ताओं के लिए क्षेत्रीय भाषा में बोलकर जानकारी।',
 
-    // Interaction Section
     interactionTitle: 'दवाओं के आपसी प्रभाव की तुरंत जांच करें।',
     interactionDesc: 'अलग-अलग डॉक्टरों की दवाओं के बीच कोई हानिकारक टकराव तो नहीं? हमारा सिस्टम तुरंत समय और खुराक का सुरक्षित अंतराल बताता है।',
     lowRisk: 'कम जोखिम',
@@ -193,12 +182,10 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     contraindicationRadar: 'टकराव की चेतावनी',
     pharmacokineticSpacing: 'दवा लेने का सही अंतराल',
 
-    // Lab Decoder
     labDecoderTitle: 'बिना जटिल शब्दों के लैब रिपोर्ट समझें।',
     labDecoderDesc: 'कठिन मेडिकल शब्दों की चिंता छोड़ें। वैद्यवाणी ब्लड शुगर, लिपिड और सीबीसी को सरल भाषा में स्पष्ट करता है।',
     uploadLabReport: 'लैब रिपोर्ट अपलोड करें',
 
-    // Voice Section
     voiceTitle: 'अपनी भाषा में बोलकर समझाती स्वास्थ्य सेवा।',
     voiceDesc: 'स्वास्थ्य की जानकारी हर किसी के लिए है। हमारा सिस्टम बुजुर्गों के लिए पूरी रिपोर्ट हिंदी और अन्य भाषाओं में बोलकर सुनाता है।',
     voiceDemoTitle: 'हिंदी वॉयस सिंथेसिस डेमो',
@@ -206,7 +193,6 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     speakingNow: 'ऑडियो चल रहा है...',
     playVoice: 'आवाज़ में सुनें',
 
-    // Dashboard
     vaultTitle: 'व्यक्तिगत स्वास्थ्य वॉल्ट',
     unifiedView: 'समग्र दृश्य',
     rxSafetyTab: 'पर्चे और दवा सुरक्षा',

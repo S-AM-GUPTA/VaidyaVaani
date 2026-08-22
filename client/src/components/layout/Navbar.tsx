@@ -21,11 +21,13 @@ import { useAuth } from '../../context/AuthContext';
 import { useLanguage, LANGUAGES } from '../../context/LanguageContext';
 import Logo from '../Logo';
 
-const NOTIFICATIONS = [
-  { id: 1, title: 'Drug Spacing Reminder', desc: 'Space Atenolol 2 hours apart from antacids.', time: '10m ago', unread: true },
-  { id: 2, title: 'Lab Biomarkers Ingested', desc: 'Fasting glucose extracted at 108 mg/dL.', time: '1h ago', unread: true },
-  { id: 3, title: 'Vault Sealed', desc: 'Client-side encryption verified.', time: '1d ago', unread: false },
-];
+interface NotificationItem {
+  id: number | string;
+  title: string;
+  desc: string;
+  time: string;
+  unread: boolean;
+}
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -39,7 +41,10 @@ const Navbar = () => {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [notifs, setNotifs] = useState(NOTIFICATIONS);
+  const [notifs, setNotifs] = useState<NotificationItem[]>(() => {
+    const saved = localStorage.getItem('vv_patient_notifs');
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const langRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
@@ -267,20 +272,26 @@ const Navbar = () => {
                           </button>
                         </div>
                         <div className="space-y-2 max-h-60 overflow-y-auto">
-                          {notifs.map((n) => (
-                            <div 
-                              key={n.id} 
-                              className={`p-2.5 rounded-lg border text-xs transition-colors ${
-                                n.unread ? 'bg-sky-50/50 border-sky-100' : 'bg-slate-50 border-transparent opacity-75'
-                              }`}
-                            >
-                              <div className="flex items-center justify-between mb-1">
-                                <span className="font-semibold text-slate-900">{n.title}</span>
-                                <span className="text-[9px] font-mono text-slate-400">{n.time}</span>
-                              </div>
-                              <p className="text-[11px] text-slate-600">{n.desc}</p>
+                          {notifs.length === 0 ? (
+                            <div className="py-6 text-center text-xs text-slate-400 font-mono">
+                              No new notifications.
                             </div>
-                          ))}
+                          ) : (
+                            notifs.map((n) => (
+                              <div 
+                                key={n.id} 
+                                className={`p-2.5 rounded-lg border text-xs transition-colors ${
+                                  n.unread ? 'bg-sky-50/50 border-sky-100' : 'bg-slate-50 border-transparent opacity-75'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="font-semibold text-slate-900">{n.title}</span>
+                                  <span className="text-[9px] font-mono text-slate-400">{n.time}</span>
+                                </div>
+                                <p className="text-[11px] text-slate-600">{n.desc}</p>
+                              </div>
+                            ))
+                          )}
                         </div>
                       </motion.div>
                     )}

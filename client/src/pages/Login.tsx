@@ -11,7 +11,6 @@ import {
   ShieldCheck, 
   Phone, 
   Smartphone,
-  Zap,
   Info,
   CheckCircle2,
   HeartPulse
@@ -41,17 +40,10 @@ const Login = () => {
     loginWithEmail, 
     signupWithEmail, 
     sendPhoneOtp, 
-    verifyPhoneOtp,
-    loginAsGuest 
+    verifyPhoneOtp
   } = useAuth();
   
   const navigate = useNavigate();
-
-  // 1-Click Guest Login
-  const handleGuestEntry = () => {
-    loginAsGuest();
-    navigate('/home');
-  };
 
   // Google Sign-In via Firebase
   const handleGoogleSignIn = async () => {
@@ -208,26 +200,6 @@ const Login = () => {
             <p className="text-xs text-slate-500">
               Access and manage your encrypted health records securely.
             </p>
-          </div>
-
-          {/* Quick 1-Click Guest Pass */}
-          <div className="mb-5">
-            <button
-              type="button"
-              onClick={handleGuestEntry}
-              className="w-full p-3 rounded-lg bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-900 text-xs flex items-center justify-between transition-all group"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded bg-sky-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
-                  <Zap className="w-3.5 h-3.5" />
-                </div>
-                <div className="text-left">
-                  <span className="font-bold text-slate-900 block text-xs">Instant Demo Access (1-Click)</span>
-                  <span className="text-[11px] text-slate-600">Explore prescriptions, vitals & lab diagnostics</span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-sky-700 group-hover:translate-x-0.5 transition-transform" />
-            </button>
           </div>
 
           {/* Primary Method Switcher (Email vs Phone) */}
@@ -438,7 +410,7 @@ const Login = () => {
 
                   <div className="p-3 bg-sky-50 border border-sky-200 rounded-lg mb-2 flex items-start gap-2 text-xs text-sky-900">
                     <Info className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
-                    <span>Enter code sent to <strong className="text-slate-900 font-mono">{phoneNumber}</strong> (or test code <strong className="text-sky-700 font-mono">123456</strong>).</span>
+                    <span>Enter the 6-digit SMS verification code sent to <strong className="text-slate-900 font-mono">{phoneNumber}</strong>.</span>
                   </div>
 
                   <div className="relative">
