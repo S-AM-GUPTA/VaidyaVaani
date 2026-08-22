@@ -25,13 +25,15 @@ export const uploadPrescription = async (req: Request, res: Response): Promise<v
     let medicinesData: any[] = [];
 
     try {
-      const { extractTextFromImage } = await import('../services/ocr.service');
+      const { analyzePrescriptionOCR } = await import('../services/ocr.service');
       const { explainPrescription } = await import('../services/ai.service');
       
-      extractedText = await extractTextFromImage(file.path);
+      const ocrResult = await analyzePrescriptionOCR(file.path);
+      extractedText = ocrResult.raw_text || '';
+      const ocrCandidates = ocrResult.prescription?.medicines || [];
       
-      if (extractedText) {
-        const rawJson = await explainPrescription(extractedText);
+      if (extractedText || ocrCandidates.length > 0) {
+        const rawJson = await explainPrescription(extractedText, ocrCandidates);
         let cleanJson = rawJson.replace(/```json/gi, '').replace(/```/g, '');
         const firstBrace = cleanJson.indexOf('{');
         const lastBrace = cleanJson.lastIndexOf('}');
@@ -46,8 +48,20 @@ export const uploadPrescription = async (req: Request, res: Response): Promise<v
           console.error("Failed to parse Gemini JSON:", cleanJson);
         }
         
-        if (parsed.medicines && Array.isArray(parsed.medicines)) {
+        if (parsed.medicines && Array.isArray(parsed.medicines) && parsed.medicines.length > 0) {
           medicinesData = parsed.medicines;
+        } else if (ocrCandidates.length > 0) {
+          // Fallback to deterministic OCR normalization if LLM fails
+          medicinesData = ocrCandidates.map(c => ({
+            name: c.name,
+            purpose: c.purpose || 'Prescribed therapy',
+            dosage: `${c.strength || ''} ${c.dosage || ''}`.trim(),
+            timing: c.timing || c.frequency || 'As prescribed',
+            foodInstructions: c.timing || 'As directed',
+            warnings: 'Verify with prescribing doctor',
+            confidenceScore: Math.round((c.confidence || 0.8) * 100),
+            requiresVerification: c.needs_verification || false
+          }));
         }
       }
       

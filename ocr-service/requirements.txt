@@ -3,3 +3,9 @@ uvicorn
 paddlepaddle
 paddleocr
 pydantic
+rapidfuzz
+torch
+transformers
+pillow
+opencv-python-headless
+PyMuPDF

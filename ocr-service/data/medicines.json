@@ -1,0 +1,170 @@
+[
+  {
+    "generic_name": "Paracetamol",
+    "brand_names": ["Dolo", "Dolo 650", "Calpol", "Crocin", "Pacimol", "Pyrigesic", "FeveX"],
+    "common_spellings": ["Paracetamoll", "Paracip", "Paracetamol", "PCM", "Dolo650", "Calpol650", "Dolo-650"],
+    "strengths": ["500 mg", "650 mg", "1000 mg", "120 mg/5ml", "250 mg/5ml"],
+    "forms": ["tablet", "syrup", "infusion", "drops"],
+    "indications": ["Fever", "Mild to moderate pain", "Headache"]
+  },
+  {
+    "generic_name": "Amoxicillin + Clavulanic Acid",
+    "brand_names": ["Augmentin", "Augmentin 625", "Clavam", "Clavam 625", "Moxikind-CV", "Advent", "Novamox-CV"],
+    "common_spellings": ["Amox-Clav", "Augmentin625", "Amoxiclav", "Amox Clav", "Clavam625", "Moxclav"],
+    "strengths": ["375 mg", "625 mg", "1000 mg", "228.5 mg/5ml", "457 mg/5ml"],
+    "forms": ["tablet", "syrup", "injection"],
+    "indications": ["Bacterial infection", "Respiratory tract infection", "ENT infections"]
+  },
+  {
+    "generic_name": "Amoxicillin",
+    "brand_names": ["Novamox", "Mox", "Amox", "Amoxi", "Wymox", "Almox"],
+    "common_spellings": ["Amoxycillin", "Amoxicilin", "Amoxcillin", "Amoxi 500", "Novamox 500"],
+    "strengths": ["250 mg", "500 mg", "125 mg/5ml", "250 mg/5ml"],
+    "forms": ["capsule", "tablet", "syrup"],
+    "indications": ["Bacterial infections", "Dental infection", "Skin infection"]
+  },
+  {
+    "generic_name": "Telmisartan",
+    "brand_names": ["Telma", "Telma 40", "Telpres", "Telvas", "Telsartan", "Telmikind"],
+    "common_spellings": ["Telmisartn", "Telma40", "Telma 20", "Telma 80", "Telpres40"],
+    "strengths": ["20 mg", "40 mg", "80 mg"],
+    "forms": ["tablet"],
+    "indications": ["Hypertension", "Cardiovascular risk reduction"]
+  },
+  {
+    "generic_name": "Telmisartan + Hydrochlorothiazide",
+    "brand_names": ["Telma-H", "Telpres-H", "Telvas-H", "Telsartan-H"],
+    "common_spellings": ["Telma H", "TelmaH", "Telmisartan HCTZ"],
+    "strengths": ["40/12.5 mg", "80/12.5 mg"],
+    "forms": ["tablet"],
+    "indications": ["Hypertension"]
+  },
+  {
+    "generic_name": "Amlodipine",
+    "brand_names": ["Amlong", "Amlopin", "Amlodac", "Stamlo", "Amlovas"],
+    "common_spellings": ["Amlodipin", "Amlong 5", "Amlong 10", "Amlodipine Besylate"],
+    "strengths": ["2.5 mg", "5 mg", "10 mg"],
+    "forms": ["tablet"],
+    "indications": ["Hypertension", "Angina pectoris"]
+  },
+  {
+    "generic_name": "Pantoprazole",
+    "brand_names": ["Pantocid", "Pan 40", "Pantodac", "Pantop", "Protium"],
+    "common_spellings": ["Pantoprazol", "Pantocid40", "Pan40", "Pantop 40", "Panto 40"],
+    "strengths": ["20 mg", "40 mg"],
+    "forms": ["tablet", "injection"],
+    "indications": ["GERD", "Gastric ulcer", "Acid reflux"]
+  },
+  {
+    "generic_name": "Pantoprazole + Domperidone",
+    "brand_names": ["Pan-D", "Pantocid-D", "Pantodac-DSR", "Pantop-D", "Pan D"],
+    "common_spellings": ["PanD", "Pan DSR", "Pantocid D", "Pantodac D"],
+    "strengths": ["40/30 mg", "40/10 mg"],
+    "forms": ["capsule", "tablet"],
+    "indications": ["Gastroesophageal reflux disease with nausea", "Dyspepsia"]
+  },
+  {
+    "generic_name": "Metformin",
+    "brand_names": ["Glycomet", "Glyciphage", "Glucophage", "Obimet", "Bigomet"],
+    "common_spellings": ["Metformin HCl", "Glycomet 500", "Glycomet 850", "Glycomet 1000", "Glycomet SR"],
+    "strengths": ["500 mg", "850 mg", "1000 mg", "500 mg SR", "1000 mg SR"],
+    "forms": ["tablet", "extended-release tablet"],
+    "indications": ["Type 2 Diabetes Mellitus"]
+  },
+  {
+    "generic_name": "Metformin + Glimepiride",
+    "brand_names": ["Glycomet-GP", "Amaryl-M", "Glimisave-M", "Zoryl-M", "Gemer"],
+    "common_spellings": ["Glycomet GP 1", "Glycomet GP 2", "Glycomet GP", "Glimisave M1", "Glimisave M2"],
+    "strengths": ["500/1 mg", "500/2 mg", "1000/2 mg"],
+    "forms": ["tablet", "sustained-release tablet"],
+    "indications": ["Type 2 Diabetes Mellitus"]
+  },
+  {
+    "generic_name": "Atorvastatin",
+    "brand_names": ["Atorva", "Lipitor", "Atocor", "Storvas", "Atchol", "Tonact"],
+    "common_spellings": ["Atorvastin", "Atorva 10", "Atorva 20", "Atorva 40", "Storvas 10"],
+    "strengths": ["10 mg", "20 mg", "40 mg", "80 mg"],
+    "forms": ["tablet"],
+    "indications": ["Hypercholesterolemia", "Prevention of cardiovascular events"]
+  },
+  {
+    "generic_name": "Montelukast + Levocetirizine",
+    "brand_names": ["Montair-LC", "Montek-LC", "Telekast-L", "Levocet-M", "Romilast-L"],
+    "common_spellings": ["Montair LC", "Montek LC", "MontairLC", "Levocet M", "Montelukast Levocet"],
+    "strengths": ["10/5 mg", "4/2.5 mg (kid)"],
+    "forms": ["tablet", "chewable tablet", "syrup"],
+    "indications": ["Allergic rhinitis", "Bronchial asthma symptoms", "Urticaria"]
+  },
+  {
+    "generic_name": "Azithromycin",
+    "brand_names": ["Azithral", "Azee", "Zithrox", "Azibact", "Azimax"],
+    "common_spellings": ["Azithral 500", "Azee 500", "Azithromicin", "Azithromycin 250"],
+    "strengths": ["250 mg", "500 mg", "100 mg/5ml", "200 mg/5ml"],
+    "forms": ["tablet", "syrup"],
+    "indications": ["Respiratory tract infections", "Typhoid", "Skin infections"]
+  },
+  {
+    "generic_name": "Levothyroxine",
+    "brand_names": ["Thyronorm", "Eltroxin", "Thyrox", "Lethra"],
+    "common_spellings": ["Thyronorm 25", "Thyronorm 50", "Thyronorm 75", "Thyronorm 100", "Eltroxin 50"],
+    "strengths": ["25 mcg", "50 mcg", "75 mcg", "88 mcg", "100 mcg", "125 mcg"],
+    "forms": ["tablet"],
+    "indications": ["Hypothyroidism"]
+  },
+  {
+    "generic_name": "Aspirin",
+    "brand_names": ["Ecosprin", "Disprin", "Delisprin", "Loprin", "ASA"],
+    "common_spellings": ["Ecosprin 75", "Ecosprin 150", "Ecosprin-AV", "Dispirin", "Acetylsalicylic Acid"],
+    "strengths": ["75 mg", "150 mg", "325 mg"],
+    "forms": ["enteric-coated tablet", "effervescent tablet"],
+    "indications": ["Antiplatelet", "Prevention of myocardial infarction", "Stroke prevention"]
+  },
+  {
+    "generic_name": "Calcium + Vitamin D3",
+    "brand_names": ["Shelcal", "Shelcal 500", "Calcirol", "Gemcal", "Cipcal", "Calcimax"],
+    "common_spellings": ["Shelcal500", "Shelcal HD", "Shelcal-500", "Cipcal 500", "Calcium 500 D3"],
+    "strengths": ["500 mg/250 IU", "500 mg/400 IU"],
+    "forms": ["tablet", "suspension"],
+    "indications": ["Calcium deficiency", "Osteoporosis", "Bone health"]
+  },
+  {
+    "generic_name": "Atenolol",
+    "brand_names": ["Aten", "Betacard", "Tenormin", "Atenova"],
+    "common_spellings": ["Aten 25", "Aten 50", "Atenolol 50", "Aten 100"],
+    "strengths": ["25 mg", "50 mg", "100 mg"],
+    "forms": ["tablet"],
+    "indications": ["Hypertension", "Angina pectoris", "Arrhythmias"]
+  },
+  {
+    "generic_name": "Omeprazole",
+    "brand_names": ["Omez", "Omee", "Ocid", "Omesec"],
+    "common_spellings": ["Omez 20", "Omez D", "Omeprazol", "Ocid 20"],
+    "strengths": ["20 mg", "40 mg"],
+    "forms": ["capsule", "tablet"],
+    "indications": ["Peptic ulcer disease", "GERD", "Zollinger-Ellison syndrome"]
+  },
+  {
+    "generic_name": "Cefixime",
+    "brand_names": ["Zifi", "Taxim-O", "Mahacef", "Cefolac", "Omnicef"],
+    "common_spellings": ["Zifi 200", "Taxim O 200", "Taxim-O 200", "Cefixim", "Mahacef 200"],
+    "strengths": ["100 mg", "200 mg", "400 mg", "50 mg/5ml", "100 mg/5ml"],
+    "forms": ["tablet", "syrup"],
+    "indications": ["Bacterial infections", "Typhoid fever", "Urinary tract infections"]
+  },
+  {
+    "generic_name": "Ibuprofen + Paracetamol",
+    "brand_names": ["Combiflam", "Flexon", "Ibugesic-Plus", "Brufen Plus"],
+    "common_spellings": ["Combiflam", "Ibu-PCM", "Flexon", "Ibugesic Plus"],
+    "strengths": ["400/325 mg", "100/162.5 mg/5ml"],
+    "forms": ["tablet", "syrup"],
+    "indications": ["Pain and inflammatory conditions", "Fever"]
+  },
+  {
+    "generic_name": "Warfarin",
+    "brand_names": ["Coumadin", "Warf", "Uniwarf"],
+    "common_spellings": ["Warf 1", "Warf 2", "Warf 5", "Warfarin Sodium"],
+    "strengths": ["1 mg", "2 mg", "5 mg"],
+    "forms": ["tablet"],
+    "indications": ["Anticoagulation", "Deep vein thrombosis", "Atrial fibrillation"]
+  }
+]

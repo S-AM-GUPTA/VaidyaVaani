@@ -27,7 +27,6 @@ ${ocrText}
         contents: prompt,
     });
     
-    // We expect the LLM to return JSON. Let's return it as a stringified JSON for the controller to parse, or just the raw text.
     return response.text || '{}';
   } catch (error) {
     console.error('Gemini API Error (Report):', error);
@@ -35,34 +34,44 @@ ${ocrText}
   }
 };
 
-export const explainPrescription = async (ocrText: string): Promise<string> => {
+export const explainPrescription = async (ocrText: string, candidates?: any[]): Promise<string> => {
   if (!ocrText || ocrText.trim() === '') {
-    return 'No text could be extracted from this prescription.';
+    return '{"medicines": []}';
   }
 
+  const candidatesContext = candidates && candidates.length > 0
+    ? `\n\nIdentified Candidate OCR Matches (from Medical Normalization Engine):\n${JSON.stringify(candidates, null, 2)}`
+    : '';
+
   const prompt = `
-You are VaidyaVaani, a highly intelligent medical assistant.
-Below is text extracted from a doctor's prescription via OCR. It includes the raw text and the OCR engine's confidence score for that text.
-Because doctors' handwriting can be very illegible, the OCR output may contain misspellings or partial names.
+You are VaidyaVaani, a clinical verification assistant for prescription interpretation.
+Below is text extracted from a doctor's prescription via OCR (PaddleOCR + TrOCR) along with normalization candidates.
 
-Your Task:
-1. Act as a medical dictionary and context engine.
-2. Use fuzzy matching and medical context to identify the actual medicines prescribed.
-3. Determine a final confidence score (0-100) for each medicine based on the OCR confidence and your certainty of the match.
-4. If your confidence is below 90, flag it as requiring verification.
+CRITICAL MEDICAL SAFETY RULES:
+1. NEVER invent medications, dosages, or durations that are not indicated in the OCR signals.
+2. If handwriting is ambiguous or a medicine is uncertain, set "requiresVerification": true and "confidenceScore" < 80.
+3. If an OCR candidate matches standard Indian pharmaceuticals (e.g. Dolo 650, Augmentin 625, Telma 40, Pantocid 40, Glycomet-GP, Atorva, Montair-LC, Azithral), normalize its official name and clinical indications.
+4. Format output strictly as JSON with key "medicines".
 
-Format your output EXACTLY as a JSON object with a single key "medicines", which is an array of objects. Each object MUST have:
-- "name": The corrected name of the medicine.
-- "purpose": A simple explanation of what it is for.
-- "dosage": How much to take (if detectable).
-- "timing": When to take it (e.g., Morning/Night).
-- "foodInstructions": e.g., "After food".
-- "warnings": Any common warnings (e.g., "Avoid alcohol").
-- "confidenceScore": Your final confidence score (number between 0 and 100).
-- "requiresVerification": true if confidenceScore is < 90, otherwise false.
+JSON Schema:
+{
+  "medicines": [
+    {
+      "name": "Corrected Brand or Generic Name (e.g., Augmentin 625)",
+      "purpose": "Plain-language therapy description (e.g., Bacterial respiratory & ENT infections)",
+      "dosage": "e.g., 625 mg, 1 tablet",
+      "timing": "e.g., Morning & Night / Before food / After food",
+      "foodInstructions": "e.g., After meals / With plenty of water",
+      "warnings": "e.g., Complete full 5-day course; avoid missing doses",
+      "confidenceScore": 92,
+      "requiresVerification": false
+    }
+  ]
+}
 
 OCR Text with Confidences:
 ${ocrText}
+${candidatesContext}
   `;
 
   try {
