@@ -199,11 +199,11 @@ const Home = () => {
         {/* Workspace Top Header & Section Switcher */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 pb-8 border-b border-white/[0.08]">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-2 flex items-center gap-2">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-2 flex items-center gap-2 font-mono">
               <span className="w-2 h-2 rounded-full bg-[#15846e] animate-pulse"></span>
               {currentLanguage.native} • {t('distributedIntel')}
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#ffffff] tracking-[-0.04em] leading-[1.06]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#ffffff] tracking-tight leading-[1.06] font-display">
               {t('vaultTitle')}
             </h1>
           </div>
@@ -215,7 +215,7 @@ const Home = () => {
               className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
                 activeTaskSection === 'all' 
                   ? 'bg-white/15 text-white shadow-sm' 
-                  : 'text-[#9a9a9a] hover:text-white'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               {t('unifiedView')}
@@ -226,7 +226,7 @@ const Home = () => {
               className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
                 activeTaskSection === 'prescriptions' 
                   ? 'bg-[#15846e] text-white shadow-[0_0_15px_rgba(21,132,110,0.4)]' 
-                  : 'text-[#9a9a9a] hover:text-white'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               <Pill className="w-3.5 h-3.5" />
@@ -238,7 +238,7 @@ const Home = () => {
               className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
                 activeTaskSection === 'labs' 
                   ? 'bg-[#004fdc] text-white shadow-[0_0_15px_rgba(0,79,220,0.4)]' 
-                  : 'text-[#9a9a9a] hover:text-white'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
@@ -249,28 +249,28 @@ const Home = () => {
 
         {/* Global Summary Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
-          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">{t('activeRx')}</div>
-            <div className="text-3xl font-normal text-[#15846e] tracking-tight">{meds.length}</div>
-            <div className="text-[11px] text-[#bdbdbd] font-light mt-1">Cross-checked safe</div>
+          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08] shadow-sm">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400 font-mono mb-1">{t('activeRx')}</div>
+            <div className="text-3xl font-semibold text-[#15846e] font-mono tracking-tight">{meds.length}</div>
+            <div className="text-[11px] text-zinc-400 font-normal mt-1">Cross-checked safe</div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">{t('labBiomarkers')}</div>
-            <div className="text-3xl font-normal text-[#004fdc] tracking-tight">14</div>
-            <div className="text-[11px] text-[#ffb829] font-light mt-1">1 mild elevation</div>
+          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08] shadow-sm">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400 font-mono mb-1">{t('labBiomarkers')}</div>
+            <div className="text-3xl font-semibold text-[#38bdf8] font-mono tracking-tight">14</div>
+            <div className="text-[11px] text-[#ffb829] font-normal mt-1">1 mild elevation</div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">{t('contraindicationRadar')}</div>
-            <div className="text-3xl font-normal text-[#ffb829] tracking-tight">1</div>
-            <div className="text-[11px] text-[#bdbdbd] font-light mt-1">{t('pharmacokineticSpacing')}</div>
+          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08] shadow-sm">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400 font-mono mb-1">{t('contraindicationRadar')}</div>
+            <div className="text-3xl font-semibold text-[#ffb829] font-mono tracking-tight">1</div>
+            <div className="text-[11px] text-zinc-400 font-normal mt-1">{t('pharmacokineticSpacing')}</div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#9a9a9a] mb-1">{t('zeroKnowledgeVault')}</div>
-            <div className="text-3xl font-normal text-[#ffffff] tracking-tight">100%</div>
-            <div className="text-[11px] text-[#15846e] font-light mt-1">Client Encrypted</div>
+          <div className="p-5 rounded-3xl bg-white/[0.02] border border-white/[0.08] shadow-sm">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400 font-mono mb-1">{t('zeroKnowledgeVault')}</div>
+            <div className="text-3xl font-semibold text-[#ffffff] font-mono tracking-tight">100%</div>
+            <div className="text-[11px] text-[#15846e] font-normal mt-1">Client Encrypted</div>
           </div>
         </div>
 
@@ -285,7 +285,7 @@ const Home = () => {
                   <Pill className="w-3.5 h-3.5" />
                   Task 01 — {t('rxSafetyTab')}
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-normal text-[#ffffff] tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-[#ffffff] tracking-tight font-display">
                   {t('rxSafetyTab')}
                 </h2>
               </div>
@@ -316,8 +316,8 @@ const Home = () => {
               <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
                 <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-5">
                   <div>
-                    <h3 className="text-base font-normal text-white">{t('activeSchedule')}</h3>
-                    <p className="text-xs text-[#9a9a9a] font-light">Cross-checked against contraindication databases</p>
+                    <h3 className="text-base font-semibold text-white font-display">{t('activeSchedule')}</h3>
+                    <p className="text-xs text-zinc-400 font-normal">Cross-checked against contraindication databases</p>
                   </div>
                   <button
                     onClick={() => setIsAddMedModalOpen(true)}
@@ -336,13 +336,13 @@ const Home = () => {
                           <Pill className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="text-sm font-normal text-white">{m.name}</div>
-                          <div className="text-[11px] text-[#9a9a9a] font-light">Source: {m.doctor}</div>
+                          <div className="text-sm font-medium text-white">{m.name}</div>
+                          <div className="text-[11px] text-zinc-400 font-normal">Source: {m.doctor}</div>
                         </div>
                       </div>
 
                       <div className="text-right">
-                        <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-[#15846e]/15 border border-[#15846e]/30 text-[#15846e]">
+                        <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-[#15846e]/15 border border-[#15846e]/30 text-[#15846e] font-semibold">
                           {m.timing}
                         </span>
                       </div>
@@ -354,8 +354,8 @@ const Home = () => {
                 <div className="mt-5 p-4 rounded-2xl bg-[#ffb829]/10 border border-[#ffb829]/25 flex items-start gap-3">
                   <AlertTriangle className="w-4 h-4 text-[#ffb829] shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-xs font-semibold text-[#ffb829] uppercase tracking-wider">{t('pharmacokineticSpacing')}</div>
-                    <p className="text-xs text-[#bdbdbd] font-light mt-0.5">Space dosage by 2 hours to avoid up to 35% bioavailability loss.</p>
+                    <div className="text-xs font-semibold text-[#ffb829] uppercase tracking-wider font-mono">{t('pharmacokineticSpacing')}</div>
+                    <p className="text-xs text-zinc-300 font-normal mt-0.5">Space dosage by 2 hours to avoid up to 35% bioavailability loss.</p>
                   </div>
                 </div>
               </div>
@@ -363,8 +363,8 @@ const Home = () => {
               {/* Prescription Documents Feed */}
               <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
                 <div className="pb-4 border-b border-white/[0.06] mb-5">
-                  <h3 className="text-base font-normal text-white">{t('rxTimeline')}</h3>
-                  <p className="text-xs text-[#9a9a9a] font-light">Deciphered doctor records and dosage orders</p>
+                  <h3 className="text-base font-semibold text-white font-display">{t('rxTimeline')}</h3>
+                  <p className="text-xs text-zinc-400 font-normal">Deciphered doctor records and dosage orders</p>
                 </div>
 
                 <div className="space-y-4">
@@ -376,16 +376,16 @@ const Home = () => {
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-11 h-11 rounded-2xl bg-black border border-white/10 flex flex-col items-center justify-center text-center">
-                          <span className="text-[8px] font-mono text-[#9a9a9a] uppercase">{doc.month}</span>
-                          <span className="text-sm font-normal text-white">{doc.date}</span>
+                          <span className="text-[8px] font-mono text-zinc-400 uppercase font-semibold">{doc.month}</span>
+                          <span className="text-sm font-semibold text-white font-mono">{doc.date}</span>
                         </div>
                         <div>
-                          <div className="text-sm font-normal text-white group-hover:text-[#15846e] transition-colors">{doc.title}</div>
-                          <div className="text-xs text-[#9a9a9a] font-light">{doc.insights[0]}</div>
+                          <div className="text-sm font-medium text-white group-hover:text-[#15846e] transition-colors">{doc.title}</div>
+                          <div className="text-xs text-zinc-400 font-normal">{doc.insights[0]}</div>
                         </div>
                       </div>
 
-                      <ChevronRight className="w-4 h-4 text-[#9a9a9a] group-hover:text-white group-hover:translate-x-1 transition-all" />
+                      <ChevronRight className="w-4 h-4 text-zinc-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
                     </div>
                   ))}
                 </div>
@@ -402,11 +402,11 @@ const Home = () => {
           <section id="section-diagnostics" className="mb-20 pt-4 scroll-mt-28 border-t border-white/[0.06] pt-14">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#004fdc]/15 border border-[#004fdc]/30 text-[#004fdc] text-[11px] font-mono uppercase tracking-wider mb-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#004fdc]/15 border border-[#004fdc]/30 text-[#38bdf8] text-[11px] font-mono uppercase tracking-wider mb-2">
                   <Activity className="w-3.5 h-3.5" />
                   Task 02 — {t('labDiagTab')}
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-normal text-[#ffffff] tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-[#ffffff] tracking-tight font-display">
                   {t('labDiagTab')}
                 </h2>
               </div>
@@ -429,10 +429,10 @@ const Home = () => {
               <div className="lg:col-span-7 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
                 <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-5">
                   <div>
-                    <h3 className="text-base font-normal text-white">{t('extractedPanels')}</h3>
-                    <p className="text-xs text-[#9a9a9a] font-light">Calculated against verified international reference ranges</p>
+                    <h3 className="text-base font-semibold text-white font-display">{t('extractedPanels')}</h3>
+                    <p className="text-xs text-zinc-400 font-normal">Calculated against verified international reference ranges</p>
                   </div>
-                  <span className="text-[10px] font-mono text-[#004fdc] px-2.5 py-1 rounded-full bg-[#004fdc]/10 border border-[#004fdc]/20">
+                  <span className="text-[10px] font-mono font-semibold text-[#38bdf8] px-2.5 py-1 rounded-full bg-[#004fdc]/10 border border-[#004fdc]/20">
                     Latest CBC
                   </span>
                 </div>
@@ -441,37 +441,37 @@ const Home = () => {
                   
                   {/* Biomarker 1 */}
                   <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                    <div className="text-[10px] font-mono text-[#9a9a9a]">HEMOGLOBIN A1C</div>
-                    <div className="text-xl font-normal text-white mt-1">5.4%</div>
-                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1">
-                      <CheckCircle2 className="w-3 h-3" /> Normal (&lt; 5.7%)
+                    <div className="text-[10px] font-mono text-zinc-400">HEMOGLOBIN A1C</div>
+                    <div className="text-xl font-semibold text-white font-mono tracking-tight mt-1">5.4%</div>
+                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1 font-medium">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Normal (&lt; 5.7%)
                     </div>
                   </div>
 
                   {/* Biomarker 2 */}
                   <div className="p-4 rounded-2xl bg-[#ffb829]/5 border border-[#ffb829]/20">
                     <div className="text-[10px] font-mono text-[#ffb829]">FASTING GLUCOSE</div>
-                    <div className="text-xl font-normal text-white mt-1">108 mg/dL</div>
-                    <div className="text-[11px] text-[#ffb829] flex items-center gap-1 mt-1">
-                      <AlertTriangle className="w-3 h-3" /> Slightly High (70–99)
+                    <div className="text-xl font-semibold text-white font-mono tracking-tight mt-1">108 mg/dL</div>
+                    <div className="text-[11px] text-[#ffb829] flex items-center gap-1 mt-1 font-medium">
+                      <AlertTriangle className="w-3.5 h-3.5" /> Slightly High (70–99)
                     </div>
                   </div>
 
                   {/* Biomarker 3 */}
                   <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                    <div className="text-[10px] font-mono text-[#9a9a9a]">LIPID PROFILE (LDL-C)</div>
-                    <div className="text-xl font-normal text-white mt-1">94 mg/dL</div>
-                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1">
-                      <CheckCircle2 className="w-3 h-3" /> Optimal (&lt; 100)
+                    <div className="text-[10px] font-mono text-zinc-400">LIPID PROFILE (LDL-C)</div>
+                    <div className="text-xl font-semibold text-white font-mono tracking-tight mt-1">94 mg/dL</div>
+                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1 font-medium">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Optimal (&lt; 100)
                     </div>
                   </div>
 
                   {/* Biomarker 4 */}
                   <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                    <div className="text-[10px] font-mono text-[#9a9a9a]">TOTAL LEUKOCYTES (WBC)</div>
-                    <div className="text-xl font-normal text-white mt-1">7,200 /µL</div>
-                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1">
-                      <CheckCircle2 className="w-3 h-3" /> Normal (4.5k–11k)
+                    <div className="text-[10px] font-mono text-zinc-400">TOTAL LEUKOCYTES (WBC)</div>
+                    <div className="text-xl font-semibold text-white font-mono tracking-tight mt-1">7,200 /µL</div>
+                    <div className="text-[11px] text-[#15846e] flex items-center gap-1 mt-1 font-medium">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Normal (4.5k–11k)
                     </div>
                   </div>
 
@@ -481,8 +481,8 @@ const Home = () => {
               {/* Lab Reports Documents Timeline */}
               <div className="lg:col-span-5 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
                 <div className="pb-4 border-b border-white/[0.06] mb-5">
-                  <h3 className="text-base font-normal text-white">{t('diagFeed')}</h3>
-                  <p className="text-xs text-[#9a9a9a] font-light">Laboratory & radiology PDF assessments</p>
+                  <h3 className="text-base font-semibold text-white font-display">{t('diagFeed')}</h3>
+                  <p className="text-xs text-zinc-400 font-normal">Laboratory & radiology PDF assessments</p>
                 </div>
 
                 <div className="space-y-4">
@@ -494,16 +494,16 @@ const Home = () => {
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-11 h-11 rounded-2xl bg-black border border-white/10 flex flex-col items-center justify-center text-center">
-                          <span className="text-[8px] font-mono text-[#9a9a9a] uppercase">{doc.month}</span>
-                          <span className="text-sm font-normal text-white">{doc.date}</span>
+                          <span className="text-[8px] font-mono text-zinc-400 uppercase font-semibold">{doc.month}</span>
+                          <span className="text-sm font-semibold text-white font-mono">{doc.date}</span>
                         </div>
                         <div>
-                          <div className="text-sm font-normal text-white group-hover:text-[#004fdc] transition-colors">{doc.title}</div>
-                          <div className="text-xs text-[#9a9a9a] font-light">{doc.insights[0]}</div>
+                          <div className="text-sm font-medium text-white group-hover:text-[#38bdf8] transition-colors">{doc.title}</div>
+                          <div className="text-xs text-zinc-400 font-normal">{doc.insights[0]}</div>
                         </div>
                       </div>
 
-                      <ChevronRight className="w-4 h-4 text-[#9a9a9a] group-hover:text-white group-hover:translate-x-1 transition-all" />
+                      <ChevronRight className="w-4 h-4 text-zinc-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
                     </div>
                   ))}
                 </div>
@@ -523,7 +523,7 @@ const Home = () => {
                 <Sparkles className="w-3.5 h-3.5" />
                 {currentLanguage.native} • {t('aiChat')}
               </div>
-              <h2 className="text-2xl sm:text-3xl font-normal text-white">{t('askQuestionsTitle')}</h2>
+              <h2 className="text-2xl sm:text-3xl font-semibold text-white font-display">{t('askQuestionsTitle')}</h2>
             </div>
 
             <div className="p-6 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] flex flex-col h-[500px] shadow-2xl">
@@ -531,17 +531,17 @@ const Home = () => {
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-4">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#15846e] animate-pulse"></span>
-                  <h3 className="font-normal text-[#ffffff] text-xs uppercase tracking-widest">{t('aiChat')} ({currentLanguage.native})</h3>
+                  <h3 className="font-medium text-[#ffffff] text-xs uppercase tracking-widest font-mono">{t('aiChat')} ({currentLanguage.native})</h3>
                 </div>
-                <span className="text-[10px] font-mono text-[#9a9a9a]">{t('zeroKnowledgeVault')}</span>
+                <span className="text-[10px] font-mono text-zinc-400">{t('zeroKnowledgeVault')}</span>
               </div>
               
               {/* Message Feed */}
-              <div className="flex-1 overflow-y-auto space-y-3 pr-1 pb-4">
+              <div className="flex-1 overflow-y-auto space-y-3.5 pr-1 pb-4">
                 {messages.map((m, idx) => (
                   <div 
                     key={idx} 
-                    className={`p-4 rounded-2xl text-xs font-light leading-relaxed flex items-start justify-between gap-3 ${
+                    className={`p-4 rounded-2xl text-xs font-normal leading-relaxed flex items-start justify-between gap-3 ${
                       m.sender === 'ai' 
                         ? 'bg-white/[0.03] border border-white/10 text-[#ffffff] mr-8' 
                         : 'bg-[#15846e] text-white ml-8 text-right shadow-[0_0_20px_rgba(21,132,110,0.3)]'
@@ -551,7 +551,7 @@ const Home = () => {
                     {m.sender === 'ai' && (
                       <button 
                         onClick={() => speakText(m.text)}
-                        className="p-1 rounded-full hover:bg-white/10 text-[#9a9a9a] hover:text-[#15846e] transition-colors shrink-0"
+                        className="p-1 rounded-full hover:bg-white/10 text-zinc-400 hover:text-[#15846e] transition-colors shrink-0"
                         title="Listen to this response"
                       >
                         <Volume2 className="w-3.5 h-3.5" />
@@ -560,7 +560,7 @@ const Home = () => {
                   </div>
                 ))}
                 {isTyping && (
-                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-[#9a9a9a] flex items-center gap-2 w-fit">
+                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-zinc-400 flex items-center gap-2 w-fit font-mono">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce"></span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce [animation-delay:0.2s]"></span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#15846e] animate-bounce [animation-delay:0.4s]"></span>
@@ -576,7 +576,7 @@ const Home = () => {
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder={t('askAi')} 
-                  className="flex-1 text-xs outline-none bg-transparent text-[#ffffff] placeholder:text-[#9a9a9a] font-light" 
+                  className="flex-1 text-xs outline-none bg-transparent text-[#ffffff] placeholder:text-zinc-400 font-normal" 
                 />
                 <button 
                   type="submit"
@@ -615,13 +615,13 @@ const Home = () => {
                </div>
                
                <div className="p-8 md:p-12">
-                 <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-2">
+                 <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] font-mono mb-2">
                    {t('zeroKnowledgeVault')}
                  </div>
-                 <h2 className="text-3xl font-normal text-[#ffffff] tracking-tight mb-2">
+                 <h2 className="text-3xl font-semibold text-[#ffffff] tracking-tight mb-2 font-display">
                    {uploadType === 'reports' ? t('uploadLabReport') : t('uploadPrescription')}
                  </h2>
-                 <p className="text-sm font-light text-[#9a9a9a] mb-8">
+                 <p className="text-sm font-normal text-zinc-400 mb-8 leading-relaxed">
                    Your document will be encrypted and instantly deciphered by our distributed neural intelligence engine.
                  </p>
                  
@@ -629,7 +629,7 @@ const Home = () => {
                    type={uploadType} 
                    onUploadComplete={() => {
                      setIsUploadModalOpen(false);
-                     navigate('/dashboard');
+                     navigate('/home');
                    }} 
                  />
                </div>
@@ -651,8 +651,8 @@ const Home = () => {
             >
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#15846e]">Task 01 Action</div>
-                  <h3 className="text-xl font-normal text-white">{t('addRx')}</h3>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#15846e] font-mono">Task 01 Action</div>
+                  <h3 className="text-xl font-semibold text-white font-display mt-0.5">{t('addRx')}</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddMedModalOpen(false)}
@@ -664,7 +664,7 @@ const Home = () => {
 
               <form onSubmit={handleAddMedicine} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">Medicine Name & Strength</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">Medicine Name & Strength</label>
                   <input 
                     type="text" 
                     required
@@ -676,7 +676,7 @@ const Home = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">Prescribing Doctor / Source</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">Prescribing Doctor / Source</label>
                   <input 
                     type="text" 
                     value={newMedDoctor}
@@ -687,7 +687,7 @@ const Home = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">Timing Schedule</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">Timing Schedule</label>
                   <select 
                     value={newMedTiming}
                     onChange={(e) => setNewMedTiming(e.target.value)}
@@ -704,7 +704,7 @@ const Home = () => {
                 <div className="pt-2">
                   <button 
                     type="submit"
-                    className="w-full py-3.5 bg-[#15846e] hover:bg-[#116e5c] text-white rounded-full font-semibold text-xs uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(21,132,110,0.4)]"
+                    className="w-full py-3.5 bg-[#15846e] hover:bg-[#116e5c] text-white rounded-full font-semibold text-xs uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(21,132,110,0.4)] font-mono"
                   >
                     Cross-Check & Save
                   </button>
@@ -728,10 +728,10 @@ const Home = () => {
             >
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
                 <div>
-                  <div className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${selectedDoc.category === 'prescription' ? 'text-[#15846e]' : 'text-[#004fdc]'}`}>
+                  <div className={`text-[10px] font-semibold uppercase tracking-[0.2em] font-mono ${selectedDoc.category === 'prescription' ? 'text-[#15846e]' : 'text-[#38bdf8]'}`}>
                     {selectedDoc.category === 'prescription' ? 'Task 01 — Prescription Record' : 'Task 02 — Diagnostic Record'}
                   </div>
-                  <h3 className="text-xl font-normal text-white">{selectedDoc.title}</h3>
+                  <h3 className="text-xl font-semibold text-white font-display mt-0.5">{selectedDoc.title}</h3>
                 </div>
                 <button 
                   onClick={() => setSelectedDoc(null)}
@@ -742,19 +742,19 @@ const Home = () => {
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs font-mono text-[#9a9a9a]">
+                <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
                   <span>Date: {selectedDoc.month} {selectedDoc.date}, 2026</span>
-                  <span className="text-[#15846e] px-2.5 py-0.5 rounded-full bg-[#15846e]/15 border border-[#15846e]/30">Verified Ingestion</span>
+                  <span className="text-[#15846e] px-2.5 py-0.5 rounded-full bg-[#15846e]/15 border border-[#15846e]/30 font-semibold">Verified Ingestion</span>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
-                  <div className="text-xs font-semibold text-white uppercase tracking-wider">Extracted Clinical Data</div>
+                  <div className="text-xs font-semibold text-white uppercase tracking-wider font-mono">Extracted Clinical Data</div>
                   {selectedDoc.insights.map((ins, i) => (
-                    <div key={i} className="text-xs font-light text-[#bdbdbd]">{ins}</div>
+                    <div key={i} className="text-xs font-normal text-zinc-300">{ins}</div>
                   ))}
                 </div>
 
-                <div className="flex justify-end gap-3 pt-4">
+                <div className="flex justify-end gap-3 pt-4 font-mono">
                   <button 
                     onClick={() => {
                       const typeToUpload = selectedDoc.category === 'prescription' ? 'prescriptions' : 'reports';

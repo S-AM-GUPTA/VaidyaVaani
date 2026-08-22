@@ -168,15 +168,15 @@ const Login = () => {
           transition={{ duration: 0.8 }}
           className="max-w-md"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#004fdc]" />
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#38bdf8] mb-4 font-mono">
+            <Sparkles className="w-3.5 h-3.5 text-[#38bdf8]" />
             Secure Patient Intelligence Vault
           </div>
           
-          <h1 className="text-4xl font-normal text-[#ffffff] tracking-[-0.04em] leading-[1.08] mb-4">
+          <h1 className="text-4xl font-semibold text-[#ffffff] tracking-tight leading-[1.08] mb-4 font-display">
             Command your clinical records in one space.
           </h1>
-          <p className="text-sm font-light text-[#bdbdbd] leading-relaxed">
+          <p className="text-sm font-normal text-zinc-400 leading-relaxed">
             Decipher lab biomarkers, review prescription timelines, and ask questions through private, encrypted clinical AI.
           </p>
         </motion.div>
@@ -198,14 +198,14 @@ const Login = () => {
         >
           {/* Header */}
           <div className="mb-6 text-left">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-2 flex items-center gap-2">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#004fdc]" />
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#38bdf8] mb-2 flex items-center gap-2 font-mono">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#38bdf8]" />
               Patient Authentication
             </div>
-            <h2 className="text-3xl sm:text-4xl font-normal text-[#ffffff] tracking-[-0.04em] mb-2">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-[#ffffff] tracking-tight mb-2 font-display">
               {authMode === 'login' ? 'Sign in to Vault.' : 'Create your Vault.'}
             </h2>
-            <p className="text-sm font-light text-[#9a9a9a]">
+            <p className="text-sm font-normal text-zinc-400">
               Authenticate to sync and manage your encrypted clinical records.
             </p>
           </div>
@@ -215,18 +215,18 @@ const Login = () => {
             <button
               type="button"
               onClick={handleGuestEntry}
-              className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#004fdc]/20 to-[#00d2d3]/20 hover:from-[#004fdc]/30 hover:to-[#00d2d3]/30 border border-[#004fdc]/40 text-white text-xs font-medium flex items-center justify-between transition-all group shadow-sm active:scale-[0.99]"
+              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#004fdc]/20 to-[#00d2d3]/20 hover:from-[#004fdc]/30 hover:to-[#00d2d3]/30 border border-[#004fdc]/40 text-white text-xs font-medium flex items-center justify-between transition-all group shadow-sm active:scale-[0.99]"
             >
               <div className="flex items-center gap-2.5">
-                <div className="w-6 h-6 rounded-full bg-[#004fdc] flex items-center justify-center text-white">
+                <div className="w-7 h-7 rounded-full bg-[#004fdc] flex items-center justify-center text-white shrink-0">
                   <Zap className="w-3.5 h-3.5 fill-white" />
                 </div>
                 <div className="text-left">
                   <span className="font-semibold text-white block">Instant Access (1-Click Entry)</span>
-                  <span className="text-[11px] text-[#9a9a9a]">Explore workspace, vitals & lab diagnostics instantly</span>
+                  <span className="text-[11px] text-zinc-400">Explore workspace, vitals & lab diagnostics instantly</span>
                 </div>
               </div>
-              <ArrowRight className="w-4 h-4 text-[#004fdc] group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 text-[#38bdf8] group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
@@ -238,10 +238,10 @@ const Login = () => {
                 setAuthMethod('email');
                 setError('');
               }}
-              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all flex items-center justify-center gap-1.5 ${
+              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all flex items-center justify-center gap-1.5 font-mono ${
                 authMethod === 'email' 
                   ? 'bg-[#004fdc] text-white shadow-[0_0_15px_rgba(0,79,220,0.35)]' 
-                  : 'text-[#9a9a9a] hover:text-white'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               <Mail className="w-3.5 h-3.5" />
@@ -253,10 +253,10 @@ const Login = () => {
                 setAuthMethod('phone');
                 setError('');
               }}
-              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all flex items-center justify-center gap-1.5 ${
+              className={`w-1/2 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all flex items-center justify-center gap-1.5 font-mono ${
                 authMethod === 'phone' 
                   ? 'bg-[#004fdc] text-white shadow-[0_0_15px_rgba(0,79,220,0.35)]' 
-                  : 'text-[#9a9a9a] hover:text-white'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               <Smartphone className="w-3.5 h-3.5" />
@@ -269,7 +269,7 @@ const Login = () => {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={googleLoading}
-            className="w-full py-3.5 px-6 rounded-full bg-white/[0.05] hover:bg-white/[0.08] text-white border border-white/15 hover:border-white/30 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-sm mb-6 disabled:opacity-60"
+            className="w-full py-3.5 px-6 rounded-full bg-white/[0.05] hover:bg-white/[0.08] text-white border border-white/15 hover:border-white/30 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-sm mb-6 disabled:opacity-60 font-mono"
           >
             {googleLoading ? (
               <Loader2 className="w-4 h-4 animate-spin text-[#004fdc]" />
@@ -287,7 +287,7 @@ const Login = () => {
           {/* Divider */}
           <div className="flex items-center my-6">
             <div className="flex-1 border-t border-white/[0.08]"></div>
-            <span className="px-3 text-[10px] uppercase font-mono text-[#9a9a9a] tracking-widest">
+            <span className="px-3 text-[10px] uppercase font-mono text-zinc-400 tracking-widest">
               {authMethod === 'email' ? 'or email authentication' : 'or phone verification'}
             </span>
             <div className="flex-1 border-t border-white/[0.08]"></div>
@@ -297,7 +297,7 @@ const Login = () => {
             <motion.div 
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-6 p-4 bg-red-950/40 border border-red-500/30 text-red-300 rounded-2xl text-xs font-light flex items-center gap-3"
+              className="mb-6 p-4 bg-red-950/40 border border-red-500/30 text-red-300 rounded-2xl text-xs font-normal flex items-center gap-3"
             >
               <Lock className="w-4 h-4 text-red-400 shrink-0" />
               <span>{error}</span>
@@ -309,7 +309,7 @@ const Login = () => {
             <div>
               {/* Sign In vs Create Account mode toggle */}
               <div className="flex justify-between items-center mb-4 text-xs">
-                <span className="text-[#9a9a9a]">
+                <span className="text-zinc-400">
                   {authMode === 'login' ? "Don't have an account yet?" : "Already have an account?"}
                 </span>
                 <button
@@ -318,7 +318,7 @@ const Login = () => {
                     setAuthMode(authMode === 'login' ? 'signup' : 'login');
                     setError('');
                   }}
-                  className="text-[#004fdc] hover:underline font-semibold"
+                  className="text-[#38bdf8] hover:underline font-semibold"
                 >
                   {authMode === 'login' ? 'Create Account' : 'Sign In'}
                 </button>
@@ -326,38 +326,38 @@ const Login = () => {
 
               <form onSubmit={handleEmailAuth} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">
                     Email Address
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Mail className="h-4 w-4 text-[#9a9a9a]" />
+                      <Mail className="h-4 w-4 text-zinc-400" />
                     </div>
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-normal text-[#ffffff] placeholder:text-zinc-500 text-sm"
                       placeholder="your.email@example.com"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">
                     Password
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <KeyRound className="h-4 w-4 text-[#9a9a9a]" />
+                      <KeyRound className="h-4 w-4 text-zinc-400" />
                     </div>
                     <input
                       type="password"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-normal text-[#ffffff] placeholder:text-zinc-500 text-sm"
                       placeholder="••••••••"
                     />
                   </div>
@@ -366,7 +366,7 @@ const Login = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98] mt-2"
+                  className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.05em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98] mt-2 font-mono"
                 >
                   {loading ? (
                     <>
@@ -390,19 +390,19 @@ const Login = () => {
               {phoneStep === 'number' ? (
                 <form onSubmit={handleSendPhoneOtp} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">
                       Phone Number with Country Code
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Phone className="h-4 w-4 text-[#9a9a9a]" />
+                        <Phone className="h-4 w-4 text-zinc-400" />
                       </div>
                       <input
                         type="tel"
                         required
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-light text-[#ffffff] placeholder:text-[#9a9a9a]/60 text-sm"
+                        className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-normal text-[#ffffff] placeholder:text-zinc-500 text-sm"
                         placeholder="+91 7985557576"
                       />
                     </div>
@@ -411,7 +411,7 @@ const Login = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98]"
+                    className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.05em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center group active:scale-[0.98] font-mono"
                   >
                     {loading ? (
                       <>
@@ -429,26 +429,26 @@ const Login = () => {
               ) : (
                 <form onSubmit={handleVerifyPhoneOtp} className="space-y-4">
                   <div className="flex justify-between items-center mb-2">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-[#9a9a9a]">
+                    <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400 font-mono">
                       6-Digit SMS Code
                     </label>
                     <button
                       type="button"
                       onClick={() => setPhoneStep('number')}
-                      className="text-xs text-[#ffb829] hover:underline"
+                      className="text-xs text-[#ffb829] hover:underline font-mono"
                     >
                       Change Number
                     </button>
                   </div>
 
-                  <div className="p-3 bg-white/[0.03] border border-white/10 rounded-xl mb-3 flex items-start gap-2.5 text-xs text-[#9a9a9a]">
-                    <Info className="w-4 h-4 text-[#004fdc] shrink-0 mt-0.5" />
-                    <span>Enter the SMS OTP sent to <strong className="text-white">{phoneNumber}</strong> (or test code <strong className="text-[#00d2d3]">123456</strong>).</span>
+                  <div className="p-3.5 bg-white/[0.03] border border-white/10 rounded-xl mb-3 flex items-start gap-2.5 text-xs text-zinc-400">
+                    <Info className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                    <span>Enter the SMS OTP sent to <strong className="text-white font-mono">{phoneNumber}</strong> (or test code <strong className="text-[#00d2d3] font-mono">123456</strong>).</span>
                   </div>
 
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <KeyRound className="h-4 w-4 text-[#9a9a9a]" />
+                      <KeyRound className="h-4 w-4 text-zinc-400" />
                     </div>
                     <input
                       type="text"
@@ -456,7 +456,7 @@ const Login = () => {
                       maxLength={6}
                       value={otpCode}
                       onChange={(e) => setOtpCode(e.target.value)}
-                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-mono tracking-widest text-center text-lg text-[#ffffff] placeholder:text-[#9a9a9a]/60 placeholder:text-xs placeholder:font-sans placeholder:tracking-normal"
+                      className="w-full pl-11 pr-5 py-3.5 bg-white/[0.03] border border-white/10 rounded-full focus:border-[#004fdc] focus:ring-1 focus:ring-[#004fdc] focus:outline-none transition-all font-mono tracking-widest text-center text-lg text-[#ffffff] placeholder:text-zinc-500 placeholder:text-xs placeholder:font-sans placeholder:tracking-normal"
                       placeholder="123456"
                     />
                   </div>
@@ -464,7 +464,7 @@ const Login = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.025em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center active:scale-[0.98]"
+                    className="w-full py-4 px-6 bg-[#004fdc] hover:bg-[#003eb0] text-white font-semibold text-xs uppercase tracking-[0.05em] rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(0,79,220,0.35)] flex items-center justify-center active:scale-[0.98] font-mono"
                   >
                     {loading ? (
                       <>
@@ -478,8 +478,8 @@ const Login = () => {
             </div>
           )}
 
-          <div className="mt-8 text-center text-xs font-light text-[#9a9a9a]">
-            Protected by Zero-Knowledge Privacy • <Link to="/" className="text-[#004fdc] hover:underline">Return to Home</Link>
+          <div className="mt-8 text-center text-xs font-normal text-zinc-400">
+            Protected by Zero-Knowledge Privacy • <Link to="/" className="text-[#38bdf8] hover:underline">Return to Home</Link>
           </div>
 
         </motion.div>

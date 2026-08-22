@@ -168,19 +168,42 @@ const Profile = () => {
       bmi: '23.5 (Normal)',
       bp: '120/80 mmHg',
       sugar: '100 mg/dL',
-      primaryDoctor: 'Family Physician',
+      primaryDoctor: 'Primary Physician',
       allergies: [],
       chronicConditions: [],
-      active: true,
+      active: false,
     };
 
-    setProfiles(prev => [
-      ...prev.map(p => ({ ...p, active: false })),
-      newMember
-    ]);
-
+    setProfiles(prev => [...prev, newMember]);
     setNewMemberName('');
     setIsAddMemberModalOpen(false);
+  };
+
+  // Export JSON Vault Key
+  const handleExportKey = () => {
+    const keyData = {
+      vaultId: 'VAIDYA-VAULT-' + Date.now(),
+      patientName: activeProfile.name,
+      patientRelation: activeProfile.relation,
+      bloodGroup: activeProfile.bloodGroup,
+      allergies: activeProfile.allergies,
+      chronicConditions: activeProfile.chronicConditions,
+      encryptionProtocol: 'AES-256-GCM / Zero-Knowledge Proof',
+      exportedAt: new Date().toISOString(),
+      integrityHash: 'sha256-' + Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2),
+    };
+
+    const blob = new Blob([JSON.stringify(keyData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `VaidyaVaani_VaultKey_${activeProfile.name.replace(/\s+/g, '_')}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setKeyExported(true);
+    setTimeout(() => setKeyExported(false), 4000);
   };
 
   // Remove Family Member (Except Primary)
@@ -250,46 +273,22 @@ const Profile = () => {
     setIsAddingSos(false);
   };
 
-  // Export Zero-Knowledge Key
-  const handleExportKey = () => {
-    const keyData = {
-      vaultId: `vv-zk-${activeProfile.id}a9`,
-      patient: activeProfile.name,
-      relation: activeProfile.relation,
-      age: activeProfile.age,
-      bloodGroup: activeProfile.bloodGroup,
-      allergies: activeProfile.allergies,
-      chronicConditions: activeProfile.chronicConditions,
-      encryption: "AES-256-GCM / Zero-Knowledge",
-      exportedAt: new Date().toISOString(),
-      publicKeyFingerprint: "0x89A3...F42C",
-    };
-    const blob = new Blob([JSON.stringify(keyData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `vaidyavaani-vault-key-${activeProfile.name.toLowerCase().replace(/\s+/g, '-')}.json`;
-    a.click();
-    setKeyExported(true);
-    setTimeout(() => setKeyExported(false), 4000);
-  };
-
   return (
-    <div className="min-h-screen bg-[#000000] text-[#ffffff] font-sans overflow-x-hidden flex flex-col selection:bg-[#15846e] selection:text-[#ffffff] relative">
+    <div className="min-h-screen bg-[#000000] text-[#ffffff] font-sans selection:bg-[#15846e] selection:text-[#ffffff] relative flex flex-col">
       <Navbar />
 
-      {/* Ambient background dust */}
+      {/* Ambient background particle field */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-20">
         <ConstellationCanvas variant="ambient" particleCount={60} interactive={false} />
       </div>
 
       <main className="relative z-10 flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
         
-        {/* Top Breadcrumb / Action */}
+        {/* Navigation & Breadcrumb */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/[0.08]">
           <button 
             onClick={() => navigate('/home')}
-            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-zinc-400 hover:text-white transition-colors font-mono"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Workspace</span>
@@ -315,7 +314,7 @@ const Profile = () => {
             </div>
 
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-1">
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] mb-1 font-mono">
                 {activeProfile.relation}
               </div>
               {isEditingVitals ? (
@@ -324,16 +323,16 @@ const Profile = () => {
                     type="text"
                     value={activeProfile.name}
                     onChange={(e) => handleUpdateActiveVitals('name', e.target.value)}
-                    className="bg-[#111115] border border-white/20 rounded-xl px-3 py-1 text-xl font-normal text-white outline-none focus:border-[#15846e]"
+                    className="bg-[#111115] border border-white/20 rounded-xl px-3 py-1 text-xl font-medium text-white outline-none focus:border-[#15846e] font-display"
                     placeholder="Patient Name"
                   />
                 </div>
               ) : (
-                <h1 className="text-3xl sm:text-4xl font-normal text-white tracking-tight">
+                <h1 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight font-display">
                   {activeProfile.name}
                 </h1>
               )}
-              <p className="text-xs font-light text-[#9a9a9a] mt-1">
+              <p className="text-xs font-normal text-zinc-400 mt-1">
                 Age: {activeProfile.age} • Gender: {activeProfile.gender} • Blood Group: <span className="text-white font-medium">{activeProfile.bloodGroup}</span>
               </p>
             </div>
@@ -341,7 +340,7 @@ const Profile = () => {
 
           {/* Family Profiles Switcher & Add Member Action */}
           <div className="p-2.5 rounded-3xl bg-white/[0.02] border border-white/10 flex flex-wrap items-center gap-2.5 w-fit">
-            <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9a9a9a] px-2 flex items-center gap-1.5">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400 px-2 flex items-center gap-1.5 font-mono">
               <Users className="w-3.5 h-3.5 text-[#ffb829]" />
               Family Profiles:
             </div>
@@ -354,11 +353,11 @@ const Profile = () => {
                   className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-2 ${
                     p.active 
                       ? 'bg-[#15846e] text-white shadow-[0_0_15px_rgba(21,132,110,0.4)]' 
-                      : 'bg-white/[0.04] text-[#9a9a9a] hover:text-white hover:bg-white/[0.08]'
+                      : 'bg-white/[0.04] text-zinc-400 hover:text-white hover:bg-white/[0.08]'
                   }`}
                 >
                   <span>{p.name}</span>
-                  <span className="text-[9px] opacity-75 font-light">({p.relation})</span>
+                  <span className="text-[9px] opacity-75 font-normal">({p.relation})</span>
                 </button>
 
                 {/* Delete icon for non-primary profiles */}
@@ -380,7 +379,7 @@ const Profile = () => {
             {/* "+ Add Member" Button */}
             <button
               onClick={() => setIsAddMemberModalOpen(true)}
-              className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#004fdc]/20 hover:bg-[#004fdc]/30 text-[#004fdc] border border-[#004fdc]/30 flex items-center gap-1.5 transition-colors shadow-[0_0_15px_rgba(0,79,220,0.2)]"
+              className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#004fdc]/20 hover:bg-[#004fdc]/30 text-[#38bdf8] border border-[#004fdc]/30 flex items-center gap-1.5 transition-colors shadow-[0_0_15px_rgba(0,79,220,0.2)] font-mono"
             >
               <UserPlus className="w-3.5 h-3.5" />
               Add Member
@@ -395,15 +394,15 @@ const Profile = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
           
           {/* Card 1: Patient Vitals & Biological Parameters */}
-          <div className="lg:col-span-7 p-7 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+          <div className="lg:col-span-7 p-7 rounded-3xl bg-white/[0.02] border border-white/[0.08] shadow-sm">
             <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e]">Biological Telemetry</div>
-                <h2 className="text-xl font-normal text-white">Vitals & Health Metrics ({activeProfile.name})</h2>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#15846e] font-mono">Biological Telemetry</div>
+                <h2 className="text-xl font-semibold text-white font-display mt-0.5">Vitals & Health Metrics ({activeProfile.name})</h2>
               </div>
               <button
                 onClick={() => setIsEditingVitals(!isEditingVitals)}
-                className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-xs font-semibold uppercase tracking-wider text-white border border-white/10 flex items-center gap-1.5 transition-colors"
+                className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-xs font-semibold uppercase tracking-wider text-white border border-white/10 flex items-center gap-1.5 transition-colors font-mono"
               >
                 {isEditingVitals ? <Check className="w-3.5 h-3.5 text-[#15846e]" /> : <Edit3 className="w-3.5 h-3.5" />}
                 {isEditingVitals ? 'Save Vitals' : 'Edit Vitals'}
@@ -414,7 +413,7 @@ const Profile = () => {
               
               {/* Blood Group */}
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                <div className="text-[10px] font-mono text-[#9a9a9a]">BLOOD GROUP</div>
+                <div className="text-[10px] font-mono text-zinc-400">BLOOD GROUP</div>
                 {isEditingVitals ? (
                   <select 
                     value={activeProfile.bloodGroup} 
@@ -431,7 +430,7 @@ const Profile = () => {
                     <option value="AB- Negative">AB- Negative</option>
                   </select>
                 ) : (
-                  <div className="text-base font-normal text-white mt-1 flex items-center gap-1.5">
+                  <div className="text-base font-medium text-white mt-1 flex items-center gap-1.5 font-mono">
                     <Heart className="w-4 h-4 text-red-400" /> {activeProfile.bloodGroup}
                   </div>
                 )}
@@ -439,7 +438,7 @@ const Profile = () => {
 
               {/* Height / Weight */}
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                <div className="text-[10px] font-mono text-[#9a9a9a]">HEIGHT / WEIGHT</div>
+                <div className="text-[10px] font-mono text-zinc-400">HEIGHT / WEIGHT</div>
                 {isEditingVitals ? (
                   <div className="flex gap-1.5 mt-1">
                     <input 
@@ -456,7 +455,7 @@ const Profile = () => {
                     />
                   </div>
                 ) : (
-                  <div className="text-base font-normal text-white mt-1">
+                  <div className="text-base font-medium text-white mt-1 font-mono">
                     {activeProfile.height} • {activeProfile.weight}
                   </div>
                 )}
@@ -464,13 +463,13 @@ const Profile = () => {
 
               {/* BMI */}
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                <div className="text-[10px] font-mono text-[#9a9a9a]">BODY MASS INDEX (BMI)</div>
-                <div className="text-base font-normal text-[#15846e] mt-1">{activeProfile.bmi}</div>
+                <div className="text-[10px] font-mono text-zinc-400">BODY MASS INDEX (BMI)</div>
+                <div className="text-base font-semibold text-[#15846e] mt-1 font-mono">{activeProfile.bmi}</div>
               </div>
 
               {/* Blood Pressure */}
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                <div className="text-[10px] font-mono text-[#9a9a9a]">BLOOD PRESSURE</div>
+                <div className="text-[10px] font-mono text-zinc-400">BLOOD PRESSURE</div>
                 {isEditingVitals ? (
                   <input 
                     type="text" 
@@ -479,13 +478,13 @@ const Profile = () => {
                     className="w-full bg-[#111115] border border-white/20 rounded-xl px-2 py-1 text-xs text-white mt-1" 
                   />
                 ) : (
-                  <div className="text-base font-normal text-white mt-1">{activeProfile.bp}</div>
+                  <div className="text-base font-semibold text-white mt-1 font-mono">{activeProfile.bp}</div>
                 )}
               </div>
 
               {/* Fasting Sugar */}
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                <div className="text-[10px] font-mono text-[#9a9a9a]">FASTING SUGAR</div>
+                <div className="text-[10px] font-mono text-zinc-400">FASTING SUGAR</div>
                 {isEditingVitals ? (
                   <input 
                     type="text" 
@@ -494,13 +493,13 @@ const Profile = () => {
                     className="w-full bg-[#111115] border border-white/20 rounded-xl px-2 py-1 text-xs text-white mt-1" 
                   />
                 ) : (
-                  <div className="text-base font-normal text-[#ffb829] mt-1">{activeProfile.sugar}</div>
+                  <div className="text-base font-semibold text-[#ffb829] mt-1 font-mono">{activeProfile.sugar}</div>
                 )}
               </div>
 
               {/* Primary Doctor */}
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-                <div className="text-[10px] font-mono text-[#9a9a9a]">PRIMARY DOCTOR</div>
+                <div className="text-[10px] font-mono text-zinc-400">PRIMARY DOCTOR</div>
                 {isEditingVitals ? (
                   <input 
                     type="text" 
@@ -509,7 +508,7 @@ const Profile = () => {
                     className="w-full bg-[#111115] border border-white/20 rounded-xl px-2 py-1 text-xs text-white mt-1" 
                   />
                 ) : (
-                  <div className="text-sm font-normal text-white mt-1 truncate">{activeProfile.primaryDoctor}</div>
+                  <div className="text-sm font-medium text-white mt-1 truncate">{activeProfile.primaryDoctor}</div>
                 )}
               </div>
 
@@ -517,15 +516,15 @@ const Profile = () => {
           </div>
 
           {/* Card 2: Emergency SOS Contacts */}
-          <div className="lg:col-span-5 p-7 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+          <div className="lg:col-span-5 p-7 rounded-3xl bg-white/[0.02] border border-white/[0.08] shadow-sm">
             <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-red-400">Rapid Response</div>
-                <h2 className="text-xl font-normal text-white">Emergency SOS Contacts</h2>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-red-400 font-mono">Rapid Response</div>
+                <h2 className="text-xl font-semibold text-white font-display mt-0.5">Emergency SOS Contacts</h2>
               </div>
               <button
                 onClick={() => setIsAddingSos(true)}
-                className="px-3 py-1.5 rounded-full bg-red-500/20 hover:bg-red-500/30 text-xs font-semibold uppercase tracking-wider text-red-400 border border-red-500/30 flex items-center gap-1.5 transition-colors"
+                className="px-3 py-1.5 rounded-full bg-red-500/20 hover:bg-red-500/30 text-xs font-semibold uppercase tracking-wider text-red-400 border border-red-500/30 flex items-center gap-1.5 transition-colors font-mono"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add SOS
@@ -540,8 +539,8 @@ const Profile = () => {
                       <Phone className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-sm font-normal text-white">{contact.name}</div>
-                      <div className="text-[11px] text-[#9a9a9a] font-light">{contact.relation}</div>
+                      <div className="text-sm font-medium text-white">{contact.name}</div>
+                      <div className="text-[11px] text-zinc-400 font-normal">{contact.relation}</div>
                     </div>
                   </div>
 
@@ -559,7 +558,7 @@ const Profile = () => {
             <div className="mt-6 p-4 rounded-2xl bg-red-950/20 border border-red-500/25 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <AlertCircle className="w-5 h-5 text-red-400 animate-pulse" />
-                <div className="text-xs text-red-200 font-light">Emergency clinical medical card available on lock screen</div>
+                <div className="text-xs text-red-200 font-normal">Emergency clinical medical card available on lock screen</div>
               </div>
             </div>
           </div>
@@ -572,11 +571,11 @@ const Profile = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Allergies & Chronic Conditions */}
-          <div className="lg:col-span-8 p-7 rounded-3xl bg-white/[0.02] border border-white/[0.08]">
+          <div className="lg:col-span-8 p-7 rounded-3xl bg-white/[0.02] border border-white/[0.08] shadow-sm">
             <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829]">Pharmacopeia Guard</div>
-                <h2 className="text-xl font-normal text-white">Allergies & Conditions ({activeProfile.name})</h2>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb829] font-mono">Pharmacopeia Guard</div>
+                <h2 className="text-xl font-semibold text-white font-display mt-0.5">Allergies & Conditions ({activeProfile.name})</h2>
               </div>
               <div className="flex gap-2">
                 <button
@@ -584,7 +583,7 @@ const Profile = () => {
                     setTagType('allergy');
                     setIsTagModalOpen(true);
                   }}
-                  className="px-3 py-1.5 rounded-full bg-[#ffb829]/15 hover:bg-[#ffb829]/25 text-[#ffb829] text-xs font-semibold flex items-center gap-1 border border-[#ffb829]/30"
+                  className="px-3 py-1.5 rounded-full bg-[#ffb829]/15 hover:bg-[#ffb829]/25 text-[#ffb829] text-xs font-semibold flex items-center gap-1 border border-[#ffb829]/30 font-mono"
                 >
                   <Plus className="w-3.5 h-3.5" /> Allergy
                 </button>
@@ -593,7 +592,7 @@ const Profile = () => {
                     setTagType('condition');
                     setIsTagModalOpen(true);
                   }}
-                  className="px-3 py-1.5 rounded-full bg-[#15846e]/15 hover:bg-[#15846e]/25 text-[#15846e] text-xs font-semibold flex items-center gap-1 border border-[#15846e]/30"
+                  className="px-3 py-1.5 rounded-full bg-[#15846e]/15 hover:bg-[#15846e]/25 text-[#15846e] text-xs font-semibold flex items-center gap-1 border border-[#15846e]/30 font-mono"
                 >
                   <Plus className="w-3.5 h-3.5" /> Condition
                 </button>
@@ -602,14 +601,14 @@ const Profile = () => {
 
             <div className="space-y-6">
               <div>
-                <div className="text-xs font-mono uppercase text-[#9a9a9a] mb-2.5">Known Drug & Food Allergies:</div>
+                <div className="text-xs font-mono uppercase text-zinc-400 mb-2.5">Known Drug & Food Allergies:</div>
                 <div className="flex flex-wrap gap-2.5">
                   {activeProfile.allergies.length === 0 ? (
-                    <span className="text-xs text-[#9a9a9a] font-light">No allergies recorded for {activeProfile.name}.</span>
+                    <span className="text-xs text-zinc-400 font-normal">No allergies recorded for {activeProfile.name}.</span>
                   ) : (
                     activeProfile.allergies.map((allergy, i) => (
-                      <span key={i} className="px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/25 text-red-300 text-xs font-light flex items-center gap-2 group">
-                        <AlertCircle className="w-3 h-3 text-red-400" />
+                      <span key={i} className="px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/25 text-red-300 text-xs font-normal flex items-center gap-2 group">
+                        <AlertCircle className="w-3.5 h-3.5 text-red-400" />
                         {allergy}
                         <button 
                           onClick={() => handleRemoveTag('allergy', i)}
@@ -624,14 +623,14 @@ const Profile = () => {
               </div>
 
               <div>
-                <div className="text-xs font-mono uppercase text-[#9a9a9a] mb-2.5">Chronic Medical Conditions:</div>
+                <div className="text-xs font-mono uppercase text-zinc-400 mb-2.5">Chronic Medical Conditions:</div>
                 <div className="flex flex-wrap gap-2.5">
                   {activeProfile.chronicConditions.length === 0 ? (
-                    <span className="text-xs text-[#9a9a9a] font-light">No chronic conditions recorded for {activeProfile.name}.</span>
+                    <span className="text-xs text-zinc-400 font-normal">No chronic conditions recorded for {activeProfile.name}.</span>
                   ) : (
                     activeProfile.chronicConditions.map((cond, i) => (
-                      <span key={i} className="px-3.5 py-1.5 rounded-full bg-[#15846e]/15 border border-[#15846e]/30 text-[#15846e] text-xs font-light flex items-center gap-2 group">
-                        <Activity className="w-3 h-3 text-[#15846e]" />
+                      <span key={i} className="px-3.5 py-1.5 rounded-full bg-[#15846e]/15 border border-[#15846e]/30 text-[#15846e] text-xs font-normal flex items-center gap-2 group">
+                        <Activity className="w-3.5 h-3.5 text-[#15846e]" />
                         {cond}
                         <button 
                           onClick={() => handleRemoveTag('condition', i)}
@@ -648,36 +647,36 @@ const Profile = () => {
           </div>
 
           {/* Zero-Knowledge Vault Keys & Export */}
-          <div className="lg:col-span-4 p-7 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] flex flex-col justify-between">
+          <div className="lg:col-span-4 p-7 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] flex flex-col justify-between shadow-sm">
             <div>
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#004fdc] mb-2">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#38bdf8] mb-2 font-mono">
                 <Lock className="w-3.5 h-3.5" />
                 Security Vault
               </div>
-              <h2 className="text-xl font-normal text-white mb-2">Zero-Knowledge Key Export</h2>
-              <p className="text-xs text-[#9a9a9a] font-light leading-relaxed mb-6">
+              <h2 className="text-xl font-semibold text-white mb-2 font-display">Zero-Knowledge Key Export</h2>
+              <p className="text-xs text-zinc-400 font-normal leading-relaxed mb-6">
                 Your medical identity is cryptographically anchored. Download your portable JSON key to decrypt records on external hospital systems or offline devices.
               </p>
 
-              <div className="p-4 rounded-2xl bg-black/50 border border-white/10 font-mono text-[10px] text-[#bdbdbd] space-y-1 mb-6">
+              <div className="p-4 rounded-2xl bg-black/50 border border-white/10 font-mono text-[10px] text-zinc-300 space-y-1 mb-6">
                 <div className="flex justify-between">
-                  <span className="text-[#9a9a9a]">PATIENT:</span>
-                  <span className="text-white">{activeProfile.name}</span>
+                  <span className="text-zinc-400">PATIENT:</span>
+                  <span className="text-white font-medium">{activeProfile.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#9a9a9a]">CIPHER:</span>
+                  <span className="text-zinc-400">CIPHER:</span>
                   <span className="text-[#15846e]">AES-256-GCM</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#9a9a9a]">STATUS:</span>
-                  <span className="text-[#004fdc]">Protected</span>
+                  <span className="text-zinc-400">STATUS:</span>
+                  <span className="text-[#38bdf8]">Protected</span>
                 </div>
               </div>
             </div>
 
             <button
               onClick={handleExportKey}
-              className="w-full py-3.5 rounded-full bg-[#004fdc] hover:bg-[#003eb0] text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(0,79,220,0.35)] active:scale-95"
+              className="w-full py-3.5 rounded-full bg-[#004fdc] hover:bg-[#003eb0] text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(0,79,220,0.35)] active:scale-95 font-mono"
             >
               {keyExported ? <FileCheck className="w-4 h-4 text-white" /> : <Download className="w-4 h-4" />}
               {keyExported ? 'Vault Key Downloaded!' : 'Export Encrypted Key'}
@@ -703,8 +702,8 @@ const Profile = () => {
             >
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#004fdc]">Family Health Network</div>
-                  <h3 className="text-xl font-normal text-white">Add Family Member</h3>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#38bdf8] font-mono">Family Health Network</div>
+                  <h3 className="text-xl font-semibold text-white font-display mt-0.5">Add Family Member</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddMemberModalOpen(false)}
@@ -716,7 +715,7 @@ const Profile = () => {
 
               <form onSubmit={handleAddFamilyMember} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-1.5">Full Name</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5 font-mono">Full Name</label>
                   <input 
                     type="text" 
                     required
@@ -729,7 +728,7 @@ const Profile = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-1.5">Relationship</label>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5 font-mono">Relationship</label>
                     <select 
                       value={newMemberRelation}
                       onChange={(e) => setNewMemberRelation(e.target.value)}
@@ -745,7 +744,7 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-1.5">Age</label>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5 font-mono">Age</label>
                     <input 
                       type="number" 
                       required
@@ -758,7 +757,7 @@ const Profile = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-1.5">Gender</label>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5 font-mono">Gender</label>
                     <select 
                       value={newMemberGender}
                       onChange={(e) => setNewMemberGender(e.target.value)}
@@ -771,7 +770,7 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-1.5">Blood Group</label>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5 font-mono">Blood Group</label>
                     <select 
                       value={newMemberBlood}
                       onChange={(e) => setNewMemberBlood(e.target.value)}
@@ -792,7 +791,7 @@ const Profile = () => {
                 <div className="pt-3">
                   <button 
                     type="submit"
-                    className="w-full py-3.5 bg-[#004fdc] hover:bg-[#003eb0] text-white rounded-full font-semibold text-xs uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(0,79,220,0.4)]"
+                    className="w-full py-3.5 bg-[#004fdc] hover:bg-[#003eb0] text-white rounded-full font-semibold text-xs uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(0,79,220,0.4)] font-mono"
                   >
                     Add to Family Vault
                   </button>
@@ -816,8 +815,8 @@ const Profile = () => {
             >
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-red-400">Emergency SOS</div>
-                  <h3 className="text-xl font-normal text-white">Add Emergency Contact</h3>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-red-400 font-mono">Emergency SOS</div>
+                  <h3 className="text-xl font-semibold text-white font-display mt-0.5">Add Emergency Contact</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddingSos(false)}
@@ -829,7 +828,7 @@ const Profile = () => {
 
               <form onSubmit={handleAddSos} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">Doctor / Contact Name</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">Doctor / Contact Name</label>
                   <input 
                     type="text" 
                     required
@@ -841,21 +840,21 @@ const Profile = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">Emergency Phone Number</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">Emergency Phone Number</label>
                   <input 
                     type="tel" 
                     required
                     value={newSosPhone}
                     onChange={(e) => setNewSosPhone(e.target.value)}
                     placeholder="e.g. +91 98123 45678"
-                    className="w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-sm text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-sm text-white focus:outline-none focus:border-red-500 font-mono"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button 
                     type="submit"
-                    className="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-full font-semibold text-xs uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+                    className="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-full font-semibold text-xs uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(239,68,68,0.4)] font-mono"
                   >
                     Save SOS Contact
                   </button>
@@ -879,10 +878,10 @@ const Profile = () => {
             >
               <div className="flex justify-between items-center pb-4 border-b border-white/[0.06] mb-6">
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ffb829]">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ffb829] font-mono">
                     {tagType === 'allergy' ? 'Drug / Food Allergy' : 'Chronic Health Condition'}
                   </div>
-                  <h3 className="text-xl font-normal text-white">
+                  <h3 className="text-xl font-semibold text-white font-display mt-0.5">
                     Add {tagType === 'allergy' ? 'Allergy Tag' : 'Medical Condition'}
                   </h3>
                 </div>
@@ -896,7 +895,7 @@ const Profile = () => {
 
               <form onSubmit={handleAddTag} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#9a9a9a] mb-2">Description</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 font-mono">Description</label>
                   <input 
                     type="text" 
                     required
@@ -910,7 +909,7 @@ const Profile = () => {
                 <div className="pt-2">
                   <button 
                     type="submit"
-                    className="w-full py-3.5 bg-[#ffb829] hover:bg-[#e5a524] text-black rounded-full font-bold text-xs uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(255,184,41,0.4)]"
+                    className="w-full py-3.5 bg-[#ffb829] hover:bg-[#e5a524] text-black rounded-full font-bold text-xs uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(255,184,41,0.4)] font-mono"
                   >
                     Save Tag to Vault
                   </button>

@@ -1,52 +1,54 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   Dala / VaidyaVaani Design Tokens — Palette: #004fdc (Electric Cobalt Blue)
+   VaidyaVaani Elite Typography & Design Tokens
+   Palette: #004fdc (Electric Cobalt) • #15846e (Deep Verdant) • #ffb829 (Saffron)
+   Fonts: 'Plus Jakarta Sans' (Primary UI) • 'Space Grotesk' / 'Outfit' (Display) • 'JetBrains Mono' (Telemetry)
    ========================================================================== */
 
 @theme {
   /* Colors */
   --color-void: #000000;
   --color-bone-white: #ffffff;
-  --color-ash-gray: #9a9a9a;
-  --color-silver-mist: #bdbdbd;
+  --color-ash-gray: #a1a1aa;
+  --color-silver-mist: #d4d4d8;
   --color-brand-blue: #004fdc;
   --color-electric-iris: #004fdc;
   --color-saffron-spark: #ffb829;
   --color-deep-verdant: #15846e;
 
-  /* Typography */
-  --font-ppneuemontreal: 'PPNeueMontreal', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Font Families */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Space Grotesk', 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Typography — Scale */
+  /* Typography Scale */
   --text-caption: 12px;
   --leading-caption: 1.5;
-  --text-nav-label: 14px;
+  --text-nav-label: 13px;
   --leading-nav-label: 1.2;
-  --tracking-nav-label: 0.35px;
-  --text-body: 18px;
-  --leading-body: 1.5;
-  --text-heading-2xs: 24px;
+  --tracking-nav-label: 0.05em;
+  --text-body: 16px;
+  --leading-body: 1.6;
+  --text-heading-2xs: 22px;
   --leading-heading-2xs: 1.25;
-  --tracking-heading-2xs: -0.48px;
-  --text-heading-xs: 27px;
-  --leading-heading-xs: 1;
-  --text-subheading: 36px;
-  --leading-subheading: 1.2;
-  --text-heading-sm: 42px;
-  --leading-heading-sm: 1.2;
-  --tracking-heading-sm: -1.68px;
+  --tracking-heading-2xs: -0.02em;
+  --text-heading-xs: 26px;
+  --leading-heading-xs: 1.15;
+  --text-subheading: 32px;
+  --leading-subheading: 1.15;
+  --text-heading-sm: 40px;
+  --leading-heading-sm: 1.12;
+  --tracking-heading-sm: -0.03em;
   --text-heading: 48px;
-  --leading-heading: 1.1;
-  --tracking-heading: -1.68px;
-  --text-heading-lg: 78px;
-  --leading-heading-lg: 1.1;
-  --tracking-heading-lg: -3.12px;
-  --text-display: 113px;
-  --leading-display: 1.1;
-  --tracking-display: -4.52px;
+  --leading-heading: 1.08;
+  --tracking-heading: -0.035em;
+  --text-heading-lg: 72px;
+  --leading-heading-lg: 1.04;
+  --tracking-heading-lg: -0.04em;
+  --text-display: 96px;
+  --leading-display: 1.02;
+  --tracking-display: -0.045em;
 
   /* Spacing */
   --spacing-6: 6px;
@@ -68,49 +70,53 @@
   /* Colors */
   --color-void: #000000;
   --color-bone-white: #ffffff;
-  --color-ash-gray: #9a9a9a;
-  --color-silver-mist: #bdbdbd;
+  --color-ash-gray: #a1a1aa;
+  --color-silver-mist: #d4d4d8;
   --color-brand-blue: #004fdc;
   --color-electric-iris: #004fdc;
   --color-saffron-spark: #ffb829;
   --color-deep-verdant: #15846e;
 
   /* Typography — Font Families */
-  --font-ppneuemontreal: 'PPNeueMontreal', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Space Grotesk', 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Typography — Scale */
   --text-caption: 12px;
   --leading-caption: 1.5;
-  --text-nav-label: 14px;
+  --text-nav-label: 13px;
   --leading-nav-label: 1.2;
-  --tracking-nav-label: 0.35px;
-  --text-body: 18px;
-  --leading-body: 1.5;
-  --text-heading-2xs: 24px;
+  --tracking-nav-label: 0.05em;
+  --text-body: 16px;
+  --leading-body: 1.6;
+  --text-heading-2xs: 22px;
   --leading-heading-2xs: 1.25;
-  --tracking-heading-2xs: -0.48px;
-  --text-heading-xs: 27px;
-  --leading-heading-xs: 1;
-  --text-subheading: 36px;
-  --leading-subheading: 1.2;
-  --text-heading-sm: 42px;
-  --leading-heading-sm: 1.2;
-  --tracking-heading-sm: -1.68px;
+  --tracking-heading-2xs: -0.02em;
+  --text-heading-xs: 26px;
+  --leading-heading-xs: 1.15;
+  --text-subheading: 32px;
+  --leading-subheading: 1.15;
+  --text-heading-sm: 40px;
+  --leading-heading-sm: 1.12;
+  --tracking-heading-sm: -0.03em;
   --text-heading: 48px;
-  --leading-heading: 1.1;
-  --tracking-heading: -1.68px;
-  --text-heading-lg: 78px;
-  --leading-heading-lg: 1.1;
-  --tracking-heading-lg: -3.12px;
-  --text-display: 113px;
-  --leading-display: 1.1;
-  --tracking-display: -4.52px;
+  --leading-heading: 1.08;
+  --tracking-heading: -0.035em;
+  --text-heading-lg: 72px;
+  --leading-heading-lg: 1.04;
+  --tracking-heading-lg: -0.04em;
+  --text-display: 96px;
+  --leading-display: 1.02;
+  --tracking-display: -0.045em;
 
   /* Typography — Weights */
-  --font-weight-extralight: 200;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
+  --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
 
   /* Spacing */
   --spacing-unit: 6px;
@@ -126,15 +132,13 @@
 
   /* Layout */
   --page-max-width: 1280px;
-  --section-gap: 60-120px;
+  --section-gap: 80-140px;
   --card-padding: 24-38px;
-  --element-gap: 6-18px;
+  --element-gap: 8-20px;
 
   /* Border Radius */
   --radius-3xl: 24px;
   --radius-full: 9999px;
-
-  /* Named Radii */
   --radius-nav: 24px;
   --radius-tags: 9999px;
   --radius-cards: 24px;
@@ -151,6 +155,7 @@
     scroll-behavior: smooth;
     background-color: #000000;
     color: #ffffff;
+    font-family: var(--font-sans);
   }
 
   body {
@@ -161,7 +166,19 @@
     padding: 0;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    color: #ffffff;
+  }
+
+  code, kbd, samp, pre {
+    font-family: var(--font-mono);
   }
 
   ::selection {
@@ -170,29 +187,86 @@
   }
 }
 
+/* ==========================================================================
+   High-End Typography & Texture Utility Classes
+   ========================================================================== */
+
+/* Hero Gradient Text Shine */
+.text-gradient-hero {
+  background: linear-gradient(180deg, #ffffff 20%, #e2e8f0 70%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #004fdc 0%, #00d2d3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-verdant {
+  background: linear-gradient(135deg, #15846e 0%, #00d2d3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Eyebrow Micro Badges */
+.eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a1a1aa;
+  backdrop-filter: blur(12px);
+}
+
+/* High Precision Telemetry Numbers */
+.telemetry-val {
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* Double-Bezel Glass Card (Doppelrand) */
+.card-glass {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(16px);
+  border-radius: 1.5rem;
+}
+
 /* Custom Dala/VaidyaVaani Pill Button */
 .btn-pill-primary {
   background-color: #004fdc;
   color: #ffffff;
   border-radius: 9999px;
-  padding: 14.4px 24px;
-  font-size: 14px;
+  padding: 12px 24px;
+  font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.025em;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.05em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   border: none;
   outline: none;
+  box-shadow: 0 0 25px rgba(0, 79, 220, 0.35);
 }
 
 .btn-pill-primary:hover {
   background-color: #003eb0;
-  transform: scale(1.02);
-  box-shadow: 0 0 30px rgba(0, 79, 220, 0.45);
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 0 35px rgba(0, 79, 220, 0.55);
 }
 
 .btn-pill-primary:active {
