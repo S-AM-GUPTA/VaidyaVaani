@@ -129,7 +129,7 @@ const Profile = () => {
   // Emergency SOS state
   const [sosContacts, setSosContacts] = useState([
     { id: 'c1', name: 'Dr. Sharma (Cardiologist)', phone: '+91 98765 43210', relation: 'Primary Physician' },
-    { id: 'c2', name: 'Emergency Ambulance Hotline', phone: '108 / 102', relation: 'Emergency Medical Service' },
+    { id: 'c2', name: 'Emergency Ambulance Hotline', phone: '108 / 102', relation: 'National Medical Service' },
   ]);
   const [newSosName, setNewSosName] = useState('');
   const [newSosPhone, setNewSosPhone] = useState('');
@@ -273,22 +273,22 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-[#f8fafc] font-sans selection:bg-[#0d9488] selection:text-white flex flex-col">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans flex flex-col selection:bg-sky-600 selection:text-white">
       <Navbar />
 
       <main className="flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
         
         {/* Navigation & Breadcrumb */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#1e293b]">
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
           <button 
             onClick={() => navigate('/home')}
-            className="inline-flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-white transition-colors font-mono"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors font-mono"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Workspace</span>
+            <span>Back to Dashboard</span>
           </button>
 
-          <div className="clinical-badge font-mono">
+          <div className="med-badge font-mono">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Zero-Knowledge Clinical Identity</span>
           </div>
@@ -297,15 +297,15 @@ const Profile = () => {
         {/* =========================================================
             HEADER & FAMILY MEMBERS SWITCHER / MANAGER
             ========================================================= */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-10 pb-8 border-b border-[#1e293b]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10 pb-8 border-b border-slate-200">
           
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 rounded-xl bg-teal-950/80 border border-teal-500/40 flex items-center justify-center text-teal-300 shrink-0">
-              <User className="w-8 h-8 text-teal-400" />
+            <div className="w-16 h-16 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-lg shrink-0">
+              <User className="w-8 h-8 text-sky-700" />
             </div>
 
             <div>
-              <div className="text-xs font-medium uppercase text-teal-400 mb-0.5 font-mono">
+              <div className="text-xs font-bold uppercase text-sky-700 mb-0.5 font-mono">
                 {activeProfile.relation}
               </div>
               {isEditingVitals ? (
@@ -314,25 +314,25 @@ const Profile = () => {
                     type="text"
                     value={activeProfile.name}
                     onChange={(e) => handleUpdateActiveVitals('name', e.target.value)}
-                    className="bg-[#0f1523] border border-[#1e293b] rounded-lg px-3 py-1 text-xl font-semibold text-white outline-none focus:border-teal-500"
+                    className="bg-white border border-slate-300 rounded-lg px-3 py-1 text-xl font-bold text-slate-900 outline-none focus:border-sky-500"
                     placeholder="Patient Name"
                   />
                 </div>
               ) : (
-                <h1 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                   {activeProfile.name}
                 </h1>
               )}
-              <p className="text-xs text-slate-400 mt-0.5">
-                Age: {activeProfile.age} • Gender: {activeProfile.gender} • Blood Group: <span className="text-white font-medium">{activeProfile.bloodGroup}</span>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Age: {activeProfile.age} • Gender: {activeProfile.gender} • Blood Group: <span className="text-slate-900 font-bold">{activeProfile.bloodGroup}</span>
               </p>
             </div>
           </div>
 
           {/* Family Profiles Switcher */}
-          <div className="p-1.5 rounded-lg bg-[#0f1523] border border-[#1e293b] flex flex-wrap items-center gap-2 w-fit">
-            <div className="text-xs font-mono uppercase text-slate-400 px-2 flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-teal-400" />
+          <div className="p-1.5 rounded-lg bg-white border border-slate-200 shadow-xs flex flex-wrap items-center gap-2 w-fit">
+            <div className="text-xs font-mono uppercase text-slate-500 font-bold px-2 flex items-center gap-1.5">
+              <Users className="w-3.5 h-3.5 text-sky-600" />
               Profiles:
             </div>
 
@@ -341,10 +341,10 @@ const Profile = () => {
               <div key={p.id} className="relative group">
                 <button
                   onClick={() => handleSwitchProfile(p.id)}
-                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 ${
                     p.active 
-                      ? 'bg-teal-700 text-white shadow-sm' 
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                      ? 'bg-sky-600 text-white shadow-xs' 
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
                   <span>{p.name}</span>
@@ -370,7 +370,7 @@ const Profile = () => {
             {/* "+ Add Member" Button */}
             <button
               onClick={() => setIsAddMemberModalOpen(true)}
-              className="px-3 py-1.5 rounded-md text-xs font-medium bg-blue-950/60 hover:bg-blue-900/60 text-blue-300 border border-blue-500/30 flex items-center gap-1.5 transition-colors font-mono"
+              className="px-3 py-1.5 rounded-md text-xs font-bold bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 flex items-center gap-1.5 transition-colors font-mono"
             >
               <UserPlus className="w-3.5 h-3.5" />
               Add Member
@@ -385,31 +385,31 @@ const Profile = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
           
           {/* Card 1: Patient Vitals */}
-          <div className="lg:col-span-7 clinical-card p-6">
-            <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+          <div className="lg:col-span-7 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+            <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
               <div>
-                <div className="clinical-badge mb-1 font-mono">Telemetry</div>
-                <h2 className="text-lg font-semibold text-white">Vitals & Biological Metrics ({activeProfile.name})</h2>
+                <div className="med-badge mb-1 font-mono">Telemetry</div>
+                <h2 className="text-lg font-bold text-slate-900">Vitals & Biological Metrics ({activeProfile.name})</h2>
               </div>
               <button
                 onClick={() => setIsEditingVitals(!isEditingVitals)}
-                className="btn-secondary text-xs"
+                className="btn-med-secondary text-xs"
               >
-                {isEditingVitals ? <Check className="w-3.5 h-3.5 text-teal-400" /> : <Edit3 className="w-3.5 h-3.5" />}
+                {isEditingVitals ? <Check className="w-3.5 h-3.5 text-teal-600" /> : <Edit3 className="w-3.5 h-3.5" />}
                 {isEditingVitals ? 'Save Vitals' : 'Edit Vitals'}
               </button>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
               
               {/* Blood Group */}
-              <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400">BLOOD GROUP</div>
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                <div className="text-xs font-mono text-slate-500 font-bold">BLOOD GROUP</div>
                 {isEditingVitals ? (
                   <select 
                     value={activeProfile.bloodGroup} 
                     onChange={(e) => handleUpdateActiveVitals('bloodGroup', e.target.value)}
-                    className="w-full bg-[#0f1523] border border-[#1e293b] rounded-lg px-2 py-1 text-xs text-white mt-1 outline-none" 
+                    className="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 mt-1 outline-none" 
                   >
                     <option value="A+ Positive">A+ Positive</option>
                     <option value="A- Negative">A- Negative</option>
@@ -421,85 +421,85 @@ const Profile = () => {
                     <option value="AB- Negative">AB- Negative</option>
                   </select>
                 ) : (
-                  <div className="text-sm font-semibold text-white mt-1 flex items-center gap-1.5 font-mono">
-                    <Heart className="w-4 h-4 text-rose-400" /> {activeProfile.bloodGroup}
+                  <div className="text-sm font-bold text-slate-900 mt-1 flex items-center gap-1.5 font-mono">
+                    <Heart className="w-4 h-4 text-rose-500" /> {activeProfile.bloodGroup}
                   </div>
                 )}
               </div>
 
               {/* Height / Weight */}
-              <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400">HEIGHT / WEIGHT</div>
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                <div className="text-xs font-mono text-slate-500 font-bold">HEIGHT / WEIGHT</div>
                 {isEditingVitals ? (
                   <div className="flex gap-1.5 mt-1">
                     <input 
                       type="text" 
                       value={activeProfile.height} 
                       onChange={(e) => handleUpdateActiveVitals('height', e.target.value)}
-                      className="w-1/2 bg-[#0f1523] border border-[#1e293b] rounded px-2 py-1 text-xs text-white" 
+                      className="w-1/2 bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900" 
                     />
                     <input 
                       type="text" 
                       value={activeProfile.weight} 
                       onChange={(e) => handleUpdateActiveVitals('weight', e.target.value)}
-                      className="w-1/2 bg-[#0f1523] border border-[#1e293b] rounded px-2 py-1 text-xs text-white" 
+                      className="w-1/2 bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900" 
                     />
                   </div>
                 ) : (
-                  <div className="text-sm font-semibold text-white mt-1 font-mono">
+                  <div className="text-sm font-bold text-slate-900 mt-1 font-mono">
                     {activeProfile.height} • {activeProfile.weight}
                   </div>
                 )}
               </div>
 
               {/* BMI */}
-              <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400">BODY MASS INDEX</div>
-                <div className="text-sm font-semibold text-teal-400 mt-1 font-mono">{activeProfile.bmi}</div>
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                <div className="text-xs font-mono text-slate-500 font-bold">BODY MASS INDEX</div>
+                <div className="text-sm font-bold text-teal-700 mt-1 font-mono">{activeProfile.bmi}</div>
               </div>
 
               {/* Blood Pressure */}
-              <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400">BLOOD PRESSURE</div>
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                <div className="text-xs font-mono text-slate-500 font-bold">BLOOD PRESSURE</div>
                 {isEditingVitals ? (
                   <input 
                     type="text" 
                     value={activeProfile.bp} 
                     onChange={(e) => handleUpdateActiveVitals('bp', e.target.value)}
-                    className="w-full bg-[#0f1523] border border-[#1e293b] rounded px-2 py-1 text-xs text-white mt-1" 
+                    className="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 mt-1" 
                   />
                 ) : (
-                  <div className="text-sm font-semibold text-white mt-1 font-mono">{activeProfile.bp}</div>
+                  <div className="text-sm font-bold text-slate-900 mt-1 font-mono">{activeProfile.bp}</div>
                 )}
               </div>
 
               {/* Fasting Sugar */}
-              <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400">FASTING GLUCOSE</div>
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                <div className="text-xs font-mono text-slate-500 font-bold">FASTING GLUCOSE</div>
                 {isEditingVitals ? (
                   <input 
                     type="text" 
                     value={activeProfile.sugar} 
                     onChange={(e) => handleUpdateActiveVitals('sugar', e.target.value)}
-                    className="w-full bg-[#0f1523] border border-[#1e293b] rounded px-2 py-1 text-xs text-white mt-1" 
+                    className="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 mt-1" 
                   />
                 ) : (
-                  <div className="text-sm font-semibold text-amber-400 mt-1 font-mono">{activeProfile.sugar}</div>
+                  <div className="text-sm font-bold text-amber-700 mt-1 font-mono">{activeProfile.sugar}</div>
                 )}
               </div>
 
               {/* Primary Doctor */}
-              <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400">PRIMARY DOCTOR</div>
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                <div className="text-xs font-mono text-slate-500 font-bold">PRIMARY DOCTOR</div>
                 {isEditingVitals ? (
                   <input 
                     type="text" 
                     value={activeProfile.primaryDoctor} 
                     onChange={(e) => handleUpdateActiveVitals('primaryDoctor', e.target.value)}
-                    className="w-full bg-[#0f1523] border border-[#1e293b] rounded px-2 py-1 text-xs text-white mt-1" 
+                    className="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 mt-1" 
                   />
                 ) : (
-                  <div className="text-xs font-medium text-white mt-1 truncate">{activeProfile.primaryDoctor}</div>
+                  <div className="text-xs font-bold text-slate-900 mt-1 truncate">{activeProfile.primaryDoctor}</div>
                 )}
               </div>
 
@@ -507,37 +507,37 @@ const Profile = () => {
           </div>
 
           {/* Card 2: Emergency SOS Contacts */}
-          <div className="lg:col-span-5 clinical-card p-6">
-            <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+          <div className="lg:col-span-5 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+            <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
               <div>
-                <div className="text-xs font-mono uppercase text-rose-400 font-semibold mb-1">Rapid Response</div>
-                <h2 className="text-lg font-semibold text-white">Emergency SOS Contacts</h2>
+                <div className="text-xs font-mono uppercase text-rose-600 font-bold mb-1">Rapid Response</div>
+                <h2 className="text-lg font-bold text-slate-900">Emergency SOS Contacts</h2>
               </div>
               <button
                 onClick={() => setIsAddingSos(true)}
-                className="px-3 py-1 rounded-md bg-rose-950/60 hover:bg-rose-900/60 text-rose-300 text-xs font-semibold flex items-center gap-1 border border-rose-500/30"
+                className="px-3 py-1 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold flex items-center gap-1 border border-rose-200 transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add SOS
               </button>
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {sosContacts.map((contact) => (
-                <div key={contact.id} className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] flex items-center justify-between">
+                <div key={contact.id} className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-rose-950/80 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                    <div className="w-8 h-8 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center">
                       <Phone className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-white">{contact.name}</div>
-                      <div className="text-xs text-slate-400">{contact.relation}</div>
+                      <div className="text-sm font-bold text-slate-900">{contact.name}</div>
+                      <div className="text-xs text-slate-500">{contact.relation}</div>
                     </div>
                   </div>
 
                   <a 
                     href={`tel:${contact.phone}`} 
-                    className="px-3 py-1 rounded-md bg-rose-600 hover:bg-rose-700 text-white text-xs font-mono font-semibold transition-colors"
+                    className="px-3 py-1 rounded-md bg-rose-600 hover:bg-rose-700 text-white text-xs font-mono font-bold transition-colors"
                   >
                     {contact.phone}
                   </a>
@@ -546,9 +546,9 @@ const Profile = () => {
             </div>
 
             {/* Quick SOS Trigger Box */}
-            <div className="mt-4 p-3 rounded-lg bg-rose-950/20 border border-rose-500/30 flex items-center gap-2.5 text-xs text-rose-200">
-              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
-              <span>Emergency clinical medical card available for lock screen access.</span>
+            <div className="mt-4 p-3.5 rounded-lg bg-rose-50 border border-rose-200 flex items-center gap-2.5 text-xs text-rose-800">
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+              <span>Emergency clinical card formatted for instant lock screen access.</span>
             </div>
           </div>
 
@@ -560,11 +560,11 @@ const Profile = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
           {/* Allergies & Chronic Conditions */}
-          <div className="lg:col-span-8 clinical-card p-6">
-            <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+          <div className="lg:col-span-8 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+            <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
               <div>
-                <div className="text-xs font-mono uppercase text-amber-400 font-semibold mb-1">Pharmacopeia Guard</div>
-                <h2 className="text-lg font-semibold text-white">Allergies & Medical Conditions ({activeProfile.name})</h2>
+                <div className="text-xs font-mono uppercase text-amber-700 font-bold mb-1">Pharmacopeia Guard</div>
+                <h2 className="text-lg font-bold text-slate-900">Allergies & Medical Conditions ({activeProfile.name})</h2>
               </div>
               <div className="flex gap-2">
                 <button
@@ -572,7 +572,7 @@ const Profile = () => {
                     setTagType('allergy');
                     setIsTagModalOpen(true);
                   }}
-                  className="px-2.5 py-1 rounded-md bg-amber-950/60 hover:bg-amber-900/60 text-amber-300 text-xs font-semibold flex items-center gap-1 border border-amber-500/30"
+                  className="px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold flex items-center gap-1 border border-amber-200"
                 >
                   <Plus className="w-3.5 h-3.5" /> Allergy
                 </button>
@@ -581,7 +581,7 @@ const Profile = () => {
                     setTagType('condition');
                     setIsTagModalOpen(true);
                   }}
-                  className="px-2.5 py-1 rounded-md bg-teal-950/60 hover:bg-teal-900/60 text-teal-300 text-xs font-semibold flex items-center gap-1 border border-teal-500/30"
+                  className="px-2.5 py-1 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-800 text-xs font-bold flex items-center gap-1 border border-sky-200"
                 >
                   <Plus className="w-3.5 h-3.5" /> Condition
                 </button>
@@ -590,18 +590,18 @@ const Profile = () => {
 
             <div className="space-y-4">
               <div>
-                <div className="text-xs font-mono uppercase text-slate-400 mb-2">Known Drug & Food Allergies:</div>
+                <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-2">Known Drug & Food Allergies:</div>
                 <div className="flex flex-wrap gap-2">
                   {activeProfile.allergies.length === 0 ? (
                     <span className="text-xs text-slate-400">No allergies recorded for {activeProfile.name}.</span>
                   ) : (
                     activeProfile.allergies.map((allergy, i) => (
-                      <span key={i} className="px-3 py-1 rounded-lg bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-1.5 group">
-                        <AlertCircle className="w-3.5 h-3.5 text-rose-400" />
+                      <span key={i} className="px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-center gap-1.5 group">
+                        <AlertCircle className="w-3.5 h-3.5 text-rose-600" />
                         {allergy}
                         <button 
                           onClick={() => handleRemoveTag('allergy', i)}
-                          className="text-rose-400 hover:text-white ml-1 opacity-60 group-hover:opacity-100"
+                          className="text-rose-500 hover:text-rose-900 ml-1 font-bold"
                         >
                           ×
                         </button>
@@ -612,18 +612,18 @@ const Profile = () => {
               </div>
 
               <div>
-                <div className="text-xs font-mono uppercase text-slate-400 mb-2">Chronic Medical Conditions:</div>
+                <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-2">Chronic Medical Conditions:</div>
                 <div className="flex flex-wrap gap-2">
                   {activeProfile.chronicConditions.length === 0 ? (
                     <span className="text-xs text-slate-400">No chronic conditions recorded for {activeProfile.name}.</span>
                   ) : (
                     activeProfile.chronicConditions.map((cond, i) => (
-                      <span key={i} className="px-3 py-1 rounded-lg bg-teal-950/30 border border-teal-500/30 text-teal-300 text-xs flex items-center gap-1.5 group">
-                        <Activity className="w-3.5 h-3.5 text-teal-400" />
+                      <span key={i} className="px-3 py-1 rounded-lg bg-teal-50 border border-teal-200 text-teal-800 text-xs font-medium flex items-center gap-1.5 group">
+                        <Activity className="w-3.5 h-3.5 text-teal-600" />
                         {cond}
                         <button 
                           onClick={() => handleRemoveTag('condition', i)}
-                          className="text-teal-400 hover:text-white ml-1 opacity-60 group-hover:opacity-100"
+                          className="text-teal-600 hover:text-teal-900 ml-1 font-bold"
                         >
                           ×
                         </button>
@@ -636,36 +636,36 @@ const Profile = () => {
           </div>
 
           {/* Zero-Knowledge Vault Keys & Export */}
-          <div className="lg:col-span-4 clinical-card p-6 flex flex-col justify-between">
+          <div className="lg:col-span-4 bg-white p-6 rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-1.5 text-xs font-mono uppercase text-blue-400 font-semibold mb-1">
+              <div className="flex items-center gap-1.5 text-xs font-mono uppercase text-sky-700 font-bold mb-1">
                 <Lock className="w-3.5 h-3.5" />
                 Security Vault
               </div>
-              <h2 className="text-lg font-semibold text-white mb-2">Zero-Knowledge Key Export</h2>
-              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+              <h2 className="text-lg font-bold text-slate-900 mb-2">Zero-Knowledge Key Export</h2>
+              <p className="text-xs text-slate-500 leading-relaxed mb-4">
                 Download your portable encrypted JSON key to authenticate and decrypt medical records offline or on external clinic systems.
               </p>
 
-              <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] font-mono text-xs text-slate-300 space-y-1 mb-4">
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 font-mono text-xs text-slate-700 space-y-1 mb-4">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">PATIENT:</span>
-                  <span className="text-white">{activeProfile.name}</span>
+                  <span className="text-slate-500">PATIENT:</span>
+                  <span className="text-slate-900 font-bold">{activeProfile.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">CIPHER:</span>
-                  <span className="text-teal-400">AES-256-GCM</span>
+                  <span className="text-slate-500">CIPHER:</span>
+                  <span className="text-teal-700 font-bold">AES-256-GCM</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">STATUS:</span>
-                  <span className="text-blue-400">Verified</span>
+                  <span className="text-slate-500">STATUS:</span>
+                  <span className="text-sky-700 font-bold">Verified</span>
                 </div>
               </div>
             </div>
 
             <button
               onClick={handleExportKey}
-              className="w-full btn-primary text-xs font-semibold"
+              className="w-full btn-med-primary text-xs font-semibold"
             >
               {keyExported ? <FileCheck className="w-4 h-4 text-white" /> : <Download className="w-4 h-4" />}
               {keyExported ? 'Vault Key Downloaded!' : 'Export Encrypted Key'}
@@ -682,21 +682,21 @@ const Profile = () => {
       <AnimatePresence>
         {isAddMemberModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={() => setIsAddMemberModalOpen(false)}></div>
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs" onClick={() => setIsAddMemberModalOpen(false)}></div>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 15 }}
-              className="bg-[#0f1523] rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-[#1e293b] p-6 sm:p-8"
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-8"
             >
-              <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-wider text-blue-400 font-mono">Family Profile</div>
-                  <h3 className="text-lg font-semibold text-white mt-0.5">Add Family Member</h3>
+                  <div className="text-xs font-bold uppercase tracking-wider text-sky-700 font-mono">Family Profile</div>
+                  <h3 className="text-lg font-bold text-slate-900 mt-0.5">Add Family Member</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddMemberModalOpen(false)}
-                  className="w-8 h-8 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-slate-300 flex items-center justify-center"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -704,24 +704,24 @@ const Profile = () => {
 
               <form onSubmit={handleAddFamilyMember} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1 font-mono">Full Name</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Full Name</label>
                   <input 
                     type="text" 
                     required
                     value={newMemberName}
                     onChange={(e) => setNewMemberName(e.target.value)}
                     placeholder="e.g. Priya Gupta"
-                    className="w-full px-3.5 py-2.5 bg-[#090d16] border border-[#1e293b] rounded-lg text-sm text-white focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1 font-mono">Relationship</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Relationship</label>
                     <select 
                       value={newMemberRelation}
                       onChange={(e) => setNewMemberRelation(e.target.value)}
-                      className="w-full px-3 py-2 bg-[#090d16] border border-[#1e293b] rounded-lg text-xs text-white focus:outline-none focus:border-teal-500"
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                     >
                       <option value="Spouse">Spouse</option>
                       <option value="Father">Father</option>
@@ -733,24 +733,24 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1 font-mono">Age</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Age</label>
                     <input 
                       type="number" 
                       required
                       value={newMemberAge}
                       onChange={(e) => setNewMemberAge(e.target.value)}
-                      className="w-full px-3 py-2 bg-[#090d16] border border-[#1e293b] rounded-lg text-xs text-white focus:outline-none focus:border-teal-500"
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1 font-mono">Gender</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Gender</label>
                     <select 
                       value={newMemberGender}
                       onChange={(e) => setNewMemberGender(e.target.value)}
-                      className="w-full px-3 py-2 bg-[#090d16] border border-[#1e293b] rounded-lg text-xs text-white focus:outline-none focus:border-teal-500"
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                     >
                       <option value="Female">Female</option>
                       <option value="Male">Male</option>
@@ -759,11 +759,11 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1 font-mono">Blood Group</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Blood Group</label>
                     <select 
                       value={newMemberBlood}
                       onChange={(e) => setNewMemberBlood(e.target.value)}
-                      className="w-full px-3 py-2 bg-[#090d16] border border-[#1e293b] rounded-lg text-xs text-white focus:outline-none focus:border-teal-500"
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                     >
                       <option value="O+ Positive">O+ Positive</option>
                       <option value="O- Negative">O- Negative</option>
@@ -780,7 +780,7 @@ const Profile = () => {
                 <div className="pt-2">
                   <button 
                     type="submit"
-                    className="w-full btn-primary text-xs"
+                    className="w-full btn-med-primary text-xs"
                   >
                     Add to Family Profiles
                   </button>
@@ -795,21 +795,21 @@ const Profile = () => {
       <AnimatePresence>
         {isAddingSos && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={() => setIsAddingSos(false)}></div>
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs" onClick={() => setIsAddingSos(false)}></div>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 15 }}
-              className="bg-[#0f1523] rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-[#1e293b] p-6 sm:p-8"
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-8"
             >
-              <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-wider text-rose-400 font-mono">Emergency SOS</div>
-                  <h3 className="text-lg font-semibold text-white mt-0.5">Add Emergency Contact</h3>
+                  <div className="text-xs font-bold uppercase tracking-wider text-rose-600 font-mono">Emergency SOS</div>
+                  <h3 className="text-lg font-bold text-slate-900 mt-0.5">Add Emergency Contact</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddingSos(false)}
-                  className="w-8 h-8 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-slate-300 flex items-center justify-center"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -817,33 +817,33 @@ const Profile = () => {
 
               <form onSubmit={handleAddSos} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1 font-mono">Doctor / Contact Name</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Doctor / Contact Name</label>
                   <input 
                     type="text" 
                     required
                     value={newSosName}
                     onChange={(e) => setNewSosName(e.target.value)}
                     placeholder="e.g. Dr. Verma (Physician)"
-                    className="w-full px-3.5 py-2.5 bg-[#090d16] border border-[#1e293b] rounded-lg text-sm text-white focus:outline-none focus:border-rose-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-rose-500 focus:bg-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1 font-mono">Emergency Phone Number</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Emergency Phone Number</label>
                   <input 
                     type="tel" 
                     required
                     value={newSosPhone}
                     onChange={(e) => setNewSosPhone(e.target.value)}
                     placeholder="e.g. +91 98123 45678"
-                    className="w-full px-3.5 py-2.5 bg-[#090d16] border border-[#1e293b] rounded-lg text-sm text-white focus:outline-none focus:border-rose-500 font-mono"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-rose-500 focus:bg-white font-mono"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button 
                     type="submit"
-                    className="w-full btn-primary bg-rose-600 hover:bg-rose-700 border-rose-500/30 text-xs"
+                    className="w-full btn-med-primary bg-rose-600 hover:bg-rose-700 border-rose-500/30 text-xs"
                   >
                     Save SOS Contact
                   </button>
@@ -858,25 +858,25 @@ const Profile = () => {
       <AnimatePresence>
         {isTagModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={() => setIsTagModalOpen(false)}></div>
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs" onClick={() => setIsTagModalOpen(false)}></div>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 15 }}
-              className="bg-[#0f1523] rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-[#1e293b] p-6 sm:p-8"
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-8"
             >
-              <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-wider text-amber-400 font-mono">
+                  <div className="text-xs font-bold uppercase tracking-wider text-amber-700 font-mono">
                     {tagType === 'allergy' ? 'Drug / Food Allergy' : 'Chronic Medical Condition'}
                   </div>
-                  <h3 className="text-lg font-semibold text-white mt-0.5">
+                  <h3 className="text-lg font-bold text-slate-900 mt-0.5">
                     Add {tagType === 'allergy' ? 'Allergy Record' : 'Medical Condition'}
                   </h3>
                 </div>
                 <button 
                   onClick={() => setIsTagModalOpen(false)}
-                  className="w-8 h-8 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-slate-300 flex items-center justify-center"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -884,21 +884,21 @@ const Profile = () => {
 
               <form onSubmit={handleAddTag} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1 font-mono">Description</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">Description</label>
                   <input 
                     type="text" 
                     required
                     value={newTagInput}
                     onChange={(e) => setNewTagInput(e.target.value)}
                     placeholder={tagType === 'allergy' ? 'e.g. Aspirin (Asthma flare)' : 'e.g. Type 2 Diabetes'}
-                    className="w-full px-3.5 py-2.5 bg-[#090d16] border border-[#1e293b] rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button 
                     type="submit"
-                    className="w-full btn-primary text-xs"
+                    className="w-full btn-med-primary text-xs"
                   >
                     Save to Health Record
                   </button>

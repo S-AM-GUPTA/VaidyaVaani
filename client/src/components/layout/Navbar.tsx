@@ -1,15 +1,31 @@
 import { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, ChevronDown, Bell, User, LogOut, Check, Menu, X, Pill, Activity, ShieldCheck, MessageSquare } from 'lucide-react';
+import { 
+  Globe, 
+  ChevronDown, 
+  Bell, 
+  User, 
+  LogOut, 
+  Check, 
+  Menu, 
+  X, 
+  Pill, 
+  Activity, 
+  ShieldCheck, 
+  MessageSquare,
+  Phone,
+  Clock,
+  HeartPulse
+} from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage, LANGUAGES } from '../../context/LanguageContext';
 import Logo from '../Logo';
 
 const NOTIFICATIONS = [
-  { id: 1, title: 'Drug Spacing Reminder', desc: 'Space Atenolol 2 hours from antacids.', time: '10m ago', unread: true },
+  { id: 1, title: 'Drug Spacing Reminder', desc: 'Space Atenolol 2 hours apart from antacids.', time: '10m ago', unread: true },
   { id: 2, title: 'Lab Biomarkers Ingested', desc: 'Fasting glucose extracted at 108 mg/dL.', time: '1h ago', unread: true },
-  { id: 3, title: 'Vault Sealed', desc: 'Zero-knowledge encryption keys refreshed.', time: '1d ago', unread: false },
+  { id: 3, title: 'Vault Sealed', desc: 'Client-side encryption verified.', time: '1d ago', unread: false },
 ];
 
 const Navbar = () => {
@@ -49,87 +65,31 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[#090d16]/95 border-b border-[#1e293b] sticky top-0 z-50 transition-colors backdrop-blur-xl">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
-        <div className="flex justify-between items-center h-18">
+    <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+      
+      {/* Top Medical Utility Bar (Classic Hospital Reference) */}
+      <div className="bg-[#0f172a] text-slate-300 text-xs py-2 px-6 lg:px-12 border-b border-slate-800">
+        <div className="max-w-[1280px] mx-auto flex flex-wrap items-center justify-between gap-3">
           
-          {/* Brand Logo */}
-          <Logo to={isAuthenticated ? "/home" : "/"} size="md" />
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Phone className="w-3.5 h-3.5 text-rose-400" />
+              <span>Emergency 24/7 Helpline: <strong className="text-white font-mono">108 / 102</strong></span>
+            </div>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center space-x-1 p-1 bg-[#0f1523] border border-[#1e293b] rounded-lg">
-            {isAuthenticated ? (
-              <>
-                <button
-                  onClick={() => navigate('/home')}
-                  className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${
-                    isDashboard 
-                      ? 'bg-[#0d9488] text-white shadow-sm' 
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Activity className="w-3.5 h-3.5" />
-                  {t('workspace')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('#section-prescriptions')}
-                  className="px-3.5 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5"
-                >
-                  <Pill className="w-3.5 h-3.5 text-teal-400" />
-                  {t('prescriptions')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('#section-diagnostics')}
-                  className="px-3.5 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-                  {t('labDiagnostics')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('#chat')}
-                  className="px-3.5 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5"
-                >
-                  <MessageSquare className="w-3.5 h-3.5 text-amber-400" />
-                  {t('aiChat')}
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={() => handleNavClick('#safety-matrix')}
-                  className="px-3.5 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-colors"
-                >
-                  {t('safetyMatrix')}
-                </button>
-                <button
-                  onClick={() => handleNavClick('#lab-decoder')}
-                  className="px-3.5 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-colors"
-                >
-                  {t('labDecoding')}
-                </button>
-                <button
-                  onClick={() => handleNavClick('#multilingual-voice')}
-                  className="px-3.5 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-colors"
-                >
-                  {t('intelligence')}
-                </button>
-                <button
-                  onClick={() => handleNavClick('#workflow')}
-                  className="px-3.5 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-white transition-colors"
-                >
-                  {t('pipeline')}
-                </button>
-              </>
-            )}
+            <div className="hidden sm:flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-sky-400" />
+              <span>Clinical Ingestion Support: <span className="text-slate-200">Mon - Sun (24/7)</span></span>
+            </div>
           </div>
 
-          {/* Right Actions */}
-          <div className="flex items-center space-x-3">
-            
-            {/* Live Multilingual Language Switcher Dropdown */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 text-teal-400 font-medium">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span className="text-[11px] font-mono">Verified Medical Protocol</span>
+            </div>
+
+            {/* Language Switcher */}
             <div className="relative" ref={langRef}>
               <button 
                 onClick={() => {
@@ -137,25 +97,24 @@ const Navbar = () => {
                   setIsNotifOpen(false);
                   setIsProfileOpen(false);
                 }}
-                className="flex items-center space-x-2 text-slate-200 hover:text-white px-3 py-1.5 rounded-md text-xs font-medium transition-colors border border-[#1e293b] hover:border-[#334155] bg-[#0f1523]"
+                className="flex items-center gap-1.5 text-slate-200 hover:text-white px-2 py-0.5 rounded text-[11px] font-medium bg-slate-800 border border-slate-700 hover:border-slate-600 transition-colors"
               >
-                <Globe className="w-3.5 h-3.5 text-teal-400" />
-                <span className="font-mono text-[11px]">{currentLanguage.native}</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${isLangOpen ? 'rotate-180' : ''}`} />
+                <Globe className="w-3 h-3 text-sky-400" />
+                <span className="font-mono">{currentLanguage.native}</span>
+                <ChevronDown className="w-3 h-3" />
               </button>
 
               <AnimatePresence>
                 {isLangOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 5 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-2 w-52 rounded-xl bg-[#0f1523] border border-[#1e293b] shadow-xl p-2 z-50"
+                    className="absolute right-0 mt-2 w-48 rounded-lg bg-white border border-slate-200 shadow-xl p-1.5 z-50 text-slate-800"
                   >
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 px-3 py-1.5 border-b border-[#1e293b] mb-1 flex items-center justify-between font-mono">
-                      <span>Regional Dialect</span>
-                      <span className="text-teal-400 text-[9px]">ACTIVE</span>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 px-2 py-1 border-b border-slate-100 mb-1 font-mono">
+                      Select Dialect
                     </div>
                     {LANGUAGES.map((lang) => (
                       <button
@@ -164,17 +123,14 @@ const Navbar = () => {
                           setLanguage(lang.code);
                           setIsLangOpen(false);
                         }}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-colors ${
+                        className={`w-full text-left px-2.5 py-1.5 rounded-md text-xs flex items-center justify-between transition-colors ${
                           currentLanguage.code === lang.code 
-                            ? 'bg-teal-950/40 text-teal-300 font-medium border border-teal-500/30' 
-                            : 'text-slate-300 hover:bg-[#172036] hover:text-white'
+                            ? 'bg-sky-50 text-sky-700 font-semibold' 
+                            : 'hover:bg-slate-50 text-slate-700'
                         }`}
                       >
-                        <span className="flex items-center gap-1.5">
-                          <span className="font-medium">{lang.native}</span>
-                          <span className="text-[10px] text-slate-400">({lang.label})</span>
-                        </span>
-                        {currentLanguage.code === lang.code && <Check className="w-3.5 h-3.5 text-teal-400" />}
+                        <span>{lang.native} <span className="text-[10px] text-slate-400 font-normal">({lang.label})</span></span>
+                        {currentLanguage.code === lang.code && <Check className="w-3.5 h-3.5 text-sky-600" />}
                       </button>
                     ))}
                   </motion.div>
@@ -182,6 +138,95 @@ const Navbar = () => {
               </AnimatePresence>
             </div>
 
+          </div>
+
+        </div>
+      </div>
+
+      {/* Main Navigation Bar */}
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+        <div className="flex justify-between items-center h-20">
+          
+          {/* Hospital Brand Logo */}
+          <Logo to={isAuthenticated ? "/home" : "/"} size="md" />
+
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-600">
+            {isAuthenticated ? (
+              <>
+                <button
+                  onClick={() => navigate('/home')}
+                  className={`transition-colors py-2 flex items-center gap-1.5 ${
+                    isDashboard ? 'text-sky-600 font-semibold border-b-2 border-sky-600' : 'hover:text-slate-900'
+                  }`}
+                >
+                  <Activity className="w-4 h-4 text-sky-600" />
+                  {t('workspace')}
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('#section-prescriptions')}
+                  className="hover:text-slate-900 transition-colors py-2 flex items-center gap-1.5"
+                >
+                  <Pill className="w-4 h-4 text-teal-600" />
+                  {t('prescriptions')}
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('#section-diagnostics')}
+                  className="hover:text-slate-900 transition-colors py-2 flex items-center gap-1.5"
+                >
+                  <ShieldCheck className="w-4 h-4 text-blue-600" />
+                  {t('labDiagnostics')}
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('#chat')}
+                  className="hover:text-slate-900 transition-colors py-2 flex items-center gap-1.5"
+                >
+                  <MessageSquare className="w-4 h-4 text-amber-600" />
+                  {t('aiChat')}
+                </button>
+              </>
+            ) : (
+              <>
+                <a
+                  href="#services"
+                  className="hover:text-sky-600 transition-colors py-2"
+                >
+                  Medical Services
+                </a>
+                <a
+                  href="#safety-matrix"
+                  className="hover:text-sky-600 transition-colors py-2"
+                >
+                  Drug Safety Matrix
+                </a>
+                <a
+                  href="#lab-decoder"
+                  className="hover:text-sky-600 transition-colors py-2"
+                >
+                  Lab Biomarkers
+                </a>
+                <a
+                  href="#multilingual-voice"
+                  className="hover:text-sky-600 transition-colors py-2"
+                >
+                  Regional Care
+                </a>
+                <a
+                  href="#doctors"
+                  className="hover:text-sky-600 transition-colors py-2"
+                >
+                  Clinical Standards
+                </a>
+              </>
+            )}
+          </div>
+
+          {/* Right Action Buttons */}
+          <div className="flex items-center space-x-3">
+            
             {isAuthenticated ? (
               <div className="flex items-center space-x-3">
                 
@@ -193,28 +238,28 @@ const Navbar = () => {
                       setIsLangOpen(false);
                       setIsProfileOpen(false);
                     }}
-                    className="w-9 h-9 rounded-md bg-[#0f1523] border border-[#1e293b] hover:border-[#334155] text-slate-400 hover:text-white flex items-center justify-center relative transition-colors"
+                    className="w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 hover:text-slate-900 flex items-center justify-center relative transition-colors"
                   >
                     <Bell className="w-4 h-4" />
                     {notifs.some(n => n.unread) && (
-                      <span className="absolute top-2 right-2 w-2 h-2 bg-teal-400 rounded-full"></span>
+                      <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full"></span>
                     )}
                   </button>
 
                   <AnimatePresence>
                     {isNotifOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 5 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-80 rounded-xl bg-[#0f1523] border border-[#1e293b] shadow-xl p-3 z-50"
+                        className="absolute right-0 mt-2 w-80 rounded-xl bg-white border border-slate-200 shadow-xl p-3 z-50 text-slate-800"
                       >
-                        <div className="flex items-center justify-between pb-2 border-b border-[#1e293b] mb-2 px-1">
-                          <span className="text-xs font-semibold text-white font-mono uppercase tracking-wider">{t('notifications')}</span>
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-100 mb-2 px-1">
+                          <span className="text-xs font-semibold text-slate-900 uppercase font-mono">{t('notifications')}</span>
                           <button 
                             onClick={markAllNotifsRead} 
-                            className="text-[10px] text-teal-400 hover:underline"
+                            className="text-[10px] text-sky-600 hover:underline"
                           >
                             {t('markAllRead')}
                           </button>
@@ -224,14 +269,14 @@ const Navbar = () => {
                             <div 
                               key={n.id} 
                               className={`p-2.5 rounded-lg border text-xs transition-colors ${
-                                n.unread ? 'bg-[#172036] border-[#1e293b]' : 'bg-transparent border-transparent opacity-60'
+                                n.unread ? 'bg-sky-50/50 border-sky-100' : 'bg-slate-50 border-transparent opacity-75'
                               }`}
                             >
                               <div className="flex items-center justify-between mb-1">
-                                <span className="font-medium text-white">{n.title}</span>
+                                <span className="font-semibold text-slate-900">{n.title}</span>
                                 <span className="text-[9px] font-mono text-slate-400">{n.time}</span>
                               </div>
-                              <p className="text-[11px] font-normal text-slate-400">{n.desc}</p>
+                              <p className="text-[11px] text-slate-600">{n.desc}</p>
                             </div>
                           ))}
                         </div>
@@ -240,35 +285,35 @@ const Navbar = () => {
                   </AnimatePresence>
                 </div>
 
-                {/* Profile Session Menu */}
+                {/* Profile User Dropdown */}
                 <div className="relative">
                   <div 
-                    className="flex items-center space-x-2.5 cursor-pointer group p-1 pr-2.5 rounded-md bg-[#0f1523] border border-[#1e293b] hover:border-[#334155] transition-all" 
+                    className="flex items-center space-x-2.5 cursor-pointer p-1.5 pr-3 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all" 
                     onClick={() => {
                       setIsProfileOpen(!isProfileOpen);
                       setIsLangOpen(false);
                       setIsNotifOpen(false);
                     }}
                   >
-                    <div className="w-7 h-7 rounded-md bg-teal-950/60 border border-teal-500/40 flex items-center justify-center text-teal-300">
-                      <User className="w-3.5 h-3.5 text-teal-400" />
+                    <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-semibold text-xs">
+                      <User className="w-4 h-4" />
                     </div>
-                    <span className="font-medium text-slate-200 text-xs hidden sm:inline max-w-[120px] truncate">{userDisplayName}</span>
-                    <ChevronDown className="w-3 h-3 text-slate-400" />
+                    <span className="font-semibold text-slate-800 text-xs hidden sm:inline max-w-[120px] truncate">{userDisplayName}</span>
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
                   </div>
 
                   <AnimatePresence>
                     {isProfileOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 5 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-52 rounded-xl bg-[#0f1523] border border-[#1e293b] shadow-xl p-2 z-50"
+                        className="absolute right-0 mt-2 w-56 rounded-xl bg-white border border-slate-200 shadow-xl p-2 z-50 text-slate-800"
                       >
-                        <div className="px-3 py-2 border-b border-[#1e293b] mb-1">
-                          <div className="text-xs font-semibold text-white truncate">{userDisplayName}</div>
-                          <div className="text-[10px] text-teal-400 font-mono">Zero-Knowledge Encrypted</div>
+                        <div className="px-3 py-2 border-b border-slate-100 mb-1">
+                          <div className="text-xs font-semibold text-slate-900 truncate">{userDisplayName}</div>
+                          <div className="text-[10px] text-teal-600 font-mono">Zero-Knowledge Encrypted</div>
                         </div>
 
                         <button 
@@ -276,9 +321,9 @@ const Navbar = () => {
                             setIsProfileOpen(false);
                             navigate('/profile');
                           }}
-                          className="w-full text-left px-3 py-2 rounded-lg text-xs text-slate-200 hover:bg-[#172036] hover:text-white flex items-center gap-2 transition-colors mb-1"
+                          className="w-full text-left px-3 py-2 rounded-lg text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors mb-1"
                         >
-                          <User className="w-3.5 h-3.5 text-teal-400" />
+                          <User className="w-3.5 h-3.5 text-sky-600" />
                           <span>Health Profile & SOS</span>
                         </button>
 
@@ -287,7 +332,7 @@ const Navbar = () => {
                             logout();
                             navigate('/');
                           }}
-                          className="w-full text-left px-3 py-2 rounded-lg text-xs text-rose-400 hover:bg-rose-950/30 flex items-center gap-2 transition-colors"
+                          className="w-full text-left px-3 py-2 rounded-lg text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 transition-colors"
                         >
                           <LogOut className="w-3.5 h-3.5" />
                           <span>{t('endSession')}</span>
@@ -301,21 +346,23 @@ const Navbar = () => {
             ) : (
               <button 
                 onClick={() => navigate('/login')}
-                className="btn-primary py-2 px-4 text-xs font-semibold"
+                className="btn-med-primary text-xs font-semibold"
               >
-                {t('requestAccess')}
+                <HeartPulse className="w-4 h-4" />
+                <span>Patient Portal Login</span>
               </button>
             )}
 
-            {/* Mobile Hamburger Toggle */}
+            {/* Mobile Hamburger Menu Toggle */}
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden w-9 h-9 rounded-md bg-[#0f1523] border border-[#1e293b] flex items-center justify-center text-white"
+              className="lg:hidden w-10 h-10 rounded-lg border border-slate-200 flex items-center justify-center text-slate-700"
             >
-              {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
           </div>
+
         </div>
 
         {/* Mobile Navigation Drawer */}
@@ -325,7 +372,7 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden pb-6 border-t border-[#1e293b] pt-4 space-y-2 overflow-hidden"
+              className="lg:hidden pb-6 border-t border-slate-200 pt-4 space-y-2 overflow-hidden text-slate-700"
             >
               {isAuthenticated ? (
                 <>
@@ -334,59 +381,56 @@ const Navbar = () => {
                       navigate('/home');
                       setIsMobileMenuOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-white bg-teal-950/40 border border-teal-500/30 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-semibold text-sky-700 bg-sky-50 flex items-center gap-2"
                   >
-                    <Activity className="w-4 h-4 text-teal-400" />
+                    <Activity className="w-4 h-4 text-sky-600" />
                     {t('workspace')}
                   </button>
                   <button
                     onClick={() => handleNavClick('#section-prescriptions')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#172036] flex items-center gap-2"
+                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2"
                   >
-                    <Pill className="w-4 h-4 text-teal-400" />
+                    <Pill className="w-4 h-4 text-teal-600" />
                     {t('prescriptions')}
                   </button>
                   <button
                     onClick={() => handleNavClick('#section-diagnostics')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#172036] flex items-center gap-2"
+                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2"
                   >
-                    <ShieldCheck className="w-4 h-4 text-blue-400" />
+                    <ShieldCheck className="w-4 h-4 text-blue-600" />
                     {t('labDiagnostics')}
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#chat')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#172036] flex items-center gap-2"
-                  >
-                    <MessageSquare className="w-4 h-4 text-amber-400" />
-                    {t('aiChat')}
                   </button>
                 </>
               ) : (
                 <>
-                  <button
-                    onClick={() => handleNavClick('#safety-matrix')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#172036]"
+                  <a
+                    href="#services"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
                   >
-                    {t('safetyMatrix')}
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#lab-decoder')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#172036]"
+                    Medical Services
+                  </a>
+                  <a
+                    href="#safety-matrix"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
                   >
-                    {t('labDecoding')}
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#multilingual-voice')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#172036]"
+                    Drug Safety Matrix
+                  </a>
+                  <a
+                    href="#lab-decoder"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
                   >
-                    {t('intelligence')}
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#workflow')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#172036]"
+                    Lab Biomarkers
+                  </a>
+                  <a
+                    href="#multilingual-voice"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
                   >
-                    {t('pipeline')}
-                  </button>
+                    Regional Care
+                  </a>
                 </>
               )}
             </motion.div>
@@ -394,7 +438,7 @@ const Navbar = () => {
         </AnimatePresence>
 
       </div>
-    </nav>
+    </header>
   );
 };
 

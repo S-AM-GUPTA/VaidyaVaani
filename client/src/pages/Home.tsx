@@ -39,7 +39,7 @@ const INITIAL_PRESCRIPTIONS: TimelineDoc[] = [
     title: 'Cardiology Prescription (Dr. Sharma)',
     category: 'prescription',
     type: 'Active Therapy',
-    badgeColor: '#0d9488',
+    badgeColor: '#0284c7',
     insights: ['• Atenolol 25mg 1-0-0 (30 Days)', '• Low sodium dietary guidance attached'],
   },
   {
@@ -49,7 +49,7 @@ const INITIAL_PRESCRIPTIONS: TimelineDoc[] = [
     title: 'General Physician Rx (Dr. Verma)',
     category: 'prescription',
     type: 'Acute Care',
-    badgeColor: '#0d9488',
+    badgeColor: '#0284c7',
     insights: ['• Paracetamol 650mg SOS', '• Vitamin B Complex (Once Daily)'],
   },
 ];
@@ -62,7 +62,7 @@ const INITIAL_LABS: TimelineDoc[] = [
     title: 'Complete Blood Count & Metabolic Panel',
     category: 'lab',
     type: 'Blood Pathology',
-    badgeColor: '#2563eb',
+    badgeColor: '#0d9488',
     insights: ['• Fasting Glucose: 108 mg/dL (Slightly High)', '• Lipid Profile: Optimal (LDL 94 mg/dL)', '• Hemoglobin: 13.2 g/dL (Normal)'],
   },
   {
@@ -72,7 +72,7 @@ const INITIAL_LABS: TimelineDoc[] = [
     title: 'Radiology Scan Assessment',
     category: 'lab',
     type: 'Radiology Imaging',
-    badgeColor: '#2563eb',
+    badgeColor: '#0d9488',
     insights: ['• Chest X-Ray Normal / No Infiltrates', '• Clear lung fields verified'],
   },
 ];
@@ -101,9 +101,9 @@ const Home = () => {
 
   // Pharmacopeia List State
   const [meds, setMeds] = useState([
-    { name: 'Atenolol 25mg', timing: 'Morning', doctor: 'Dr. Sharma' },
-    { name: 'Paracetamol 650mg', timing: 'As Needed', doctor: 'Dr. Verma' },
-    { name: 'Vitamin B Complex', timing: 'Afternoon', doctor: 'Self' },
+    { name: 'Atenolol 25mg', timing: 'Morning', doctor: 'Dr. Sharma (Cardiology)' },
+    { name: 'Paracetamol 650mg', timing: 'As Needed', doctor: 'Dr. Verma (Physician)' },
+    { name: 'Vitamin B Complex', timing: 'Afternoon', doctor: 'Dr. Anita Roy' },
   ]);
   const [newMedName, setNewMedName] = useState('');
   const [newMedTiming, setNewMedTiming] = useState('Morning');
@@ -174,7 +174,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-[#f8fafc] font-sans flex flex-col selection:bg-[#0d9488] selection:text-white">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans flex flex-col selection:bg-sky-600 selection:text-white">
       <Navbar />
 
       {/* Hidden camera file input */}
@@ -190,25 +190,25 @@ const Home = () => {
       <main className="flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
         
         {/* Workspace Top Header & Section Switcher */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-6 border-b border-[#1e293b]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 pb-6 border-b border-slate-200">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-teal-400 mb-1 flex items-center gap-2 font-mono">
-              <span className="w-2 h-2 rounded-full bg-teal-400"></span>
-              {currentLanguage.native} • Patient Clinical Workspace
+            <div className="text-xs font-semibold uppercase tracking-wider text-sky-700 mb-1 flex items-center gap-2 font-mono">
+              <span className="w-2 h-2 rounded-full bg-sky-600"></span>
+              {currentLanguage.native} • Patient Health Dashboard
             </div>
-            <h1 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
               {t('vaultTitle')}
             </h1>
           </div>
 
           {/* Section Filter Tabs */}
-          <div className="flex items-center gap-1.5 p-1 bg-[#0f1523] border border-[#1e293b] rounded-lg w-fit">
+          <div className="flex items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-lg shadow-xs w-fit">
             <button
               onClick={() => setActiveTaskSection('all')}
-              className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all ${
+              className={`px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all ${
                 activeTaskSection === 'all' 
-                  ? 'bg-slate-700 text-white shadow-sm' 
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-sky-600 text-white shadow-xs' 
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               {t('unifiedView')}
@@ -216,10 +216,10 @@ const Home = () => {
 
             <button
               onClick={() => setActiveTaskSection('prescriptions')}
-              className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 activeTaskSection === 'prescriptions' 
-                  ? 'bg-teal-700 text-white shadow-sm' 
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-sky-600 text-white shadow-xs' 
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <Pill className="w-3.5 h-3.5" />
@@ -228,10 +228,10 @@ const Home = () => {
 
             <button
               onClick={() => setActiveTaskSection('labs')}
-              className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 activeTaskSection === 'labs' 
-                  ? 'bg-blue-700 text-white shadow-sm' 
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-sky-600 text-white shadow-xs' 
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
@@ -241,29 +241,29 @@ const Home = () => {
         </div>
 
         {/* Global Summary Metric Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          <div className="clinical-card p-5">
-            <div className="text-xs font-mono uppercase text-slate-400 mb-1">{t('activeRx')}</div>
-            <div className="text-2xl font-semibold text-teal-400 font-mono">{meds.length} Active</div>
-            <div className="text-xs text-slate-400 mt-1">Cross-checked safe</div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+            <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">{t('activeRx')}</div>
+            <div className="text-2xl font-bold text-sky-700 font-mono">{meds.length} Active</div>
+            <div className="text-xs text-teal-600 font-medium mt-1">Cross-checked safe</div>
           </div>
 
-          <div className="clinical-card p-5">
-            <div className="text-xs font-mono uppercase text-slate-400 mb-1">{t('labBiomarkers')}</div>
-            <div className="text-2xl font-semibold text-blue-400 font-mono">14 Tracked</div>
-            <div className="text-xs text-amber-400 mt-1">1 mild elevation</div>
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+            <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">{t('labBiomarkers')}</div>
+            <div className="text-2xl font-bold text-slate-900 font-mono">14 Tracked</div>
+            <div className="text-xs text-amber-700 font-medium mt-1">1 mild elevation</div>
           </div>
 
-          <div className="clinical-card p-5">
-            <div className="text-xs font-mono uppercase text-slate-400 mb-1">Safety Advisory</div>
-            <div className="text-2xl font-semibold text-amber-400 font-mono">1 Spacing Alert</div>
-            <div className="text-xs text-slate-400 mt-1">Antacid interval needed</div>
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+            <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">Safety Advisory</div>
+            <div className="text-2xl font-bold text-amber-700 font-mono">1 Spacing Alert</div>
+            <div className="text-xs text-slate-500 mt-1">Antacid interval needed</div>
           </div>
 
-          <div className="clinical-card p-5">
-            <div className="text-xs font-mono uppercase text-slate-400 mb-1">Security Status</div>
-            <div className="text-2xl font-semibold text-white font-mono">Encrypted</div>
-            <div className="text-xs text-teal-400 mt-1">Zero-Knowledge Vault</div>
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+            <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">Vault Privacy</div>
+            <div className="text-2xl font-bold text-teal-700 font-mono">100% Encrypted</div>
+            <div className="text-xs text-slate-500 mt-1">Client Zero-Knowledge</div>
           </div>
         </div>
 
@@ -271,14 +271,13 @@ const Home = () => {
             TASK SECTION 1: PRESCRIPTIONS & DRUG SAFETY VAULT
             ========================================================= */}
         {(activeTaskSection === 'all' || activeTaskSection === 'prescriptions') && (
-          <section id="section-prescriptions" className="mb-14 scroll-mt-24">
+          <section id="section-prescriptions" className="mb-12 scroll-mt-24">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
-                <div className="clinical-badge mb-2 font-mono">
-                  <Pill className="w-3.5 h-3.5" />
-                  Prescription Regimen & Safety
+                <div className="med-badge mb-1 font-mono">
+                  Prescription Regimen
                 </div>
-                <h2 className="text-2xl font-semibold text-white tracking-tight">
+                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
                   {t('rxSafetyTab')}
                 </h2>
               </div>
@@ -287,15 +286,15 @@ const Home = () => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleCameraScan}
-                  className="btn-secondary text-xs"
+                  className="btn-med-secondary text-xs"
                 >
-                  <Camera className="w-4 h-4 text-teal-400" />
+                  <Camera className="w-4 h-4 text-sky-600" />
                   {t('scanRxPhoto')}
                 </button>
 
                 <button
                   onClick={() => openUploadModal('prescriptions')}
-                  className="btn-primary text-xs"
+                  className="btn-med-primary text-xs"
                 >
                   <CloudUpload className="w-4 h-4" />
                   {t('uploadPrescription')}
@@ -306,36 +305,36 @@ const Home = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               
               {/* Active Medication List */}
-              <div className="lg:col-span-6 clinical-card p-6">
-                <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+              <div className="lg:col-span-6 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+                <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                   <div>
-                    <h3 className="text-base font-semibold text-white">{t('activeSchedule')}</h3>
-                    <p className="text-xs text-slate-400">Current therapies verified against interactions</p>
+                    <h3 className="text-base font-bold text-slate-900">{t('activeSchedule')}</h3>
+                    <p className="text-xs text-slate-500">Current therapies verified against interactions</p>
                   </div>
                   <button
                     onClick={() => setIsAddMedModalOpen(true)}
-                    className="px-3 py-1 rounded-md bg-teal-950/60 hover:bg-teal-900/60 text-teal-300 text-xs font-semibold flex items-center gap-1 border border-teal-500/30"
+                    className="px-3 py-1 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-bold flex items-center gap-1 border border-sky-200 transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     {t('addRx')}
                   </button>
                 </div>
 
-                <div className="space-y-2.5">
+                <div className="space-y-3">
                   {meds.map((m, idx) => (
-                    <div key={idx} className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] flex items-center justify-between">
+                    <div key={idx} className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded bg-teal-950/80 border border-teal-500/30 flex items-center justify-center text-teal-400">
+                        <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
                           <Pill className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-white">{m.name}</div>
-                          <div className="text-xs text-slate-400">Source: {m.doctor}</div>
+                          <div className="text-sm font-bold text-slate-900">{m.name}</div>
+                          <div className="text-xs text-slate-500">{m.doctor}</div>
                         </div>
                       </div>
 
-                      <div className="text-right">
-                        <span className="text-xs font-mono px-2 py-0.5 rounded bg-teal-950/50 border border-teal-500/30 text-teal-400 font-semibold">
+                      <div>
+                        <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-sky-100 text-sky-800">
                           {m.timing}
                         </span>
                       </div>
@@ -344,20 +343,20 @@ const Home = () => {
                 </div>
 
                 {/* Interaction Warning Box */}
-                <div className="mt-4 p-3.5 rounded-lg bg-amber-950/20 border border-amber-500/30 flex items-start gap-2.5">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <div className="mt-4 p-3.5 rounded-lg bg-amber-50 border border-amber-200 flex items-start gap-2.5">
+                  <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-xs font-semibold text-amber-400 font-mono uppercase">{t('pharmacokineticSpacing')}</div>
-                    <p className="text-xs text-slate-300 mt-0.5">Space Atenolol dosage 2 hours away from antacids to prevent absorption decline.</p>
+                    <div className="text-xs font-bold text-amber-800 font-mono uppercase">{t('pharmacokineticSpacing')}</div>
+                    <p className="text-xs text-amber-900 mt-0.5">Space Atenolol dosage 2 hours apart from antacids to prevent absorption decline.</p>
                   </div>
                 </div>
               </div>
 
               {/* Prescription Documents Feed */}
-              <div className="lg:col-span-6 clinical-card p-6">
-                <div className="pb-4 border-b border-[#1e293b] mb-4">
-                  <h3 className="text-base font-semibold text-white">{t('rxTimeline')}</h3>
-                  <p className="text-xs text-slate-400">Deciphered clinical records and doctor orders</p>
+              <div className="lg:col-span-6 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+                <div className="pb-4 border-b border-slate-100 mb-4">
+                  <h3 className="text-base font-bold text-slate-900">{t('rxTimeline')}</h3>
+                  <p className="text-xs text-slate-500">Deciphered clinical records and doctor orders</p>
                 </div>
 
                 <div className="space-y-3">
@@ -365,20 +364,20 @@ const Home = () => {
                     <div 
                       key={doc.id}
                       onClick={() => setSelectedDoc(doc)}
-                      className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] hover:border-slate-600 transition-all cursor-pointer group flex items-center justify-between"
+                      className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all cursor-pointer group flex items-center justify-between"
                     >
                       <div className="flex items-center gap-3.5">
-                        <div className="w-10 h-10 rounded-lg bg-[#0f1523] border border-[#1e293b] flex flex-col items-center justify-center text-center">
-                          <span className="text-[9px] font-mono text-slate-400 uppercase font-semibold">{doc.month}</span>
-                          <span className="text-sm font-semibold text-white font-mono">{doc.date}</span>
+                        <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex flex-col items-center justify-center text-center shadow-2xs">
+                          <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">{doc.month}</span>
+                          <span className="text-sm font-bold text-slate-900 font-mono">{doc.date}</span>
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-white group-hover:text-teal-400 transition-colors">{doc.title}</div>
-                          <div className="text-xs text-slate-400">{doc.insights[0]}</div>
+                          <div className="text-sm font-bold text-slate-900 group-hover:text-sky-700 transition-colors">{doc.title}</div>
+                          <div className="text-xs text-slate-500">{doc.insights[0]}</div>
                         </div>
                       </div>
 
-                      <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-all" />
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-700 transition-all" />
                     </div>
                   ))}
                 </div>
@@ -392,14 +391,13 @@ const Home = () => {
             TASK SECTION 2: CLINICAL LAB BIOMARKERS & DIAGNOSTICS
             ========================================================= */}
         {(activeTaskSection === 'all' || activeTaskSection === 'labs') && (
-          <section id="section-diagnostics" className="mb-14 scroll-mt-24 border-t border-[#1e293b] pt-10">
+          <section id="section-diagnostics" className="mb-12 scroll-mt-24 border-t border-slate-200 pt-10">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
-                <div className="clinical-badge mb-2 font-mono">
-                  <Activity className="w-3.5 h-3.5 text-blue-400" />
-                  Diagnostic Panel Tracking
+                <div className="med-badge mb-1 font-mono">
+                  Diagnostics & Labs
                 </div>
-                <h2 className="text-2xl font-semibold text-white tracking-tight">
+                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
                   {t('labDiagTab')}
                 </h2>
               </div>
@@ -408,7 +406,7 @@ const Home = () => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => openUploadModal('reports')}
-                  className="btn-primary text-xs bg-blue-600 hover:bg-blue-700 border-blue-500/30"
+                  className="btn-med-primary text-xs"
                 >
                   <FileSpreadsheet className="w-4 h-4" />
                   {t('uploadLabReport')}
@@ -419,51 +417,51 @@ const Home = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               
               {/* Extracted Biomarker Grid */}
-              <div className="lg:col-span-7 clinical-card p-6">
-                <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+              <div className="lg:col-span-7 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+                <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                   <div>
-                    <h3 className="text-base font-semibold text-white">{t('extractedPanels')}</h3>
-                    <p className="text-xs text-slate-400">Extracted from verified clinical laboratory reports</p>
+                    <h3 className="text-base font-bold text-slate-900">{t('extractedPanels')}</h3>
+                    <p className="text-xs text-slate-500">Extracted from verified clinical laboratory reports</p>
                   </div>
-                  <span className="text-xs font-mono font-semibold text-blue-400 px-2 py-0.5 rounded bg-blue-950/60 border border-blue-500/30">
+                  <span className="text-xs font-mono font-bold text-sky-700 px-2 py-0.5 rounded bg-sky-100">
                     Latest CBC
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   
                   {/* Biomarker 1 */}
-                  <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                    <div className="text-xs font-mono text-slate-400">HEMOGLOBIN A1C</div>
-                    <div className="text-lg font-semibold text-white font-mono mt-0.5">5.4%</div>
-                    <div className="text-xs text-teal-400 flex items-center gap-1 mt-1">
+                  <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                    <div className="text-xs font-mono text-slate-500 uppercase">HEMOGLOBIN A1C</div>
+                    <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">5.4%</div>
+                    <div className="text-xs text-teal-700 font-semibold flex items-center gap-1 mt-1">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Normal (&lt; 5.7%)
                     </div>
                   </div>
 
                   {/* Biomarker 2 */}
-                  <div className="p-3.5 rounded-lg bg-amber-950/10 border border-amber-500/30">
-                    <div className="text-xs font-mono text-amber-400">FASTING GLUCOSE</div>
-                    <div className="text-lg font-semibold text-white font-mono mt-0.5">108 mg/dL</div>
-                    <div className="text-xs text-amber-400 flex items-center gap-1 mt-1">
+                  <div className="p-3.5 rounded-lg bg-amber-50/60 border border-amber-200">
+                    <div className="text-xs font-mono text-amber-800 uppercase font-bold">FASTING GLUCOSE</div>
+                    <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">108 mg/dL</div>
+                    <div className="text-xs text-amber-800 font-semibold flex items-center gap-1 mt-1">
                       <AlertTriangle className="w-3.5 h-3.5" /> Slightly High (70–99)
                     </div>
                   </div>
 
                   {/* Biomarker 3 */}
-                  <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                    <div className="text-xs font-mono text-slate-400">LIPID PROFILE (LDL-C)</div>
-                    <div className="text-lg font-semibold text-white font-mono mt-0.5">94 mg/dL</div>
-                    <div className="text-xs text-teal-400 flex items-center gap-1 mt-1">
+                  <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                    <div className="text-xs font-mono text-slate-500 uppercase">LIPID PROFILE (LDL-C)</div>
+                    <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">94 mg/dL</div>
+                    <div className="text-xs text-teal-700 font-semibold flex items-center gap-1 mt-1">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Optimal (&lt; 100)
                     </div>
                   </div>
 
                   {/* Biomarker 4 */}
-                  <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                    <div className="text-xs font-mono text-slate-400">TOTAL LEUKOCYTES (WBC)</div>
-                    <div className="text-lg font-semibold text-white font-mono mt-0.5">7,200 /µL</div>
-                    <div className="text-xs text-teal-400 flex items-center gap-1 mt-1">
+                  <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+                    <div className="text-xs font-mono text-slate-500 uppercase">TOTAL LEUKOCYTES (WBC)</div>
+                    <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">7,200 /µL</div>
+                    <div className="text-xs text-teal-700 font-semibold flex items-center gap-1 mt-1">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Normal (4.5k–11k)
                     </div>
                   </div>
@@ -472,10 +470,10 @@ const Home = () => {
               </div>
 
               {/* Lab Reports Documents Timeline */}
-              <div className="lg:col-span-5 clinical-card p-6">
-                <div className="pb-4 border-b border-[#1e293b] mb-4">
-                  <h3 className="text-base font-semibold text-white">{t('diagFeed')}</h3>
-                  <p className="text-xs text-slate-400">Laboratory and imaging assessments</p>
+              <div className="lg:col-span-5 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+                <div className="pb-4 border-b border-slate-100 mb-4">
+                  <h3 className="text-base font-bold text-slate-900">{t('diagFeed')}</h3>
+                  <p className="text-xs text-slate-500">Laboratory and imaging assessments</p>
                 </div>
 
                 <div className="space-y-3">
@@ -483,20 +481,20 @@ const Home = () => {
                     <div 
                       key={doc.id}
                       onClick={() => setSelectedDoc(doc)}
-                      className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] hover:border-blue-500/50 transition-all cursor-pointer group flex items-center justify-between"
+                      className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all cursor-pointer group flex items-center justify-between"
                     >
                       <div className="flex items-center gap-3.5">
-                        <div className="w-10 h-10 rounded-lg bg-[#0f1523] border border-[#1e293b] flex flex-col items-center justify-center text-center">
-                          <span className="text-[9px] font-mono text-slate-400 uppercase font-semibold">{doc.month}</span>
-                          <span className="text-sm font-semibold text-white font-mono">{doc.date}</span>
+                        <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex flex-col items-center justify-center text-center shadow-2xs">
+                          <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">{doc.month}</span>
+                          <span className="text-sm font-bold text-slate-900 font-mono">{doc.date}</span>
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-white group-hover:text-blue-400 transition-colors">{doc.title}</div>
-                          <div className="text-xs text-slate-400">{doc.insights[0]}</div>
+                          <div className="text-sm font-bold text-slate-900 group-hover:text-sky-700 transition-colors">{doc.title}</div>
+                          <div className="text-xs text-slate-500">{doc.insights[0]}</div>
                         </div>
                       </div>
 
-                      <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-all" />
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-700 transition-all" />
                     </div>
                   ))}
                 </div>
@@ -507,25 +505,25 @@ const Home = () => {
         )}
 
         {/* =========================================================
-            NEURAL AI CHAT ASSISTANT TERMINAL
+            AI HEALTH CONSULTATION ASSISTANT
             ========================================================= */}
-        <section id="chat" className="scroll-mt-24 border-t border-[#1e293b] pt-10 mb-10">
+        <section id="chat" className="scroll-mt-24 border-t border-slate-200 pt-10 mb-10">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-6">
-              <div className="clinical-badge mb-2 font-mono">
-                {currentLanguage.native} • Multilingual Health Consultation
+              <div className="med-badge mb-2 font-mono">
+                {currentLanguage.native} • Clinical Assistant
               </div>
-              <h2 className="text-2xl font-semibold text-white">{t('askQuestionsTitle')}</h2>
+              <h2 className="text-2xl font-bold text-slate-900">{t('askQuestionsTitle')}</h2>
             </div>
 
-            <div className="clinical-card p-6 flex flex-col h-[480px]">
+            <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col h-[480px]">
               
-              <div className="flex justify-between items-center pb-3 border-b border-[#1e293b] mb-4">
+              <div className="flex justify-between items-center pb-3 border-b border-slate-100 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-teal-400"></span>
-                  <h3 className="font-medium text-white text-xs font-mono uppercase tracking-wider">{t('aiChat')} ({currentLanguage.native})</h3>
+                  <span className="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+                  <h3 className="font-bold text-slate-900 text-xs font-mono uppercase tracking-wider">{t('aiChat')} ({currentLanguage.native})</h3>
                 </div>
-                <span className="text-xs font-mono text-slate-400">Encrypted Consultation</span>
+                <span className="text-xs font-mono text-slate-500">Zero-Knowledge Consultation</span>
               </div>
               
               {/* Message Feed */}
@@ -533,48 +531,48 @@ const Home = () => {
                 {messages.map((m, idx) => (
                   <div 
                     key={idx} 
-                    className={`p-3.5 rounded-lg text-xs leading-relaxed flex items-start justify-between gap-3 ${
+                    className={`p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed flex items-start justify-between gap-3 ${
                       m.sender === 'ai' 
-                        ? 'bg-[#090d16] border border-[#1e293b] text-slate-200 mr-8' 
-                        : 'bg-teal-800 text-white ml-8 text-right'
+                        ? 'bg-slate-50 border border-slate-200 text-slate-800 mr-8' 
+                        : 'bg-sky-600 text-white ml-8 text-right'
                     }`}
                   >
                     <div>{m.text}</div>
                     {m.sender === 'ai' && (
                       <button 
                         onClick={() => speakText(m.text)}
-                        className="p-1 rounded hover:bg-slate-800 text-slate-400 hover:text-teal-400 transition-colors shrink-0"
+                        className="p-1 rounded hover:bg-slate-200 text-slate-500 hover:text-sky-600 transition-colors shrink-0"
                         title="Listen to this response"
                       >
-                        <Volume2 className="w-3.5 h-3.5" />
+                        <Volume2 className="w-4 h-4" />
                       </button>
                     )}
                   </div>
                 ))}
                 {isTyping && (
-                  <div className="p-2.5 rounded-lg bg-[#090d16] border border-[#1e293b] text-xs text-slate-400 flex items-center gap-2 w-fit font-mono">
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-bounce"></span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-bounce [animation-delay:0.2s]"></span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-bounce [animation-delay:0.4s]"></span>
-                    <span>Formulating clinical advisory in {currentLanguage.native}...</span>
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 flex items-center gap-2 w-fit font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-600 animate-bounce"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-600 animate-bounce [animation-delay:0.2s]"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-600 animate-bounce [animation-delay:0.4s]"></span>
+                    <span>Analyzing clinical guidelines in {currentLanguage.native}...</span>
                   </div>
                 )}
               </div>
               
               {/* Input Form */}
-              <form onSubmit={handleSendMessage} className="mt-2 flex items-center bg-[#090d16] border border-[#1e293b] rounded-lg pl-4 pr-1.5 py-1.5 focus-within:border-teal-500 transition-colors">
+              <form onSubmit={handleSendMessage} className="mt-2 flex items-center bg-slate-50 border border-slate-200 rounded-lg pl-4 pr-1.5 py-1.5 focus-within:border-sky-500 focus-within:bg-white transition-colors">
                 <input 
                   type="text" 
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder={t('askAi')} 
-                  className="flex-1 text-xs outline-none bg-transparent text-white placeholder:text-slate-500" 
+                  className="flex-1 text-xs sm:text-sm outline-none bg-transparent text-slate-900 placeholder:text-slate-400" 
                 />
                 <button 
                   type="submit"
-                  className="w-8 h-8 bg-teal-600 hover:bg-teal-700 text-white rounded-md flex items-center justify-center transition-colors shrink-0"
+                  className="w-8 h-8 bg-sky-600 hover:bg-sky-700 text-white rounded-md flex items-center justify-center transition-colors shrink-0"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-4 h-4" />
                 </button>
               </form>
 
@@ -590,30 +588,30 @@ const Home = () => {
       <AnimatePresence>
         {isUploadModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={() => setIsUploadModalOpen(false)}></div>
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs" onClick={() => setIsUploadModalOpen(false)}></div>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 15 }}
-              className="bg-[#0f1523] rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative z-10 border border-[#1e293b] p-8 md:p-10"
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-8 md:p-10"
             >
                <div className="absolute top-5 right-5 z-10">
                  <button 
                    onClick={() => setIsUploadModalOpen(false)}
-                   className="w-8 h-8 bg-[#1e293b] hover:bg-[#334155] text-slate-300 rounded-lg flex items-center justify-center transition-colors"
+                   className="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg flex items-center justify-center transition-colors"
                  >
                    <X className="w-4 h-4" />
                  </button>
                </div>
                
                <div>
-                 <div className="text-xs font-semibold uppercase tracking-wider text-teal-400 font-mono mb-1">
+                 <div className="text-xs font-bold uppercase tracking-wider text-sky-700 font-mono mb-1">
                    {t('zeroKnowledgeVault')}
                  </div>
-                 <h2 className="text-2xl font-semibold text-white tracking-tight mb-2">
+                 <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">
                    {uploadType === 'reports' ? t('uploadLabReport') : t('uploadPrescription')}
                  </h2>
-                 <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+                 <p className="text-xs text-slate-500 mb-6 leading-relaxed">
                    Upload your medical document to extract medicine timings, dosage guidelines, and lab reference values.
                  </p>
                  
@@ -634,21 +632,21 @@ const Home = () => {
       <AnimatePresence>
         {isAddMedModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={() => setIsAddMedModalOpen(false)}></div>
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs" onClick={() => setIsAddMedModalOpen(false)}></div>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 15 }}
-              className="bg-[#0f1523] rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-[#1e293b] p-6 sm:p-8"
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-8"
             >
-              <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-6">
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-6">
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-wider text-teal-400 font-mono">Pharmacopeia Entry</div>
-                  <h3 className="text-lg font-semibold text-white mt-0.5">{t('addRx')}</h3>
+                  <div className="text-xs font-bold uppercase tracking-wider text-sky-700 font-mono">Pharmacopeia Entry</div>
+                  <h3 className="text-lg font-bold text-slate-900 mt-0.5">{t('addRx')}</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddMedModalOpen(false)}
-                  className="w-8 h-8 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-slate-300 flex items-center justify-center"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -656,34 +654,34 @@ const Home = () => {
 
               <form onSubmit={handleAddMedicine} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">Medicine Name & Strength</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Medicine Name & Strength</label>
                   <input 
                     type="text" 
                     required
                     value={newMedName}
                     onChange={(e) => setNewMedName(e.target.value)}
                     placeholder="e.g. Metformin 500mg"
-                    className="w-full px-3.5 py-2.5 bg-[#090d16] border border-[#1e293b] rounded-lg text-sm text-white focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">Prescribing Doctor / Source</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Prescribing Doctor / Source</label>
                   <input 
                     type="text" 
                     value={newMedDoctor}
                     onChange={(e) => setNewMedDoctor(e.target.value)}
                     placeholder="e.g. Dr. Verma (Endocrinologist)"
-                    className="w-full px-3.5 py-2.5 bg-[#090d16] border border-[#1e293b] rounded-lg text-sm text-white focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">Timing Schedule</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Timing Schedule</label>
                   <select 
                     value={newMedTiming}
                     onChange={(e) => setNewMedTiming(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-[#090d16] border border-[#1e293b] rounded-lg text-sm text-white focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
                   >
                     <option value="Morning">Morning</option>
                     <option value="Afternoon">Afternoon</option>
@@ -696,7 +694,7 @@ const Home = () => {
                 <div className="pt-2">
                   <button 
                     type="submit"
-                    className="w-full btn-primary py-3 text-xs"
+                    className="w-full btn-med-primary py-3 text-xs"
                   >
                     Save to Medication List
                   </button>
@@ -711,38 +709,38 @@ const Home = () => {
       <AnimatePresence>
         {selectedDoc && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={() => setSelectedDoc(null)}></div>
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs" onClick={() => setSelectedDoc(null)}></div>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 15 }}
-              className="bg-[#0f1523] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative z-10 border border-[#1e293b] p-6 sm:p-8"
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-8"
             >
-              <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-4">
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                 <div>
-                  <div className={`text-xs font-semibold uppercase tracking-wider font-mono ${selectedDoc.category === 'prescription' ? 'text-teal-400' : 'text-blue-400'}`}>
+                  <div className={`text-xs font-bold uppercase tracking-wider font-mono ${selectedDoc.category === 'prescription' ? 'text-sky-700' : 'text-teal-700'}`}>
                     {selectedDoc.category === 'prescription' ? 'Prescription Record' : 'Diagnostic Lab Record'}
                   </div>
-                  <h3 className="text-lg font-semibold text-white mt-0.5">{selectedDoc.title}</h3>
+                  <h3 className="text-lg font-bold text-slate-900 mt-0.5">{selectedDoc.title}</h3>
                 </div>
                 <button 
                   onClick={() => setSelectedDoc(null)}
-                  className="w-8 h-8 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-slate-300 flex items-center justify-center"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs font-mono text-slate-400">
-                  <span>Date: {selectedDoc.month} {selectedDoc.date}, 2026</span>
-                  <span className="text-teal-400 px-2 py-0.5 rounded bg-teal-950/60 border border-teal-500/30">Verified Ingestion</span>
+                <div className="flex items-center justify-between text-xs font-mono text-slate-500">
+                  <span>Date: {docFormat(selectedDoc.month, selectedDoc.date)}</span>
+                  <span className="text-teal-700 font-bold px-2 py-0.5 rounded bg-teal-50 border border-teal-200">Verified Ingestion</span>
                 </div>
 
-                <div className="p-4 rounded-lg bg-[#090d16] border border-[#1e293b] space-y-2">
-                  <div className="text-xs font-semibold text-white uppercase tracking-wider font-mono">Extracted Details</div>
+                <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Extracted Details</div>
                   {selectedDoc.insights.map((ins, i) => (
-                    <div key={i} className="text-xs text-slate-300">{ins}</div>
+                    <div key={i} className="text-xs text-slate-700">{ins}</div>
                   ))}
                 </div>
 
@@ -753,13 +751,13 @@ const Home = () => {
                       setSelectedDoc(null);
                       openUploadModal(typeToUpload);
                     }}
-                    className="btn-secondary text-xs"
+                    className="btn-med-secondary text-xs"
                   >
                     Upload New Version
                   </button>
                   <button 
                     onClick={() => setSelectedDoc(null)}
-                    className="btn-primary text-xs"
+                    className="btn-med-primary text-xs"
                   >
                     Done
                   </button>
@@ -773,5 +771,9 @@ const Home = () => {
     </div>
   );
 };
+
+function docFormat(month: string, date: string) {
+  return `${month} ${date}, 2026`;
+}
 
 export default Home;

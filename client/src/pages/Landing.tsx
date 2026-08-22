@@ -5,15 +5,19 @@ import {
   ArrowRight, 
   Activity, 
   ShieldCheck, 
-  AlertTriangle, 
-  Cpu, 
-  Lock, 
-  Globe2, 
+  Check, 
+  Globe, 
   Volume2, 
   VolumeX, 
-  X,
   UploadCloud,
-  Check
+  Pill,
+  HeartPulse,
+  Phone,
+  ChevronRight,
+  FileSpreadsheet,
+  Users,
+  CheckCircle2,
+  X
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -51,223 +55,340 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-[#f8fafc] font-sans selection:bg-[#0d9488] selection:text-white">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-sky-600 selection:text-white">
       <Navbar />
 
       {/* =========================================================
-          HERO SECTION: High-Trust Clinical Health Intelligence
+          HERO SECTION: High-Trust Hospital & Clinical Banner
           ========================================================= */}
-      <section className="relative z-10 max-w-[1280px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="relative bg-gradient-to-b from-sky-50/70 via-white to-[#f8fafc] pt-14 pb-28 border-b border-slate-200">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-12 text-center">
           
-          {/* Left Column: Authoritative Medical Value Proposition */}
-          <div className="lg:col-span-7 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/60 border border-teal-500/30 text-teal-400 text-xs font-mono uppercase tracking-wider mb-6">
-              <ShieldCheck className="w-3.5 h-3.5 text-teal-400" />
-              Clinical Pharmacopeia & Diagnostic Vault
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold text-white tracking-tight leading-[1.08] mb-6">
-              Prescription safety & lab diagnostics, <br />
-              <span className="text-teal-400">explained in your language.</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed mb-8 max-w-[560px]">
-              VaidyaVaani safeguards patient care by detecting harmful drug interactions across multiple doctors and translating clinical lab reports into clear, actionable health summaries.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 mb-12">
-              <button 
-                onClick={handleCtaClick}
-                className="btn-primary py-3.5 px-6 text-sm font-semibold flex items-center gap-2"
-              >
-                <span>{isAuthenticated ? t('openDashboard') : 'Access Patient Portal'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <a 
-                href="#safety-matrix" 
-                className="btn-secondary py-3.5 px-5 text-sm font-medium"
-              >
-                Explore Drug Safety Matrix
-              </a>
-            </div>
-
-            {/* Trusted Medical Standard Badges */}
-            <div className="pt-6 border-t border-[#1e293b] grid grid-cols-3 gap-6 max-w-lg">
-              <div>
-                <div className="text-lg font-semibold text-white font-mono">100%</div>
-                <div className="text-xs text-slate-400 mt-0.5">Zero-Knowledge Encrypted</div>
-              </div>
-              <div>
-                <div className="text-lg font-semibold text-teal-400 font-mono">7+ Regional</div>
-                <div className="text-xs text-slate-400 mt-0.5">Indian Dialects</div>
-              </div>
-              <div>
-                <div className="text-lg font-semibold text-blue-400 font-mono">Multi-Rx</div>
-                <div className="text-xs text-slate-400 mt-0.5">Cross-Interaction Check</div>
-              </div>
-            </div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-100/80 text-sky-800 text-xs font-semibold uppercase tracking-wider mb-6 border border-sky-200">
+            <HeartPulse className="w-4 h-4 text-sky-600" />
+            Trusted Healthcare Safety Platform
           </div>
 
-          {/* Right Column: Live Clinical Intelligence Simulator */}
-          <div className="lg:col-span-5">
-            <div className="clinical-card p-6 border border-[#1e293b] shadow-2xl relative">
-              <div className="flex items-center justify-between pb-4 border-b border-[#1e293b] mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-teal-400"></div>
-                  <span className="text-xs font-mono text-slate-200 uppercase tracking-wider">Live Clinical Audit</span>
-                </div>
-                <span className="text-[11px] font-mono text-teal-400 bg-teal-950/50 px-2 py-0.5 rounded border border-teal-500/20">Verified Protocol</span>
-              </div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-[1.12] mb-6 max-w-4xl mx-auto">
+            Making Clinical Healthcare Clear, Safe & Accessible for Every Family.
+          </h1>
 
-              {/* Simulated Patient Prescription Record */}
-              <div className="space-y-3 mb-4">
-                <div className="p-3.5 rounded-lg bg-[#131a2b] border border-[#1e293b] flex items-center justify-between">
-                  <div>
-                    <div className="text-xs font-semibold text-white">Atenolol 50mg (Beta-Blocker)</div>
-                    <div className="text-[11px] text-slate-400">Dr. Sharma (Cardiology) • 1-0-0</div>
-                  </div>
-                  <span className="text-[10px] font-mono text-teal-400 font-medium px-2 py-0.5 rounded bg-teal-950/40 border border-teal-500/30">Active</span>
-                </div>
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-10 max-w-2xl mx-auto font-normal">
+            A secure digital medical vault that cross-checks prescriptions across doctors for dangerous drug interactions, simplifies blood test lab reports, and delivers plain-language voice guidance in 7 regional Indian languages.
+          </p>
 
-                <div className="p-3.5 rounded-lg bg-[#131a2b] border border-[#1e293b] flex items-center justify-between">
-                  <div>
-                    <div className="text-xs font-semibold text-white">Magnesium Hydroxide (Antacid)</div>
-                    <div className="text-[11px] text-slate-400">Dr. Verma (Gastroenterology) • SOS</div>
-                  </div>
-                  <span className="text-[10px] font-mono text-amber-400 font-medium px-2 py-0.5 rounded bg-amber-950/40 border border-amber-500/30">Spacing Required</span>
-                </div>
-              </div>
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
+            <button 
+              onClick={handleCtaClick}
+              className="btn-med-primary py-3.5 px-7 text-sm font-semibold flex items-center gap-2"
+            >
+              <span>{isAuthenticated ? 'Open Clinical Workspace' : 'Access Patient Portal'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
 
-              {/* Safety Assessment Alert */}
-              <div className="p-3.5 rounded-lg bg-amber-950/30 border border-amber-500/30 text-amber-200 text-xs leading-relaxed mb-4">
-                <div className="font-semibold text-amber-400 flex items-center gap-1.5 mb-1 font-mono uppercase text-[11px]">
-                  <AlertTriangle className="w-3.5 h-3.5" />
-                  Pharmacokinetic Spacing Advisory
-                </div>
-                Antacids decrease Atenolol gastrointestinal absorption by up to 35%. Take Atenolol at least <strong>2 hours before</strong> antacid administration.
-              </div>
+            <a 
+              href="#safety-matrix" 
+              className="btn-med-secondary py-3.5 px-6 text-sm font-semibold"
+            >
+              Check Drug Interactions
+            </a>
+          </div>
 
-              {/* Biomarker Summary Strip */}
-              <div className="p-3 rounded-lg bg-[#090d16] border border-[#1e293b] flex items-center justify-between text-xs font-mono">
-                <span className="text-slate-400">Latest Fasting Glucose:</span>
-                <span className="text-teal-400 font-semibold">108 mg/dL (Mild Elevation)</span>
-              </div>
+          {/* Clinical Assurance Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-8 text-xs font-medium text-slate-500 pt-6 border-t border-slate-200/80 max-w-3xl mx-auto">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-teal-600" />
+              <span>Zero-Knowledge Encrypted</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-sky-600" />
+              <span>Standard Pharmacopeia Screening</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Globe className="w-4 h-4 text-indigo-600" />
+              <span>7 Indian Regional Dialects</span>
             </div>
           </div>
 
         </div>
       </section>
 
+      {/* =========================================================
+          CLASSIC 4 OVERLAPPING FEATURE CARDS (CareMed / Medilink Pattern)
+          ========================================================= */}
+      <section className="relative z-20 max-w-[1280px] mx-auto px-6 lg:px-12 -mt-16 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          {/* Card 1: Emergency SOS Medical ID */}
+          <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-lg hover:shadow-xl transition-all border-t-4 border-t-rose-500 flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center mb-4">
+                <Phone className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Emergency SOS & ID</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Rapid clinical medical card with blood group, active allergies, and direct emergency hospital dialers (108 / 102).
+              </p>
+            </div>
+            <div className="text-xs font-semibold text-rose-600 flex items-center gap-1">
+              <span>24/7 Rapid Response</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </div>
+          </div>
+
+          {/* Card 2: Prescription & Drug Safety */}
+          <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-lg hover:shadow-xl transition-all border-t-4 border-t-teal-500 flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
+                <Pill className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Drug Safety Matrix</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Multi-doctor prescription screening that prevents dangerous drug-drug conflicts and bioavailability spacing errors.
+              </p>
+            </div>
+            <a href="#safety-matrix" className="text-xs font-semibold text-teal-600 flex items-center gap-1">
+              <span>View Safety Matrix</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          {/* Card 3: Lab Biomarker Ingestion */}
+          <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-lg hover:shadow-xl transition-all border-t-4 border-t-sky-500 flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center mb-4">
+                <Activity className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Lab Report Decoder</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Automated extraction of HbA1c, fasting glucose, lipid profiles, and CBC with standard reference ranges.
+              </p>
+            </div>
+            <a href="#lab-decoder" className="text-xs font-semibold text-sky-600 flex items-center gap-1">
+              <span>Explore Diagnostic Decoder</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          {/* Card 4: Regional Voice Care */}
+          <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-lg hover:shadow-xl transition-all border-t-4 border-t-indigo-500 flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
+                <Volume2 className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Regional Voice Audio</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Prescriptions and health guidance translated and spoken in Hindi, Bengali, Tamil, Telugu, Marathi, and Gujarati.
+              </p>
+            </div>
+            <a href="#multilingual-voice" className="text-xs font-semibold text-indigo-600 flex items-center gap-1">
+              <span>Listen to Speech Demo</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+        </div>
+      </section>
 
       {/* =========================================================
-          FEATURE 1: PHARMACOKINETIC SAFETY MATRIX
+          SECTION: CLINICAL SERVICES & DEPARTMENTS
           ========================================================= */}
-      <section id="safety-matrix" className="py-20 border-t border-[#1e293b] bg-[#0c111c]/60">
+      <section id="services" className="py-16 bg-white border-t border-slate-200">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+          
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <div className="med-badge mb-2 font-mono">
+              Clinical Specializations
+            </div>
+            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+              Specialized Care for Every Health Need
+            </h2>
+            <p className="text-slate-600 text-sm mt-3 leading-relaxed">
+              VaidyaVaani coordinates treatment parameters across major medical disciplines, ensuring that specialized therapies work harmoniously.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* Dept 1 */}
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
+              <div className="w-10 h-10 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center mb-4">
+                <HeartPulse className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Cardiology & Hypertension</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Tracking beta-blockers, ACE inhibitors, and blood pressure trends with dietary sodium advisories.
+              </p>
+            </div>
+
+            {/* Dept 2 */}
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
+              <div className="w-10 h-10 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center mb-4">
+                <Activity className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Endocrinology & Diabetes</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Monitoring HbA1c, fasting glucose levels, and oral hypoglycemic drug schedules over time.
+              </p>
+            </div>
+
+            {/* Dept 3 */}
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
+              <div className="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-4">
+                <FileSpreadsheet className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Pathology & Lab Diagnostics</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Instant optical extraction of blood test markers, lipid profiles, kidney function, and liver enzymes.
+              </p>
+            </div>
+
+            {/* Dept 4 */}
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
+              <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center mb-4">
+                <Pill className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Gastroenterology Spacing</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Automated reminders for antacids, proton-pump inhibitors, and gut absorption intervals.
+              </p>
+            </div>
+
+            {/* Dept 5 */}
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
+              <div className="w-10 h-10 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center mb-4">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Pharmacology Contraindication</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Real-time safety flags for anticoagulants, NSAIDs, and allergic reaction risks.
+              </p>
+            </div>
+
+            {/* Dept 6 */}
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
+              <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
+                <Users className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Family Health Vault</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Manage unified health records and emergency contacts for elderly parents, children, and dependents.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================
+          FEATURE 1: INTERACTIVE DRUG SAFETY MATRIX (Interactive Medical Tool)
+          ========================================================= */}
+      <section id="safety-matrix" className="py-20 bg-[#f8fafc] border-t border-slate-200">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
           
           <div className="max-w-2xl mb-12">
-            <div className="clinical-badge mb-3 font-mono">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              Pharmacology Safety Matrix
+            <div className="med-badge mb-2 font-mono">
+              Pharmacology Safety Screening
             </div>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">
-              Prevent unintended drug interactions across multiple prescriptions.
+            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+              Interactive Drug Interaction Screening
             </h2>
-            <p className="text-slate-400 text-sm mt-3 leading-relaxed">
-              When consulting different specialists, drug-drug conflicts often go unnoticed. VaidyaVaani automatically cross-checks your medications against medical registries.
+            <p className="text-slate-600 text-sm mt-2 leading-relaxed">
+              When patients visit multiple doctors, prescription cross-effects can cause serious complications. Select a clinical scenario below to see how VaidyaVaani safeguards patient care:
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Interactive Selector */}
+            {/* Interactive Scenario Buttons */}
             <div className="lg:col-span-4 space-y-3">
               <button 
                 onClick={() => setActiveSeverityTab('low')}
                 className={`w-full text-left p-4 rounded-xl border transition-all ${
                   activeSeverityTab === 'low' 
-                    ? 'bg-[#131a2b] border-teal-500/80 shadow-md' 
-                    : 'bg-[#0f1523] border-[#1e293b] text-slate-400 hover:border-slate-700'
+                    ? 'bg-white border-teal-500 shadow-md ring-1 ring-teal-500' 
+                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
                 }`}
               >
-                <div className="text-xs font-mono uppercase text-teal-400 font-semibold mb-1">Low Clinical Risk</div>
-                <div className="text-sm font-semibold text-white">Food & Dietary Timing</div>
-                <div className="text-xs text-slate-400 mt-1">Minor gastrointestinal interactions manageable with meals.</div>
+                <div className="text-xs font-mono uppercase text-teal-700 font-bold mb-1">Low Clinical Risk</div>
+                <div className="text-sm font-semibold text-slate-900">Food & Dietary Timing</div>
+                <div className="text-xs text-slate-500 mt-1">Minor gastrointestinal interactions manageable with meals.</div>
               </button>
 
               <button 
                 onClick={() => setActiveSeverityTab('mod')}
                 className={`w-full text-left p-4 rounded-xl border transition-all ${
                   activeSeverityTab === 'mod' 
-                    ? 'bg-[#131a2b] border-amber-500/80 shadow-md' 
-                    : 'bg-[#0f1523] border-[#1e293b] text-slate-400 hover:border-slate-700'
+                    ? 'bg-white border-amber-500 shadow-md ring-1 ring-amber-500' 
+                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
                 }`}
               >
-                <div className="text-xs font-mono uppercase text-amber-400 font-semibold mb-1">Moderate Risk</div>
-                <div className="text-sm font-semibold text-white">Dosage Spacing Adjustments</div>
-                <div className="text-xs text-slate-400 mt-1">Bioavailability reduction requiring timed intervals.</div>
+                <div className="text-xs font-mono uppercase text-amber-700 font-bold mb-1">Moderate Risk</div>
+                <div className="text-sm font-semibold text-slate-900">Dosage Spacing Adjustments</div>
+                <div className="text-xs text-slate-500 mt-1">Bioavailability reduction requiring timed intervals.</div>
               </button>
 
               <button 
                 onClick={() => setActiveSeverityTab('crit')}
                 className={`w-full text-left p-4 rounded-xl border transition-all ${
                   activeSeverityTab === 'crit' 
-                    ? 'bg-[#131a2b] border-rose-500/80 shadow-md' 
-                    : 'bg-[#0f1523] border-[#1e293b] text-slate-400 hover:border-slate-700'
+                    ? 'bg-white border-rose-500 shadow-md ring-1 ring-rose-500' 
+                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
                 }`}
               >
-                <div className="text-xs font-mono uppercase text-rose-400 font-semibold mb-1">Critical Contraindication</div>
-                <div className="text-sm font-semibold text-white">Adverse Antagonism</div>
-                <div className="text-xs text-slate-400 mt-1">Severe clinical complications requiring immediate doctor review.</div>
+                <div className="text-xs font-mono uppercase text-rose-700 font-bold mb-1">Critical Contraindication</div>
+                <div className="text-sm font-semibold text-slate-900">Adverse Antagonism</div>
+                <div className="text-xs text-slate-500 mt-1">Severe clinical complications requiring immediate doctor review.</div>
               </button>
             </div>
 
-            {/* Detailed Inspection Display */}
-            <div className="lg:col-span-8 clinical-card p-6 md:p-8">
-              <div className="flex items-center justify-between pb-4 border-b border-[#1e293b] mb-6">
-                <div className="text-sm font-semibold text-white font-mono">
-                  {activeSeverityTab === 'low' && 'Case A: Atorvastatin (Lipids) + Grapefruit Extract'}
-                  {activeSeverityTab === 'mod' && 'Case B: Atenolol (Blood Pressure) + Magnesium Antacids'}
-                  {activeSeverityTab === 'crit' && 'Case C: Warfarin (Blood Thinner) + High-Dose Aspirin'}
+            {/* Scenario Diagnostic Table Card */}
+            <div className="lg:col-span-8 bg-white rounded-xl p-6 sm:p-8 border border-slate-200 shadow-md">
+              <div className="flex flex-wrap items-center justify-between pb-4 border-b border-slate-100 gap-2 mb-6">
+                <div>
+                  <div className="text-xs font-mono text-slate-400 uppercase">Screening Result</div>
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                    {activeSeverityTab === 'low' && 'Case A: Atorvastatin (Lipids) + Grapefruit Extract'}
+                    {activeSeverityTab === 'mod' && 'Case B: Atenolol (Blood Pressure) + Magnesium Antacids'}
+                    {activeSeverityTab === 'crit' && 'Case C: Warfarin (Blood Thinner) + High-Dose Aspirin'}
+                  </h3>
                 </div>
-                <span className={`text-xs font-mono font-semibold px-2.5 py-0.5 rounded ${
-                  activeSeverityTab === 'crit' ? 'bg-rose-950/60 text-rose-300 border border-rose-500/40' :
-                  activeSeverityTab === 'mod' ? 'bg-amber-950/60 text-amber-300 border border-amber-500/40' :
-                  'bg-teal-950/60 text-teal-300 border border-teal-500/40'
+                <span className={`text-xs font-mono font-bold px-3 py-1 rounded-full ${
+                  activeSeverityTab === 'crit' ? 'bg-rose-100 text-rose-800' :
+                  activeSeverityTab === 'mod' ? 'bg-amber-100 text-amber-800' :
+                  'bg-teal-100 text-teal-800'
                 }`}>
-                  {activeSeverityTab === 'crit' ? 'High Hazard' : activeSeverityTab === 'mod' ? 'Moderate Risk' : 'Low Risk'}
+                  {activeSeverityTab === 'crit' ? 'High Hazard Alert' : activeSeverityTab === 'mod' ? 'Moderate Spacing Needed' : 'Low Risk / Advisory'}
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div className="p-4 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                  <div className="text-xs font-mono text-slate-400 uppercase">Primary Therapy</div>
-                  <div className="text-sm font-semibold text-white mt-1">
+                <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
+                  <div className="text-xs font-mono text-slate-500 uppercase">Primary Therapy</div>
+                  <div className="text-base font-bold text-slate-900 mt-1">
                     {activeSeverityTab === 'crit' ? 'Warfarin 5mg' : activeSeverityTab === 'mod' ? 'Atenolol 50mg' : 'Atorvastatin 20mg'}
                   </div>
-                  <div className="text-xs text-slate-400 mt-0.5">Cardiovascular Regimen</div>
+                  <div className="text-xs text-slate-500 mt-0.5">Prescribed by Cardiologist</div>
                 </div>
 
-                <div className="p-4 rounded-lg bg-[#090d16] border border-[#1e293b]">
-                  <div className="text-xs font-mono text-slate-400 uppercase">Co-Administered Agent</div>
-                  <div className="text-sm font-semibold text-white mt-1">
-                    {activeSeverityTab === 'crit' ? 'Aspirin 325mg (NSAID)' : activeSeverityTab === 'mod' ? 'Magnesium Hydroxide' : 'CYP3A4 Inhibitor'}
+                <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
+                  <div className="text-xs font-mono text-slate-500 uppercase">Co-Administered Agent</div>
+                  <div className="text-base font-bold text-slate-900 mt-1">
+                    {activeSeverityTab === 'crit' ? 'Aspirin 325mg (NSAID)' : activeSeverityTab === 'mod' ? 'Magnesium Hydroxide' : 'Grapefruit Extract'}
                   </div>
-                  <div className="text-xs text-slate-400 mt-0.5">Secondary Prescription</div>
+                  <div className="text-xs text-slate-500 mt-0.5">Secondary Prescription / Over-the-counter</div>
                 </div>
               </div>
 
-              <div className={`p-4 rounded-lg border ${
-                activeSeverityTab === 'crit' ? 'bg-rose-950/20 border-rose-500/30 text-rose-200' :
-                activeSeverityTab === 'mod' ? 'bg-amber-950/20 border-amber-500/30 text-amber-200' :
-                'bg-teal-950/20 border-teal-500/30 text-teal-200'
+              <div className={`p-4 rounded-lg border text-xs sm:text-sm leading-relaxed ${
+                activeSeverityTab === 'crit' ? 'bg-rose-50 border-rose-200 text-rose-900' :
+                activeSeverityTab === 'mod' ? 'bg-amber-50 border-amber-200 text-amber-900' :
+                'bg-teal-50 border-teal-200 text-teal-900'
               }`}>
-                <div className="font-semibold text-xs uppercase font-mono mb-1">Clinical Pharmacist Note:</div>
-                <p className="text-xs leading-relaxed">
-                  {activeSeverityTab === 'crit' && 'Severe hemorrhagic hazard: Concomitant platelet inhibition and coagulation cascade suppression dramatically elevate GI bleeding. Alert physician immediately.'}
-                  {activeSeverityTab === 'mod' && 'Chelation & pH interference: Antacids bind with beta-blockers in the stomach, reducing peak blood concentration by 35%. Space dosages by a minimum of 2 hours.'}
+                <div className="font-bold uppercase text-xs font-mono mb-1">Clinical Pharmacist Summary:</div>
+                <p>
+                  {activeSeverityTab === 'crit' && 'Severe hemorrhagic hazard: Concomitant platelet inhibition and coagulation cascade suppression dramatically elevate GI bleeding. Notify physician immediately to review alternative analgesics.'}
+                  {activeSeverityTab === 'mod' && 'Chelation & pH interference: Antacids bind with beta-blockers in the stomach, reducing peak absorption by up to 35%. Take Atenolol at least 2 hours before antacids.'}
                   {activeSeverityTab === 'low' && 'Metabolic pathway competition: Ingestion with meals reduces mild gastric discomfort. No significant therapeutic alteration observed.'}
                 </p>
               </div>
@@ -277,104 +398,101 @@ const Landing = () => {
         </div>
       </section>
 
-
       {/* =========================================================
-          FEATURE 2: LAB BIOMARKER DECODER
+          FEATURE 2: LAB BIOMARKER DECODER (Diagnostic Report Table)
           ========================================================= */}
-      <section id="lab-decoder" className="py-20 border-t border-[#1e293b]">
+      <section id="lab-decoder" className="py-20 bg-white border-t border-slate-200">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
-          
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Column: Diagnostic Report Data Table */}
-            <div className="lg:col-span-6 clinical-card p-6 md:p-8">
-              <div className="flex items-center justify-between pb-4 border-b border-[#1e293b] mb-6">
+            {/* Left Column: Medical Lab Report View */}
+            <div className="lg:col-span-6 bg-[#f8fafc] rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
                 <div>
-                  <div className="text-xs font-mono text-slate-400 uppercase">Automated OCR Extraction</div>
-                  <h3 className="text-lg font-semibold text-white">Comprehensive Metabolic & Lipid Panel</h3>
+                  <div className="text-xs font-mono text-slate-500 uppercase">Pathology Ingestion</div>
+                  <h3 className="text-lg font-bold text-slate-900">Comprehensive Metabolic & Lipid Panel</h3>
                 </div>
-                <span className="text-xs font-mono text-teal-400 bg-teal-950/50 px-2.5 py-1 rounded border border-teal-500/30">
-                  Ref Ranges 2026
+                <span className="text-xs font-mono font-bold text-sky-700 bg-sky-100 px-2.5 py-1 rounded">
+                  Ref Norms 2026
                 </span>
               </div>
 
               <div className="space-y-3">
-                <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] flex items-center justify-between">
+                <div className="p-3.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between shadow-xs">
                   <div>
-                    <div className="text-xs text-slate-400 font-mono">HEMOGLOBIN A1C</div>
-                    <div className="text-sm font-semibold text-white">5.4%</div>
+                    <div className="text-xs text-slate-500 font-mono">HEMOGLOBIN A1C</div>
+                    <div className="text-sm font-bold text-slate-900">5.4%</div>
                   </div>
-                  <span className="text-xs text-teal-400 font-medium font-mono px-2 py-0.5 rounded bg-teal-950/40 border border-teal-500/20">
+                  <span className="text-xs text-teal-700 font-semibold font-mono px-2 py-0.5 rounded bg-teal-50 border border-teal-200">
                     Normal (&lt; 5.7%)
                   </span>
                 </div>
 
-                <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] flex items-center justify-between">
+                <div className="p-3.5 rounded-lg bg-amber-50/50 border border-amber-200 flex items-center justify-between shadow-xs">
                   <div>
-                    <div className="text-xs text-slate-400 font-mono">FASTING BLOOD GLUCOSE</div>
-                    <div className="text-sm font-semibold text-white">108 mg/dL</div>
+                    <div className="text-xs text-amber-700 font-mono">FASTING BLOOD GLUCOSE</div>
+                    <div className="text-sm font-bold text-slate-900">108 mg/dL</div>
                   </div>
-                  <span className="text-xs text-amber-400 font-medium font-mono px-2 py-0.5 rounded bg-amber-950/40 border border-amber-500/20">
+                  <span className="text-xs text-amber-700 font-semibold font-mono px-2 py-0.5 rounded bg-amber-100 border border-amber-300">
                     Mild Elevation (70–99)
                   </span>
                 </div>
 
-                <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] flex items-center justify-between">
+                <div className="p-3.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between shadow-xs">
                   <div>
-                    <div className="text-xs text-slate-400 font-mono">LIPID PROFILE (LDL CHOLESTEROL)</div>
-                    <div className="text-sm font-semibold text-white">94 mg/dL</div>
+                    <div className="text-xs text-slate-500 font-mono">LIPID PROFILE (LDL CHOLESTEROL)</div>
+                    <div className="text-sm font-bold text-slate-900">94 mg/dL</div>
                   </div>
-                  <span className="text-xs text-teal-400 font-medium font-mono px-2 py-0.5 rounded bg-teal-950/40 border border-teal-500/20">
+                  <span className="text-xs text-teal-700 font-semibold font-mono px-2 py-0.5 rounded bg-teal-50 border border-teal-200">
                     Optimal (&lt; 100)
                   </span>
                 </div>
 
-                <div className="p-3.5 rounded-lg bg-[#090d16] border border-[#1e293b] flex items-center justify-between">
+                <div className="p-3.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between shadow-xs">
                   <div>
-                    <div className="text-xs text-slate-400 font-mono">TOTAL LEUKOCYTES (WBC)</div>
-                    <div className="text-sm font-semibold text-white">7,200 /µL</div>
+                    <div className="text-xs text-slate-500 font-mono">TOTAL LEUKOCYTES (WBC)</div>
+                    <div className="text-sm font-bold text-slate-900">7,200 /µL</div>
                   </div>
-                  <span className="text-xs text-teal-400 font-medium font-mono px-2 py-0.5 rounded bg-teal-950/40 border border-teal-500/20">
+                  <span className="text-xs text-teal-700 font-semibold font-mono px-2 py-0.5 rounded bg-teal-50 border border-teal-200">
                     Normal (4.5k–11k)
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Narrative Explanations */}
+            {/* Right Column: Diagnostic Features */}
             <div className="lg:col-span-6">
-              <div className="clinical-badge mb-3 font-mono">
-                <Activity className="w-3.5 h-3.5" />
-                Diagnostic Report Decoding
+              <div className="med-badge mb-2 font-mono">
+                Diagnostic Clarity
               </div>
-              <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-4">
-                Understand your lab results without clinical confusion.
+              <h2 className="text-3xl font-bold text-slate-900 tracking-tight mb-4">
+                Understand Pathology Reports Without Confusion
               </h2>
-              <p className="text-slate-300 text-base leading-relaxed mb-6">
-                Upload photos or PDF copies of blood tests, lipid profiles, and pathology reports. VaidyaVaani extracts each parameter and summarizes what numbers mean in everyday language.
+              <p className="text-slate-600 text-base leading-relaxed mb-6">
+                Blood tests and lab numbers often cause unnecessary anxiety. VaidyaVaani interprets complex clinical values into clear explanations, highlighting what is normal and what needs a doctor's attention.
               </p>
 
-              <div className="space-y-3 mb-8">
+              <div className="space-y-3.5 mb-8">
                 <div className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded bg-teal-950 text-teal-400 border border-teal-500/40 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-5 h-5 rounded bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3.5 h-3.5" />
                   </div>
-                  <p className="text-sm text-slate-300">Instant extraction of reference ranges, high/low flags, and units.</p>
+                  <p className="text-sm text-slate-700">Instant extraction of reference ranges, normal boundaries, and clinical units.</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded bg-teal-950 text-teal-400 border border-teal-500/40 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-5 h-5 rounded bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3.5 h-3.5" />
                   </div>
-                  <p className="text-sm text-slate-300">Tracks changes across tests over time to monitor metabolic trends.</p>
+                  <p className="text-sm text-slate-700">Tracks longitudinal changes across tests to observe metabolic health trends.</p>
                 </div>
               </div>
 
               <button 
                 onClick={() => setIsDemoUploadOpen(true)}
-                className="btn-primary py-3 px-5 text-xs font-semibold"
+                className="btn-med-primary text-xs font-semibold"
               >
                 <UploadCloud className="w-4 h-4" />
-                Upload Sample Lab Report
+                <span>Upload Sample Lab Report</span>
               </button>
             </div>
 
@@ -382,42 +500,41 @@ const Landing = () => {
         </div>
       </section>
 
-
       {/* =========================================================
-          FEATURE 3: MULTILINGUAL HEALTH VOICE INTELLIGENCE
+          FEATURE 3: MULTILINGUAL VOICE INCLUSIVITY
           ========================================================= */}
-      <section id="multilingual-voice" className="py-20 border-t border-[#1e293b] bg-[#0c111c]/60">
+      <section id="multilingual-voice" className="py-20 bg-[#0f172a] text-white">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <div className="lg:col-span-7">
-              <div className="clinical-badge mb-3 font-mono">
-                <Globe2 className="w-3.5 h-3.5" />
-                Universal Patient Inclusivity
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-900/60 text-sky-400 text-xs font-mono uppercase tracking-wider mb-4 border border-sky-700">
+                <Globe className="w-3.5 h-3.5" />
+                Universal Regional Inclusivity
               </div>
-              <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-4">
-                Health clarity in the regional languages families speak at home.
+              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+                Healthcare Clarity in the Languages Families Speak at Home.
               </h2>
-              <p className="text-slate-300 text-base leading-relaxed mb-6">
-                Complex medical English creates barriers for elderly patients and non-English speaking family members. VaidyaVaani explains prescriptions and medical advice clearly in Hindi, Bengali, Tamil, Telugu, Marathi, and Gujarati.
+              <p className="text-slate-300 text-base leading-relaxed mb-8">
+                Elderly parents and rural patients often find English medical jargon difficult to follow. VaidyaVaani translates and reads prescription instructions aloud in 7 Indian regional languages.
               </p>
 
-              {/* Functional Voice Player */}
-              <div className="p-4 rounded-xl bg-[#0f1523] border border-[#1e293b] flex items-center justify-between max-w-lg mb-6">
-                <div className="flex items-center gap-3.5">
+              {/* Functional Audio Player Box */}
+              <div className="p-5 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-wrap items-center justify-between gap-4 max-w-lg mb-6 shadow-md">
+                <div className="flex items-center gap-4">
                   <button 
                     onClick={toggleVoiceDemo}
-                    className="w-10 h-10 rounded-lg bg-teal-600 hover:bg-teal-700 text-white flex items-center justify-center transition-colors shrink-0 shadow-md"
+                    className="w-12 h-12 rounded-lg bg-sky-600 hover:bg-sky-500 text-white flex items-center justify-center transition-colors shrink-0 shadow-sm"
                   >
-                    {isSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    {isSpeaking ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                   </button>
                   <div>
-                    <div className="text-xs font-semibold text-white flex items-center gap-2">
-                      <span>{currentLanguage.native} Health Narration</span>
-                      <span className="text-[10px] font-mono text-teal-400 bg-teal-950 px-2 py-0.5 rounded border border-teal-500/30">AUDIO DEMO</span>
+                    <div className="text-sm font-semibold text-white flex items-center gap-2">
+                      <span>{currentLanguage.native} Speech Audio</span>
+                      <span className="text-[10px] font-mono text-sky-400 bg-sky-950 px-2 py-0.5 rounded border border-sky-800">ACTIVE</span>
                     </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5">
-                      {isSpeaking ? 'Playing voice synthesis...' : 'Click to listen to prescription summary'}
+                    <div className="text-xs text-slate-400 mt-0.5">
+                      {isSpeaking ? 'Playing voice guidance...' : 'Click play button to listen'}
                     </div>
                   </div>
                 </div>
@@ -426,8 +543,8 @@ const Landing = () => {
                   {[30, 60, 25, 80, 45, 70, 35].map((height, i) => (
                     <div 
                       key={i} 
-                      className={`w-1 bg-teal-400 rounded-full transition-all duration-300 ${isSpeaking ? 'animate-pulse' : 'opacity-40'}`}
-                      style={{ height: `${isSpeaking ? height * 0.3 : 6}px` }}
+                      className={`w-1 bg-sky-400 rounded-full transition-all duration-300 ${isSpeaking ? 'animate-pulse' : 'opacity-40'}`}
+                      style={{ height: `${isSpeaking ? height * 0.35 : 8}px` }}
                     />
                   ))}
                 </div>
@@ -438,27 +555,27 @@ const Landing = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-5 clinical-card p-8 text-center">
-              <div className="w-12 h-12 rounded-xl bg-teal-950/60 border border-teal-500/40 text-teal-400 flex items-center justify-center mx-auto mb-4">
-                <Volume2 className="w-6 h-6" />
+            <div className="lg:col-span-5 bg-slate-800 rounded-xl p-8 border border-slate-700 text-center shadow-xl">
+              <div className="w-14 h-14 rounded-full bg-sky-900/60 border border-sky-700 text-sky-400 flex items-center justify-center mx-auto mb-4">
+                <Volume2 className="w-7 h-7" />
               </div>
-              <div className="text-2xl font-semibold text-white mb-2">
-                {currentLanguage.code === 'hi' ? 'स्वास्थ्य ज्ञान' :
-                 currentLanguage.code === 'bn' ? 'স্বাস্থ্য সচেতনতা' :
-                 currentLanguage.code === 'ta' ? 'ஆரோக்கிய அறிவு' :
-                 currentLanguage.code === 'te' ? 'ఆరోగ్య స్పష్టత' :
-                 currentLanguage.code === 'mr' ? 'आरोग्य मार्गदर्शन' :
-                 currentLanguage.code === 'gu' ? 'સ્વાસ્થ્ય જ્ઞાન' :
-                 'Clinical Clarity'}
+              <div className="text-2xl font-bold text-white mb-2">
+                {currentLanguage.code === 'hi' ? 'स्वास्थ्य मार्गदर्शन' :
+                 currentLanguage.code === 'bn' ? 'চিকিৎসা পরামর্শ' :
+                 currentLanguage.code === 'ta' ? 'ஆரோக்கிய அறிவுரை' :
+                 currentLanguage.code === 'te' ? 'ఆరోగ్య సలహా' :
+                 currentLanguage.code === 'mr' ? 'वैद्यकीय सल्ला' :
+                 currentLanguage.code === 'gu' ? 'સ્વાસ્થ્ય સલાહ' :
+                 'Clinical Audio Guidance'}
               </div>
-              <p className="text-xs text-slate-300 italic mb-6 leading-relaxed">
+              <p className="text-sm text-slate-300 italic mb-6 leading-relaxed">
                 "{currentLanguage.demoSpeechText}"
               </p>
               <button 
                 onClick={toggleVoiceDemo}
-                className="btn-secondary text-xs font-mono uppercase"
+                className="btn-med-primary text-xs font-semibold"
               >
-                {isSpeaking ? 'Stop Audio' : `Play Voice in ${currentLanguage.native}`}
+                {isSpeaking ? 'Stop Voice Demo' : `Play Voice in ${currentLanguage.native}`}
               </button>
             </div>
 
@@ -466,115 +583,51 @@ const Landing = () => {
         </div>
       </section>
 
-
       {/* =========================================================
-          WORKFLOW / HOW IT WORKS
+          EMERGENCY 24/7 CALLOUT BANNER (Classic Hospital Banner)
           ========================================================= */}
-      <section id="workflow" className="py-20 border-t border-[#1e293b]">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
-          
-          <div className="max-w-xl mb-14">
-            <div className="clinical-badge mb-3 font-mono">
-              <Cpu className="w-3.5 h-3.5" />
-              Clinical Processing Pipeline
+      <section className="bg-sky-700 text-white py-12">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+              <Phone className="w-7 h-7 text-white" />
             </div>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">
-              From paper prescription to verified patient insight.
-            </h2>
+            <div>
+              <div className="text-xs uppercase font-mono tracking-wider text-sky-200">Emergency Medical Assistance</div>
+              <h3 className="text-2xl font-bold text-white">Call National Emergency Hotline: 108 / 102</h3>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <div className="clinical-card p-6">
-              <div className="w-8 h-8 rounded-lg bg-teal-950/80 border border-teal-500/40 flex items-center justify-center text-xs font-mono text-teal-400 mb-4">
-                01
-              </div>
-              <h3 className="text-base font-semibold text-white mb-1.5">Upload or Scan</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Photograph paper prescriptions or upload lab PDF documents securely from your phone or PC.
-              </p>
-            </div>
-
-            <div className="clinical-card p-6">
-              <div className="w-8 h-8 rounded-lg bg-teal-950/80 border border-teal-500/40 flex items-center justify-center text-xs font-mono text-teal-400 mb-4">
-                02
-              </div>
-              <h3 className="text-base font-semibold text-white mb-1.5">Intelligent OCR</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                High-precision medical OCR extracts medicine names, dosages, biomarkers, and test values.
-              </p>
-            </div>
-
-            <div className="clinical-card p-6">
-              <div className="w-8 h-8 rounded-lg bg-teal-950/80 border border-teal-500/40 flex items-center justify-center text-xs font-mono text-teal-400 mb-4">
-                03
-              </div>
-              <h3 className="text-base font-semibold text-white mb-1.5">Pharmacology Audit</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                All records are cross-checked against international drug interaction databases and reference norms.
-              </p>
-            </div>
-
-            <div className="clinical-card p-6">
-              <div className="w-8 h-8 rounded-lg bg-teal-950/80 border border-teal-500/40 flex items-center justify-center text-xs font-mono text-teal-400 mb-4">
-                04
-              </div>
-              <h3 className="text-base font-semibold text-white mb-1.5">Voice & Plain Language</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Receive clear advisories, dosage timelines, and voice guidance in your regional language.
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-
-      {/* =========================================================
-          FINAL CTA
-          ========================================================= */}
-      <section className="py-24 border-t border-[#1e293b] bg-[#0c111c]/60 text-center">
-        <div className="max-w-2xl mx-auto px-6">
-          <div className="clinical-badge mb-4 font-mono">
-            <Lock className="w-3.5 h-3.5" />
-            Zero-Knowledge Patient Identity
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-4">
-            Take command of your family's healthcare today.
-          </h2>
-          <p className="text-slate-400 text-sm mb-8 leading-relaxed">
-            Join patients and caregivers managing multiple prescriptions, lab records, and emergency SOS profiles in one encrypted vault.
-          </p>
           <button 
             onClick={handleCtaClick}
-            className="btn-primary py-3.5 px-8 text-sm font-semibold"
+            className="bg-white text-sky-800 hover:bg-sky-50 font-bold px-6 py-3 rounded-lg text-sm shadow-md transition-all shrink-0"
           >
-            {isAuthenticated ? 'Open Clinical Workspace' : 'Get Started with VaidyaVaani'}
+            {isAuthenticated ? 'Open Health Vault' : 'Sign In to Patient Portal'}
           </button>
         </div>
       </section>
 
-      {/* Demo Modal for Lab Report / Upload */}
+      {/* Modal: Document Ingestion Demo */}
       <AnimatePresence>
         {isDemoUploadOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={() => setIsDemoUploadOpen(false)}></div>
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs" onClick={() => setIsDemoUploadOpen(false)}></div>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 15 }}
-              className="bg-[#0f1523] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative z-10 border border-[#1e293b] p-6 sm:p-8"
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              className="bg-white rounded-xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-8"
             >
-              <div className="flex justify-between items-center pb-4 border-b border-[#1e293b] mb-6">
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-6">
                 <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-wider text-teal-400 font-mono">
-                    Document Processing Portal
+                  <div className="text-xs font-semibold uppercase tracking-wider text-sky-600 font-mono">
+                    Document Ingestion
                   </div>
-                  <h3 className="text-lg font-semibold text-white mt-0.5">{t('uploadLabReport')}</h3>
+                  <h3 className="text-lg font-bold text-slate-900 mt-0.5">{t('uploadLabReport')}</h3>
                 </div>
                 <button 
                   onClick={() => setIsDemoUploadOpen(false)}
-                  className="w-8 h-8 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-slate-300 flex items-center justify-center"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -588,11 +641,11 @@ const Landing = () => {
                     navigate('/login');
                   }
                 }}
-                className="border border-dashed border-[#334155] hover:border-teal-500 rounded-xl p-8 text-center cursor-pointer bg-[#090d16] hover:bg-[#131a2b] transition-all"
+                className="border-2 border-dashed border-slate-300 hover:border-sky-500 rounded-xl p-8 text-center cursor-pointer bg-slate-50 hover:bg-sky-50/50 transition-all"
               >
-                <UploadCloud className="w-10 h-10 text-teal-400 mx-auto mb-3" />
-                <div className="text-sm font-semibold text-white">Select PDF or Image</div>
-                <p className="text-xs text-slate-400 mt-1">Click to authenticate and process your clinical document</p>
+                <UploadCloud className="w-10 h-10 text-sky-600 mx-auto mb-3" />
+                <div className="text-sm font-bold text-slate-900">Select PDF or Image</div>
+                <p className="text-xs text-slate-500 mt-1">Authenticate to process clinical lab results securely</p>
               </div>
 
               <div className="mt-6 flex justify-end">
@@ -601,9 +654,9 @@ const Landing = () => {
                     setIsDemoUploadOpen(false);
                     navigate('/login');
                   }}
-                  className="btn-primary text-xs"
+                  className="btn-med-primary text-xs"
                 >
-                  Continue to Vault
+                  Continue to Login
                 </button>
               </div>
             </motion.div>
