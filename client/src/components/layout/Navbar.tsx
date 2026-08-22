@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Globe, 
@@ -13,7 +13,6 @@ import {
   Pill, 
   Activity, 
   ShieldCheck, 
-  MessageSquare,
   Phone,
   Clock,
   HeartPulse
@@ -45,7 +44,6 @@ const Navbar = () => {
   const langRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
 
-  const isHome = location.pathname === '/' || location.pathname === '';
   const isDashboard = location.pathname === '/home';
 
   const markAllNotifsRead = () => {
@@ -54,8 +52,12 @@ const Navbar = () => {
 
   const handleNavClick = (anchorId: string) => {
     setIsMobileMenuOpen(false);
-    if (!isHome && !isDashboard) {
-      navigate('/' + anchorId);
+    if (location.pathname !== '/home') {
+      navigate('/home');
+      setTimeout(() => {
+        const element = document.querySelector(anchorId);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
       return;
     }
     const element = document.querySelector(anchorId);
@@ -67,7 +69,7 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
       
-      {/* Top Medical Utility Bar (Classic Hospital Reference) */}
+      {/* Top Medical Utility Bar */}
       <div className="bg-[#0f172a] text-slate-300 text-xs py-2 px-6 lg:px-12 border-b border-slate-800">
         <div className="max-w-[1280px] mx-auto flex flex-wrap items-center justify-between gap-3">
           
@@ -151,18 +153,18 @@ const Navbar = () => {
           <Logo to={isAuthenticated ? "/home" : "/"} size="md" />
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-600">
+          <div className="hidden lg:flex items-center space-x-7 font-medium text-sm text-slate-600">
             {isAuthenticated ? (
               <>
-                <button
-                  onClick={() => navigate('/home')}
+                <Link
+                  to="/home"
                   className={`transition-colors py-2 flex items-center gap-1.5 ${
-                    isDashboard ? 'text-sky-600 font-semibold border-b-2 border-sky-600' : 'hover:text-slate-900'
+                    isDashboard ? 'text-sky-600 font-bold border-b-2 border-sky-600' : 'hover:text-slate-900'
                   }`}
                 >
                   <Activity className="w-4 h-4 text-sky-600" />
                   {t('workspace')}
-                </button>
+                </Link>
 
                 <button
                   onClick={() => handleNavClick('#section-prescriptions')}
@@ -180,46 +182,46 @@ const Navbar = () => {
                   {t('labDiagnostics')}
                 </button>
 
-                <button
-                  onClick={() => handleNavClick('#chat')}
-                  className="hover:text-slate-900 transition-colors py-2 flex items-center gap-1.5"
+                <Link
+                  to="/safety-matrix"
+                  className={`hover:text-slate-900 transition-colors py-2 ${location.pathname === '/safety-matrix' ? 'text-sky-600 font-bold border-b-2 border-sky-600' : ''}`}
                 >
-                  <MessageSquare className="w-4 h-4 text-amber-600" />
-                  {t('aiChat')}
-                </button>
+                  Safety Matrix
+                </Link>
+
+                <Link
+                  to="/lab-decoder"
+                  className={`hover:text-slate-900 transition-colors py-2 ${location.pathname === '/lab-decoder' ? 'text-sky-600 font-bold border-b-2 border-sky-600' : ''}`}
+                >
+                  Lab Decoder
+                </Link>
               </>
             ) : (
               <>
-                <a
-                  href="#services"
-                  className="hover:text-sky-600 transition-colors py-2"
+                <Link
+                  to="/services"
+                  className={`transition-colors py-2 ${location.pathname === '/services' ? 'text-sky-600 font-bold border-b-2 border-sky-600' : 'hover:text-sky-600'}`}
                 >
                   Medical Services
-                </a>
-                <a
-                  href="#safety-matrix"
-                  className="hover:text-sky-600 transition-colors py-2"
+                </Link>
+                <Link
+                  to="/safety-matrix"
+                  className={`transition-colors py-2 ${location.pathname === '/safety-matrix' ? 'text-sky-600 font-bold border-b-2 border-sky-600' : 'hover:text-sky-600'}`}
                 >
                   Drug Safety Matrix
-                </a>
-                <a
-                  href="#lab-decoder"
-                  className="hover:text-sky-600 transition-colors py-2"
+                </Link>
+                <Link
+                  to="/lab-decoder"
+                  className={`transition-colors py-2 ${location.pathname === '/lab-decoder' ? 'text-sky-600 font-bold border-b-2 border-sky-600' : 'hover:text-sky-600'}`}
                 >
                   Lab Biomarkers
-                </a>
-                <a
-                  href="#multilingual-voice"
-                  className="hover:text-sky-600 transition-colors py-2"
+                </Link>
+                <Link
+                  to="/regional-care"
+                  className={`transition-colors py-2 ${location.pathname === '/regional-care' ? 'text-sky-600 font-bold border-b-2 border-sky-600' : 'hover:text-sky-600'}`}
                 >
                   Regional Care
-                </a>
-                <a
-                  href="#doctors"
-                  className="hover:text-sky-600 transition-colors py-2"
-                >
-                  Clinical Standards
-                </a>
+                </Link>
               </>
             )}
           </div>
@@ -376,61 +378,58 @@ const Navbar = () => {
             >
               {isAuthenticated ? (
                 <>
-                  <button
-                    onClick={() => {
-                      navigate('/home');
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-semibold text-sky-700 bg-sky-50 flex items-center gap-2"
-                  >
-                    <Activity className="w-4 h-4 text-sky-600" />
-                    {t('workspace')}
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#section-prescriptions')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                  >
-                    <Pill className="w-4 h-4 text-teal-600" />
-                    {t('prescriptions')}
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#section-diagnostics')}
-                    className="w-full text-left px-4 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                  >
-                    <ShieldCheck className="w-4 h-4 text-blue-600" />
-                    {t('labDiagnostics')}
-                  </button>
-                </>
-              ) : (
-                <>
-                  <a
-                    href="#services"
+                  <Link
+                    to="/home"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
+                    className="block px-4 py-2.5 rounded-lg text-xs font-semibold text-sky-700 bg-sky-50"
                   >
-                    Medical Services
-                  </a>
-                  <a
-                    href="#safety-matrix"
+                    {t('workspace')}
+                  </Link>
+                  <Link
+                    to="/safety-matrix"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
                   >
                     Drug Safety Matrix
-                  </a>
-                  <a
-                    href="#lab-decoder"
+                  </Link>
+                  <Link
+                    to="/lab-decoder"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
+                  >
+                    Lab Report Decoder
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/services"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
+                  >
+                    Medical Services
+                  </Link>
+                  <Link
+                    to="/safety-matrix"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
+                  >
+                    Drug Safety Matrix
+                  </Link>
+                  <Link
+                    to="/lab-decoder"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
                   >
                     Lab Biomarkers
-                  </a>
-                  <a
-                    href="#multilingual-voice"
+                  </Link>
+                  <Link
+                    to="/regional-care"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block px-4 py-2.5 rounded-lg text-xs font-medium hover:bg-slate-50"
                   >
                     Regional Care
-                  </a>
+                  </Link>
                 </>
               )}
             </motion.div>

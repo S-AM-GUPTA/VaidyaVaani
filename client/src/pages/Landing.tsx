@@ -1,21 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
   Activity, 
   ShieldCheck, 
-  Check, 
   Globe, 
   Volume2, 
-  VolumeX, 
   UploadCloud,
   Pill,
   HeartPulse,
   Phone,
   ChevronRight,
   FileSpreadsheet,
-  Users,
   CheckCircle2,
   X
 } from 'lucide-react';
@@ -27,24 +24,10 @@ import { useLanguage } from '../context/LanguageContext';
 const Landing = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const { currentLanguage, t, speakText, stopSpeaking, isSpeaking } = useLanguage();
+  const { t } = useLanguage();
 
   const [activeSeverityTab, setActiveSeverityTab] = useState<'low' | 'mod' | 'crit'>('mod');
   const [isDemoUploadOpen, setIsDemoUploadOpen] = useState(false);
-
-  const toggleVoiceDemo = () => {
-    if (isSpeaking) {
-      stopSpeaking();
-    } else {
-      speakText();
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      stopSpeaking();
-    };
-  }, []);
 
   const handleCtaClick = () => {
     if (isAuthenticated) {
@@ -86,12 +69,13 @@ const Landing = () => {
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            <a 
-              href="#safety-matrix" 
-              className="btn-med-secondary py-3.5 px-6 text-sm font-semibold"
+            <Link 
+              to="/safety-matrix" 
+              className="btn-med-secondary py-3.5 px-6 text-sm font-semibold flex items-center gap-2"
             >
-              Check Drug Interactions
-            </a>
+              <span>Drug Safety Matrix</span>
+              <ChevronRight className="w-4 h-4" />
+            </Link>
           </div>
 
           {/* Clinical Assurance Bar */}
@@ -130,10 +114,10 @@ const Landing = () => {
                 Rapid clinical medical card with blood group, active allergies, and direct emergency hospital dialers (108 / 102).
               </p>
             </div>
-            <div className="text-xs font-semibold text-rose-600 flex items-center gap-1">
-              <span>24/7 Rapid Response</span>
+            <Link to={isAuthenticated ? "/profile" : "/login"} className="text-xs font-semibold text-rose-600 flex items-center gap-1 hover:underline">
+              <span>View Emergency Medical ID</span>
               <ChevronRight className="w-3.5 h-3.5" />
-            </div>
+            </Link>
           </div>
 
           {/* Card 2: Prescription & Drug Safety */}
@@ -147,10 +131,10 @@ const Landing = () => {
                 Multi-doctor prescription screening that prevents dangerous drug-drug conflicts and bioavailability spacing errors.
               </p>
             </div>
-            <a href="#safety-matrix" className="text-xs font-semibold text-teal-600 flex items-center gap-1">
-              <span>View Safety Matrix</span>
+            <Link to="/safety-matrix" className="text-xs font-semibold text-teal-600 flex items-center gap-1 hover:underline">
+              <span>Open Safety Matrix Tool</span>
               <ChevronRight className="w-3.5 h-3.5" />
-            </a>
+            </Link>
           </div>
 
           {/* Card 3: Lab Biomarker Ingestion */}
@@ -164,10 +148,10 @@ const Landing = () => {
                 Automated extraction of HbA1c, fasting glucose, lipid profiles, and CBC with standard reference ranges.
               </p>
             </div>
-            <a href="#lab-decoder" className="text-xs font-semibold text-sky-600 flex items-center gap-1">
-              <span>Explore Diagnostic Decoder</span>
+            <Link to="/lab-decoder" className="text-xs font-semibold text-sky-600 flex items-center gap-1 hover:underline">
+              <span>Explore Lab Decoder Tool</span>
               <ChevronRight className="w-3.5 h-3.5" />
-            </a>
+            </Link>
           </div>
 
           {/* Card 4: Regional Voice Care */}
@@ -176,15 +160,15 @@ const Landing = () => {
               <div className="w-12 h-12 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
                 <Volume2 className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Regional Voice Audio</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Regional Voice Care</h3>
               <p className="text-xs text-slate-600 leading-relaxed mb-4">
                 Prescriptions and health guidance translated and spoken in Hindi, Bengali, Tamil, Telugu, Marathi, and Gujarati.
               </p>
             </div>
-            <a href="#multilingual-voice" className="text-xs font-semibold text-indigo-600 flex items-center gap-1">
-              <span>Listen to Speech Demo</span>
+            <Link to="/regional-care" className="text-xs font-semibold text-indigo-600 flex items-center gap-1 hover:underline">
+              <span>Listen in Regional Dialects</span>
               <ChevronRight className="w-3.5 h-3.5" />
-            </a>
+            </Link>
           </div>
 
         </div>
@@ -196,84 +180,76 @@ const Landing = () => {
       <section id="services" className="py-16 bg-white border-t border-slate-200">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
           
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="med-badge mb-2 font-mono">
-              Clinical Specializations
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="med-badge mb-2 font-mono">
+                Clinical Specializations
+              </div>
+              <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+                Specialized Care for Every Health Need
+              </h2>
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
-              Specialized Care for Every Health Need
-            </h2>
-            <p className="text-slate-600 text-sm mt-3 leading-relaxed">
-              VaidyaVaani coordinates treatment parameters across major medical disciplines, ensuring that specialized therapies work harmoniously.
-            </p>
+
+            <Link 
+              to="/services" 
+              className="btn-med-secondary text-xs font-semibold flex items-center gap-1.5 w-fit"
+            >
+              <span>View All 6 Clinical Departments</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             
             {/* Dept 1 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
-              <div className="w-10 h-10 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center mb-4">
-                <HeartPulse className="w-5 h-5" />
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center mb-4">
+                  <HeartPulse className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mb-1">Cardiology & Hypertension</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Tracking beta-blockers, ACE inhibitors, and blood pressure trends with dietary sodium advisories.
+                </p>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Cardiology & Hypertension</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Tracking beta-blockers, ACE inhibitors, and blood pressure trends with dietary sodium advisories.
-              </p>
+              <Link to="/services" className="text-xs font-semibold text-sky-600 flex items-center gap-1 hover:underline">
+                <span>Learn more</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
             {/* Dept 2 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
-              <div className="w-10 h-10 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center mb-4">
-                <Activity className="w-5 h-5" />
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center mb-4">
+                  <Activity className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mb-1">Endocrinology & Diabetes</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Monitoring HbA1c, fasting glucose levels, and oral hypoglycemic drug schedules over time.
+                </p>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Endocrinology & Diabetes</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Monitoring HbA1c, fasting glucose levels, and oral hypoglycemic drug schedules over time.
-              </p>
+              <Link to="/services" className="text-xs font-semibold text-teal-600 flex items-center gap-1 hover:underline">
+                <span>Learn more</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
             {/* Dept 3 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
-              <div className="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-4">
-                <FileSpreadsheet className="w-5 h-5" />
+            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-4">
+                  <FileSpreadsheet className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mb-1">Pathology & Lab Diagnostics</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Instant optical extraction of blood test markers, lipid profiles, kidney function, and liver enzymes.
+                </p>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Pathology & Lab Diagnostics</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Instant optical extraction of blood test markers, lipid profiles, kidney function, and liver enzymes.
-              </p>
-            </div>
-
-            {/* Dept 4 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
-              <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center mb-4">
-                <Pill className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Gastroenterology Spacing</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Automated reminders for antacids, proton-pump inhibitors, and gut absorption intervals.
-              </p>
-            </div>
-
-            {/* Dept 5 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
-              <div className="w-10 h-10 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center mb-4">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Pharmacology Contraindication</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Real-time safety flags for anticoagulants, NSAIDs, and allergic reaction risks.
-              </p>
-            </div>
-
-            {/* Dept 6 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-[#f8fafc] hover:bg-white hover:border-sky-300 hover:shadow-md transition-all">
-              <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
-                <Users className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Family Health Vault</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Manage unified health records and emergency contacts for elderly parents, children, and dependents.
-              </p>
+              <Link to="/lab-decoder" className="text-xs font-semibold text-indigo-600 flex items-center gap-1 hover:underline">
+                <span>Open decoder</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
           </div>
@@ -281,21 +257,31 @@ const Landing = () => {
       </section>
 
       {/* =========================================================
-          FEATURE 1: INTERACTIVE DRUG SAFETY MATRIX (Interactive Medical Tool)
+          FEATURE 1: INTERACTIVE DRUG SAFETY MATRIX SECTION
           ========================================================= */}
       <section id="safety-matrix" className="py-20 bg-[#f8fafc] border-t border-slate-200">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
           
-          <div className="max-w-2xl mb-12">
-            <div className="med-badge mb-2 font-mono">
-              Pharmacology Safety Screening
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div className="max-w-2xl">
+              <div className="med-badge mb-2 font-mono">
+                Pharmacology Safety Screening
+              </div>
+              <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+                Interactive Drug Interaction Screening
+              </h2>
+              <p className="text-slate-600 text-sm mt-2 leading-relaxed">
+                Select a clinical scenario below to see how VaidyaVaani flags contraindications and schedules dosage intervals:
+              </p>
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
-              Interactive Drug Interaction Screening
-            </h2>
-            <p className="text-slate-600 text-sm mt-2 leading-relaxed">
-              When patients visit multiple doctors, prescription cross-effects can cause serious complications. Select a clinical scenario below to see how VaidyaVaani safeguards patient care:
-            </p>
+
+            <Link 
+              to="/safety-matrix" 
+              className="btn-med-primary text-xs font-semibold flex items-center gap-1.5 w-fit shrink-0"
+            >
+              <span>Open Full Interactive Checker</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -399,192 +385,7 @@ const Landing = () => {
       </section>
 
       {/* =========================================================
-          FEATURE 2: LAB BIOMARKER DECODER (Diagnostic Report Table)
-          ========================================================= */}
-      <section id="lab-decoder" className="py-20 bg-white border-t border-slate-200">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Medical Lab Report View */}
-            <div className="lg:col-span-6 bg-[#f8fafc] rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
-                <div>
-                  <div className="text-xs font-mono text-slate-500 uppercase">Pathology Ingestion</div>
-                  <h3 className="text-lg font-bold text-slate-900">Comprehensive Metabolic & Lipid Panel</h3>
-                </div>
-                <span className="text-xs font-mono font-bold text-sky-700 bg-sky-100 px-2.5 py-1 rounded">
-                  Ref Norms 2026
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                <div className="p-3.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between shadow-xs">
-                  <div>
-                    <div className="text-xs text-slate-500 font-mono">HEMOGLOBIN A1C</div>
-                    <div className="text-sm font-bold text-slate-900">5.4%</div>
-                  </div>
-                  <span className="text-xs text-teal-700 font-semibold font-mono px-2 py-0.5 rounded bg-teal-50 border border-teal-200">
-                    Normal (&lt; 5.7%)
-                  </span>
-                </div>
-
-                <div className="p-3.5 rounded-lg bg-amber-50/50 border border-amber-200 flex items-center justify-between shadow-xs">
-                  <div>
-                    <div className="text-xs text-amber-700 font-mono">FASTING BLOOD GLUCOSE</div>
-                    <div className="text-sm font-bold text-slate-900">108 mg/dL</div>
-                  </div>
-                  <span className="text-xs text-amber-700 font-semibold font-mono px-2 py-0.5 rounded bg-amber-100 border border-amber-300">
-                    Mild Elevation (70–99)
-                  </span>
-                </div>
-
-                <div className="p-3.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between shadow-xs">
-                  <div>
-                    <div className="text-xs text-slate-500 font-mono">LIPID PROFILE (LDL CHOLESTEROL)</div>
-                    <div className="text-sm font-bold text-slate-900">94 mg/dL</div>
-                  </div>
-                  <span className="text-xs text-teal-700 font-semibold font-mono px-2 py-0.5 rounded bg-teal-50 border border-teal-200">
-                    Optimal (&lt; 100)
-                  </span>
-                </div>
-
-                <div className="p-3.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between shadow-xs">
-                  <div>
-                    <div className="text-xs text-slate-500 font-mono">TOTAL LEUKOCYTES (WBC)</div>
-                    <div className="text-sm font-bold text-slate-900">7,200 /µL</div>
-                  </div>
-                  <span className="text-xs text-teal-700 font-semibold font-mono px-2 py-0.5 rounded bg-teal-50 border border-teal-200">
-                    Normal (4.5k–11k)
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Diagnostic Features */}
-            <div className="lg:col-span-6">
-              <div className="med-badge mb-2 font-mono">
-                Diagnostic Clarity
-              </div>
-              <h2 className="text-3xl font-bold text-slate-900 tracking-tight mb-4">
-                Understand Pathology Reports Without Confusion
-              </h2>
-              <p className="text-slate-600 text-base leading-relaxed mb-6">
-                Blood tests and lab numbers often cause unnecessary anxiety. VaidyaVaani interprets complex clinical values into clear explanations, highlighting what is normal and what needs a doctor's attention.
-              </p>
-
-              <div className="space-y-3.5 mb-8">
-                <div className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5" />
-                  </div>
-                  <p className="text-sm text-slate-700">Instant extraction of reference ranges, normal boundaries, and clinical units.</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5" />
-                  </div>
-                  <p className="text-sm text-slate-700">Tracks longitudinal changes across tests to observe metabolic health trends.</p>
-                </div>
-              </div>
-
-              <button 
-                onClick={() => setIsDemoUploadOpen(true)}
-                className="btn-med-primary text-xs font-semibold"
-              >
-                <UploadCloud className="w-4 h-4" />
-                <span>Upload Sample Lab Report</span>
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          FEATURE 3: MULTILINGUAL VOICE INCLUSIVITY
-          ========================================================= */}
-      <section id="multilingual-voice" className="py-20 bg-[#0f172a] text-white">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-900/60 text-sky-400 text-xs font-mono uppercase tracking-wider mb-4 border border-sky-700">
-                <Globe className="w-3.5 h-3.5" />
-                Universal Regional Inclusivity
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
-                Healthcare Clarity in the Languages Families Speak at Home.
-              </h2>
-              <p className="text-slate-300 text-base leading-relaxed mb-8">
-                Elderly parents and rural patients often find English medical jargon difficult to follow. VaidyaVaani translates and reads prescription instructions aloud in 7 Indian regional languages.
-              </p>
-
-              {/* Functional Audio Player Box */}
-              <div className="p-5 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-wrap items-center justify-between gap-4 max-w-lg mb-6 shadow-md">
-                <div className="flex items-center gap-4">
-                  <button 
-                    onClick={toggleVoiceDemo}
-                    className="w-12 h-12 rounded-lg bg-sky-600 hover:bg-sky-500 text-white flex items-center justify-center transition-colors shrink-0 shadow-sm"
-                  >
-                    {isSpeaking ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                  </button>
-                  <div>
-                    <div className="text-sm font-semibold text-white flex items-center gap-2">
-                      <span>{currentLanguage.native} Speech Audio</span>
-                      <span className="text-[10px] font-mono text-sky-400 bg-sky-950 px-2 py-0.5 rounded border border-sky-800">ACTIVE</span>
-                    </div>
-                    <div className="text-xs text-slate-400 mt-0.5">
-                      {isSpeaking ? 'Playing voice guidance...' : 'Click play button to listen'}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 cursor-pointer pr-2" onClick={toggleVoiceDemo}>
-                  {[30, 60, 25, 80, 45, 70, 35].map((height, i) => (
-                    <div 
-                      key={i} 
-                      className={`w-1 bg-sky-400 rounded-full transition-all duration-300 ${isSpeaking ? 'animate-pulse' : 'opacity-40'}`}
-                      style={{ height: `${isSpeaking ? height * 0.35 : 8}px` }}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div className="text-xs text-slate-400 font-mono">
-                Supported: English • हिन्दी • বাংলা • தமிழ் • తెలుగు • मराठी • ગુજરાતી
-              </div>
-            </div>
-
-            <div className="lg:col-span-5 bg-slate-800 rounded-xl p-8 border border-slate-700 text-center shadow-xl">
-              <div className="w-14 h-14 rounded-full bg-sky-900/60 border border-sky-700 text-sky-400 flex items-center justify-center mx-auto mb-4">
-                <Volume2 className="w-7 h-7" />
-              </div>
-              <div className="text-2xl font-bold text-white mb-2">
-                {currentLanguage.code === 'hi' ? 'स्वास्थ्य मार्गदर्शन' :
-                 currentLanguage.code === 'bn' ? 'চিকিৎসা পরামর্শ' :
-                 currentLanguage.code === 'ta' ? 'ஆரோக்கிய அறிவுரை' :
-                 currentLanguage.code === 'te' ? 'ఆరోగ్య సలహా' :
-                 currentLanguage.code === 'mr' ? 'वैद्यकीय सल्ला' :
-                 currentLanguage.code === 'gu' ? 'સ્વાસ્થ્ય સલાહ' :
-                 'Clinical Audio Guidance'}
-              </div>
-              <p className="text-sm text-slate-300 italic mb-6 leading-relaxed">
-                "{currentLanguage.demoSpeechText}"
-              </p>
-              <button 
-                onClick={toggleVoiceDemo}
-                className="btn-med-primary text-xs font-semibold"
-              >
-                {isSpeaking ? 'Stop Voice Demo' : `Play Voice in ${currentLanguage.native}`}
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          EMERGENCY 24/7 CALLOUT BANNER (Classic Hospital Banner)
+          EMERGENCY 24/7 CALLOUT BANNER
           ========================================================= */}
       <section className="bg-sky-700 text-white py-12">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
