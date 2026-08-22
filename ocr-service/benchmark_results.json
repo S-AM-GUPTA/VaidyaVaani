@@ -1,0 +1,73 @@
+{
+  "dataset_name": "mehaksingal/illegible-medical-prescription-images-dataset",
+  "total_images_in_dataset": 129,
+  "evaluated_samples": 5,
+  "success_rate_percent": 100.0,
+  "avg_latency_per_page_ms": 112404.63,
+  "avg_lines_extracted_per_page": 30.0,
+  "clinical_medicine_yield_rate_percent": 60.0,
+  "avg_composite_confidence_percent": 48.99,
+  "tier_distribution": {
+    "HIGH": 0,
+    "MEDIUM": 3,
+    "LOW": 2
+  },
+  "sample_results": [
+    {
+      "filename": "1.jpg",
+      "status": "SUCCESS",
+      "lines_count": 18,
+      "medicines_count": 1,
+      "medicines": [
+        "Telma"
+      ],
+      "confidence": 0.8551,
+      "confidence_tier": "MEDIUM",
+      "latency_ms": 69018.68
+    },
+    {
+      "filename": "2.jpg",
+      "status": "SUCCESS",
+      "lines_count": 36,
+      "medicines_count": 0,
+      "medicines": [],
+      "confidence": 0.0,
+      "confidence_tier": "LOW",
+      "latency_ms": 139647.72
+    },
+    {
+      "filename": "3.jpg",
+      "status": "SUCCESS",
+      "lines_count": 20,
+      "medicines_count": 1,
+      "medicines": [
+        "Dolo"
+      ],
+      "confidence": 0.7923,
+      "confidence_tier": "MEDIUM",
+      "latency_ms": 39445.46
+    },
+    {
+      "filename": "4.jpg",
+      "status": "SUCCESS",
+      "lines_count": 58,
+      "medicines_count": 1,
+      "medicines": [
+        "Ecosprin"
+      ],
+      "confidence": 0.8021,
+      "confidence_tier": "MEDIUM",
+      "latency_ms": 273700.54
+    },
+    {
+      "filename": "5.jpg",
+      "status": "SUCCESS",
+      "lines_count": 18,
+      "medicines_count": 0,
+      "medicines": [],
+      "confidence": 0.0,
+      "confidence_tier": "LOW",
+      "latency_ms": 40210.77
+    }
+  ]
+}

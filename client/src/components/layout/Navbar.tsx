@@ -227,6 +227,12 @@ const Navbar = () => {
                 >
                   Regional Care
                 </Link>
+                <Link
+                  to="/annotation"
+                  className={`transition-colors py-2 text-emerald-600 font-medium ${location.pathname === '/annotation' ? 'font-bold border-b-2 border-emerald-600' : 'hover:text-emerald-700'}`}
+                >
+                  Ground Truth Studio
+                </Link>
               </>
             )}
           </div>

@@ -171,6 +171,9 @@ async def analyze_prescription(
         print(f"[Prescription Analyze Error] {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+from fastapi.responses import FileResponse
+from annotation import get_annotation_manager, PrescriptionAnnotation
+
 @app.get("/health")
 def health_check():
     """
@@ -189,6 +192,72 @@ def health_check():
         }
     }
 
+# ==================== Ground-Truth Annotation Endpoints ====================
+
+@app.get("/annotation/list")
+def get_annotation_list():
+    """
+    Lists all 129 Kaggle images with their verification review status.
+    """
+    mgr = get_annotation_manager()
+    return {
+        "success": True,
+        "items": mgr.get_all_items()
+    }
+
+@app.get("/annotation/item/{image_id}")
+def get_annotation_item(image_id: str):
+    """
+    Retrieves full annotation record for an image, including OCR proposals and ground truth.
+    """
+    mgr = get_annotation_manager()
+    item = mgr.get_item(image_id)
+    if not item:
+        raise HTTPException(status_code=404, detail=f"Image {image_id} not found")
+    return {
+        "success": True,
+        "item": item
+    }
+
+@app.post("/annotation/save")
+def save_annotation(data: Dict[str, Any]):
+    """
+    Saves human-reviewed ground-truth annotation.
+    """
+    mgr = get_annotation_manager()
+    try:
+        saved = mgr.save_item(data)
+        return {
+            "success": True,
+            "item": saved
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/annotation/stats")
+def get_annotation_stats():
+    """
+    Calculates exact real-time Data Quality Report from annotation database.
+    """
+    mgr = get_annotation_manager()
+    report = mgr.get_quality_report()
+    return {
+        "success": True,
+        "report": report
+    }
+
+@app.get("/annotation/image/{image_id}")
+def get_annotation_image(image_id: str):
+    """
+    Serves the high-resolution prescription image for side-by-side zoomable review.
+    """
+    mgr = get_annotation_manager()
+    item = mgr.annotations.get(image_id)
+    if not item or not os.path.exists(item.get("image_path", "")):
+        raise HTTPException(status_code=404, detail="Image file not found")
+    return FileResponse(item["image_path"], media_type="image/jpeg")
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+

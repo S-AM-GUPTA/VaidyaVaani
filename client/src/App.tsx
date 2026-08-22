@@ -6,6 +6,7 @@ import ServicesPage from './pages/ServicesPage';
 import SafetyMatrixPage from './pages/SafetyMatrixPage';
 import LabDecoderPage from './pages/LabDecoderPage';
 import RegionalCarePage from './pages/RegionalCarePage';
+import AnnotationPage from './pages/AnnotationPage';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/safety-matrix" element={<SafetyMatrixPage />} />
         <Route path="/lab-decoder" element={<LabDecoderPage />} />
         <Route path="/regional-care" element={<RegionalCarePage />} />
+        <Route path="/annotation" element={<AnnotationPage />} />
         <Route path="/login" element={<Login />} />
 
         {/* Authenticated Patient Vault Routes */}

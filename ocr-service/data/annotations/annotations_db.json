@@ -1,0 +1,1292 @@
+{
+  "1": {
+    "image_id": "1",
+    "filename": "1.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\1.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "2": {
+    "image_id": "2",
+    "filename": "2.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\2.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "3": {
+    "image_id": "3",
+    "filename": "3.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\3.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "4": {
+    "image_id": "4",
+    "filename": "4.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\4.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "5": {
+    "image_id": "5",
+    "filename": "5.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\5.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "6": {
+    "image_id": "6",
+    "filename": "6.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\6.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "7": {
+    "image_id": "7",
+    "filename": "7.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\7.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "8": {
+    "image_id": "8",
+    "filename": "8.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\8.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "9": {
+    "image_id": "9",
+    "filename": "9.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\9.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "10": {
+    "image_id": "10",
+    "filename": "10.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\10.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "11": {
+    "image_id": "11",
+    "filename": "11.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\11.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "12": {
+    "image_id": "12",
+    "filename": "12.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\12.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "13": {
+    "image_id": "13",
+    "filename": "13.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\13.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "14": {
+    "image_id": "14",
+    "filename": "14.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\14.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "15": {
+    "image_id": "15",
+    "filename": "15.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\15.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "16": {
+    "image_id": "16",
+    "filename": "16.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\16.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "17": {
+    "image_id": "17",
+    "filename": "17.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\17.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "18": {
+    "image_id": "18",
+    "filename": "18.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\18.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "19": {
+    "image_id": "19",
+    "filename": "19.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\19.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "20": {
+    "image_id": "20",
+    "filename": "20.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\20.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "21": {
+    "image_id": "21",
+    "filename": "21.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\21.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "22": {
+    "image_id": "22",
+    "filename": "22.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\22.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "23": {
+    "image_id": "23",
+    "filename": "23.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\23.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "24": {
+    "image_id": "24",
+    "filename": "24.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\24.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "25": {
+    "image_id": "25",
+    "filename": "25.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\25.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "26": {
+    "image_id": "26",
+    "filename": "26.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\26.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "27": {
+    "image_id": "27",
+    "filename": "27.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\27.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "28": {
+    "image_id": "28",
+    "filename": "28.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\28.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "29": {
+    "image_id": "29",
+    "filename": "29.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\29.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "30": {
+    "image_id": "30",
+    "filename": "30.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\30.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "31": {
+    "image_id": "31",
+    "filename": "31.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\31.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "32": {
+    "image_id": "32",
+    "filename": "32.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\32.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "33": {
+    "image_id": "33",
+    "filename": "33.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\33.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "34": {
+    "image_id": "34",
+    "filename": "34.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\34.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "35": {
+    "image_id": "35",
+    "filename": "35.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\35.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "36": {
+    "image_id": "36",
+    "filename": "36.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\36.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "37": {
+    "image_id": "37",
+    "filename": "37.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\37.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "38": {
+    "image_id": "38",
+    "filename": "38.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\38.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "39": {
+    "image_id": "39",
+    "filename": "39.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\39.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "40": {
+    "image_id": "40",
+    "filename": "40.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\40.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "41": {
+    "image_id": "41",
+    "filename": "41.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\41.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "42": {
+    "image_id": "42",
+    "filename": "42.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\42.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "43": {
+    "image_id": "43",
+    "filename": "43.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\43.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "44": {
+    "image_id": "44",
+    "filename": "44.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\44.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "45": {
+    "image_id": "45",
+    "filename": "45.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\45.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "46": {
+    "image_id": "46",
+    "filename": "46.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\46.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "47": {
+    "image_id": "47",
+    "filename": "47.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\47.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "48": {
+    "image_id": "48",
+    "filename": "48.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\48.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "49": {
+    "image_id": "49",
+    "filename": "49.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\49.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "50": {
+    "image_id": "50",
+    "filename": "50.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\50.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "51": {
+    "image_id": "51",
+    "filename": "51.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\51.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "52": {
+    "image_id": "52",
+    "filename": "52.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\52.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "53": {
+    "image_id": "53",
+    "filename": "53.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\53.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "54": {
+    "image_id": "54",
+    "filename": "54.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\54.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "55": {
+    "image_id": "55",
+    "filename": "55.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\55.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "56": {
+    "image_id": "56",
+    "filename": "56.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\56.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "57": {
+    "image_id": "57",
+    "filename": "57.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\57.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "58": {
+    "image_id": "58",
+    "filename": "58.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\58.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "59": {
+    "image_id": "59",
+    "filename": "59.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\59.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "60": {
+    "image_id": "60",
+    "filename": "60.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\60.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "61": {
+    "image_id": "61",
+    "filename": "61.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\61.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "62": {
+    "image_id": "62",
+    "filename": "62.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\62.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "63": {
+    "image_id": "63",
+    "filename": "63.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\63.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "64": {
+    "image_id": "64",
+    "filename": "64.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\64.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "65": {
+    "image_id": "65",
+    "filename": "65.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\65.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "66": {
+    "image_id": "66",
+    "filename": "66.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\66.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "67": {
+    "image_id": "67",
+    "filename": "67.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\67.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "68": {
+    "image_id": "68",
+    "filename": "68.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\68.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "69": {
+    "image_id": "69",
+    "filename": "69.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\69.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "70": {
+    "image_id": "70",
+    "filename": "70.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\70.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "71": {
+    "image_id": "71",
+    "filename": "71.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\71.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "72": {
+    "image_id": "72",
+    "filename": "72.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\72.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "73": {
+    "image_id": "73",
+    "filename": "73.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\73.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "74": {
+    "image_id": "74",
+    "filename": "74.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\74.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "75": {
+    "image_id": "75",
+    "filename": "75.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\75.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "76": {
+    "image_id": "76",
+    "filename": "76.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\76.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "77": {
+    "image_id": "77",
+    "filename": "77.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\77.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "78": {
+    "image_id": "78",
+    "filename": "78.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\78.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "79": {
+    "image_id": "79",
+    "filename": "79.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\79.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "80": {
+    "image_id": "80",
+    "filename": "80.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\80.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "81": {
+    "image_id": "81",
+    "filename": "81.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\81.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "82": {
+    "image_id": "82",
+    "filename": "82.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\82.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "83": {
+    "image_id": "83",
+    "filename": "83.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\83.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "84": {
+    "image_id": "84",
+    "filename": "84.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\84.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "85": {
+    "image_id": "85",
+    "filename": "85.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\85.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "86": {
+    "image_id": "86",
+    "filename": "86.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\86.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "87": {
+    "image_id": "87",
+    "filename": "87.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\87.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "88": {
+    "image_id": "88",
+    "filename": "88.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\88.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "89": {
+    "image_id": "89",
+    "filename": "89.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\89.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "90": {
+    "image_id": "90",
+    "filename": "90.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\90.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "91": {
+    "image_id": "91",
+    "filename": "91.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\91.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "92": {
+    "image_id": "92",
+    "filename": "92.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\92.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "93": {
+    "image_id": "93",
+    "filename": "93.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\93.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "94": {
+    "image_id": "94",
+    "filename": "94.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\94.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "95": {
+    "image_id": "95",
+    "filename": "95.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\95.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "96": {
+    "image_id": "96",
+    "filename": "96.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\96.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "97": {
+    "image_id": "97",
+    "filename": "97.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\97.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "98": {
+    "image_id": "98",
+    "filename": "98.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\98.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "99": {
+    "image_id": "99",
+    "filename": "99.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\99.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "100": {
+    "image_id": "100",
+    "filename": "100.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\100.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "101": {
+    "image_id": "101",
+    "filename": "101.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\101.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "102": {
+    "image_id": "102",
+    "filename": "102.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\102.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "103": {
+    "image_id": "103",
+    "filename": "103.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\103.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "104": {
+    "image_id": "104",
+    "filename": "104.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\104.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "105": {
+    "image_id": "105",
+    "filename": "105.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\105.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "106": {
+    "image_id": "106",
+    "filename": "106.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\106.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "107": {
+    "image_id": "107",
+    "filename": "107.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\107.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "108": {
+    "image_id": "108",
+    "filename": "108.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\108.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "109": {
+    "image_id": "109",
+    "filename": "109.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\109.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "110": {
+    "image_id": "110",
+    "filename": "110.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\110.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "111": {
+    "image_id": "111",
+    "filename": "111.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\111.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "112": {
+    "image_id": "112",
+    "filename": "112.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\112.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "113": {
+    "image_id": "113",
+    "filename": "113.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\113.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "114": {
+    "image_id": "114",
+    "filename": "114.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\114.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "115": {
+    "image_id": "115",
+    "filename": "115.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\115.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "116": {
+    "image_id": "116",
+    "filename": "116.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\116.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "117": {
+    "image_id": "117",
+    "filename": "117.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\117.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "118": {
+    "image_id": "118",
+    "filename": "118.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\118.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "119": {
+    "image_id": "119",
+    "filename": "119.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\119.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "120": {
+    "image_id": "120",
+    "filename": "120.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\120.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "121": {
+    "image_id": "121",
+    "filename": "121.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\121.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "122": {
+    "image_id": "122",
+    "filename": "122.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\122.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "123": {
+    "image_id": "123",
+    "filename": "123.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\123.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "124": {
+    "image_id": "124",
+    "filename": "124.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\124.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "125": {
+    "image_id": "125",
+    "filename": "125.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\125.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "126": {
+    "image_id": "126",
+    "filename": "126.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\126.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "127": {
+    "image_id": "127",
+    "filename": "127.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\127.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "128": {
+    "image_id": "128",
+    "filename": "128.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\128.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  },
+  "129": {
+    "image_id": "129",
+    "filename": "129.jpg",
+    "image_path": "C:\\Users\\samfg/.cache/kagglehub/datasets/mehaksingal/illegible-medical-prescription-images-dataset/versions/1/data\\129.jpg",
+    "overall_status": "UNREVIEWED",
+    "annotator": null,
+    "reviewed_at": null,
+    "regions": [],
+    "general_notes": null
+  }
+}
