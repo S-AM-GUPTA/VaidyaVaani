@@ -194,7 +194,7 @@ const Home = () => {
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-sky-700 mb-1 flex items-center gap-2 font-mono">
               <span className="w-2 h-2 rounded-full bg-sky-600"></span>
-              {currentLanguage.native} • Patient Health Dashboard
+              {currentLanguage.native} • Health & Medicine Dashboard
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
               {t('vaultTitle')}

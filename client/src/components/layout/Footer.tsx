@@ -75,9 +75,9 @@ const Footer = () => {
             <div className="pt-2">
               <Link 
                 to="/login"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:text-sky-300"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300"
               >
-                <span>Patient Portal Login</span>
+                <span>Sign In / Vault Access</span>
                 <span>→</span>
               </Link>
             </div>
@@ -86,7 +86,7 @@ const Footer = () => {
           {/* Column 4: Mobile App */}
           <div className="space-y-3">
             <div className="text-xs font-bold text-white uppercase tracking-wider font-mono mb-2">
-              Patient Mobile App
+              VaidyaVaani Mobile App
             </div>
             
             <p className="text-xs text-slate-400">
@@ -124,9 +124,9 @@ const Footer = () => {
         <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>© {new Date().getFullYear()} VaidyaVaani Healthcare Technologies. All clinical protocols verified.</p>
           <div className="flex items-center space-x-6 text-[11px] font-mono text-slate-400">
-            <span className="text-teal-400 font-semibold">CLINICAL SAFETY</span>
+            <span className="text-emerald-400 font-semibold">HEALTHCARE CLARITY</span>
             <span>•</span>
-            <span className="text-sky-400 font-semibold">PATIENT PRIVACY FIRST</span>
+            <span className="text-teal-400 font-semibold">USER PRIVACY FIRST</span>
           </div>
         </div>
 

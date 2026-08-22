@@ -35,7 +35,7 @@ const Navbar = () => {
   const { isAuthenticated, logout, user } = useAuth();
   const { currentLanguage, setLanguage, t } = useLanguage();
   
-  const userDisplayName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : 'Patient Vault'));
+  const userDisplayName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : 'Health Vault'));
   
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -359,10 +359,10 @@ const Navbar = () => {
             ) : (
               <button 
                 onClick={() => navigate('/login')}
-                className="btn-med-primary text-xs font-semibold"
+                className="btn-med-primary text-xs font-semibold cursor-pointer"
               >
                 <HeartPulse className="w-4 h-4" />
-                <span>Patient Portal Login</span>
+                <span>Sign In / Vault</span>
               </button>
             )}
 

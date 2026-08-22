@@ -52,7 +52,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const userAccountName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : 'Primary Patient'));
+  const userAccountName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : 'Account Holder'));
 
   // Persistent Family Profiles
   const [profiles, setProfiles] = useState<MemberData[]>(() => {
@@ -303,7 +303,7 @@ const Profile = () => {
                     value={activeProfile.name}
                     onChange={(e) => handleUpdateActiveVitals('name', e.target.value)}
                     className="bg-white border border-slate-300 rounded-lg px-3 py-1 text-xl font-bold text-slate-900 outline-none focus:border-sky-500"
-                    placeholder="Patient Name"
+                    placeholder="Full Name"
                   />
                 </div>
               ) : (
