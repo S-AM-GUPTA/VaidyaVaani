@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Apple, Play, Lock, X, QrCode, Smartphone } from 'lucide-react';
+import { Apple, Play, X, QrCode, Smartphone, ShieldCheck } from 'lucide-react';
 import Logo from '../Logo';
 
 const Footer = () => {
   const [appModalPlatform, setAppModalPlatform] = useState<'ios' | 'android' | null>(null);
 
   return (
-    <footer className="bg-[#000000] border-t border-white/[0.06] text-[#ffffff] pt-16 pb-12">
+    <footer className="bg-[#090d16] border-t border-[#1e293b] text-slate-300 pt-16 pb-12">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
         
         {/* Top Grid */}
@@ -18,79 +18,79 @@ const Footer = () => {
           <div className="flex flex-col space-y-4">
             <Logo size="md" />
             
-            <p className="text-xs font-light text-[#9a9a9a] leading-relaxed max-w-xs">
-              Distributed medical intelligence. Built to translate clinical complexity into weightless personal agency.
+            <p className="text-xs text-slate-400 leading-relaxed max-w-xs">
+              Distributed healthcare safety infrastructure. Simplifying prescriptions, lab biomarkers, and medical records for families across India.
             </p>
 
-            <div className="flex items-center gap-2 text-[11px] font-mono text-[#15846e]">
-              <Lock className="w-3.5 h-3.5" />
-              <span>HIPAA / Zero-Knowledge Protocol</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-teal-400">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Zero-Knowledge Encrypted</span>
             </div>
           </div>
 
           {/* Column 1: Platform */}
-          <div className="flex flex-col space-y-3">
-            <div className="text-[11px] font-semibold text-[#ffffff] uppercase tracking-[0.1em] mb-1">
-              Platform
+          <div className="flex flex-col space-y-2.5">
+            <div className="text-xs font-semibold text-white uppercase tracking-wider font-mono mb-1">
+              Clinical Platform
             </div>
-            <a href="#features" className="text-xs text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-              Safety Matrix
+            <a href="#safety-matrix" className="text-xs text-slate-400 hover:text-white transition-colors">
+              Drug Interaction Matrix
             </a>
-            <a href="#lab-decoder" className="text-xs text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-              Lab Biomarkers
+            <a href="#lab-decoder" className="text-xs text-slate-400 hover:text-white transition-colors">
+              Lab Biomarker Decoder
             </a>
-            <a href="#intelligence" className="text-xs text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-              Neural Dialects
+            <a href="#multilingual-voice" className="text-xs text-slate-400 hover:text-white transition-colors">
+              Regional Voice Guidance
             </a>
-            <Link to="/login" className="text-xs text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-              Vault Access
+            <Link to="/login" className="text-xs text-slate-400 hover:text-white transition-colors">
+              Patient Portal Access
             </Link>
           </div>
 
-          {/* Column 2: Architecture */}
-          <div className="flex flex-col space-y-3">
-            <div className="text-[11px] font-semibold text-[#ffffff] uppercase tracking-[0.1em] mb-1">
-              Intelligence
+          {/* Column 2: Safety & Architecture */}
+          <div className="flex flex-col space-y-2.5">
+            <div className="text-xs font-semibold text-white uppercase tracking-wider font-mono mb-1">
+              Security & Standards
             </div>
-            <a href="#features" className="text-xs text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
+            <a href="#safety-matrix" className="text-xs text-slate-400 hover:text-white transition-colors">
               Pharmacopeia Database
             </a>
-            <a href="#pipeline" className="text-xs text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-              Zero Knowledge Proofs
+            <a href="#workflow" className="text-xs text-slate-400 hover:text-white transition-colors">
+              HIPAA Compliant Ingestion
             </a>
-            <a href="#intelligence" className="text-xs text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-              Regional Audio Synthesis
+            <a href="#multilingual-voice" className="text-xs text-slate-400 hover:text-white transition-colors">
+              Multilingual Speech Models
             </a>
-            <a href="#pipeline" className="text-xs text-[#9a9a9a] hover:text-[#ffffff] transition-colors">
-              Clinical Security Whitepaper
+            <a href="#workflow" className="text-xs text-slate-400 hover:text-white transition-colors">
+              Patient Emergency SOS Protocol
             </a>
           </div>
 
-          {/* Column 3: App Downloads */}
-          <div className="flex flex-col space-y-4">
-            <div className="text-[11px] font-semibold text-[#ffffff] uppercase tracking-[0.1em]">
-              Mobile Experience
+          {/* Column 3: Mobile Apps */}
+          <div className="flex flex-col space-y-3">
+            <div className="text-xs font-semibold text-white uppercase tracking-wider font-mono mb-1">
+              Patient Mobile App
             </div>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2">
               <button 
                 onClick={() => setAppModalPlatform('ios')}
-                className="bg-white/5 border border-white/10 hover:border-[#004fdc]/50 text-white rounded-full px-4 py-2 flex items-center space-x-3 transition-colors active:scale-95 text-left"
+                className="bg-[#0f1523] border border-[#1e293b] hover:border-slate-600 text-white rounded-lg px-3.5 py-2 flex items-center space-x-3 transition-colors text-left"
               >
                 <Apple className="w-4 h-4 text-white" />
                 <div className="flex flex-col items-start">
-                  <span className="text-[9px] text-[#9a9a9a] uppercase tracking-wider">Download on</span>
-                  <span className="text-xs font-medium text-white tracking-tight">Apple iOS</span>
+                  <span className="text-[9px] text-slate-400 uppercase tracking-wider font-mono">Available on</span>
+                  <span className="text-xs font-medium text-white">Apple iOS</span>
                 </div>
               </button>
 
               <button 
                 onClick={() => setAppModalPlatform('android')}
-                className="bg-white/5 border border-white/10 hover:border-[#15846e]/50 text-white rounded-full px-4 py-2 flex items-center space-x-3 transition-colors active:scale-95 text-left"
+                className="bg-[#0f1523] border border-[#1e293b] hover:border-slate-600 text-white rounded-lg px-3.5 py-2 flex items-center space-x-3 transition-colors text-left"
               >
-                <Play className="w-4 h-4 text-[#15846e]" />
+                <Play className="w-4 h-4 text-teal-400" />
                 <div className="flex flex-col items-start">
-                  <span className="text-[9px] text-[#9a9a9a] uppercase tracking-wider">Get it on</span>
-                  <span className="text-xs font-medium text-white tracking-tight">Google Android</span>
+                  <span className="text-[9px] text-slate-400 uppercase tracking-wider font-mono">Get it on</span>
+                  <span className="text-xs font-medium text-white">Google Play</span>
                 </div>
               </button>
             </div>
@@ -99,12 +99,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/[0.06] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-light text-[#9a9a9a]">
-          <p>© {new Date().getFullYear()} VaidyaVaani Systems. All rights reserved.</p>
-          <div className="flex items-center space-x-6 text-[11px] font-mono">
-            <span className="text-[#004fdc]">NEURAL COGNITION</span>
+        <div className="border-t border-[#1e293b] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <p>© {new Date().getFullYear()} VaidyaVaani Healthcare Technologies. All rights reserved.</p>
+          <div className="flex items-center space-x-6 text-[11px] font-mono text-slate-400">
+            <span className="text-teal-400">CLINICAL SAFETY</span>
             <span>•</span>
-            <span className="text-[#15846e]">ZERO-KNOWLEDGE MEDICINE</span>
+            <span className="text-blue-400">SECURE PATIENT PORTAL</span>
           </div>
         </div>
 
@@ -114,42 +114,42 @@ const Footer = () => {
       <AnimatePresence>
         {appModalPlatform && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" onClick={() => setAppModalPlatform(null)}></div>
+            <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={() => setAppModalPlatform(null)}></div>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.96, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-[#0c0c0c] rounded-[32px] w-full max-w-sm overflow-hidden shadow-[0_0_80px_rgba(0,79,220,0.3)] relative z-10 border border-white/10 p-8 text-center"
+              exit={{ opacity: 0, scale: 0.96, y: 15 }}
+              className="bg-[#0f1523] rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl relative z-10 border border-[#1e293b] p-6 text-center"
             >
               <div className="flex justify-between items-center pb-3 mb-4">
-                <div className="text-xs font-semibold uppercase tracking-widest text-[#004fdc]">Mobile App Preview</div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-teal-400 font-mono">Mobile App Link</div>
                 <button 
                   onClick={() => setAppModalPlatform(null)}
-                  className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 text-white flex items-center justify-center"
+                  className="w-7 h-7 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-white flex items-center justify-center"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
               </div>
 
-              <div className="w-16 h-16 rounded-2xl bg-[#004fdc]/15 border border-[#004fdc]/30 flex items-center justify-center mx-auto mb-4">
-                <Smartphone className="w-8 h-8 text-[#004fdc]" />
+              <div className="w-12 h-12 rounded-xl bg-teal-950/60 border border-teal-500/30 flex items-center justify-center mx-auto mb-3 text-teal-400">
+                <Smartphone className="w-6 h-6" />
               </div>
 
-              <h3 className="text-lg font-normal text-white mb-1">
+              <h3 className="text-base font-semibold text-white mb-1">
                 {appModalPlatform === 'ios' ? 'VaidyaVaani for iOS' : 'VaidyaVaani for Android'}
               </h3>
-              <p className="text-xs text-[#9a9a9a] mb-6">
-                Scan the secure QR key with your camera or launch the web app directly.
+              <p className="text-xs text-slate-400 mb-5">
+                Scan the secure QR code with your camera or launch the web app directly.
               </p>
 
-              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center mb-6">
-                <QrCode className="w-24 h-24 text-white" />
-                <span className="text-[10px] font-mono text-[#9a9a9a] mt-2">SECURE APP CLOUD PAIRING</span>
+              <div className="p-5 rounded-xl bg-[#090d16] border border-[#1e293b] flex flex-col items-center justify-center mb-5">
+                <QrCode className="w-20 h-20 text-white" />
+                <span className="text-[10px] font-mono text-slate-400 mt-2">SECURE APP CLOUD PAIRING</span>
               </div>
 
               <button 
                 onClick={() => setAppModalPlatform(null)}
-                className="w-full py-3 bg-[#004fdc] hover:bg-[#003eb0] text-white rounded-full font-semibold text-xs uppercase tracking-wider"
+                className="w-full btn-primary text-xs font-semibold"
               >
                 Close Preview
               </button>
