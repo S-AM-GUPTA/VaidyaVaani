@@ -9,11 +9,13 @@ import {
   Loader2, 
   KeyRound, 
   ShieldCheck, 
-  Phone, 
   Smartphone,
   Info,
   CheckCircle2,
-  HeartPulse
+  HeartPulse,
+  ArrowLeft,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import Logo from '../components/Logo';
 
@@ -24,6 +26,7 @@ const Login = () => {
   // Email states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   // Phone states
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -53,7 +56,7 @@ const Login = () => {
     if (res.success) {
       navigate('/home');
     } else {
-      setError(res.error || 'Google Authentication failed.');
+      setError(res.error || 'Google Authentication failed. Please check network connectivity.');
     }
     setGoogleLoading(false);
   };
@@ -90,7 +93,7 @@ const Login = () => {
   const handleSendPhoneOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneNumber.trim()) {
-      setError('Please enter a valid phone number with country code (e.g. +91 7985557576).');
+      setError('Please enter a valid phone number with country code (e.g. +91 9876543210).');
       return;
     }
 
@@ -100,7 +103,7 @@ const Login = () => {
     if (res.success) {
       setPhoneStep('otp');
     } else {
-      setError(res.error || 'Failed to dispatch SMS verification code.');
+      setError(res.error || 'Failed to send SMS verification code.');
     }
     setLoading(false);
   };
@@ -124,69 +127,81 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#f8fafc] text-slate-900 font-sans selection:bg-sky-600 selection:text-white relative overflow-hidden">
+    <div className="min-h-screen flex bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-600 selection:text-white relative overflow-hidden">
       
       {/* Invisible container for Firebase Phone reCAPTCHA */}
       <div id="recaptcha-container"></div>
 
-      {/* Left Side — Hospital Overview & Patient Security */}
-      <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-16 border-r border-slate-200 bg-white">
+      {/* Left Side — Clinical Overview & Security */}
+      <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-12 lg:p-16 border-r border-slate-200 bg-white">
         
-        {/* Top Logo Lockup */}
-        <div className="w-full">
-          <Logo size="lg" />
+        {/* Top Header & Logo */}
+        <div className="w-full flex items-center justify-between">
+          <Logo size="lg" theme="light" />
+
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-emerald-700 transition-colors font-mono"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Home</span>
+          </Link>
         </div>
 
         {/* Center Patient Guarantee Card */}
-        <div className="my-auto w-full max-w-md mx-auto p-8 rounded-2xl bg-sky-50/50 border border-sky-100 shadow-sm">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-sky-800 font-bold mb-4">
-            <ShieldCheck className="w-4 h-4 text-sky-600" />
-            Patient Data Security Standards
+        <div className="my-auto w-full max-w-md mx-auto p-8 rounded-3xl bg-emerald-50/50 border border-emerald-100 shadow-sm">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-emerald-800 font-bold mb-4">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            Zero-Knowledge Clinical Architecture
           </div>
           
-          <h3 className="text-xl font-bold text-slate-900 mb-3">
-            Secure, Encrypted Clinical Portal
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 tracking-tight">
+            Secure, Client-Decrypted Patient Portal
           </h3>
           
           <p className="text-xs text-slate-600 leading-relaxed mb-6">
-            All medical records, prescriptions, and lab biomarkers are decrypted exclusively in your local session. Your personal clinical records are never sold or shared.
+            All medical records, prescriptions, and lab biomarkers are encrypted. Your personal clinical records are protected with bank-grade privacy standards.
           </p>
 
-          <div className="space-y-3 text-xs text-slate-700 font-medium">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-teal-600" />
-              <span>Multi-Doctor Prescription Cross-Audit</span>
+          <div className="space-y-3.5 text-xs text-slate-700 font-medium">
+            <div className="flex items-center gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Generic Salt Alternatives (Up to 80% Savings)</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-teal-600" />
-              <span>Regional Language Voice Explanations</span>
+            <div className="flex items-center gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Multi-Doctor Pharmacopeia Interaction Radar</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-teal-600" />
-              <span>Emergency SOS Medical ID Key</span>
+            <div className="flex items-center gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>7 Indian Regional Language Voice Guidance</span>
             </div>
           </div>
         </div>
 
         {/* Bottom Tag */}
-        <div className="text-xs text-slate-500">
+        <div className="text-xs text-slate-400 font-mono">
           VaidyaVaani Healthcare Safety Infrastructure • Version 2.4 (2026)
         </div>
       </div>
 
       {/* Right Side — Form Area */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12 lg:px-16 xl:px-24 bg-[#f8fafc]">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 py-10 sm:py-12 lg:px-16 xl:px-24 bg-[#f8fafc]">
         
         {/* Mobile Header */}
-        <div className="mb-8 lg:hidden">
-          <Logo size="sm" />
+        <div className="mb-6 lg:hidden flex items-center justify-between">
+          <Logo size="sm" theme="light" />
+          <Link to="/" className="text-xs text-slate-500 hover:text-slate-900 font-mono font-semibold flex items-center gap-1">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Home</span>
+          </Link>
         </div>
 
         <motion.div 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="w-full max-w-md mx-auto bg-white p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-sm"
+          transition={{ duration: 0.35 }}
+          className="w-full max-w-md mx-auto bg-white p-7 sm:p-10 rounded-3xl border border-slate-200 shadow-sm"
         >
           {/* Header */}
           <div className="mb-6 text-left">
@@ -194,8 +209,8 @@ const Login = () => {
               <HeartPulse className="w-3.5 h-3.5" />
               Patient Portal Access
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-1">
-              {authMode === 'login' ? 'Sign in to Patient Portal' : 'Create Your Clinical Vault'}
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
+              {authMode === 'login' ? 'Sign in to Patient Portal' : 'Create Your Health Vault'}
             </h2>
             <p className="text-xs text-slate-500">
               Access and manage your encrypted health records securely.
@@ -203,14 +218,14 @@ const Login = () => {
           </div>
 
           {/* Primary Method Switcher (Email vs Phone) */}
-          <div className="flex p-1 bg-slate-100 border border-slate-200 rounded-lg mb-5 w-full">
+          <div className="flex p-1 bg-slate-100 border border-slate-200 rounded-xl mb-5 w-full">
             <button
               type="button"
               onClick={() => {
                 setAuthMethod('email');
                 setError('');
               }}
-              className={`w-1/2 py-2 text-xs font-semibold rounded-md transition-all flex items-center justify-center gap-1.5 ${
+              className={`w-1/2 py-2.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 authMethod === 'email' 
                   ? 'bg-white text-slate-900 shadow-xs' 
                   : 'text-slate-600 hover:text-slate-900'
@@ -225,9 +240,9 @@ const Login = () => {
                 setAuthMethod('phone');
                 setError('');
               }}
-              className={`w-1/2 py-2 text-xs font-semibold rounded-md transition-all flex items-center justify-center gap-1.5 ${
+              className={`w-1/2 py-2.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 authMethod === 'phone' 
-                  ? 'bg-sky-600 text-white shadow-xs' 
+                  ? 'bg-emerald-600 text-white shadow-xs' 
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -241,10 +256,10 @@ const Login = () => {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={googleLoading}
-            className="w-full btn-med-secondary py-2.5 px-4 text-xs font-bold flex items-center justify-center gap-2.5 mb-5 disabled:opacity-60"
+            className="w-full btn-med-secondary py-3 px-4 text-xs font-bold flex items-center justify-center gap-2.5 mb-5 disabled:opacity-60 cursor-pointer"
           >
             {googleLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin text-sky-600" />
+              <Loader2 className="w-4 h-4 animate-spin text-emerald-600" />
             ) : (
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.4l3.7 2.9C6.5 7.4 9 5 12 5z"/>
@@ -253,20 +268,20 @@ const Login = () => {
                 <path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.3L1.9 16.4C3.7 20.2 7.5 23.5 12 23.5z"/>
               </svg>
             )}
-            <span>Sign In with Google</span>
+            <span>Continue with Google</span>
           </button>
 
           {/* Divider */}
           <div className="flex items-center my-4">
             <div className="flex-1 border-t border-slate-200"></div>
             <span className="px-3 text-[10px] uppercase font-mono text-slate-400 font-bold tracking-wider">
-              {authMethod === 'email' ? 'or email credentials' : 'or phone number'}
+              {authMethod === 'email' ? 'or email credentials' : 'or mobile number'}
             </span>
             <div className="flex-1 border-t border-slate-200"></div>
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-lg text-xs flex items-center gap-2">
+            <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
               <Lock className="w-4 h-4 text-rose-600 shrink-0" />
               <span>{error}</span>
             </div>
@@ -285,7 +300,7 @@ const Login = () => {
                     setAuthMode(authMode === 'login' ? 'signup' : 'login');
                     setError('');
                   }}
-                  className="text-sky-600 hover:underline font-bold"
+                  className="text-emerald-700 hover:underline font-bold cursor-pointer"
                 >
                   {authMode === 'login' ? 'Register Account' : 'Sign In'}
                 </button>
@@ -305,7 +320,7 @@ const Login = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:border-sky-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
                       placeholder="patient@example.com"
                     />
                   </div>
@@ -320,20 +335,27 @@ const Login = () => {
                       <KeyRound className="h-4 w-4 text-slate-400" />
                     </div>
                     <input
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:border-sky-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
+                      className="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
                       placeholder="••••••••"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
                   </div>
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full btn-med-primary py-3 text-xs font-semibold"
+                  className="w-full btn-med-primary py-3 text-xs font-semibold cursor-pointer"
                 >
                   {loading ? (
                     <>
@@ -358,27 +380,31 @@ const Login = () => {
                 <form onSubmit={handleSendPhoneOtp} className="space-y-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1 font-mono">
-                      Phone Number with Country Code
+                      Mobile Phone Number
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                        <Phone className="h-4 w-4 text-slate-400" />
+                        <Smartphone className="h-4 w-4 text-slate-400" />
                       </div>
                       <input
                         type="tel"
                         required
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:border-sky-500 focus:bg-white focus:outline-none transition-colors text-slate-900 placeholder:text-slate-400 text-sm"
-                        placeholder="+91 7985557576"
+                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors font-mono text-sm text-slate-900 placeholder:text-slate-400"
+                        placeholder="+91 9876543210"
                       />
                     </div>
+                    <p className="text-[11px] text-slate-500 mt-1.5 flex items-center gap-1">
+                      <Info className="w-3 h-3 text-emerald-600 shrink-0" />
+                      Include country code (e.g. +91 for India).
+                    </p>
                   </div>
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full btn-med-primary py-3 text-xs font-semibold"
+                    className="w-full btn-med-primary py-3 text-xs font-semibold cursor-pointer"
                   >
                     {loading ? (
                       <>
@@ -387,7 +413,7 @@ const Login = () => {
                       </>
                     ) : (
                       <>
-                        Send SMS Verification Code
+                        Send 6-Digit SMS Code
                         <ArrowRight className="w-4 h-4 ml-1" />
                       </>
                     )}
@@ -402,14 +428,14 @@ const Login = () => {
                     <button
                       type="button"
                       onClick={() => setPhoneStep('number')}
-                      className="text-xs text-sky-600 hover:underline font-mono font-bold"
+                      className="text-xs text-emerald-700 hover:underline font-mono font-bold cursor-pointer"
                     >
                       Change Number
                     </button>
                   </div>
 
-                  <div className="p-3 bg-sky-50 border border-sky-200 rounded-lg mb-2 flex items-start gap-2 text-xs text-sky-900">
-                    <Info className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
+                  <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl mb-2 flex items-start gap-2 text-xs text-emerald-900">
+                    <Info className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <span>Enter the 6-digit SMS verification code sent to <strong className="text-slate-900 font-mono">{phoneNumber}</strong>.</span>
                   </div>
 
@@ -423,7 +449,7 @@ const Login = () => {
                       maxLength={6}
                       value={otpCode}
                       onChange={(e) => setOtpCode(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:border-sky-500 focus:bg-white focus:outline-none transition-colors font-mono tracking-widest text-center text-lg text-slate-900"
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white focus:outline-none transition-colors font-mono tracking-widest text-center text-lg text-slate-900"
                       placeholder="123456"
                     />
                   </div>
@@ -431,7 +457,7 @@ const Login = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full btn-med-primary py-3 text-xs font-semibold"
+                    className="w-full btn-med-primary py-3 text-xs font-semibold cursor-pointer"
                   >
                     {loading ? (
                       <>
@@ -445,10 +471,10 @@ const Login = () => {
             </div>
           )}
 
-          <div className="mt-6 text-center text-xs text-slate-500">
-            Protected by Clinical Encryption • <Link to="/" className="text-sky-600 hover:underline font-bold">Return to Home</Link>
-          </div>
-
+          {/* Privacy Note */}
+          <p className="text-[11px] text-center text-slate-400 mt-6 leading-relaxed">
+            By signing in, you verify that clinical records decrypted in this session are processed strictly under zero-knowledge encryption protocols.
+          </p>
         </motion.div>
       </div>
 
