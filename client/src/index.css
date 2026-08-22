@@ -1,176 +1,138 @@
 @import "tailwindcss";
 
-/* ==========================================================================
-   VaidyaVaani — Professional Healthcare & Medical Design System
-   Inspired by Top-Tier Medical Websites (CareMed, Medilink, Epic Systems)
-   Aesthetic: Clean Clinical Trust (Crisp White, Deep Royal Navy, Medical Blue & Teal)
-   Font: 'Plus Jakarta Sans', system-ui, sans-serif
-   ========================================================================== */
-
-@theme {
-  /* Medical Light Canvas & Surfaces */
-  --color-canvas: #f8fafc;
-  --color-surface: #ffffff;
-  --color-surface-subtle: #f1f5f9;
-  --color-border: #e2e8f0;
-  --color-border-subtle: #cbd5e1;
-
-  /* Deep Trust Text Hierarchy */
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #334155;
-  --color-text-muted: #64748b;
-
-  /* Clinical Accents */
-  --color-med-blue: #0284c7;
-  --color-med-blue-dark: #0369a1;
-  --color-med-teal: #0d9488;
-  --color-med-teal-light: #14b8a6;
-  --color-med-navy: #0f172a;
-  --color-med-amber: #d97706;
-  --color-med-rose: #e11d48;
-
-  /* Typography */
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
-
-:root {
-  --canvas: #f8fafc;
-  --surface: #ffffff;
-  --text-main: #0f172a;
-  --med-blue: #0284c7;
-  --med-teal: #0d9488;
-}
-
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    background-color: #f8fafc;
-    color: #0f172a;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+  :root {
+    --font-headline: 'Manrope', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
 
   body {
+    font-family: var(--font-body);
     background-color: #f8fafc;
     color: #0f172a;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    color: #0f172a;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  ::selection {
-    background-color: #0284c7;
-    color: #ffffff;
+    font-family: var(--font-headline);
   }
 }
 
-/* ==========================================================================
-   Professional Medical Components & Cards
-   ========================================================================== */
+.font-headline {
+  font-family: var(--font-headline);
+}
 
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Custom UI Cards */
 .med-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 0.875rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease-in-out;
 }
 
 .med-card:hover {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
   border-color: #cbd5e1;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.07);
 }
 
-.med-card-highlight {
-  background-color: #ffffff;
-  border: 1px solid #bae6fd;
-  border-radius: 0.875rem;
-  box-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.08);
-}
-
+/* Badges */
 .med-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
-  font-weight: 600;
-  background-color: #e0f2fe;
-  color: #0369a1;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
 }
 
+/* Primary Green / Emerald Action Button */
 .btn-med-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.6875rem 1.375rem;
-  border-radius: 0.5rem;
-  background-color: #0284c7;
-  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
   font-size: 0.875rem;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
-  transition: all 0.2s ease;
+  background-color: #059669;
+  color: #ffffff;
+  box-shadow: 0 4px 14px 0 rgba(5, 150, 105, 0.25);
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 
 .btn-med-primary:hover {
-  background-color: #0369a1;
+  background-color: #047857;
+  box-shadow: 0 6px 20px 0 rgba(5, 150, 105, 0.35);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
 }
 
+.btn-med-primary:active {
+  transform: translateY(0);
+}
+
+/* Clean Secondary Button */
 .btn-med-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.6875rem 1.375rem;
-  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.875rem;
   background-color: #ffffff;
   color: #0f172a;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 
 .btn-med-secondary:hover {
   background-color: #f8fafc;
-  border-color: #94a3b8;
-  color: #0284c7;
+  border-color: #cbd5e1;
+  color: #059669;
 }
 
-/* Custom Medical Scrollbar */
+/* Floating Assistant Pulse */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
 }
-
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 9999px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
