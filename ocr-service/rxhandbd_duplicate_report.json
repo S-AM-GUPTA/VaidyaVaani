@@ -1,0 +1,10 @@
+{
+  "rxhandbd_total_samples": 5578,
+  "kaggle_129_total_prescriptions": 129,
+  "exact_sha256_duplicates_count": 0,
+  "near_phash_duplicates_count": 0,
+  "unique_rxhandbd_samples": 5578,
+  "exact_duplicates": [],
+  "near_duplicates": [],
+  "dataset_separation_status": "PROVEN_INDEPENDENT"
+}

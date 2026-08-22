@@ -1,0 +1,1186 @@
+{
+  "dataset_1": {
+    "name": "mehaksingal/illegible-medical-prescription-images-dataset",
+    "total_images": 129,
+    "directory": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1"
+  },
+  "dataset_2": {
+    "name": "sujaydaiml/handwritten-medical-prescriptions-collection",
+    "total_images": 129,
+    "directory": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1"
+  },
+  "comparison_results": {
+    "exact_sha256_duplicates_count": 129,
+    "exact_phash_duplicates_count": 0,
+    "near_duplicates_count": 0,
+    "new_unique_images_in_sujaydaiml": 0,
+    "total_combined_unique_sha256_images": 126,
+    "total_combined_perceptual_unique_images": 129
+  },
+  "exact_sha256_duplicates": [
+    {
+      "sujay_file": "1.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\1.jpg",
+      "mehak_file": "1.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\1.jpg",
+      "sha256": "33cebf97759ee401a51888d144bdb3772d414c1f65308b755d81c4aff5c34c82",
+      "resolution_sujay": "304x351",
+      "resolution_mehak": "304x351"
+    },
+    {
+      "sujay_file": "10.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\10.jpg",
+      "mehak_file": "10.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\10.jpg",
+      "sha256": "8e9da3ea572989d50af64c660f800d9282c88a575ad044a5ea33db28c653ecf0",
+      "resolution_sujay": "960x1280",
+      "resolution_mehak": "960x1280"
+    },
+    {
+      "sujay_file": "100.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\100.jpg",
+      "mehak_file": "100.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\100.jpg",
+      "sha256": "83073b39b38f80528728bcb07db78670856b6899bee2dcd5ca091c032025cac0",
+      "resolution_sujay": "1200x921",
+      "resolution_mehak": "1200x921"
+    },
+    {
+      "sujay_file": "101.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\101.jpg",
+      "mehak_file": "101.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\101.jpg",
+      "sha256": "d33619aa612322c476e5d0c78348356e120fcff262559bbab30685626d1dfca8",
+      "resolution_sujay": "1200x800",
+      "resolution_mehak": "1200x800"
+    },
+    {
+      "sujay_file": "102.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\102.jpg",
+      "mehak_file": "102.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\102.jpg",
+      "sha256": "de281ffceaecfbe134f3cc1292a25ac713bb26c513f7f205e4b38a568b6b7138",
+      "resolution_sujay": "706x596",
+      "resolution_mehak": "706x596"
+    },
+    {
+      "sujay_file": "103.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\103.jpg",
+      "mehak_file": "103.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\103.jpg",
+      "sha256": "d70e832b7b81bff5351936d12d4582be612289d80ab235ffa171d5770ca53e5c",
+      "resolution_sujay": "500x396",
+      "resolution_mehak": "500x396"
+    },
+    {
+      "sujay_file": "104.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\104.jpg",
+      "mehak_file": "104.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\104.jpg",
+      "sha256": "e57b49a997af10a0ea0360940469c051ec973f55b054d5a67b81c9bb8ecf437d",
+      "resolution_sujay": "750x435",
+      "resolution_mehak": "750x435"
+    },
+    {
+      "sujay_file": "105.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\105.jpg",
+      "mehak_file": "105.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\105.jpg",
+      "sha256": "b6ed5919ce7c46c6f26d4f108ece3d462f5ed23d9f43670fdf3d22197a1ef501",
+      "resolution_sujay": "960x1280",
+      "resolution_mehak": "960x1280"
+    },
+    {
+      "sujay_file": "106.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\106.jpg",
+      "mehak_file": "106.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\106.jpg",
+      "sha256": "7b6f555e04a0267b6cf367f39f364e2e978143bc62436bdac9b879931c1106f8",
+      "resolution_sujay": "443x249",
+      "resolution_mehak": "443x249"
+    },
+    {
+      "sujay_file": "107.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\107.jpg",
+      "mehak_file": "107.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\107.jpg",
+      "sha256": "9a9b35d7f309904df85b6790daa293f6c0442757921d5be226d1d501d51bb5ea",
+      "resolution_sujay": "1200x712",
+      "resolution_mehak": "1200x712"
+    },
+    {
+      "sujay_file": "108.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\108.jpg",
+      "mehak_file": "108.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\108.jpg",
+      "sha256": "85f4dd19f6a3d698edca6e5d9af257afe07703007d2580043a406484f6bccdf7",
+      "resolution_sujay": "2400x3600",
+      "resolution_mehak": "2400x3600"
+    },
+    {
+      "sujay_file": "109.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\109.jpg",
+      "mehak_file": "109.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\109.jpg",
+      "sha256": "c571c8b4037c674294e7e22516eb3cf1802de17bac59f053f97c06a76cf6a333",
+      "resolution_sujay": "299x169",
+      "resolution_mehak": "299x169"
+    },
+    {
+      "sujay_file": "11.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\11.jpg",
+      "mehak_file": "11.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\11.jpg",
+      "sha256": "f93844c8c0bd242b384014024b7c0cda48dbcfcdc073ef45c6132e13002514b7",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "110.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\110.jpg",
+      "mehak_file": "110.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\110.jpg",
+      "sha256": "fc694f507e9cfd9cfff6e47ff85811ac49e6d56dc62bcdadda48260a12c7396e",
+      "resolution_sujay": "733x524",
+      "resolution_mehak": "733x524"
+    },
+    {
+      "sujay_file": "111.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\111.jpg",
+      "mehak_file": "111.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\111.jpg",
+      "sha256": "8a98e226d8babb689d625bbf678ce5b380e65472d7e9d5a205309d6d094c1ffb",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "112.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\112.jpg",
+      "mehak_file": "112.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\112.jpg",
+      "sha256": "781dbae3381df54ec930c75886a622e2ec4380cd49c95709c46bd4ed0a1fde80",
+      "resolution_sujay": "500x654",
+      "resolution_mehak": "500x654"
+    },
+    {
+      "sujay_file": "113.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\113.jpg",
+      "mehak_file": "113.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\113.jpg",
+      "sha256": "95cfc9d07bfe93f0f8cab14ef8829f5c3881eb06df7c23f81650a500225185c4",
+      "resolution_sujay": "576x608",
+      "resolution_mehak": "576x608"
+    },
+    {
+      "sujay_file": "114.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\114.jpg",
+      "mehak_file": "83.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\83.jpg",
+      "sha256": "c269643e7f70fbc4d5c5dd2fc1a2b549e2fd75d8dc4cd630a1b8d9c96ff20aab",
+      "resolution_sujay": "808x515",
+      "resolution_mehak": "808x515"
+    },
+    {
+      "sujay_file": "115.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\115.jpg",
+      "mehak_file": "115.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\115.jpg",
+      "sha256": "8e5919589b6d06ff3df528759ed0063918a46761ffba0e07a653582dc4932c1d",
+      "resolution_sujay": "675x1200",
+      "resolution_mehak": "675x1200"
+    },
+    {
+      "sujay_file": "116.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\116.jpg",
+      "mehak_file": "116.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\116.jpg",
+      "sha256": "609ed3eb26f2404226108f688e537a1840d154420b0789dbc1db3a98ad2251a1",
+      "resolution_sujay": "547x1200",
+      "resolution_mehak": "547x1200"
+    },
+    {
+      "sujay_file": "117.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\117.jpg",
+      "mehak_file": "117.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\117.jpg",
+      "sha256": "be5f670e2477d13a0501b6c51a4c537ece5ac8c6ab9e8355dca1ae897cfc8a7a",
+      "resolution_sujay": "328x153",
+      "resolution_mehak": "328x153"
+    },
+    {
+      "sujay_file": "118.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\118.jpg",
+      "mehak_file": "118.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\118.jpg",
+      "sha256": "25b4753b2fed13bffdb2113a35dd9dee18d24c105904f8b976f1e4f0949d84fb",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "119.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\119.jpg",
+      "mehak_file": "119.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\119.jpg",
+      "sha256": "6b215b30f87cec7664b856f6a27b57ecd173bf82619cf59a1f2f21d7f60f6c25",
+      "resolution_sujay": "2400x3600",
+      "resolution_mehak": "2400x3600"
+    },
+    {
+      "sujay_file": "12.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\12.jpg",
+      "mehak_file": "12.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\12.jpg",
+      "sha256": "f3b2203b100f86744008126df1fb3ef69249ffd1b90c1f892bb474fbf7f232db",
+      "resolution_sujay": "1110x344",
+      "resolution_mehak": "1110x344"
+    },
+    {
+      "sujay_file": "120.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\120.jpg",
+      "mehak_file": "120.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\120.jpg",
+      "sha256": "8102c685b544f012ce600a114e7dda87e606224e3885bb2b50f26d3d299e96b0",
+      "resolution_sujay": "340x270",
+      "resolution_mehak": "340x270"
+    },
+    {
+      "sujay_file": "121.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\121.jpg",
+      "mehak_file": "121.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\121.jpg",
+      "sha256": "b35c6a66aff15012ed48f52344727e975998693a95235a0e3173df6935b025cd",
+      "resolution_sujay": "800x450",
+      "resolution_mehak": "800x450"
+    },
+    {
+      "sujay_file": "122.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\122.jpg",
+      "mehak_file": "122.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\122.jpg",
+      "sha256": "023da996196f3df31070abc1b8798bd5b26f5646d6f07910622394863b159a4c",
+      "resolution_sujay": "630x354",
+      "resolution_mehak": "630x354"
+    },
+    {
+      "sujay_file": "123.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\123.jpg",
+      "mehak_file": "123.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\123.jpg",
+      "sha256": "1778f33e4e70b11a83c9e05ec6e22cdf9fd513e4e4a512ba1b72d93deafe11db",
+      "resolution_sujay": "400x308",
+      "resolution_mehak": "400x308"
+    },
+    {
+      "sujay_file": "124.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\124.jpg",
+      "mehak_file": "124.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\124.jpg",
+      "sha256": "982dafc63305bbf3e17980138a99eeb41b93fc0ec0be3dab2cf60ead847c21f4",
+      "resolution_sujay": "1872x2752",
+      "resolution_mehak": "1872x2752"
+    },
+    {
+      "sujay_file": "125.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\125.jpg",
+      "mehak_file": "125.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\125.jpg",
+      "sha256": "d256dee2550ec9f63846a85c5d732a0a477a666fd1999a29fbf0a0c41fea9a9f",
+      "resolution_sujay": "675x1200",
+      "resolution_mehak": "675x1200"
+    },
+    {
+      "sujay_file": "126.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\126.jpg",
+      "mehak_file": "126.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\126.jpg",
+      "sha256": "c48350916793c81f03556509e0b7df684bc9cf9ef7090d180004fc1b4af55705",
+      "resolution_sujay": "424x371",
+      "resolution_mehak": "424x371"
+    },
+    {
+      "sujay_file": "127.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\127.jpg",
+      "mehak_file": "127.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\127.jpg",
+      "sha256": "1533f6a98c48d8234bcfed08dcca513ebf2598f2a68ba007d4b9b59e12a928e2",
+      "resolution_sujay": "196x257",
+      "resolution_mehak": "196x257"
+    },
+    {
+      "sujay_file": "128.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\128.jpg",
+      "mehak_file": "128.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\128.jpg",
+      "sha256": "b9d4f841982255b3936839c85e20fcfc464db7f37aefad924699e962d9e9365c",
+      "resolution_sujay": "2400x3600",
+      "resolution_mehak": "2400x3600"
+    },
+    {
+      "sujay_file": "129.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\129.jpg",
+      "mehak_file": "129.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\129.jpg",
+      "sha256": "4fd869d0e865b58bf8e85ebe9faf7a1bded4511fe95f264cb3e28348f9e3b0ed",
+      "resolution_sujay": "400x436",
+      "resolution_mehak": "400x436"
+    },
+    {
+      "sujay_file": "13.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\13.jpg",
+      "mehak_file": "13.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\13.jpg",
+      "sha256": "d436b348f76884c3621de62b9ad48fcd42c80d5b6305195ab7e22ae46307b9ed",
+      "resolution_sujay": "1280x720",
+      "resolution_mehak": "1280x720"
+    },
+    {
+      "sujay_file": "14.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\14.jpg",
+      "mehak_file": "14.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\14.jpg",
+      "sha256": "592d72636155f1c1c81ead92384acf772bc0d61078e7bf085f641f6728ddf0e0",
+      "resolution_sujay": "864x1152",
+      "resolution_mehak": "864x1152"
+    },
+    {
+      "sujay_file": "15.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\15.jpg",
+      "mehak_file": "15.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\15.jpg",
+      "sha256": "66dec2f98271ad9a6975ffc2bbbf53d41a7b1a74b4bb09becbfcc4aa2379f5d7",
+      "resolution_sujay": "635x386",
+      "resolution_mehak": "635x386"
+    },
+    {
+      "sujay_file": "16.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\16.jpg",
+      "mehak_file": "16.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\16.jpg",
+      "sha256": "d2f6a7225e42cd6dd5d8b3fa67d7e93691216b64d44ef616e40ca1dd898d4e64",
+      "resolution_sujay": "304x166",
+      "resolution_mehak": "304x166"
+    },
+    {
+      "sujay_file": "17.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\17.jpg",
+      "mehak_file": "17.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\17.jpg",
+      "sha256": "a863e6087b112ac863fbc20fb230384aba3bcc7fa642c4175c2b47160652328c",
+      "resolution_sujay": "1227x1600",
+      "resolution_mehak": "1227x1600"
+    },
+    {
+      "sujay_file": "18.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\18.jpg",
+      "mehak_file": "18.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\18.jpg",
+      "sha256": "24c5a481620737c4392454da0ae6ceea06c0ad8bd880b7c5e627532941c262d8",
+      "resolution_sujay": "500x389",
+      "resolution_mehak": "500x389"
+    },
+    {
+      "sujay_file": "19.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\19.jpg",
+      "mehak_file": "19.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\19.jpg",
+      "sha256": "9dc57444806021300554c9574a4464b99dafda5532e87fa9807de78f4c990210",
+      "resolution_sujay": "640x644",
+      "resolution_mehak": "640x644"
+    },
+    {
+      "sujay_file": "2.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\2.jpg",
+      "mehak_file": "2.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\2.jpg",
+      "sha256": "10c43d9d709dd699b60df65804972132888449a1e8f14f536c35cb77609bb89e",
+      "resolution_sujay": "720x1280",
+      "resolution_mehak": "720x1280"
+    },
+    {
+      "sujay_file": "20.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\20.jpg",
+      "mehak_file": "20.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\20.jpg",
+      "sha256": "f9f018dd4230d0e838eba52ff3ad31e6ca59ed8fd9ad0249cb3d6452e2c8f74d",
+      "resolution_sujay": "200x274",
+      "resolution_mehak": "200x274"
+    },
+    {
+      "sujay_file": "21.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\21.jpg",
+      "mehak_file": "21.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\21.jpg",
+      "sha256": "a29724dc2c0fb454c0f4d4b2b85e190ee42bfcfd52f2580f493059139ab1b027",
+      "resolution_sujay": "750x435",
+      "resolution_mehak": "750x435"
+    },
+    {
+      "sujay_file": "22.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\22.jpg",
+      "mehak_file": "22.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\22.jpg",
+      "sha256": "2a217412be044d0e5c3f692b40c8982d41d8a60f496e41ce0b091e94357a4b3c",
+      "resolution_sujay": "400x334",
+      "resolution_mehak": "400x334"
+    },
+    {
+      "sujay_file": "23.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\23.jpg",
+      "mehak_file": "23.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\23.jpg",
+      "sha256": "2d542beba255f72d38bccb9bf05c931924b8e97150f73426078bb835506934a0",
+      "resolution_sujay": "602x803",
+      "resolution_mehak": "602x803"
+    },
+    {
+      "sujay_file": "24.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\24.jpg",
+      "mehak_file": "24.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\24.jpg",
+      "sha256": "3e651664ac804fc0d65bf6538be4b5a05a988ff8f799944aafa810851139eb73",
+      "resolution_sujay": "1734x2307",
+      "resolution_mehak": "1734x2307"
+    },
+    {
+      "sujay_file": "25.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\25.jpg",
+      "mehak_file": "25.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\25.jpg",
+      "sha256": "68866894b7ce2ec8d1aa28083c9a6445b2cf1e988ac0f8ccf6601249eb078b27",
+      "resolution_sujay": "400x347",
+      "resolution_mehak": "400x347"
+    },
+    {
+      "sujay_file": "26.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\26.jpg",
+      "mehak_file": "26.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\26.jpg",
+      "sha256": "225a52cba1f9371982b14463f812d1a7428c6e578927111d80fe3036231606f5",
+      "resolution_sujay": "440x334",
+      "resolution_mehak": "440x334"
+    },
+    {
+      "sujay_file": "27.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\27.jpg",
+      "mehak_file": "27.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\27.jpg",
+      "sha256": "f92dfd41e354b3dd496f84e149ee6bb4aa17f78a2d2397fb1dc0d35dafb0fa64",
+      "resolution_sujay": "921x1361",
+      "resolution_mehak": "921x1361"
+    },
+    {
+      "sujay_file": "28.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\28.jpg",
+      "mehak_file": "28.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\28.jpg",
+      "sha256": "41e7d39c435b313adabff8ba6e8d4a54e0c824981349db46075a41852b34f4d6",
+      "resolution_sujay": "576x1024",
+      "resolution_mehak": "576x1024"
+    },
+    {
+      "sujay_file": "29.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\29.jpg",
+      "mehak_file": "29.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\29.jpg",
+      "sha256": "20501a6185259e79af3c1edd359b46bcda4c6094807d880fdf24599ed81612b5",
+      "resolution_sujay": "685x938",
+      "resolution_mehak": "685x938"
+    },
+    {
+      "sujay_file": "3.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\3.jpg",
+      "mehak_file": "3.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\3.jpg",
+      "sha256": "1770ce3d1a1dabef1d3c0bc122aa4d25c25324bb5b5cf7e2b0f4e78294fbd9c8",
+      "resolution_sujay": "400x261",
+      "resolution_mehak": "400x261"
+    },
+    {
+      "sujay_file": "30.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\30.jpg",
+      "mehak_file": "30.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\30.jpg",
+      "sha256": "fde76aa5e904e4b0673d7e27940bd18ac1c86771aaf41d54d9946603acd15f4d",
+      "resolution_sujay": "1299x1600",
+      "resolution_mehak": "1299x1600"
+    },
+    {
+      "sujay_file": "31.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\31.jpg",
+      "mehak_file": "31.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\31.jpg",
+      "sha256": "0cc4be046ef5c3373b810aced51ffbebdf88856546f3ffb2508d7bc03814649c",
+      "resolution_sujay": "400x435",
+      "resolution_mehak": "400x435"
+    },
+    {
+      "sujay_file": "32.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\32.jpg",
+      "mehak_file": "32.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\32.jpg",
+      "sha256": "9a93362b22c5e20611aba919c7d93585dbcd0d357655e1b7a296d01ae6bb4f9d",
+      "resolution_sujay": "312x500",
+      "resolution_mehak": "312x500"
+    },
+    {
+      "sujay_file": "33.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\33.jpg",
+      "mehak_file": "33.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\33.jpg",
+      "sha256": "989be7c7a47f3540f5d35e19d4992a07b059698aaa968b236d1615528acd4839",
+      "resolution_sujay": "960x1280",
+      "resolution_mehak": "960x1280"
+    },
+    {
+      "sujay_file": "34.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\34.jpg",
+      "mehak_file": "34.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\34.jpg",
+      "sha256": "45628b9218f27517f22b7339596b6a2025d11609a6f27f0e130f2248b5e62b8f",
+      "resolution_sujay": "640x737",
+      "resolution_mehak": "640x737"
+    },
+    {
+      "sujay_file": "35.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\35.jpg",
+      "mehak_file": "35.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\35.jpg",
+      "sha256": "ecd7472710fe1499c66a286e69bff4267bd336a91b73dd9db71f70d5c5fa7290",
+      "resolution_sujay": "232x218",
+      "resolution_mehak": "232x218"
+    },
+    {
+      "sujay_file": "36.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\36.jpg",
+      "mehak_file": "36.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\36.jpg",
+      "sha256": "a7e396b5d684e5ee25828de2910fa22a4526db34c1d3ddcbe1ae859b36967c87",
+      "resolution_sujay": "604x900",
+      "resolution_mehak": "604x900"
+    },
+    {
+      "sujay_file": "37.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\37.jpg",
+      "mehak_file": "37.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\37.jpg",
+      "sha256": "38734d50100bc2f6dc3e8642a6893bca2394fe26febf29fc6455103ac59e2d71",
+      "resolution_sujay": "750x575",
+      "resolution_mehak": "750x575"
+    },
+    {
+      "sujay_file": "38.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\38.jpg",
+      "mehak_file": "38.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\38.jpg",
+      "sha256": "2503283ea7069e7f8f882ef288bc4b349e32dad2754be62125f47a51f2ec50ac",
+      "resolution_sujay": "1800x2559",
+      "resolution_mehak": "1800x2559"
+    },
+    {
+      "sujay_file": "39.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\39.jpg",
+      "mehak_file": "39.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\39.jpg",
+      "sha256": "dc293e0bcd4e9ea423d4c38704ede1fabc8fbb568f2a3d73abef23c4122dfbe4",
+      "resolution_sujay": "262x193",
+      "resolution_mehak": "262x193"
+    },
+    {
+      "sujay_file": "4.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\4.jpg",
+      "mehak_file": "4.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\4.jpg",
+      "sha256": "7ff41f6440dd18fa0fa019fbe5c25d72a0b5a3c4255143982f6205fff266c8f0",
+      "resolution_sujay": "2400x3600",
+      "resolution_mehak": "2400x3600"
+    },
+    {
+      "sujay_file": "40.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\40.jpg",
+      "mehak_file": "40.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\40.jpg",
+      "sha256": "bf8ae3778e52e37fb006118caf22c8e7c54a75c7fdae74c73f80e61377427814",
+      "resolution_sujay": "720x1280",
+      "resolution_mehak": "720x1280"
+    },
+    {
+      "sujay_file": "41.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\41.jpg",
+      "mehak_file": "70.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\70.jpg",
+      "sha256": "29e6e0daebfc57c0ebb5e56d37513a9b79c72b94d763aa0b820596dc8e112bcf",
+      "resolution_sujay": "400x461",
+      "resolution_mehak": "400x461"
+    },
+    {
+      "sujay_file": "42.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\42.jpg",
+      "mehak_file": "42.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\42.jpg",
+      "sha256": "a51d7d9695eba772e9982897f6925ca1f423c1a72a730be663abfb041ee50879",
+      "resolution_sujay": "944x1164",
+      "resolution_mehak": "944x1164"
+    },
+    {
+      "sujay_file": "43.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\43.jpg",
+      "mehak_file": "43.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\43.jpg",
+      "sha256": "3cbf314c4bc2d33e2f1d2d3f49d98e3acaa66f52d49b4b9f6c048f8a6194b36d",
+      "resolution_sujay": "276x400",
+      "resolution_mehak": "276x400"
+    },
+    {
+      "sujay_file": "44.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\44.jpg",
+      "mehak_file": "44.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\44.jpg",
+      "sha256": "e572f29be53e6250287310e5b76569a3ffe8fec0df5d20ce6d6557aff7ae45a5",
+      "resolution_sujay": "800x458",
+      "resolution_mehak": "800x458"
+    },
+    {
+      "sujay_file": "45.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\45.jpg",
+      "mehak_file": "45.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\45.jpg",
+      "sha256": "ea2a3231f4083465a8485594d00eac1572dd0953dddb5422f0d80c355627cb9a",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "46.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\46.jpg",
+      "mehak_file": "46.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\46.jpg",
+      "sha256": "af9be2279e487d6803a02f94aebba8fea906e7a9c9b4e21bd3484d5c55f33212",
+      "resolution_sujay": "768x1024",
+      "resolution_mehak": "768x1024"
+    },
+    {
+      "sujay_file": "47.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\47.jpg",
+      "mehak_file": "47.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\47.jpg",
+      "sha256": "2a7410211d7075c85465859d778593c412a208813479392aac3b60139f2e2a10",
+      "resolution_sujay": "191x263",
+      "resolution_mehak": "191x263"
+    },
+    {
+      "sujay_file": "48.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\48.jpg",
+      "mehak_file": "48.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\48.jpg",
+      "sha256": "1e19f5fdc1ec3492dda4ad04756792333a7185ad2e616ba835770576d83bb6bb",
+      "resolution_sujay": "424x224",
+      "resolution_mehak": "424x224"
+    },
+    {
+      "sujay_file": "49.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\49.jpg",
+      "mehak_file": "49.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\49.jpg",
+      "sha256": "86bf8443db82bea01d05c79430c0ae680f4b5f001d51776882c187497c25c50a",
+      "resolution_sujay": "462x283",
+      "resolution_mehak": "462x283"
+    },
+    {
+      "sujay_file": "5.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\5.jpg",
+      "mehak_file": "5.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\5.jpg",
+      "sha256": "9c7f4a17d0a669ce70d6d7473c67232a0f02fe7b61d9af62e0b8d21623d82fce",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "50.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\50.jpg",
+      "mehak_file": "50.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\50.jpg",
+      "sha256": "df0f7784ec201d97ee311f1f9c580f6f01bd38994f1c09e029d804ff417652cc",
+      "resolution_sujay": "701x1000",
+      "resolution_mehak": "701x1000"
+    },
+    {
+      "sujay_file": "51.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\51.jpg",
+      "mehak_file": "51.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\51.jpg",
+      "sha256": "62dc02ac56e270ddb8b2a3ab94121fb9d9c17f169d1382abe8d5128d6fae89ed",
+      "resolution_sujay": "685x915",
+      "resolution_mehak": "685x915"
+    },
+    {
+      "sujay_file": "52.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\52.jpg",
+      "mehak_file": "52.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\52.jpg",
+      "sha256": "3009713925b63ef1ab90e57753316efa81bd549678ebcb069d366bc6003ed2e1",
+      "resolution_sujay": "1023x770",
+      "resolution_mehak": "1023x770"
+    },
+    {
+      "sujay_file": "53.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\53.jpg",
+      "mehak_file": "53.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\53.jpg",
+      "sha256": "cc72a7299a81aedecd65389d4775f8ba13f97477f31965c32323270a471db1dc",
+      "resolution_sujay": "810x1053",
+      "resolution_mehak": "810x1053"
+    },
+    {
+      "sujay_file": "54.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\54.jpg",
+      "mehak_file": "54.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\54.jpg",
+      "sha256": "74a6a4336f14f6a883b69e36c1b80c8301c7c3f3e19aa5e130de8dfc63b3bef6",
+      "resolution_sujay": "600x424",
+      "resolution_mehak": "600x424"
+    },
+    {
+      "sujay_file": "55.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\55.jpg",
+      "mehak_file": "55.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\55.jpg",
+      "sha256": "fcb6294a3c6d88521a5efb246dbe7a326f3c151b46e9891a05404bb1b0b0c44d",
+      "resolution_sujay": "648x839",
+      "resolution_mehak": "648x839"
+    },
+    {
+      "sujay_file": "56.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\56.jpg",
+      "mehak_file": "56.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\56.jpg",
+      "sha256": "bbb04634d90e5ea18ca1f2c9d3cf7b722c471b43030c17b50a93346cfb626545",
+      "resolution_sujay": "537x403",
+      "resolution_mehak": "537x403"
+    },
+    {
+      "sujay_file": "57.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\57.jpg",
+      "mehak_file": "57.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\57.jpg",
+      "sha256": "6e5cd53015b3c76c6dc986124f8c504a17714363f6db77b03837f5e3d3c13d66",
+      "resolution_sujay": "984x1138",
+      "resolution_mehak": "984x1138"
+    },
+    {
+      "sujay_file": "58.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\58.jpg",
+      "mehak_file": "58.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\58.jpg",
+      "sha256": "e2271f560562ca8717c5d44d8aa04e61dd97ae82f164355f1a3c3110f29579ba",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "59.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\59.jpg",
+      "mehak_file": "59.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\59.jpg",
+      "sha256": "9505aa04098ca753d8896b230ee7c154554a77e3e7ea4394dc8dbded4a643745",
+      "resolution_sujay": "1000x562",
+      "resolution_mehak": "1000x562"
+    },
+    {
+      "sujay_file": "6.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\6.jpg",
+      "mehak_file": "6.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\6.jpg",
+      "sha256": "a2899a223323ec791b512c02c88667c0aeeaba0b644e97713e9174fe3223e09c",
+      "resolution_sujay": "675x1200",
+      "resolution_mehak": "675x1200"
+    },
+    {
+      "sujay_file": "60.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\60.jpg",
+      "mehak_file": "60.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\60.jpg",
+      "sha256": "33ac6a0dace474a900e99b17f0520df2a0cc343946a9e8c72152d4e19a3494f1",
+      "resolution_sujay": "824x1280",
+      "resolution_mehak": "824x1280"
+    },
+    {
+      "sujay_file": "61.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\61.jpg",
+      "mehak_file": "94.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\94.jpg",
+      "sha256": "736591e9de94f4f2bcbe1981166a4036a58f4881d6b428e57645e6d9a552a95f",
+      "resolution_sujay": "755x901",
+      "resolution_mehak": "755x901"
+    },
+    {
+      "sujay_file": "62.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\62.jpg",
+      "mehak_file": "62.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\62.jpg",
+      "sha256": "ce879fe30c118ef14d7be90fb550aad5a0d1a82adfd19cc5062b949a48830fec",
+      "resolution_sujay": "560x560",
+      "resolution_mehak": "560x560"
+    },
+    {
+      "sujay_file": "63.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\63.jpg",
+      "mehak_file": "63.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\63.jpg",
+      "sha256": "5453bdac8662bed49342599a97ef9b0f08dd2de65307b2755ca8de8e2e975759",
+      "resolution_sujay": "2061x2270",
+      "resolution_mehak": "2061x2270"
+    },
+    {
+      "sujay_file": "64.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\64.jpg",
+      "mehak_file": "64.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\64.jpg",
+      "sha256": "21981d9e3d45277ea31bc90a82ec51fc008ef31c52907c5100357bf740d47b5a",
+      "resolution_sujay": "680x446",
+      "resolution_mehak": "680x446"
+    },
+    {
+      "sujay_file": "65.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\65.jpg",
+      "mehak_file": "65.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\65.jpg",
+      "sha256": "394915d14f1725fcc83a5799c0a1acc2edd4d8a048584bb6f47df0d64005d3e6",
+      "resolution_sujay": "584x892",
+      "resolution_mehak": "584x892"
+    },
+    {
+      "sujay_file": "66.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\66.jpg",
+      "mehak_file": "66.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\66.jpg",
+      "sha256": "d368a0dd90ac2352a646fec427f9ae2e6330fa3e13d5adbe9eb7f34653a63185",
+      "resolution_sujay": "2400x3600",
+      "resolution_mehak": "2400x3600"
+    },
+    {
+      "sujay_file": "67.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\67.jpg",
+      "mehak_file": "67.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\67.jpg",
+      "sha256": "92be50e51f72a85ecf7ab0d891c5daba591d9a8ba7fcf9dd952adcee0c78e5de",
+      "resolution_sujay": "1200x1600",
+      "resolution_mehak": "1200x1600"
+    },
+    {
+      "sujay_file": "68.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\68.jpg",
+      "mehak_file": "68.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\68.jpg",
+      "sha256": "afaecfc92608bd1fcf7be3e80d39523b0c64e2de11902b5bda881f9cbe9aa391",
+      "resolution_sujay": "1637x1050",
+      "resolution_mehak": "1637x1050"
+    },
+    {
+      "sujay_file": "69.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\69.jpg",
+      "mehak_file": "69.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\69.jpg",
+      "sha256": "02d0d836e1b9df6887ac1d8a2d395ef6c25f9002bbf4beec3c08b58b948b5514",
+      "resolution_sujay": "363x139",
+      "resolution_mehak": "363x139"
+    },
+    {
+      "sujay_file": "7.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\7.jpg",
+      "mehak_file": "7.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\7.jpg",
+      "sha256": "f9b726f4ab37c2d97cdd2b9cbb28b21d2e0a334863085cbb648da5cc9b5bea87",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "70.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\70.jpg",
+      "mehak_file": "70.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\70.jpg",
+      "sha256": "29e6e0daebfc57c0ebb5e56d37513a9b79c72b94d763aa0b820596dc8e112bcf",
+      "resolution_sujay": "400x461",
+      "resolution_mehak": "400x461"
+    },
+    {
+      "sujay_file": "71.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\71.jpg",
+      "mehak_file": "71.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\71.jpg",
+      "sha256": "069143f594c4179ea8183adeafc7f6dcc68f2fc041cf260615f8bca3b1932802",
+      "resolution_sujay": "1089x675",
+      "resolution_mehak": "1089x675"
+    },
+    {
+      "sujay_file": "72.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\72.jpg",
+      "mehak_file": "72.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\72.jpg",
+      "sha256": "754ec4d6d547149a3700077d11ba9a368642588a42da1980130a41001d51a87d",
+      "resolution_sujay": "767x1023",
+      "resolution_mehak": "767x1023"
+    },
+    {
+      "sujay_file": "73.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\73.jpg",
+      "mehak_file": "73.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\73.jpg",
+      "sha256": "88962d2d1723a26e2a828212bb0dc2f964ab2350ca85ebb626add82f20cf1487",
+      "resolution_sujay": "864x864",
+      "resolution_mehak": "864x864"
+    },
+    {
+      "sujay_file": "74.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\74.jpg",
+      "mehak_file": "74.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\74.jpg",
+      "sha256": "22b8b1af1910e0ab56ee8f3cf9f1d8de6576b85eb93111d702813a5bb99a0e26",
+      "resolution_sujay": "960x1280",
+      "resolution_mehak": "960x1280"
+    },
+    {
+      "sujay_file": "75.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\75.jpg",
+      "mehak_file": "75.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\75.jpg",
+      "sha256": "2f03793bca164962f9dbdbab74c2aabba4245df243d1a69f1426d1262af5288b",
+      "resolution_sujay": "850x721",
+      "resolution_mehak": "850x721"
+    },
+    {
+      "sujay_file": "76.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\76.jpg",
+      "mehak_file": "76.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\76.jpg",
+      "sha256": "b439ad296f13c732765474261c48e12d799c91f8624031c367366115de785ec2",
+      "resolution_sujay": "291x173",
+      "resolution_mehak": "291x173"
+    },
+    {
+      "sujay_file": "77.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\77.jpg",
+      "mehak_file": "77.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\77.jpg",
+      "sha256": "777f16bd8a50748d8c45ab31b269ed8d85fdd67d2c355dc782c8a3a44e048e60",
+      "resolution_sujay": "304x347",
+      "resolution_mehak": "304x347"
+    },
+    {
+      "sujay_file": "78.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\78.jpg",
+      "mehak_file": "78.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\78.jpg",
+      "sha256": "dd27176b7dd34ff81268db737ba7d960e45f34052f3ceaca1681c0ab3e5ea63e",
+      "resolution_sujay": "602x715",
+      "resolution_mehak": "602x715"
+    },
+    {
+      "sujay_file": "79.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\79.jpg",
+      "mehak_file": "79.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\79.jpg",
+      "sha256": "fc74bb589b4833617618af6e233cf48cc5c3d05e019a35dd55ca74396296038a",
+      "resolution_sujay": "1200x1567",
+      "resolution_mehak": "1200x1567"
+    },
+    {
+      "sujay_file": "8.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\8.jpg",
+      "mehak_file": "8.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\8.jpg",
+      "sha256": "83395d897852774b941480c59be16c82fd8d2126a27c1357eb03bac634fc8a6c",
+      "resolution_sujay": "1592x1879",
+      "resolution_mehak": "1592x1879"
+    },
+    {
+      "sujay_file": "80.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\80.jpg",
+      "mehak_file": "80.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\80.jpg",
+      "sha256": "0e70159ab72ebd22c82b40127f142034eea4af122af41fba7890ecd5f400ade5",
+      "resolution_sujay": "750x898",
+      "resolution_mehak": "750x898"
+    },
+    {
+      "sujay_file": "81.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\81.jpg",
+      "mehak_file": "81.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\81.jpg",
+      "sha256": "c0f846d4b83cb02584fc012481f63bd69e2a7cfaf27acd460259bd1665d8f933",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "82.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\82.jpg",
+      "mehak_file": "82.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\82.jpg",
+      "sha256": "3d46970ec44c6cefbe48d76e3abf26c4fafdbc27ae5e76828ed76db856f488e4",
+      "resolution_sujay": "1024x1024",
+      "resolution_mehak": "1024x1024"
+    },
+    {
+      "sujay_file": "83.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\83.jpg",
+      "mehak_file": "83.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\83.jpg",
+      "sha256": "c269643e7f70fbc4d5c5dd2fc1a2b549e2fd75d8dc4cd630a1b8d9c96ff20aab",
+      "resolution_sujay": "808x515",
+      "resolution_mehak": "808x515"
+    },
+    {
+      "sujay_file": "84.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\84.jpg",
+      "mehak_file": "84.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\84.jpg",
+      "sha256": "4be9d34ba4e4b7ab42ab9eed085f9a8b71cf832236d7198d83885fb8bf9066b1",
+      "resolution_sujay": "960x1280",
+      "resolution_mehak": "960x1280"
+    },
+    {
+      "sujay_file": "85.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\85.jpg",
+      "mehak_file": "85.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\85.jpg",
+      "sha256": "055294d35067d3f4f93ed39db57ab20dfb93f1ad78e7a92ab9389464217f9efe",
+      "resolution_sujay": "3120x4160",
+      "resolution_mehak": "3120x4160"
+    },
+    {
+      "sujay_file": "86.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\86.jpg",
+      "mehak_file": "86.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\86.jpg",
+      "sha256": "035e3ae9af396f36986940ef9e58da54818aaa032bf08d6c5a848295a41d85cd",
+      "resolution_sujay": "496x557",
+      "resolution_mehak": "496x557"
+    },
+    {
+      "sujay_file": "87.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\87.jpg",
+      "mehak_file": "87.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\87.jpg",
+      "sha256": "1d2e966721bba071fd6fa9afdd8514ee55f6a217db62b1e3adde87fb0ec7a1a8",
+      "resolution_sujay": "750x435",
+      "resolution_mehak": "750x435"
+    },
+    {
+      "sujay_file": "88.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\88.jpg",
+      "mehak_file": "88.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\88.jpg",
+      "sha256": "a112b0e651f73137eb817364ec4396ef08b3476642c32481fab44bdc45ba4e65",
+      "resolution_sujay": "1103x689",
+      "resolution_mehak": "1103x689"
+    },
+    {
+      "sujay_file": "89.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\89.jpg",
+      "mehak_file": "89.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\89.jpg",
+      "sha256": "a806569c2466ff3e9086db5b549db75f107904af4f42ceec19961cd3e1a3bfc0",
+      "resolution_sujay": "525x401",
+      "resolution_mehak": "525x401"
+    },
+    {
+      "sujay_file": "9.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\9.jpg",
+      "mehak_file": "9.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\9.jpg",
+      "sha256": "6994ae0431af1b6317e7ff040e786be3e9ac78309ab86e1785db22db35fe9ce7",
+      "resolution_sujay": "624x498",
+      "resolution_mehak": "624x498"
+    },
+    {
+      "sujay_file": "90.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\90.jpg",
+      "mehak_file": "90.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\90.jpg",
+      "sha256": "4fa45c68ca3d7c910642d5f586a07624591192df3ae991603269c9ee9e61dd06",
+      "resolution_sujay": "400x449",
+      "resolution_mehak": "400x449"
+    },
+    {
+      "sujay_file": "91.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\91.jpg",
+      "mehak_file": "91.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\91.jpg",
+      "sha256": "18ccbe978586603dc15ad60b7fa9c369b0f74e9116be579d88b5ccba3f6fd30c",
+      "resolution_sujay": "768x1024",
+      "resolution_mehak": "768x1024"
+    },
+    {
+      "sujay_file": "92.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\92.jpg",
+      "mehak_file": "92.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\92.jpg",
+      "sha256": "d63694b8f90190a4347f0d1fd310aa8f830c55838b5aa6f61b908e9642b5f3ef",
+      "resolution_sujay": "675x1200",
+      "resolution_mehak": "675x1200"
+    },
+    {
+      "sujay_file": "93.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\93.jpg",
+      "mehak_file": "93.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\93.jpg",
+      "sha256": "ef5296dfd0fb68a4180976b3fdb9e52748098ad5345fff9baf476ea168d0179d",
+      "resolution_sujay": "381x408",
+      "resolution_mehak": "381x408"
+    },
+    {
+      "sujay_file": "94.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\94.jpg",
+      "mehak_file": "94.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\94.jpg",
+      "sha256": "736591e9de94f4f2bcbe1981166a4036a58f4881d6b428e57645e6d9a552a95f",
+      "resolution_sujay": "755x901",
+      "resolution_mehak": "755x901"
+    },
+    {
+      "sujay_file": "95.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\95.jpg",
+      "mehak_file": "95.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\95.jpg",
+      "sha256": "b33a1707fddfcebd7dea0ee75267d8cc04882f5a398f58010124b59c1b2cd67d",
+      "resolution_sujay": "726x1024",
+      "resolution_mehak": "726x1024"
+    },
+    {
+      "sujay_file": "96.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\96.jpg",
+      "mehak_file": "96.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\96.jpg",
+      "sha256": "03cf8d882b233008cd4cc60712956f5d398ab289d911c9eeb8062b76077c1cc6",
+      "resolution_sujay": "1234x818",
+      "resolution_mehak": "1234x818"
+    },
+    {
+      "sujay_file": "97.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\97.jpg",
+      "mehak_file": "97.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\97.jpg",
+      "sha256": "cd092423c42c3cfd54fb441a0332b53f41912b7c93bb0cceca09c2ce7f55e921",
+      "resolution_sujay": "744x900",
+      "resolution_mehak": "744x900"
+    },
+    {
+      "sujay_file": "98.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\98.jpg",
+      "mehak_file": "98.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\98.jpg",
+      "sha256": "665448d20a122ca30c92752d7e23e832dabe9a3b9cae2284a1ae6760650adcfa",
+      "resolution_sujay": "720x1280",
+      "resolution_mehak": "720x1280"
+    },
+    {
+      "sujay_file": "99.jpg",
+      "sujay_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\sujaydaiml\\handwritten-medical-prescriptions-collection\\versions\\1\\Handwritten Medical Prescriptions Collection\\99.jpg",
+      "mehak_file": "99.jpg",
+      "mehak_path": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\mehaksingal\\illegible-medical-prescription-images-dataset\\versions\\1\\data\\99.jpg",
+      "sha256": "b18f82ce26367d041f9c2593edd5848d96a4b6e677d83f67a622943ce0375056",
+      "resolution_sujay": "478x680",
+      "resolution_mehak": "478x680"
+    }
+  ],
+  "exact_phash_duplicates": [],
+  "near_duplicates": [],
+  "sample_sujay_unique": []
+}

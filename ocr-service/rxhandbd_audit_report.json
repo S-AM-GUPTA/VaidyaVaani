@@ -1,0 +1,31 @@
+{
+  "dataset_name": "RxHandBD",
+  "source": "roronaozoro007/rxhandbd (Kaggle)",
+  "license": "MIT",
+  "directory": "C:\\Users\\samfg\\.cache\\kagglehub\\datasets\\roronaozoro007\\rxhandbd\\versions\\1\\RxHandBD",
+  "total_files": 5581,
+  "total_images": 5578,
+  "train_images_count": 4463,
+  "test_images_count": 1115,
+  "train_matched_samples": 4463,
+  "test_matched_samples": 1115,
+  "missing_label_images": 0,
+  "orphan_csv_labels": 0,
+  "empty_labels_count": 0,
+  "invalid_corrupt_images": 0,
+  "total_labeled_samples": 5578,
+  "total_unique_text_labels": 1787,
+  "vocabulary_entries_count": 41,
+  "sample_color_modes": {
+    "RGB": 200
+  },
+  "sample_dimensions_min": [
+    512,
+    512
+  ],
+  "sample_dimensions_max": [
+    512,
+    512
+  ],
+  "pairing_integrity_passed": true
+}

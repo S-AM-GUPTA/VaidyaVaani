@@ -1,0 +1,166 @@
+{
+  "dataset_name": "RxHandBD",
+  "total_label_occurrences": 5578,
+  "unique_vocabulary_terms": 1787,
+  "top_25_most_frequent_labels": [
+    {
+      "label": "Tablet",
+      "frequency": 146
+    },
+    {
+      "label": "Napa",
+      "frequency": 114
+    },
+    {
+      "label": "Dexter",
+      "frequency": 100
+    },
+    {
+      "label": "Omeprazole",
+      "frequency": 87
+    },
+    {
+      "label": "Injection",
+      "frequency": 78
+    },
+    {
+      "label": "Algin",
+      "frequency": 69
+    },
+    {
+      "label": "Neuro-B",
+      "frequency": 68
+    },
+    {
+      "label": "Diet",
+      "frequency": 59
+    },
+    {
+      "label": "Nexe",
+      "frequency": 54
+    },
+    {
+      "label": "Ceftriaxone",
+      "frequency": 52
+    },
+    {
+      "label": "Nexum",
+      "frequency": 48
+    },
+    {
+      "label": "Voltalin",
+      "frequency": 47
+    },
+    {
+      "label": "nexe",
+      "frequency": 47
+    },
+    {
+      "label": "Capsule",
+      "frequency": 45
+    },
+    {
+      "label": "Rolac",
+      "frequency": 43
+    },
+    {
+      "label": "Neuroxen",
+      "frequency": 40
+    },
+    {
+      "label": "Calcor-D",
+      "frequency": 39
+    },
+    {
+      "label": "Emistat",
+      "frequency": 39
+    },
+    {
+      "label": "napa",
+      "frequency": 36
+    },
+    {
+      "label": "diet",
+      "frequency": 35
+    },
+    {
+      "label": "voltalin",
+      "frequency": 34
+    },
+    {
+      "label": "Syrup",
+      "frequency": 34
+    },
+    {
+      "label": "xinc b",
+      "frequency": 33
+    },
+    {
+      "label": "tab",
+      "frequency": 31
+    },
+    {
+      "label": "Normal",
+      "frequency": 30
+    }
+  ],
+  "category_breakdown": {
+    "medicine_name_candidates_count": 1700,
+    "dosage_form_labels_count": 81,
+    "instruction_frequency_labels_count": 1,
+    "strength_measurement_labels_count": 2,
+    "other_or_unclassified_count": 3
+  },
+  "sample_medicine_names": [
+    "Napa",
+    "Dexter",
+    "Omeprazole",
+    "Injection",
+    "Algin",
+    "Neuro-B",
+    "Diet",
+    "Nexe",
+    "Ceftriaxone",
+    "Nexum",
+    "Voltalin",
+    "nexe",
+    "Rolac",
+    "Neuroxen",
+    "Calcor-D",
+    "Emistat",
+    "napa",
+    "diet",
+    "voltalin",
+    "xinc b",
+    "Normal",
+    "ceevit",
+    "texit",
+    "Calboral",
+    "emistat",
+    "m-lucas 10",
+    "Esprazo",
+    "Ceevit",
+    "Meropenem",
+    "Neuro"
+  ],
+  "sample_dosage_forms": [
+    "Tab.Aristovif-3",
+    "Cap.Fusprazo",
+    "Tab. Naprox",
+    "Tab.Neuro",
+    "Tab.calboral",
+    "Tab. Amitip",
+    "Tab.Don-A",
+    "Tab. Naprosyn Plus",
+    "cap. Esprazo",
+    "Tab. Beklo",
+    "Tab. Neuro-B",
+    "Tab. Calboral",
+    "Tab. Epitra",
+    "Tab. Deap",
+    "cap. Folzin"
+  ],
+  "sample_clinical_instructions": [
+    "AC PR"
+  ]
+}

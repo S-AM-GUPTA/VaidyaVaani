@@ -1,0 +1,13 @@
+{
+  "dataset": "RxHandBD",
+  "source": "Kaggle",
+  "version": "1.0",
+  "license": "MIT",
+  "total_samples": 5578,
+  "verified_samples": 5578,
+  "train_samples": 4463,
+  "validation_samples": 446,
+  "test_samples": 1115,
+  "duplicate_samples_removed": 0,
+  "unique_vocabulary_size": 1787
+}

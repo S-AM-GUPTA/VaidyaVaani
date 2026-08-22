@@ -6,3 +6,10 @@ __pycache__/
 client/dist/
 server/dist/
 .DS_Store
+
+# PyTorch / ML Model Weights
+*.safetensors
+*.bin
+*.pt
+*.pth
+ocr-service/models/rxhandbd/checkpoints/

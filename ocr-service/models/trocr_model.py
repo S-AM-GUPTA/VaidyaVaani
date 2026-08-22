@@ -28,6 +28,7 @@ def get_device() -> str:
 def get_trocr_model():
     """
     Lazy-loads TrOCR processor and model once.
+    Supports selecting between 'pretrained' and 'rxhandbd-v1' checkpoints.
     """
     global _trocr_processor, _trocr_model, _initialization_error
     
@@ -37,19 +38,28 @@ def get_trocr_model():
     if _initialization_error is not None:
         return None, None
 
-    model_name = os.getenv("OCR_MODEL_NAME", "microsoft/trocr-base-handwritten")
+    model_choice = os.getenv("TROCR_MODEL", "pretrained").lower()
+    custom_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'models', 'rxhandbd', 'best'))
+    
+    if model_choice in ["rxhandbd", "rxhandbd-v1"] and os.path.exists(custom_dir):
+        model_name_or_path = custom_dir
+        version_label = "trocr-rxhandbd-v1"
+    else:
+        model_name_or_path = os.getenv("OCR_MODEL_NAME", "microsoft/trocr-base-handwritten")
+        version_label = "trocr-pretrained"
+        
     device = get_device()
     
     try:
         from transformers import TrOCRProcessor, VisionEncoderDecoderModel
-        print(f"[TrOCR Model] Loading pretrained handwriting model: {model_name} on {device}...")
+        print(f"[TrOCR Model] Loading handwriting model [{version_label}]: {model_name_or_path} on {device}...")
         
-        _trocr_processor = TrOCRProcessor.from_pretrained(model_name)
-        _trocr_model = VisionEncoderDecoderModel.from_pretrained(model_name)
+        _trocr_processor = TrOCRProcessor.from_pretrained(model_name_or_path)
+        _trocr_model = VisionEncoderDecoderModel.from_pretrained(model_name_or_path)
         _trocr_model.to(device)
         _trocr_model.eval()
         
-        print("[TrOCR Model] Successfully initialized TrOCR handwriting engine.")
+        print(f"[TrOCR Model] Successfully initialized TrOCR [{version_label}].")
         return _trocr_processor, _trocr_model
     except Exception as e:
         _initialization_error = str(e)

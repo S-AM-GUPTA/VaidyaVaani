@@ -1,0 +1,22 @@
+{
+  "model_version": "trocr-rxhandbd-v1",
+  "base_model": "microsoft/trocr-base-handwritten",
+  "dataset": "RxHandBD",
+  "device": "cpu",
+  "epochs": 1,
+  "batch_size": 4,
+  "learning_rate": 5e-05,
+  "training_samples_used": 40,
+  "validation_samples_used": 8,
+  "total_training_time_seconds": 133.85,
+  "best_validation_cer": 78.85,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 7.0628,
+      "val_loss": 4.5489,
+      "val_cer": 78.85,
+      "val_wer": 100.0
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "pretrained_trocr": {
+    "model_name": "Pretrained TrOCR",
+    "test_samples_count": 25,
+    "cer_percent": 89.1,
+    "wer_percent": 214.81,
+    "exact_match_percent": 4.0,
+    "avg_latency_ms": 1398.75,
+    "sample_predictions": [
+      {
+        "ref": "Nexcital",
+        "pred": "Nexcitae"
+      },
+      {
+        "ref": "Inderen",
+        "pred": "indexers ."
+      },
+      {
+        "ref": "Indever",
+        "pred": "In devert"
+      },
+      {
+        "ref": "Losita",
+        "pred": "2 Losite ."
+      },
+      {
+        "ref": "Rivotril",
+        "pred": "2 1 Rivotrail ."
+      },
+      {
+        "ref": "Asynta",
+        "pred": "A Synta"
+      },
+      {
+        "ref": "Napa",
+        "pred": "2 Napa ."
+      },
+      {
+        "ref": "Econate",
+        "pred": "economic"
+      },
+      {
+        "ref": "Exeptim",
+        "pred": "3 Exemptions ."
+      },
+      {
+        "ref": "Napa",
+        "pred": "napa ."
+      }
+    ]
+  },
+  "finetuned_trocr": {
+    "model_name": "RxHandBD Fine-Tuned TrOCR (v1)",
+    "test_samples_count": 25,
+    "cer_percent": 52.56,
+    "wer_percent": 100.0,
+    "exact_match_percent": 12.0,
+    "avg_latency_ms": 1371.3,
+    "sample_predictions": [
+      {
+        "ref": "Nexcital",
+        "pred": "Ncci"
+      },
+      {
+        "ref": "Inderen",
+        "pred": "Indexev"
+      },
+      {
+        "ref": "Indever",
+        "pred": "ludever"
+      },
+      {
+        "ref": "Losita",
+        "pred": "Losifa"
+      },
+      {
+        "ref": "Rivotril",
+        "pred": "Rivil"
+      },
+      {
+        "ref": "Asynta",
+        "pred": "A Synt"
+      },
+      {
+        "ref": "Napa",
+        "pred": "Napa"
+      },
+      {
+        "ref": "Econate",
+        "pred": "Eonati"
+      },
+      {
+        "ref": "Exeptim",
+        "pred": "Exephinin"
+      },
+      {
+        "ref": "Napa",
+        "pred": "Napa"
+      }
+    ]
+  },
+  "paddleocr": {
+    "model_name": "PaddleOCR (Baseline)",
+    "test_samples_count": 25,
+    "cer_percent": 48.72,
+    "wer_percent": 85.19,
+    "exact_match_percent": 16.0,
+    "avg_latency_ms": 8626.24,
+    "sample_predictions": [
+      {
+        "ref": "Nexcital",
+        "pred": "ixcital"
+      },
+      {
+        "ref": "Inderen",
+        "pred": "Inderen."
+      },
+      {
+        "ref": "Indever",
+        "pred": "ndeven"
+      },
+      {
+        "ref": "Losita",
+        "pred": "\u4e91"
+      },
+      {
+        "ref": "Rivotril",
+        "pred": "Rivotrei"
+      },
+      {
+        "ref": "Asynta",
+        "pred": "ASynt"
+      },
+      {
+        "ref": "Napa",
+        "pred": "Napa"
+      },
+      {
+        "ref": "Econate",
+        "pred": "Econate"
+      },
+      {
+        "ref": "Exeptim",
+        "pred": "Exeplitm"
+      },
+      {
+        "ref": "Napa",
+        "pred": "Napa"
+      }
+    ]
+  }
+}
