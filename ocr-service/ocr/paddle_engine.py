@@ -30,7 +30,13 @@ def recognize_paddle(image_input: Union[str, np.ndarray]) -> Dict[str, Any]:
     lines: List[Dict[str, Any]] = []
     
     try:
-        # If numpy array passed, save temporary or pass directly
+        # Ensure 3-channel format for numpy arrays so PaddleOCR doesn't crash on img.shape[2]
+        if isinstance(image_input, np.ndarray):
+            if len(image_input.shape) == 2:
+                image_input = cv2.cvtColor(image_input, cv2.COLOR_GRAY2BGR)
+            elif len(image_input.shape) == 3 and image_input.shape[2] == 4:
+                image_input = cv2.cvtColor(image_input, cv2.COLOR_BGRA2BGR)
+                
         result = ocr.ocr(image_input)
         
         if result:
@@ -44,11 +50,14 @@ def recognize_paddle(image_input: Union[str, np.ndarray]) -> Dict[str, Any]:
                     boxes = res.get('dt_polys', res.get('rec_polys', res.get('rec_boxes', [])))
                     
                     for idx, (txt, score) in enumerate(zip(texts, scores)):
-                        if txt.strip():
+                        if txt and txt.strip():
                             box_data = None
-                            if idx < len(boxes):
-                                b = boxes[idx]
-                                box_data = b.tolist() if isinstance(b, np.ndarray) else b
+                            try:
+                                if boxes is not None and len(boxes) > idx:
+                                    b = boxes[idx]
+                                    box_data = b.tolist() if isinstance(b, np.ndarray) else b
+                            except Exception:
+                                pass
                             lines.append({
                                 "text": txt.strip(),
                                 "confidence": round(float(score), 4),
@@ -64,7 +73,7 @@ def recognize_paddle(image_input: Union[str, np.ndarray]) -> Dict[str, Any]:
                             if isinstance(text_score, (list, tuple)) and len(text_score) >= 2:
                                 txt = text_score[0]
                                 score = text_score[1]
-                                if txt.strip():
+                                if txt and txt.strip():
                                     box_data = box.tolist() if isinstance(box, np.ndarray) else box
                                     lines.append({
                                         "text": txt.strip(),

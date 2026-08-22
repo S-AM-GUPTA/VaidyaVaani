@@ -85,7 +85,7 @@ def recognize_handwriting(image_input: Union[Image.Image, np.ndarray]) -> Tuple[
         pixel_values = processor(images=image_input, return_tensors="pt").pixel_values.to(device)
         
         with torch.no_grad():
-            generated_ids = model.generate(pixel_values, max_new_tokens=64, return_dict_in_generate=True, output_scores=True)
+            generated_ids = model.generate(pixel_values, max_new_tokens=32, return_dict_in_generate=True, output_scores=True)
             
         generated_text = processor.batch_decode(generated_ids.sequences, skip_special_tokens=True)[0].strip()
         

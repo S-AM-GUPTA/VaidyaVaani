@@ -84,9 +84,9 @@ def process_prescription_pipeline(file_path_or_bytes, is_pdf: bool = False) -> D
         # Run TrOCR handwriting recognition on detected boxes if TrOCR is available
         if is_trocr_available() and paddle_lines:
             boxes = [l.get('box') for l in paddle_lines if l.get('box') is not None]
+            # Prioritize ambiguous lines or sample lines
             if boxes:
-                trocr_lines = recognize_trocr_lines(img, boxes)
-                # If TrOCR extracted text with higher confidence or complementary info, include it
+                trocr_lines = recognize_trocr_lines(img, boxes[:5])
                 for tr in trocr_lines:
                     extracted_lines.append({
                         "text": tr["text"],
