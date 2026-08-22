@@ -1,255 +1,374 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { 
   ShieldCheck, 
-  ArrowRight,
+  ArrowLeft, 
   Search, 
-  ChevronRight
+  Volume2, 
+  VolumeX, 
+  Sparkles, 
+  Zap
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import { useAuth } from '../context/AuthContext';
+import { MEDICINES_DATABASE, checkDrugPairInteraction, type InteractionCheckResult } from '../services/clinicalData';
 
-const COMMON_DRUGS = [
-  'Atenolol 25mg / 50mg (Beta-Blocker)',
-  'Metformin 500mg / 850mg (Antidiabetic)',
-  'Atorvastatin 10mg / 20mg (Lipid Regimen)',
-  'Warfarin 2mg / 5mg (Anticoagulant)',
-  'Aspirin 75mg / 325mg (NSAID / Antiplatelet)',
-  'Magnesium Hydroxide (Antacid Gel)',
-  'Amoxicillin 500mg (Antibiotic)',
-  'Omeprazole 20mg (Proton Pump Inhibitor)',
-  'Levothyroxine 50mcg (Thyroid)',
-  'Amlodipine 5mg (Calcium Channel Blocker)',
-];
-
-const SCENARIOS = [
+const DRUG_PAIRS_REGISTRY = [
   {
-    id: 's1',
-    drug1: 'Atenolol 50mg',
-    drug2: 'Magnesium Hydroxide (Antacid)',
-    severity: 'moderate',
-    title: 'Pharmacokinetic Absorption Delay',
-    effect: 'Bioavailability reduction up to 35%',
-    advisory: 'Antacids form chemical chelates with beta-blockers in gastric juice, delaying peak absorption. Take Atenolol at least 2 hours before administering antacid suspension.',
-    dept: 'Cardiology & Gastroenterology',
+    pair: 'Warfarin + Aspirin',
+    primary: 'Warfarin 5mg (Anticoagulant)',
+    secondary: 'Aspirin 75mg (Antiplatelet)',
+    severity: 'Critical Hazard',
+    severityType: 'critical',
+    effect: '3.8x elevation in major gastrointestinal bleeding & systemic hemorrhage',
+    mechanism: 'Dual platelet COX-1 inhibition combined with vitamin K clotting factor synthesis blockage.',
+    spacing: 'Absolute Contraindication: Avoid combination. Contact cardiologist for non-NSAID analgesics.'
   },
   {
-    id: 's2',
-    drug1: 'Warfarin 5mg',
-    drug2: 'Aspirin 325mg',
-    severity: 'critical',
-    title: 'Severe Coagulation Cascade Antagonism',
-    effect: 'Dramatic rise in gastrointestinal hemorrhage hazard',
-    advisory: 'Concurrent platelet COX-1 inhibition with vitamin K epoxide reductase inhibition multiplies bleeding risks by 3.8x. Immediate physician review and alternative analgesic required.',
-    dept: 'Hematology & Cardiology',
+    pair: 'Atenolol + Magnesium Antacid',
+    primary: 'Atenolol 50mg (Beta-Blocker)',
+    secondary: 'Gelusil / Magnesium Hydroxide (Antacid)',
+    severity: 'Moderate Spacing',
+    severityType: 'moderate',
+    effect: '35% drop in beta-blocker absorption & blood pressure regulation loss',
+    mechanism: 'Antacid polyvalent cations chelate with beta-blockers in gastric juice.',
+    spacing: 'Space Atenolol at least 2 hours BEFORE administering magnesium/aluminum antacids.'
   },
   {
-    id: 's3',
-    drug1: 'Atorvastatin 20mg',
-    drug2: 'Grapefruit Extract / CYP3A4 Inhibitor',
-    severity: 'low',
-    title: 'Hepatic Enzyme Saturation',
-    effect: 'Mild elevation in plasma statin concentration',
-    advisory: 'Grapefruit juice inhibits intestinal CYP3A4 metabolism. Consuming normal doses with morning meals shows minimal clinical risk; avoid concentrated extracts exceeding 200ml.',
-    dept: 'Endocrinology & Nutrition',
+    pair: 'Levothyroxine + Calcium / Iron',
+    primary: 'Thyronorm 50mcg (Levothyroxine)',
+    secondary: 'Shelcal 500 / Iron Supplement',
+    severity: 'Moderate Spacing',
+    severityType: 'moderate',
+    effect: 'Insoluble complex formation reducing thyroid hormone absorption by up to 50%',
+    mechanism: 'Calcium/iron molecules physically bind thyroxine in the gastrointestinal tract.',
+    spacing: 'Administer Levothyroxine early morning empty stomach; take Calcium 4 hours later.'
   },
   {
-    id: 's4',
-    drug1: 'Metformin 850mg',
-    drug2: 'Iodinated Radiocontrast Dye',
-    severity: 'critical',
-    title: 'Lactic Acidosis Contraindication',
-    effect: 'Temporary acute renal insufficiency',
-    advisory: 'Withhold Metformin 48 hours prior to contrast imaging and re-evaluate eGFR before resuming to prevent lactic acid accumulation.',
-    dept: 'Radiology & Endocrinology',
+    pair: 'Atorvastatin + Grapefruit Juice',
+    primary: 'Atorvastatin 20mg (Statin)',
+    secondary: 'Grapefruit Extract / Citrus',
+    severity: 'Low / Dietary',
+    severityType: 'low',
+    effect: 'Mild elevation of circulating statin blood levels',
+    mechanism: 'Furanocoumarins in grapefruit inhibit intestinal CYP3A4 metabolism.',
+    spacing: 'Limit concentrated grapefruit juice to under 200ml to prevent muscle soreness.'
   },
+  {
+    pair: 'Metformin + Iodinated Contrast',
+    primary: 'Glycomet 500mg (Metformin)',
+    secondary: 'Radiological CT Scan Contrast',
+    severity: 'Critical Hazard',
+    severityType: 'critical',
+    effect: 'Acute renal failure and fatal lactic acidosis in bloodstream',
+    mechanism: 'Contrast media causes temporary nephropathy impairing metformin renal clearance.',
+    spacing: 'Withhold Metformin 48 hours prior to contrast imaging and recheck kidney function.'
+  },
+  {
+    pair: 'Paracetamol + Amoxicillin',
+    primary: 'Dolo 650mg (Paracetamol)',
+    secondary: 'Augmentin 625 (Amoxicillin+Clav)',
+    severity: 'Safe Synergy',
+    severityType: 'safe',
+    effect: 'Safe therapeutic synergy; no adverse pharmacokinetic clash detected',
+    mechanism: 'Metabolized via independent hepatic and renal clearance pathways.',
+    spacing: 'Safe to co-administer according to physician instructions.'
+  }
 ];
 
 const SafetyMatrixPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
 
-  const [selectedDrug1, setSelectedDrug1] = useState(COMMON_DRUGS[0]);
-  const [selectedDrug2, setSelectedDrug2] = useState(COMMON_DRUGS[5]);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const filteredScenarios = SCENARIOS.filter(s => 
-    s.drug1.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    s.drug2.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    s.title.toLowerCase().includes(searchQuery.toLowerCase())
+  // Custom Simulator State
+  const [selectedDrug1, setSelectedDrug1] = useState('Warfarin 5mg');
+  const [selectedDrug2, setSelectedDrug2] = useState('Aspirin 75mg');
+  const [simResult, setSimResult] = useState<InteractionCheckResult>(() => 
+    checkDrugPairInteraction('Warfarin 5mg', 'Aspirin 75mg')
   );
 
+  // Search Filter State for Registry
+  const [searchQuery, setSearchQuery] = useState('');
+  const [severityFilter, setSeverityFilter] = useState<'all' | 'critical' | 'moderate' | 'low' | 'safe'>('all');
+
+  // Text-To-Speech for simulated interaction
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const handleSimulate = (d1?: string, d2?: string) => {
+    const drugA = d1 || selectedDrug1;
+    const drugB = d2 || selectedDrug2;
+    setSelectedDrug1(drugA);
+    setSelectedDrug2(drugB);
+    const res = checkDrugPairInteraction(drugA, drugB);
+    setSimResult(res);
+  };
+
+  const handleSpeakResult = () => {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      if (isSpeaking) {
+        setIsSpeaking(false);
+        return;
+      }
+      const textToSpeak = `Clinical screening for ${simResult.drug1} and ${simResult.drug2}. Result: ${simResult.title}. Adverse Effect: ${simResult.effect}. Pharmacist recommendation: ${simResult.advisory}`;
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = 'en-IN';
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      setIsSpeaking(true);
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Filter Registry
+  const filteredRegistry = DRUG_PAIRS_REGISTRY.filter(item => {
+    const matchesSearch = item.pair.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.primary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.secondary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.effect.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSeverity = severityFilter === 'all' || item.severityType === severityFilter;
+    return matchesSearch && matchesSeverity;
+  });
+
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-sky-600 selection:text-white flex flex-col">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-600 selection:text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-grow">
+      <main className="flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
         
-        {/* Page Header */}
-        <section className="bg-white border-b border-slate-200 py-10 px-6 lg:px-12">
-          <div className="max-w-[1280px] mx-auto">
+        {/* Navigation Breadcrumb */}
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
+          <button 
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors font-mono cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back</span>
+          </button>
+
+          <div className="med-badge font-mono">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Clinical Pharmacology Radar V2.4</span>
+          </div>
+        </div>
+
+        {/* Header */}
+        <div className="max-w-3xl mb-12">
+          <div className="text-xs font-mono uppercase text-emerald-700 font-bold mb-2">Pharmacopeia Cross-Audit</div>
+          <h1 className="font-headline text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Multi-Prescription Drug Interaction Radar
+          </h1>
+          <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
+            Screen drug combinations prescribed across multiple independent clinics to detect harmful pharmacokinetic clashes, bioavailability interference, and strict dosage spacing rules.
+          </p>
+        </div>
+
+        {/* =========================================================
+            LIVE INTERACTIVE RADAR SIMULATOR
+            ========================================================= */}
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 mb-16">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-emerald-700 font-bold mb-3">
+            <Zap className="w-4 h-4 text-emerald-600" />
+            Interactive Drug-Drug Co-Administration Radar
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">
+            Test Any Medicine Combination
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6 items-center">
             
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-500 mb-4">
-              <Link to="/" className="hover:text-sky-600">Home</Link>
-              <span>/</span>
-              <span className="text-sky-700 font-bold">Drug Safety Matrix</span>
+            {/* Drug 1 Selector */}
+            <div className="md:col-span-5">
+              <label className="block text-xs font-bold font-mono text-slate-700 mb-1.5 uppercase">
+                First Medicine (Drug A):
+              </label>
+              <select
+                value={selectedDrug1}
+                onChange={(e) => {
+                  setSelectedDrug1(e.target.value);
+                  handleSimulate(e.target.value, selectedDrug2);
+                }}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 font-medium focus:outline-none focus:border-emerald-500 focus:bg-white"
+              >
+                {MEDICINES_DATABASE.map(m => (
+                  <option key={m.id} value={`${m.brand} (${m.salt})`}>
+                    {m.brand} — {m.category}
+                  </option>
+                ))}
+                <option value="Warfarin 5mg">Warfarin 5mg (Blood Thinner)</option>
+                <option value="Magnesium Antacid">Magnesium/Gelusil Antacid</option>
+                <option value="Grapefruit Extract">Grapefruit Extract</option>
+                <option value="Radiological Contrast">Radiological Contrast</option>
+              </select>
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="md:col-span-2 text-center text-xs font-mono font-bold text-slate-400">
+              <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200">VS</span>
+            </div>
+
+            {/* Drug 2 Selector */}
+            <div className="md:col-span-5">
+              <label className="block text-xs font-bold font-mono text-slate-700 mb-1.5 uppercase">
+                Second Medicine (Drug B):
+              </label>
+              <select
+                value={selectedDrug2}
+                onChange={(e) => {
+                  setSelectedDrug2(e.target.value);
+                  handleSimulate(selectedDrug1, e.target.value);
+                }}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 font-medium focus:outline-none focus:border-emerald-500 focus:bg-white"
+              >
+                <option value="Ecosprin 75mg (Aspirin)">Ecosprin 75mg (Aspirin)</option>
+                <option value="Magnesium Antacid">Gelusil / Magnesium Antacid</option>
+                <option value="Shelcal 500 (Calcium)">Shelcal 500 (Calcium+D3)</option>
+                <option value="Grapefruit Extract">Grapefruit Juice Extract</option>
+                <option value="Radiological Contrast">Radiological CT Contrast</option>
+                {MEDICINES_DATABASE.map(m => (
+                  <option key={m.id} value={`${m.brand} (${m.salt})`}>
+                    {m.brand} — {m.category}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+          </div>
+
+          {/* Live Result Display Card */}
+          <div className="p-6 rounded-2xl bg-[#f8fafc] border border-slate-200">
+            <div className="flex flex-wrap items-center justify-between pb-4 border-b border-slate-200 gap-3 mb-4">
               <div>
-                <div className="med-badge mb-2 font-mono">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  Pharmacology Cross-Screening Engine
+                <span className="text-[10px] font-mono uppercase font-bold text-slate-400">Screening Verdict</span>
+                <h3 className="text-xl font-bold text-slate-900">{simResult.title}</h3>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleSpeakResult}
+                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-emerald-700 hover:border-emerald-300 flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
+                >
+                  {isSpeaking ? <VolumeX className="w-3.5 h-3.5 text-rose-500" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-600" />}
+                  <span>{isSpeaking ? 'Stop Voice' : 'Listen Warning'}</span>
+                </button>
+
+                <span className={`text-xs font-mono font-bold px-3 py-1.5 rounded-full ${
+                  simResult.severity === 'critical' ? 'bg-rose-100 text-rose-800 border border-rose-300' :
+                  simResult.severity === 'moderate' ? 'bg-amber-100 text-amber-800 border border-amber-300' :
+                  simResult.severity === 'low' ? 'bg-teal-100 text-teal-800 border border-teal-300' :
+                  'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                }`}>
+                  {simResult.severity === 'critical' ? 'Lethal Hazard Contraindication' :
+                   simResult.severity === 'moderate' ? 'Spacing Advisory Required' :
+                   simResult.severity === 'low' ? 'Minor Dietary Advisory' : 'Safe to Combine'}
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-700 mb-4">
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
+                <div className="font-bold text-slate-900 mb-1 font-mono uppercase text-xs">Biological Mechanism:</div>
+                <p>{simResult.mechanism}</p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
+                <div className="font-bold text-slate-900 mb-1 font-mono uppercase text-xs">Clinical Adverse Outcome:</div>
+                <p>{simResult.effect}</p>
+              </div>
+            </div>
+
+            <div className={`p-4 rounded-xl border text-xs sm:text-sm leading-relaxed ${
+              simResult.severity === 'critical' ? 'bg-rose-50 border-rose-200 text-rose-900' :
+              simResult.severity === 'moderate' ? 'bg-amber-50 border-amber-200 text-amber-900' :
+              simResult.severity === 'low' ? 'bg-teal-50 border-teal-200 text-teal-900' :
+              'bg-emerald-50 border-emerald-200 text-emerald-900'
+            }`}>
+              <div className="font-bold uppercase text-xs font-mono mb-1">Pharmacist Action Protocol:</div>
+              <p>{simResult.advisory}</p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* =========================================================
+            SEARCHABLE PHARMACOLOGICAL REGISTRY
+            ========================================================= */}
+        <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900">Verified Drug Interaction Database</h2>
+            <p className="text-xs text-slate-500">Indexed against CDSCO & WHO pharmacopeia guidelines.</p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Search Input */}
+            <div className="relative">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input 
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Filter drug pairs..."
+                className="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 w-48 sm:w-60"
+              />
+            </div>
+
+            {/* Severity Filter */}
+            <select
+              value={severityFilter}
+              onChange={(e: any) => setSeverityFilter(e.target.value)}
+              className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-700 focus:outline-none focus:border-emerald-500"
+            >
+              <option value="all">All Severities</option>
+              <option value="critical">Critical Only</option>
+              <option value="moderate">Moderate Only</option>
+              <option value="low">Low Risk Only</option>
+              <option value="safe">Safe Only</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Registry Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredRegistry.map((item, idx) => (
+            <div key={idx} className="med-card p-6 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="text-[11px] font-mono font-bold text-slate-400 uppercase">Interaction Screen</span>
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                    item.severityType === 'critical' ? 'bg-rose-100 text-rose-800' :
+                    item.severityType === 'moderate' ? 'bg-amber-100 text-amber-800' :
+                    item.severityType === 'low' ? 'bg-teal-100 text-teal-800' :
+                    'bg-emerald-100 text-emerald-800'
+                  }`}>
+                    {item.severity}
+                  </span>
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
-                  Multi-Prescription Drug Interaction Checker
-                </h1>
-                <p className="text-slate-600 text-sm mt-2 max-w-2xl leading-relaxed">
-                  Cross-reference active medications prescribed by different healthcare specialists to prevent harmful drug-drug interactions and optimize bioavailability timing.
+
+                <h3 className="text-base font-bold text-slate-900 mb-2">{item.pair}</h3>
+                
+                <div className="space-y-1 text-xs text-slate-600 mb-4">
+                  <div><strong>Drug 1:</strong> {item.primary}</div>
+                  <div><strong>Drug 2:</strong> {item.secondary}</div>
+                </div>
+
+                <p className="text-xs text-slate-500 mb-4 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                  {item.effect}
                 </p>
               </div>
 
-              <button 
-                onClick={() => navigate(isAuthenticated ? '/home' : '/login')}
-                className="btn-med-primary text-xs font-semibold shrink-0"
-              >
-                <span>{isAuthenticated ? 'Open Patient Vault' : 'Sign In to Check My Rx'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-
-          </div>
-        </section>
-
-        {/* Live Pair Screening Interactive Tool */}
-        <section className="py-12 px-6 lg:px-12 max-w-[1280px] mx-auto">
-          
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-12">
-            <h2 className="text-xl font-bold text-slate-900 mb-2">Simulate Drug-Drug Co-Administration</h2>
-            <p className="text-xs text-slate-500 mb-6">Select two therapeutic agents to calculate clinical contraindications and spacing rules:</p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-2 font-mono uppercase">Primary Prescription (Drug A)</label>
-                <select 
-                  value={selectedDrug1} 
-                  onChange={(e) => setSelectedDrug1(e.target.value)}
-                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 font-medium focus:border-sky-500 focus:bg-white outline-none"
+              <div className="pt-3 border-t border-slate-100">
+                <button
+                  onClick={() => {
+                    handleSimulate(item.primary, item.secondary);
+                    window.scrollTo({ top: 200, behavior: 'smooth' });
+                  }}
+                  className="w-full btn-med-secondary text-xs flex items-center justify-center gap-1 cursor-pointer"
                 >
-                  {COMMON_DRUGS.map((d, i) => (
-                    <option key={i} value={d}>{d}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-2 font-mono uppercase">Secondary Prescription / Supplement (Drug B)</label>
-                <select 
-                  value={selectedDrug2} 
-                  onChange={(e) => setSelectedDrug2(e.target.value)}
-                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 font-medium focus:border-sky-500 focus:bg-white outline-none"
-                >
-                  {COMMON_DRUGS.map((d, i) => (
-                    <option key={i} value={d}>{d}</option>
-                  ))}
-                </select>
-              </div>
-
-            </div>
-
-            {/* Screening Result Output Box */}
-            <div className="p-5 rounded-xl bg-sky-50/70 border border-sky-200">
-              <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-sky-200 mb-3">
-                <div className="text-xs font-mono font-bold text-sky-900 uppercase">
-                  Screening Pair: {selectedDrug1.split(' ')[0]} + {selectedDrug2.split(' ')[0]}
-                </div>
-                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800">
-                  Standard Audit Passed
-                </span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                Therapeutic guideline: Maintain a <strong>minimum 2-hour dosage window</strong> between gastrointestinal agents and cardiovascular medications to preserve optimal pharmacokinetic absorption.
-              </p>
-            </div>
-
-          </div>
-
-          {/* Clinical Case Scenarios Table */}
-          <div className="mb-12">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900">Standard Clinical Pharmacopeia Registry</h2>
-                <p className="text-xs text-slate-500 mt-1">Verified interactions sourced from international clinical guidelines</p>
-              </div>
-
-              <div className="relative w-full sm:w-72">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                <input 
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search medication or condition..."
-                  className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:border-sky-500 outline-none"
-                />
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Load in Live Radar</span>
+                </button>
               </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredScenarios.map((item) => (
-                <div key={item.id} className="bg-white rounded-xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="text-xs font-mono text-slate-500 uppercase">{item.dept}</span>
-                      <span className={`text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full ${
-                        item.severity === 'critical' ? 'bg-rose-100 text-rose-800' :
-                        item.severity === 'moderate' ? 'bg-amber-100 text-amber-800' :
-                        'bg-teal-100 text-teal-800'
-                      }`}>
-                        {item.severity === 'critical' ? 'Critical Contraindication' :
-                         item.severity === 'moderate' ? 'Moderate Spacing Needed' : 'Low Risk / Advisory'}
-                      </span>
-                    </div>
-
-                    <h3 className="text-base font-bold text-slate-900 mb-2">{item.title}</h3>
-                    
-                    <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg mb-3 text-xs font-mono text-slate-700">
-                      <strong>{item.drug1}</strong> + <strong>{item.drug2}</strong>
-                    </div>
-
-                    <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                      {item.advisory}
-                    </p>
-                  </div>
-
-                  <div className="pt-3 border-t border-slate-100 text-xs font-medium text-sky-700 flex items-center justify-between">
-                    <span>Clinical Impact: {item.effect}</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-          </div>
-
-          {/* Medical Consultation CTA Banner */}
-          <div className="bg-sky-800 text-white rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-2">Need an Expert Prescription Review?</h3>
-              <p className="text-xs sm:text-sm text-sky-100 max-w-xl leading-relaxed">
-                Upload your doctor's prescriptions to automatically index your full active regimen and receive automated spacing alerts on your mobile.
-              </p>
-            </div>
-            <button 
-              onClick={() => navigate(isAuthenticated ? '/home' : '/login')}
-              className="bg-white text-sky-900 hover:bg-sky-50 font-bold px-6 py-3 rounded-lg text-xs sm:text-sm shrink-0 transition-colors shadow-xs"
-            >
-              Start Automated Prescription Audit
-            </button>
-          </div>
-
-        </section>
+          ))}
+        </div>
 
       </main>
 

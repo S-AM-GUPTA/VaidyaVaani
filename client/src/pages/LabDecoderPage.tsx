@@ -1,263 +1,381 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { 
-  Activity, 
+  ArrowLeft, 
   Search, 
-  UploadCloud 
+  Volume2, 
+  VolumeX, 
+  Activity, 
+  Sliders, 
+  Sparkles
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import { useAuth } from '../context/AuthContext';
+import { BIOMARKERS_EVALUATOR } from '../services/clinicalData';
 
-interface BiomarkerTest {
+interface LabReferenceItem {
   name: string;
   category: string;
   normalRange: string;
   unit: string;
-  significance: string;
-  sampleVal: string;
-  status: 'normal' | 'elevated' | 'optimal';
+  elevatedRisk: string;
+  lowRisk: string;
+  clinicalNote: string;
 }
 
-const BIOMARKERS_LIST: BiomarkerTest[] = [
+const LAB_REFERENCE_CATALOG: LabReferenceItem[] = [
   {
-    name: 'Hemoglobin A1c (HbA1c)',
+    name: 'Fasting Blood Sugar (FBS)',
     category: 'Endocrinology / Diabetes',
-    normalRange: '< 5.7',
-    unit: '%',
-    significance: 'Reflects average blood glucose concentrations over the previous 90-120 days.',
-    sampleVal: '5.4%',
-    status: 'normal'
-  },
-  {
-    name: 'Fasting Blood Glucose',
-    category: 'Metabolic Panel',
     normalRange: '70 – 99',
     unit: 'mg/dL',
-    significance: 'Measures circulating blood sugar after an overnight fast (minimum 8 hours).',
-    sampleVal: '108 mg/dL',
-    status: 'elevated'
+    elevatedRisk: 'Prediabetes (100–125), Diabetes Mellitus (≥126)',
+    lowRisk: 'Hypoglycemia (<70)',
+    clinicalNote: 'Requires 8-12 hours of overnight water-only fasting for accurate glycemic baseline.'
   },
   {
-    name: 'LDL Cholesterol (Direct)',
-    category: 'Lipid Profile',
+    name: 'Glycated Hemoglobin (HbA1c)',
+    category: 'Endocrinology / Diabetes',
+    normalRange: '4.0 – 5.6',
+    unit: '%',
+    elevatedRisk: 'Prediabetes (5.7–6.4%), Diabetes Mellitus (≥6.5%)',
+    lowRisk: 'Hemolytic Anemia / Low Red Cell Turnover',
+    clinicalNote: 'Reflects 90-day average blood glucose saturation without requiring fasting.'
+  },
+  {
+    name: 'LDL Cholesterol (Bad Cholesterol)',
+    category: 'Lipid Profile / Cardiology',
     normalRange: '< 100',
     unit: 'mg/dL',
-    significance: 'Primary clinical indicator for arterial plaque buildup and cardiovascular risk.',
-    sampleVal: '94 mg/dL',
-    status: 'optimal'
+    elevatedRisk: 'Atherosclerosis, Coronary Artery Disease, Stroke',
+    lowRisk: 'Malnutrition / Severe Hepatic Insufficiency',
+    clinicalNote: 'Target LDL is <70 mg/dL for patients with established cardiovascular history.'
   },
   {
-    name: 'HDL Cholesterol (Good)',
-    category: 'Lipid Profile',
-    normalRange: '> 40 (Male) / > 50 (Female)',
+    name: 'HDL Cholesterol (Good Cholesterol)',
+    category: 'Lipid Profile / Cardiology',
+    normalRange: '> 40 (Men), > 50 (Women)',
     unit: 'mg/dL',
-    significance: 'Scavenges excess cholesterol from arteries and returns it to the liver.',
-    sampleVal: '52 mg/dL',
-    status: 'optimal'
-  },
-  {
-    name: 'Total Leukocyte Count (WBC)',
-    category: 'Complete Blood Count (CBC)',
-    normalRange: '4,500 – 11,000',
-    unit: '/µL',
-    significance: 'Primary immune cells indicating inflammation, viral infection, or immune activation.',
-    sampleVal: '7,200 /µL',
-    status: 'normal'
+    elevatedRisk: 'Protective against coronary heart disease',
+    lowRisk: 'Elevated cardiovascular risk profile',
+    clinicalNote: 'Increased via regular aerobic exercise, healthy fats (almonds, olive oil).'
   },
   {
     name: 'Serum Creatinine',
-    category: 'Renal / Kidney Function (KFT)',
-    normalRange: '0.7 – 1.3',
+    category: 'Renal Function (KFT)',
+    normalRange: '0.6 – 1.2',
     unit: 'mg/dL',
-    significance: 'Waste product filtered exclusively by kidney glomeruli to evaluate renal clearance.',
-    sampleVal: '0.9 mg/dL',
-    status: 'normal'
+    elevatedRisk: 'Acute or Chronic Kidney Disease (CKD), Dehydration',
+    lowRisk: 'Decreased muscle mass / Myasthenia',
+    clinicalNote: 'Essential indicator of glomerular filtration rate (eGFR) and renal clearance.'
   },
   {
-    name: 'Serum Alanine Aminotransferase (ALT/SGPT)',
-    category: 'Liver Function Test (LFT)',
-    normalRange: '7 – 56',
-    unit: 'U/L',
-    significance: 'Enzyme concentrated in hepatocytes; elevated in liver strain or medication toxicity.',
-    sampleVal: '28 U/L',
-    status: 'normal'
-  },
-  {
-    name: 'Thyroid Stimulating Hormone (TSH)',
-    category: 'Endocrinology / Thyroid',
-    normalRange: '0.4 – 4.0',
-    unit: 'µIU/mL',
-    significance: 'Pituitary signal regulating thyroid hormone synthesis for metabolic control.',
-    sampleVal: '2.1 µIU/mL',
-    status: 'normal'
-  },
+    name: 'Hemoglobin (Hb)',
+    category: 'Complete Blood Count (CBC)',
+    normalRange: '13.0 – 17.0 (Men), 12.0 – 15.5 (Women)',
+    unit: 'g/dL',
+    elevatedRisk: 'Polycythemia, Chronic Hypoxia, Dehydration',
+    lowRisk: 'Iron Deficiency Anemia, Blood Loss',
+    clinicalNote: 'Carries oxygen from lungs to systemic organs; essential during pregnancy & fatigue audits.'
+  }
 ];
 
 const LabDecoderPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+
+  // Interactive Live Tester State
+  const [selectedBiomarkerKey, setSelectedBiomarkerKey] = useState<'glucose' | 'hba1c' | 'ldl' | 'creatinine'>('glucose');
+  const [testValue, setTestValue] = useState<number>(115);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  // Search Filter
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  const categories = ['All', 'Metabolic Panel', 'Lipid Profile', 'Complete Blood Count (CBC)', 'Renal / Kidney Function (KFT)', 'Liver Function Test (LFT)'];
+  const currentBio = BIOMARKERS_EVALUATOR[selectedBiomarkerKey];
+  const evalResult = currentBio.evaluate(testValue);
 
-  const filteredTests = BIOMARKERS_LIST.filter(b => {
-    const matchesSearch = b.name.toLowerCase().includes(searchQuery.toLowerCase()) || b.category.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCat = selectedCategory === 'All' || b.category.includes(selectedCategory);
+  // Presets
+  const handleLoadPreset = (key: 'glucose' | 'hba1c' | 'ldl' | 'creatinine', val: number) => {
+    setSelectedBiomarkerKey(key);
+    setTestValue(val);
+  };
+
+  // Text-To-Speech
+  const handleSpeakAnalysis = () => {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      if (isSpeaking) {
+        setIsSpeaking(false);
+        return;
+      }
+      const text = `${currentBio.name} measured at ${testValue} ${currentBio.unit}. Result is ${evalResult.label}. Explanation: ${evalResult.explanation}. Lifestyle recommendation: ${evalResult.lifestyleTip}`;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-IN';
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      setIsSpeaking(true);
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Filter reference items
+  const filteredCatalog = LAB_REFERENCE_CATALOG.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.elevatedRisk.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCat = selectedCategory === 'all' || item.category.toLowerCase().includes(selectedCategory.toLowerCase());
     return matchesSearch && matchesCat;
   });
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-sky-600 selection:text-white flex flex-col">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-600 selection:text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-grow">
+      <main className="flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
         
-        {/* Page Header */}
-        <section className="bg-white border-b border-slate-200 py-10 px-6 lg:px-12">
-          <div className="max-w-[1280px] mx-auto">
-            
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-500 mb-4">
-              <Link to="/" className="hover:text-sky-600">Home</Link>
-              <span>/</span>
-              <span className="text-sky-700 font-bold">Lab Report Decoder</span>
-            </div>
+        {/* Navigation Breadcrumb */}
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
+          <button 
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors font-mono cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back</span>
+          </button>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div>
-                <div className="med-badge mb-2 font-mono">
-                  <Activity className="w-3.5 h-3.5" />
-                  Pathology & Biomarker Analysis
-                </div>
-                <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
-                  Clinical Lab Report & Diagnostic Decoder
-                </h1>
-                <p className="text-slate-600 text-sm mt-2 max-w-2xl leading-relaxed">
-                  Understand your blood test numbers, reference boundaries, and clinical parameters in everyday language with zero medical jargon.
-                </p>
+          <div className="med-badge font-mono">
+            <Activity className="w-3.5 h-3.5" />
+            <span>NABL Pathology Diagnostic Matrix</span>
+          </div>
+        </div>
+
+        {/* Header */}
+        <div className="max-w-3xl mb-12">
+          <div className="text-xs font-mono uppercase text-emerald-700 font-bold mb-2">Pathology Biomarker Intelligence</div>
+          <h1 className="font-headline text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Lab Report Diagnostic & Biomarker Decoder
+          </h1>
+          <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
+            Translate complex pathology blood test values into clear clinical understanding, normal reference ranges, and actionable physician lifestyle guidance.
+          </p>
+        </div>
+
+        {/* =========================================================
+            INTERACTIVE LIVE BIOMARKER DECODER TOOL
+            ========================================================= */}
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 mb-16">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-emerald-700 font-bold mb-3">
+            <Sliders className="w-4 h-4 text-emerald-600" />
+            Interactive Blood Test Diagnostic Simulator
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">
+            Input Your Pathology Test Value
+          </h2>
+
+          {/* Biomarker Selector Tabs */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            <button
+              onClick={() => {
+                setSelectedBiomarkerKey('glucose');
+                setTestValue(115);
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
+                selectedBiomarkerKey === 'glucose' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              Fasting Glucose (Sugar)
+            </button>
+            <button
+              onClick={() => {
+                setSelectedBiomarkerKey('hba1c');
+                setTestValue(6.1);
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
+                selectedBiomarkerKey === 'hba1c' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              HbA1c (3-Month Avg)
+            </button>
+            <button
+              onClick={() => {
+                setSelectedBiomarkerKey('ldl');
+                setTestValue(135);
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
+                selectedBiomarkerKey === 'ldl' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              LDL Cholesterol (Lipid)
+            </button>
+            <button
+              onClick={() => {
+                setSelectedBiomarkerKey('creatinine');
+                setTestValue(1.3);
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
+                selectedBiomarkerKey === 'creatinine' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              Serum Creatinine (Kidney)
+            </button>
+          </div>
+
+          {/* Value Slider & Controls */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-8">
+            
+            <div className="lg:col-span-6 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-xs font-mono font-bold uppercase text-slate-500">
+                  {currentBio.name} Value:
+                </span>
+                <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">
+                  {testValue} <span className="text-sm text-slate-500 font-normal">{currentBio.unit}</span>
+                </span>
               </div>
 
-              <button 
-                onClick={() => navigate(isAuthenticated ? '/home' : '/login')}
-                className="btn-med-primary text-xs font-semibold shrink-0"
-              >
-                <UploadCloud className="w-4 h-4" />
-                <span>{isAuthenticated ? 'Upload My Lab Report' : 'Sign In to Decode Report'}</span>
-              </button>
+              <input 
+                type="range"
+                min={selectedBiomarkerKey === 'hba1c' ? '3.5' : selectedBiomarkerKey === 'creatinine' ? '0.4' : '40'}
+                max={selectedBiomarkerKey === 'hba1c' ? '12.0' : selectedBiomarkerKey === 'creatinine' ? '4.0' : '300'}
+                step={selectedBiomarkerKey === 'hba1c' ? '0.1' : selectedBiomarkerKey === 'creatinine' ? '0.1' : '1'}
+                value={testValue}
+                onChange={(e) => setTestValue(Number(e.target.value))}
+                className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+              />
+
+              <div className="flex justify-between text-[11px] font-mono text-slate-400 mt-2 font-bold">
+                <span>Standard Range: {currentBio.normalMin} – {currentBio.normalMax} {currentBio.unit}</span>
+              </div>
+
+              {/* Sample Presets */}
+              <div className="mt-4 pt-4 border-t border-slate-200 flex flex-wrap gap-2">
+                <span className="text-[11px] font-mono text-slate-500 self-center font-bold">Presets:</span>
+                <button
+                  onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 88 : selectedBiomarkerKey === 'hba1c' ? 5.2 : selectedBiomarkerKey === 'ldl' ? 85 : 0.9)}
+                  className="text-[11px] font-mono px-2 py-1 bg-white border border-slate-200 rounded text-emerald-700 hover:bg-emerald-50 cursor-pointer"
+                >
+                  Optimal Normal
+                </button>
+                <button
+                  onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 112 : selectedBiomarkerKey === 'hba1c' ? 6.1 : selectedBiomarkerKey === 'ldl' ? 122 : 1.4)}
+                  className="text-[11px] font-mono px-2 py-1 bg-white border border-slate-200 rounded text-amber-700 hover:bg-amber-50 cursor-pointer"
+                >
+                  Borderline / Mild
+                </button>
+                <button
+                  onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 168 : selectedBiomarkerKey === 'hba1c' ? 8.4 : selectedBiomarkerKey === 'ldl' ? 175 : 2.4)}
+                  className="text-[11px] font-mono px-2 py-1 bg-white border border-slate-200 rounded text-rose-700 hover:bg-rose-50 cursor-pointer"
+                >
+                  High / Alert
+                </button>
+              </div>
+            </div>
+
+            {/* Analysis Result Card */}
+            <div className="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-md">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+                <div>
+                  <span className="text-[10px] font-mono uppercase text-slate-400 font-bold">Pathology Evaluation</span>
+                  <h3 className="text-lg font-bold text-slate-900">{evalResult.label}</h3>
+                </div>
+
+                <button
+                  onClick={handleSpeakAnalysis}
+                  className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 hover:text-emerald-700 flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
+                >
+                  {isSpeaking ? <VolumeX className="w-3.5 h-3.5 text-rose-500" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-600" />}
+                  <span>{isSpeaking ? 'Stop Audio' : 'Listen Report'}</span>
+                </button>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                {evalResult.explanation}
+              </p>
+
+              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-900">
+                <div className="font-bold uppercase text-[11px] font-mono mb-0.5">Clinical & Lifestyle Advisory:</div>
+                <p>{evalResult.lifestyleTip}</p>
+              </div>
             </div>
 
           </div>
-        </section>
+        </div>
 
-        {/* Diagnostic Reference Explorer */}
-        <section className="py-12 px-6 lg:px-12 max-w-[1280px] mx-auto">
-          
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-            {/* Category Pills */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((cat, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    selectedCategory === cat 
-                      ? 'bg-sky-600 text-white shadow-xs' 
-                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+        {/* =========================================================
+            PATHOLOGY LAB REFERENCE CATALOG
+            ========================================================= */}
+        <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900">Diagnostic Blood Marker Reference Catalog</h2>
+            <p className="text-xs text-slate-500">Standardized clinical norms & diagnostic alert criteria.</p>
+          </div>
 
-            {/* Search Input */}
-            <div className="relative w-full md:w-72">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input 
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search biomarker (e.g. Glucose)..."
-                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:border-sky-500 outline-none"
+                placeholder="Filter blood tests..."
+                className="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 w-48 sm:w-60"
               />
             </div>
+
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-700 focus:outline-none focus:border-emerald-500"
+            >
+              <option value="all">All Departments</option>
+              <option value="Diabetes">Diabetes / Endocrinology</option>
+              <option value="Cardiology">Cardiology / Lipids</option>
+              <option value="Renal">Renal Function (KFT)</option>
+              <option value="CBC">Complete Blood Count (CBC)</option>
+            </select>
           </div>
+        </div>
 
-          {/* Biomarkers Data Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {filteredTests.map((item, idx) => (
-              <div key={idx} className="bg-white rounded-xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all">
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[11px] font-mono text-slate-500 uppercase">{item.category}</span>
-                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
-                      item.status === 'elevated' ? 'bg-amber-100 text-amber-800' :
-                      'bg-teal-100 text-teal-800'
-                    }`}>
-                      {item.status === 'elevated' ? 'Slightly Elevated' : 'Normal Reference'}
-                    </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCatalog.map((item, idx) => (
+            <div key={idx} className="med-card p-6 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="text-[11px] font-mono font-bold text-slate-400 uppercase">{item.category}</span>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                    Normal: {item.normalRange} {item.unit}
+                  </span>
+                </div>
+
+                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.name}</h3>
+
+                <div className="space-y-2 text-xs text-slate-600 mb-4">
+                  <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                    <strong>Elevated Indicator:</strong> {item.elevatedRisk}
                   </div>
-
-                  <h3 className="text-base font-bold text-slate-900 mb-2">{item.name}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">{item.significance}</p>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100 space-y-1.5 text-xs font-mono">
-                  <div className="flex justify-between text-slate-500">
-                    <span>Standard Reference Norm:</span>
-                    <strong className="text-slate-900">{item.normalRange} {item.unit}</strong>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Typical Patient Level:</span>
-                    <span className={item.status === 'elevated' ? 'text-amber-700 font-bold' : 'text-teal-700 font-bold'}>
-                      {item.sampleVal}
-                    </span>
-                  </div>
+                  <p className="text-slate-500 leading-relaxed">{item.clinicalNote}</p>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Ingestion Pipeline Explanation */}
-          <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm mb-12">
-            <h2 className="text-xl font-bold text-slate-900 mb-4">How Pathology Ingestion Works</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200">
-                <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs mb-3 font-mono">
-                  01
-                </div>
-                <h4 className="text-sm font-bold text-slate-900 mb-1">OCR Document Scanning</h4>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Extracts printed pathology tables from camera photographs, scanned PDFs, and hospital lab printouts.
-                </p>
+              <div className="pt-3 border-t border-slate-100">
+                <button
+                  onClick={() => {
+                    if (item.name.includes('Glucose')) handleLoadPreset('glucose', 110);
+                    else if (item.name.includes('HbA1c')) handleLoadPreset('hba1c', 6.0);
+                    else if (item.name.includes('LDL')) handleLoadPreset('ldl', 130);
+                    else if (item.name.includes('Creatinine')) handleLoadPreset('creatinine', 1.3);
+                    window.scrollTo({ top: 200, behavior: 'smooth' });
+                  }}
+                  className="w-full btn-med-secondary text-xs flex items-center justify-center gap-1 cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Test in Simulator</span>
+                </button>
               </div>
-
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200">
-                <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs mb-3 font-mono">
-                  02
-                </div>
-                <h4 className="text-sm font-bold text-slate-900 mb-1">Norm Boundary Matching</h4>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Compares individual values against verified medical laboratory reference ranges for age and gender.
-                </p>
-              </div>
-
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200">
-                <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs mb-3 font-mono">
-                  03
-                </div>
-                <h4 className="text-sm font-bold text-slate-900 mb-1">Plain Language Summary</h4>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Generates an easy-to-read summary with voice playback in your chosen regional Indian dialect.
-                </p>
-              </div>
-
             </div>
-          </div>
-
-        </section>
+          ))}
+        </div>
 
       </main>
 
