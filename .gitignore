@@ -16,4 +16,7 @@ server/dist/
 ocr-service/data/datasets/ieee_hp_prescription/raw/
 ocr-service/data/datasets/ieee_hp_prescription/*.zip
 ocr-service/models/region-router/error_analysis/
+ocr-service/models/region-router-v2-doc-split/error_analysis/
+ocr-service/models/region-router/checkpoints/
+ocr-service/models/region-router-v2-doc-split/checkpoints/
 ocr-service/models/region-router/smoke_test_model/

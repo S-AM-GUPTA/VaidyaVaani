@@ -1,0 +1,1405 @@
+{
+  "sample_split_metrics": {
+    "evaluation_timestamp": "2026-08-23T09:09:18Z",
+    "model_path": "models/region-router/best",
+    "test_sample_count": 1705,
+    "overall_accuracy": 0.9624633431085043,
+    "macro_precision": 0.9557301233372018,
+    "macro_recall": 0.9538846500286619,
+    "macro_f1": 0.954452881482711,
+    "average_latency_ms": 18.278166099743032,
+    "per_class_metrics": {
+      "Handwritten": {
+        "precision": 0.9186991869918699,
+        "recall": 0.9658119658119658,
+        "f1": 0.9416666666666668,
+        "test_count": 468
+      },
+      "Printed": {
+        "precision": 0.9656862745098039,
+        "recall": 0.9099307159353349,
+        "f1": 0.9369797859690845,
+        "test_count": 433
+      },
+      "Mixed": {
+        "precision": 0.95,
+        "recall": 0.95,
+        "f1": 0.9500000000000001,
+        "test_count": 20
+      },
+      "Other": {
+        "precision": 0.9885350318471338,
+        "recall": 0.9897959183673469,
+        "f1": 0.9891650732950925,
+        "test_count": 784
+      }
+    },
+    "confusion_matrix": {
+      "classes": [
+        "Handwritten",
+        "Printed",
+        "Mixed",
+        "Other"
+      ],
+      "matrix": [
+        [
+          452,
+          11,
+          0,
+          5
+        ],
+        [
+          35,
+          394,
+          1,
+          3
+        ],
+        [
+          0,
+          0,
+          19,
+          1
+        ],
+        [
+          5,
+          3,
+          0,
+          776
+        ]
+      ]
+    },
+    "error_summary": {
+      "Printed -> Handwritten": 35,
+      "Handwritten -> Printed": 11,
+      "Other -> Handwritten": 5,
+      "Other -> Printed": 3,
+      "Handwritten -> Other": 5,
+      "Printed -> Other": 3,
+      "Printed -> Mixed": 1,
+      "Mixed -> Other": 1
+    },
+    "sample_misclassifications": [
+      {
+        "filename": "583_1.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.7542313933372498,
+        "probabilities": {
+          "Handwritten": 0.7542313933372498,
+          "Printed": 0.23566566407680511,
+          "Mixed": 0.009478205814957619,
+          "Other": 0.0006248204736039042
+        }
+      },
+      {
+        "filename": "665_5.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.4234924614429474,
+        "probabilities": {
+          "Handwritten": 0.3472149670124054,
+          "Printed": 0.4234924614429474,
+          "Mixed": 0.036452408879995346,
+          "Other": 0.19284021854400635
+        }
+      },
+      {
+        "filename": "179_10.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.6218711137771606,
+        "probabilities": {
+          "Handwritten": 0.6218711137771606,
+          "Printed": 0.3378283977508545,
+          "Mixed": 0.038846857845783234,
+          "Other": 0.0014536201488226652
+        }
+      },
+      {
+        "filename": "421_5.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.5138610005378723,
+        "probabilities": {
+          "Handwritten": 0.5138610005378723,
+          "Printed": 0.33398616313934326,
+          "Mixed": 0.05572153255343437,
+          "Other": 0.09643135964870453
+        }
+      },
+      {
+        "filename": "581_13.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.5652108788490295,
+        "probabilities": {
+          "Handwritten": 0.5652108788490295,
+          "Printed": 0.4294317960739136,
+          "Mixed": 0.005078332964330912,
+          "Other": 0.0002790089347399771
+        }
+      },
+      {
+        "filename": "578_4.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9991075396537781,
+        "probabilities": {
+          "Handwritten": 0.9991075396537781,
+          "Printed": 0.0006672003655694425,
+          "Mixed": 0.00020963820861652493,
+          "Other": 1.558846270199865e-05
+        }
+      },
+      {
+        "filename": "254_7.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.45671987533569336,
+        "probabilities": {
+          "Handwritten": 0.45671987533569336,
+          "Printed": 0.07324624806642532,
+          "Mixed": 0.03517778962850571,
+          "Other": 0.4348560869693756
+        }
+      },
+      {
+        "filename": "75_1.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.6866148114204407,
+        "probabilities": {
+          "Handwritten": 0.036215778440237045,
+          "Printed": 0.6866148114204407,
+          "Mixed": 0.07761489599943161,
+          "Other": 0.1995544582605362
+        }
+      },
+      {
+        "filename": "485_14.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.42454469203948975,
+        "probabilities": {
+          "Handwritten": 0.42454469203948975,
+          "Printed": 0.42247962951660156,
+          "Mixed": 0.07676365971565247,
+          "Other": 0.07621213048696518
+        }
+      },
+      {
+        "filename": "471_9.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.6613855361938477,
+        "probabilities": {
+          "Handwritten": 0.6613855361938477,
+          "Printed": 0.32027992606163025,
+          "Mixed": 0.007364510092884302,
+          "Other": 0.010970021598041058
+        }
+      },
+      {
+        "filename": "31_2.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.6315551400184631,
+        "probabilities": {
+          "Handwritten": 0.3509184420108795,
+          "Printed": 0.6315551400184631,
+          "Mixed": 0.0013934160815551877,
+          "Other": 0.01613292470574379
+        }
+      },
+      {
+        "filename": "586_14.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.5143332481384277,
+        "probabilities": {
+          "Handwritten": 0.4683562219142914,
+          "Printed": 0.5143332481384277,
+          "Mixed": 0.0067154476419091225,
+          "Other": 0.010595020838081837
+        }
+      },
+      {
+        "filename": "471_11.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.8894826173782349,
+        "probabilities": {
+          "Handwritten": 0.8894826173782349,
+          "Printed": 0.10993505269289017,
+          "Mixed": 0.0003486934583634138,
+          "Other": 0.00023369707923848182
+        }
+      },
+      {
+        "filename": "410_1.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9927523136138916,
+        "probabilities": {
+          "Handwritten": 0.9927523136138916,
+          "Printed": 0.007170582190155983,
+          "Mixed": 7.643629214726388e-05,
+          "Other": 7.3409211154285e-07
+        }
+      },
+      {
+        "filename": "645_1.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.7063137888908386,
+        "probabilities": {
+          "Handwritten": 0.7063137888908386,
+          "Printed": 0.28065013885498047,
+          "Mixed": 0.012853928841650486,
+          "Other": 0.000182115807547234
+        }
+      },
+      {
+        "filename": "455_16.png",
+        "actual": "Handwritten",
+        "predicted": "Other",
+        "confidence": 0.8996373414993286,
+        "probabilities": {
+          "Handwritten": 0.09167977422475815,
+          "Printed": 0.007653581444174051,
+          "Mixed": 0.001029366278089583,
+          "Other": 0.8996373414993286
+        }
+      },
+      {
+        "filename": "76_14.png",
+        "actual": "Handwritten",
+        "predicted": "Other",
+        "confidence": 0.4718816578388214,
+        "probabilities": {
+          "Handwritten": 0.4612010419368744,
+          "Printed": 0.012083848007023335,
+          "Mixed": 0.05483340471982956,
+          "Other": 0.4718816578388214
+        }
+      },
+      {
+        "filename": "578_3.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.7046613693237305,
+        "probabilities": {
+          "Handwritten": 0.7046613693237305,
+          "Printed": 0.29167479276657104,
+          "Mixed": 0.0032817614264786243,
+          "Other": 0.0003820355632342398
+        }
+      },
+      {
+        "filename": "404_11.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.6942943930625916,
+        "probabilities": {
+          "Handwritten": 0.6942943930625916,
+          "Printed": 0.000646787288133055,
+          "Mixed": 0.0005536756361834705,
+          "Other": 0.3045050799846649
+        }
+      },
+      {
+        "filename": "179_16.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9360953569412231,
+        "probabilities": {
+          "Handwritten": 0.9360953569412231,
+          "Printed": 0.0569460503757,
+          "Mixed": 0.00515412725508213,
+          "Other": 0.0018044156022369862
+        }
+      },
+      {
+        "filename": "355_5.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.6039023399353027,
+        "probabilities": {
+          "Handwritten": 0.21388667821884155,
+          "Printed": 0.6039023399353027,
+          "Mixed": 0.03075292892754078,
+          "Other": 0.1514580249786377
+        }
+      },
+      {
+        "filename": "645_10.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.5178272724151611,
+        "probabilities": {
+          "Handwritten": 0.5178272724151611,
+          "Printed": 0.42999884486198425,
+          "Mixed": 0.05122233182191849,
+          "Other": 0.0009515743586234748
+        }
+      },
+      {
+        "filename": "464_7.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.8763995170593262,
+        "probabilities": {
+          "Handwritten": 0.8763995170593262,
+          "Printed": 0.09746403247117996,
+          "Mixed": 0.02452029101550579,
+          "Other": 0.001616148161701858
+        }
+      },
+      {
+        "filename": "73_16.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.6267790794372559,
+        "probabilities": {
+          "Handwritten": 0.6267790794372559,
+          "Printed": 0.002805001102387905,
+          "Mixed": 0.00038906888221390545,
+          "Other": 0.37002694606781006
+        }
+      },
+      {
+        "filename": "608_5.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.4149872064590454,
+        "probabilities": {
+          "Handwritten": 0.2471662163734436,
+          "Printed": 0.4149872064590454,
+          "Mixed": 0.09054934978485107,
+          "Other": 0.24729721248149872
+        }
+      },
+      {
+        "filename": "273_14.png",
+        "actual": "Printed",
+        "predicted": "Other",
+        "confidence": 0.8491596579551697,
+        "probabilities": {
+          "Handwritten": 0.0357789546251297,
+          "Printed": 0.07787949591875076,
+          "Mixed": 0.037181854248046875,
+          "Other": 0.8491596579551697
+        }
+      },
+      {
+        "filename": "273_5.png",
+        "actual": "Printed",
+        "predicted": "Other",
+        "confidence": 0.8483304381370544,
+        "probabilities": {
+          "Handwritten": 0.02999200113117695,
+          "Printed": 0.08748604357242584,
+          "Mixed": 0.03419153019785881,
+          "Other": 0.8483304381370544
+        }
+      },
+      {
+        "filename": "502_17.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.8064044713973999,
+        "probabilities": {
+          "Handwritten": 0.8064044713973999,
+          "Printed": 0.1927664428949356,
+          "Mixed": 0.0007408417295664549,
+          "Other": 8.81042069522664e-05
+        }
+      },
+      {
+        "filename": "410_14.png",
+        "actual": "Printed",
+        "predicted": "Mixed",
+        "confidence": 0.904881477355957,
+        "probabilities": {
+          "Handwritten": 0.04995320364832878,
+          "Printed": 0.039014387875795364,
+          "Mixed": 0.904881477355957,
+          "Other": 0.006150843109935522
+        }
+      },
+      {
+        "filename": "79_5.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.6358603239059448,
+        "probabilities": {
+          "Handwritten": 0.6358603239059448,
+          "Printed": 0.24548086524009705,
+          "Mixed": 0.060068633407354355,
+          "Other": 0.05859016627073288
+        }
+      },
+      {
+        "filename": "79_1.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.38501718640327454,
+        "probabilities": {
+          "Handwritten": 0.23243704438209534,
+          "Printed": 0.38501718640327454,
+          "Mixed": 0.008361118845641613,
+          "Other": 0.37418460845947266
+        }
+      },
+      {
+        "filename": "679_14.png",
+        "actual": "Printed",
+        "predicted": "Other",
+        "confidence": 0.7621862888336182,
+        "probabilities": {
+          "Handwritten": 0.03163371607661247,
+          "Printed": 0.18208660185337067,
+          "Mixed": 0.024093380197882652,
+          "Other": 0.7621862888336182
+        }
+      },
+      {
+        "filename": "489_6.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.8248926401138306,
+        "probabilities": {
+          "Handwritten": 0.8248926401138306,
+          "Printed": 0.17285272479057312,
+          "Mixed": 0.0022108559496700764,
+          "Other": 4.376552897156216e-05
+        }
+      },
+      {
+        "filename": "596_5.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.9503522515296936,
+        "probabilities": {
+          "Handwritten": 0.047687236219644547,
+          "Printed": 0.9503522515296936,
+          "Mixed": 0.0011307651875540614,
+          "Other": 0.0008297007880173624
+        }
+      },
+      {
+        "filename": "645_4.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9279705882072449,
+        "probabilities": {
+          "Handwritten": 0.9279705882072449,
+          "Printed": 0.06038476899266243,
+          "Mixed": 0.011501391418278217,
+          "Other": 0.00014327662938740104
+        }
+      },
+      {
+        "filename": "475_4.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.5252479314804077,
+        "probabilities": {
+          "Handwritten": 0.5252479314804077,
+          "Printed": 0.4548081159591675,
+          "Mixed": 0.018856331706047058,
+          "Other": 0.0010876794112846255
+        }
+      },
+      {
+        "filename": "489_1.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.8865645527839661,
+        "probabilities": {
+          "Handwritten": 0.8865645527839661,
+          "Printed": 0.10783422738313675,
+          "Mixed": 0.005518426187336445,
+          "Other": 8.284086652565747e-05
+        }
+      },
+      {
+        "filename": "471_8.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.7205005288124084,
+        "probabilities": {
+          "Handwritten": 0.7205005288124084,
+          "Printed": 0.2742098271846771,
+          "Mixed": 0.002398834330961108,
+          "Other": 0.002890818752348423
+        }
+      },
+      {
+        "filename": "645_6.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.7188366055488586,
+        "probabilities": {
+          "Handwritten": 0.7188366055488586,
+          "Printed": 0.2622825503349304,
+          "Mixed": 0.018639815971255302,
+          "Other": 0.0002410876186331734
+        }
+      },
+      {
+        "filename": "455_7.png",
+        "actual": "Handwritten",
+        "predicted": "Other",
+        "confidence": 0.9833789467811584,
+        "probabilities": {
+          "Handwritten": 0.012147312983870506,
+          "Printed": 0.0036267044488340616,
+          "Mixed": 0.0008469755994156003,
+          "Other": 0.9833789467811584
+        }
+      },
+      {
+        "filename": "661_16.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.7324808835983276,
+        "probabilities": {
+          "Handwritten": 0.7324808835983276,
+          "Printed": 0.2625828683376312,
+          "Mixed": 0.00027827711892314255,
+          "Other": 0.004657932557165623
+        }
+      },
+      {
+        "filename": "379_5.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.6228914260864258,
+        "probabilities": {
+          "Handwritten": 0.3556467890739441,
+          "Printed": 0.6228914260864258,
+          "Mixed": 0.00906669907271862,
+          "Other": 0.012395113706588745
+        }
+      },
+      {
+        "filename": "578_2.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9982267022132874,
+        "probabilities": {
+          "Handwritten": 0.9982267022132874,
+          "Printed": 0.0015777633525431156,
+          "Mixed": 0.0001588398590683937,
+          "Other": 3.664752148324624e-05
+        }
+      },
+      {
+        "filename": "503_11.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9821516275405884,
+        "probabilities": {
+          "Handwritten": 0.9821516275405884,
+          "Printed": 0.0037689737509936094,
+          "Mixed": 0.001550024258904159,
+          "Other": 0.012529372237622738
+        }
+      },
+      {
+        "filename": "617_14.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.36164233088493347,
+        "probabilities": {
+          "Handwritten": 0.33564478158950806,
+          "Printed": 0.36164233088493347,
+          "Mixed": 0.04750533029437065,
+          "Other": 0.25520747900009155
+        }
+      },
+      {
+        "filename": "359_14.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.9697494506835938,
+        "probabilities": {
+          "Handwritten": 0.018810657784342766,
+          "Printed": 0.9697494506835938,
+          "Mixed": 0.0020328175742179155,
+          "Other": 0.00940705556422472
+        }
+      },
+      {
+        "filename": "489_14.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.6733965873718262,
+        "probabilities": {
+          "Handwritten": 0.6733965873718262,
+          "Printed": 0.2942792475223541,
+          "Mixed": 0.01611887291073799,
+          "Other": 0.01620541140437126
+        }
+      },
+      {
+        "filename": "577_8.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.5377495288848877,
+        "probabilities": {
+          "Handwritten": 0.5377495288848877,
+          "Printed": 0.4483817517757416,
+          "Mixed": 0.012122420594096184,
+          "Other": 0.0017462517134845257
+        }
+      },
+      {
+        "filename": "446_14.png",
+        "actual": "Handwritten",
+        "predicted": "Other",
+        "confidence": 0.9561795592308044,
+        "probabilities": {
+          "Handwritten": 0.01442607119679451,
+          "Printed": 0.01825438067317009,
+          "Mixed": 0.011140068992972374,
+          "Other": 0.9561795592308044
+        }
+      },
+      {
+        "filename": "598_13.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.5067175626754761,
+        "probabilities": {
+          "Handwritten": 0.5067175626754761,
+          "Printed": 0.47291994094848633,
+          "Mixed": 0.018733834847807884,
+          "Other": 0.0016287205507978797
+        }
+      }
+    ]
+  },
+  "document_split_metrics": {
+    "evaluation_timestamp": "2026-08-23T12:22:00Z",
+    "model_path": "models/region-router-v2-doc-split/best",
+    "test_sample_count": 1692,
+    "overall_accuracy": 0.6205673758865248,
+    "macro_precision": 0.48583075583053065,
+    "macro_recall": 0.4733102680050354,
+    "macro_f1": 0.4602941800768669,
+    "average_latency_ms": 19.879858333332784,
+    "per_class_metrics": {
+      "Handwritten": {
+        "precision": 0.5264705882352941,
+        "recall": 0.7649572649572649,
+        "f1": 0.6236933797909409,
+        "test_count": 468
+      },
+      "Printed": {
+        "precision": 0.4232902033271719,
+        "recall": 0.5300925925925926,
+        "f1": 0.4707091469681397,
+        "test_count": 432
+      },
+      "Mixed": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "test_count": 18
+      },
+      "Other": {
+        "precision": 0.9935622317596566,
+        "recall": 0.5981912144702842,
+        "f1": 0.7467741935483871,
+        "test_count": 774
+      }
+    },
+    "confusion_matrix": {
+      "classes": [
+        "Handwritten",
+        "Printed",
+        "Mixed",
+        "Other"
+      ],
+      "matrix": [
+        [
+          358,
+          110,
+          0,
+          0
+        ],
+        [
+          200,
+          229,
+          0,
+          3
+        ],
+        [
+          3,
+          15,
+          0,
+          0
+        ],
+        [
+          119,
+          187,
+          5,
+          463
+        ]
+      ]
+    },
+    "error_summary": {
+      "Other -> Handwritten": 119,
+      "Printed -> Handwritten": 200,
+      "Other -> Printed": 187,
+      "Handwritten -> Printed": 110,
+      "Other -> Mixed": 5,
+      "Mixed -> Printed": 15,
+      "Printed -> Other": 3,
+      "Mixed -> Handwritten": 3
+    },
+    "sample_misclassifications": [
+      {
+        "filename": "199_15.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9957167506217957,
+        "probabilities": {
+          "Handwritten": 0.9957167506217957,
+          "Printed": 0.0042314305901527405,
+          "Mixed": 3.682700844365172e-05,
+          "Other": 1.5004139640950598e-05
+        }
+      },
+      {
+        "filename": "246_16.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.8608007431030273,
+        "probabilities": {
+          "Handwritten": 0.8608007431030273,
+          "Printed": 0.1391991376876831,
+          "Mixed": 1.596555705418723e-07,
+          "Other": 1.6180266015908273e-08
+        }
+      },
+      {
+        "filename": "304_0.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9976268410682678,
+        "probabilities": {
+          "Handwritten": 0.9976268410682678,
+          "Printed": 0.0023731673136353493,
+          "Mixed": 7.920720190845998e-10,
+          "Other": 9.370895726057427e-11
+        }
+      },
+      {
+        "filename": "118_1.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.9806268811225891,
+        "probabilities": {
+          "Handwritten": 0.012693569995462894,
+          "Printed": 0.9806268811225891,
+          "Mixed": 0.0001851040287874639,
+          "Other": 0.006494454108178616
+        }
+      },
+      {
+        "filename": "254_5.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.920419454574585,
+        "probabilities": {
+          "Handwritten": 0.06746223568916321,
+          "Printed": 0.920419454574585,
+          "Mixed": 0.010030276142060757,
+          "Other": 0.0020879984367638826
+        }
+      },
+      {
+        "filename": "199_4.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9996480941772461,
+        "probabilities": {
+          "Handwritten": 0.9996480941772461,
+          "Printed": 0.00032472811290062964,
+          "Mixed": 2.6279194571543485e-05,
+          "Other": 8.122167400870239e-07
+        }
+      },
+      {
+        "filename": "666_7.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.9660959243774414,
+        "probabilities": {
+          "Handwritten": 0.03205915167927742,
+          "Printed": 0.9660959243774414,
+          "Mixed": 0.0014211500529199839,
+          "Other": 0.00042375881457701325
+        }
+      },
+      {
+        "filename": "625_13.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9679829478263855,
+        "probabilities": {
+          "Handwritten": 0.9679829478263855,
+          "Printed": 0.03201315924525261,
+          "Mixed": 2.1167018076084787e-06,
+          "Other": 1.8593219692775165e-06
+        }
+      },
+      {
+        "filename": "580_11.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.999593198299408,
+        "probabilities": {
+          "Handwritten": 0.999593198299408,
+          "Printed": 0.00040683927363716066,
+          "Mixed": 1.2940369609193425e-10,
+          "Other": 3.184132124633976e-11
+        }
+      },
+      {
+        "filename": "412_17.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.9986317753791809,
+        "probabilities": {
+          "Handwritten": 0.0013115496840327978,
+          "Printed": 0.9986317753791809,
+          "Mixed": 3.504009509924799e-05,
+          "Other": 2.1643027139361948e-05
+        }
+      },
+      {
+        "filename": "199_17.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9990699887275696,
+        "probabilities": {
+          "Handwritten": 0.9990699887275696,
+          "Printed": 0.0009219491621479392,
+          "Mixed": 7.360804374911822e-06,
+          "Other": 7.468984222214203e-07
+        }
+      },
+      {
+        "filename": "199_8.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9982969164848328,
+        "probabilities": {
+          "Handwritten": 0.9982969164848328,
+          "Printed": 0.001681990921497345,
+          "Mixed": 1.3194764505897183e-05,
+          "Other": 7.853207534935791e-06
+        }
+      },
+      {
+        "filename": "67_17.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.5350614190101624,
+        "probabilities": {
+          "Handwritten": 0.002865646267309785,
+          "Printed": 0.5350614190101624,
+          "Mixed": 0.0012408089824020863,
+          "Other": 0.4608322083950043
+        }
+      },
+      {
+        "filename": "504_10.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.590464174747467,
+        "probabilities": {
+          "Handwritten": 0.40953534841537476,
+          "Printed": 0.590464174747467,
+          "Mixed": 4.5425372263707686e-07,
+          "Other": 3.5346037208228154e-08
+        }
+      },
+      {
+        "filename": "196_8.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.9237794280052185,
+        "probabilities": {
+          "Handwritten": 0.004962872713804245,
+          "Printed": 0.9237794280052185,
+          "Mixed": 0.012667441740632057,
+          "Other": 0.05859021097421646
+        }
+      },
+      {
+        "filename": "363_12.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.49318811297416687,
+        "probabilities": {
+          "Handwritten": 0.10125849395990372,
+          "Printed": 0.49318811297416687,
+          "Mixed": 0.001156394719146192,
+          "Other": 0.40439698100090027
+        }
+      },
+      {
+        "filename": "478_7.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.628325343132019,
+        "probabilities": {
+          "Handwritten": 0.628325343132019,
+          "Printed": 0.36907216906547546,
+          "Mixed": 0.0025262366980314255,
+          "Other": 7.62227937229909e-05
+        }
+      },
+      {
+        "filename": "660_4.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.7621573805809021,
+        "probabilities": {
+          "Handwritten": 0.23747052252292633,
+          "Printed": 0.7621573805809021,
+          "Mixed": 0.0003063732583541423,
+          "Other": 6.582348578376696e-05
+        }
+      },
+      {
+        "filename": "359_8.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.7352229356765747,
+        "probabilities": {
+          "Handwritten": 0.26475852727890015,
+          "Printed": 0.7352229356765747,
+          "Mixed": 1.5208948752842844e-05,
+          "Other": 3.27788643517124e-06
+        }
+      },
+      {
+        "filename": "143_13.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.7430922389030457,
+        "probabilities": {
+          "Handwritten": 0.7430922389030457,
+          "Printed": 0.21027113497257233,
+          "Mixed": 0.021256016567349434,
+          "Other": 0.025380520150065422
+        }
+      },
+      {
+        "filename": "254_12.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9999778270721436,
+        "probabilities": {
+          "Handwritten": 0.9999778270721436,
+          "Printed": 2.2208218069863506e-05,
+          "Mixed": 4.016304444576235e-08,
+          "Other": 9.067426254283362e-10
+        }
+      },
+      {
+        "filename": "424_7.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.7196220755577087,
+        "probabilities": {
+          "Handwritten": 0.7196220755577087,
+          "Printed": 0.2803776264190674,
+          "Mixed": 2.6069866976285994e-07,
+          "Other": 8.452477828768679e-09
+        }
+      },
+      {
+        "filename": "150_16.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.778477132320404,
+        "probabilities": {
+          "Handwritten": 0.778477132320404,
+          "Printed": 0.22152037918567657,
+          "Mixed": 2.39563564718992e-06,
+          "Other": 1.2435145890776766e-07
+        }
+      },
+      {
+        "filename": "98_14.png",
+        "actual": "Other",
+        "predicted": "Mixed",
+        "confidence": 0.5405937433242798,
+        "probabilities": {
+          "Handwritten": 0.3317885398864746,
+          "Printed": 0.11404246091842651,
+          "Mixed": 0.5405937433242798,
+          "Other": 0.013575232587754726
+        }
+      },
+      {
+        "filename": "660_8.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.7089260220527649,
+        "probabilities": {
+          "Handwritten": 0.7089260220527649,
+          "Printed": 0.2903972566127777,
+          "Mixed": 0.0006737037911079824,
+          "Other": 3.0365411021193722e-06
+        }
+      },
+      {
+        "filename": "662_6.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9977837204933167,
+        "probabilities": {
+          "Handwritten": 0.9977837204933167,
+          "Printed": 0.002216329798102379,
+          "Mixed": 1.0825756291410471e-08,
+          "Other": 2.1205657230183306e-09
+        }
+      },
+      {
+        "filename": "372_8.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9933920502662659,
+        "probabilities": {
+          "Handwritten": 0.9933920502662659,
+          "Printed": 0.006197652313858271,
+          "Mixed": 0.000314500299282372,
+          "Other": 9.567890083417296e-05
+        }
+      },
+      {
+        "filename": "327_9.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.5879098176956177,
+        "probabilities": {
+          "Handwritten": 0.5879098176956177,
+          "Printed": 0.41208600997924805,
+          "Mixed": 4.162319328315789e-06,
+          "Other": 3.466079689928847e-08
+        }
+      },
+      {
+        "filename": "659_15.png",
+        "actual": "Mixed",
+        "predicted": "Printed",
+        "confidence": 0.9984124898910522,
+        "probabilities": {
+          "Handwritten": 0.0015874395612627268,
+          "Printed": 0.9984124898910522,
+          "Mixed": 4.474914305774291e-08,
+          "Other": 3.0307718557054386e-09
+        }
+      },
+      {
+        "filename": "596_7.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.7969871163368225,
+        "probabilities": {
+          "Handwritten": 0.20301192998886108,
+          "Printed": 0.7969871163368225,
+          "Mixed": 7.640502417416428e-07,
+          "Other": 2.001471557377954e-07
+        }
+      },
+      {
+        "filename": "674_2.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9012399315834045,
+        "probabilities": {
+          "Handwritten": 0.9012399315834045,
+          "Printed": 0.09875573217868805,
+          "Mixed": 1.8613827705848962e-06,
+          "Other": 2.5060139705601614e-06
+        }
+      },
+      {
+        "filename": "239_8.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9571874737739563,
+        "probabilities": {
+          "Handwritten": 0.9571874737739563,
+          "Printed": 0.015001965686678886,
+          "Mixed": 0.0273897647857666,
+          "Other": 0.0004207764286547899
+        }
+      },
+      {
+        "filename": "93_14.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.8816161751747131,
+        "probabilities": {
+          "Handwritten": 0.09199304133653641,
+          "Printed": 0.8816161751747131,
+          "Mixed": 0.0225972943007946,
+          "Other": 0.0037934654392302036
+        }
+      },
+      {
+        "filename": "143_0.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9682224988937378,
+        "probabilities": {
+          "Handwritten": 0.9682224988937378,
+          "Printed": 0.03119933046400547,
+          "Mixed": 0.00011206859926460311,
+          "Other": 0.00046611364814452827
+        }
+      },
+      {
+        "filename": "304_4.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9959511756896973,
+        "probabilities": {
+          "Handwritten": 0.9959511756896973,
+          "Printed": 0.004048794042319059,
+          "Mixed": 6.92558899118012e-10,
+          "Other": 2.1838593433631814e-11
+        }
+      },
+      {
+        "filename": "254_3.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.999981164932251,
+        "probabilities": {
+          "Handwritten": 0.999981164932251,
+          "Printed": 1.8821727280737832e-05,
+          "Mixed": 3.502578671543688e-09,
+          "Other": 5.846887557448e-11
+        }
+      },
+      {
+        "filename": "239_6.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.794857919216156,
+        "probabilities": {
+          "Handwritten": 0.794857919216156,
+          "Printed": 0.1254960149526596,
+          "Mixed": 0.06987778842449188,
+          "Other": 0.009768195450305939
+        }
+      },
+      {
+        "filename": "199_7.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.9999693632125854,
+        "probabilities": {
+          "Handwritten": 0.9999693632125854,
+          "Printed": 3.067606303375214e-05,
+          "Mixed": 2.160400747186486e-08,
+          "Other": 6.294948562413083e-09
+        }
+      },
+      {
+        "filename": "551_8.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.5840752124786377,
+        "probabilities": {
+          "Handwritten": 0.5840752124786377,
+          "Printed": 0.4015996754169464,
+          "Mixed": 0.013144592754542828,
+          "Other": 0.0011805299436673522
+        }
+      },
+      {
+        "filename": "304_17.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9769495725631714,
+        "probabilities": {
+          "Handwritten": 0.9769495725631714,
+          "Printed": 0.02305043488740921,
+          "Mixed": 1.9822136820835112e-08,
+          "Other": 5.155154636504733e-10
+        }
+      },
+      {
+        "filename": "666_9.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.9556214213371277,
+        "probabilities": {
+          "Handwritten": 0.04437790438532829,
+          "Printed": 0.9556214213371277,
+          "Mixed": 5.005428533877421e-07,
+          "Other": 2.1895999680054956e-07
+        }
+      },
+      {
+        "filename": "372_16.png",
+        "actual": "Other",
+        "predicted": "Handwritten",
+        "confidence": 0.7847798466682434,
+        "probabilities": {
+          "Handwritten": 0.7847798466682434,
+          "Printed": 0.21514034271240234,
+          "Mixed": 6.103581836214289e-05,
+          "Other": 1.880696254374925e-05
+        }
+      },
+      {
+        "filename": "239_14.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.8676509261131287,
+        "probabilities": {
+          "Handwritten": 0.0015417528338730335,
+          "Printed": 0.8676509261131287,
+          "Mixed": 0.053030215203762054,
+          "Other": 0.07777707278728485
+        }
+      },
+      {
+        "filename": "580_15.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9942718744277954,
+        "probabilities": {
+          "Handwritten": 0.9942718744277954,
+          "Printed": 0.005728135816752911,
+          "Mixed": 5.440550054913729e-08,
+          "Other": 3.3785296782440355e-10
+        }
+      },
+      {
+        "filename": "519_0.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.6648514866828918,
+        "probabilities": {
+          "Handwritten": 0.6648514866828918,
+          "Printed": 0.33514851331710815,
+          "Mixed": 1.8394144873923324e-08,
+          "Other": 3.3403160237810425e-09
+        }
+      },
+      {
+        "filename": "596_14.png",
+        "actual": "Handwritten",
+        "predicted": "Printed",
+        "confidence": 0.7424331903457642,
+        "probabilities": {
+          "Handwritten": 0.25756174325942993,
+          "Printed": 0.7424331903457642,
+          "Mixed": 4.232990249875002e-06,
+          "Other": 7.820587484275165e-07
+        }
+      },
+      {
+        "filename": "583_15.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9992942810058594,
+        "probabilities": {
+          "Handwritten": 0.9992942810058594,
+          "Printed": 0.0007057081675156951,
+          "Mixed": 3.172223317360334e-10,
+          "Other": 5.080666096168862e-11
+        }
+      },
+      {
+        "filename": "604_7.png",
+        "actual": "Other",
+        "predicted": "Printed",
+        "confidence": 0.7907734513282776,
+        "probabilities": {
+          "Handwritten": 0.022835826501250267,
+          "Printed": 0.7907734513282776,
+          "Mixed": 0.001222391496412456,
+          "Other": 0.1851682811975479
+        }
+      },
+      {
+        "filename": "246_15.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9973708391189575,
+        "probabilities": {
+          "Handwritten": 0.9973708391189575,
+          "Printed": 0.0026288838125765324,
+          "Mixed": 2.01793710630227e-07,
+          "Other": 1.7394824469718628e-09
+        }
+      },
+      {
+        "filename": "580_0.png",
+        "actual": "Printed",
+        "predicted": "Handwritten",
+        "confidence": 0.9944076538085938,
+        "probabilities": {
+          "Handwritten": 0.9944076538085938,
+          "Printed": 0.005592361558228731,
+          "Mixed": 3.2285480955351886e-08,
+          "Other": 2.788351327609462e-09
+        }
+      }
+    ]
+  },
+  "comparison_table": {
+    "accuracy": {
+      "sample": 96.24633431085043,
+      "document": 62.056737588652474,
+      "delta": -34.189596722197955
+    },
+    "macro_f1": {
+      "sample": 95.4452881482711,
+      "document": 46.02941800768669,
+      "delta": -49.41587014058442
+    },
+    "handwritten_f1": {
+      "sample": 94.16666666666667,
+      "document": 62.369337979094084,
+      "delta": -31.797328687572588
+    },
+    "printed_f1": {
+      "sample": 93.69797859690846,
+      "document": 47.07091469681397,
+      "delta": -46.627063900094484
+    },
+    "mixed_f1": {
+      "sample": 95.0,
+      "document": 0.0,
+      "delta": -95.0
+    },
+    "other_f1": {
+      "sample": 98.91650732950924,
+      "document": 74.67741935483872,
+      "delta": -24.239087974670525
+    },
+    "latency_ms": {
+      "sample": 18.278166099743032,
+      "document": 19.879858333332784,
+      "delta": 1.6016922335897519
+    }
+  },
+  "leakage_effect": "SUBSTANTIAL LEAKAGE EFFECT",
+  "interpretation": "A significant performance delta was observed, showing that document-specific artifacts heavily influenced sample-level classification."
+}

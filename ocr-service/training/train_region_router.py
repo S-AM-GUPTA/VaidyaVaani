@@ -11,6 +11,9 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 
+# Maximize CPU parallelism
+torch.set_num_threads(min(8, os.cpu_count() or 4))
+
 CLASS_MAP = {
     0: "Handwritten",
     1: "Printed",
@@ -45,6 +48,9 @@ class PrescriptionRegionDataset(Dataset):
                 angle = random.uniform(-5, 5)
                 image = image.rotate(angle, resample=Image.Resampling.BILINEAR, fillcolor=(255, 255, 255))
             # Mild horizontal flip is BANNED for text readability; we preserve strict text orientation
+
+        # Pre-resize to standard vision dimensions
+        image = image.resize((224, 224), Image.Resampling.BILINEAR)
 
         # Preprocess using AutoImageProcessor (resizes, scales to [-1, 1], converts to tensor)
         inputs = self.processor(images=image, return_tensors="pt")
@@ -121,7 +127,13 @@ def train_region_router(args):
     train_samples = manifest["splits"]["train"]
     val_samples = manifest["splits"]["val"]
     test_samples = manifest["splits"]["test"]
-    class_weights_list = manifest["dataset_info"].get("class_weights", [1.0, 1.0, 1.0, 1.0])
+    if "class_weights" in manifest:
+        cw_dict = manifest["class_weights"]
+        class_weights_list = [float(cw_dict.get(str(i), cw_dict.get(i, 1.0))) for i in range(4)]
+    elif "dataset_info" in manifest and "class_weights" in manifest["dataset_info"]:
+        class_weights_list = manifest["dataset_info"]["class_weights"]
+    else:
+        class_weights_list = [1.0, 1.0, 1.0, 1.0]
 
     print(f"Loaded dataset: Train={len(train_samples)}, Val={len(val_samples)}, Test={len(test_samples)}")
 
