@@ -12,19 +12,30 @@ class VerificationStatus(str, Enum):
     ILLEGIBLE = "ILLEGIBLE"
     REJECTED = "REJECTED"
 
+class AnnotationPriority(str, Enum):
+    HIGH_AGREEMENT = "HIGH_AGREEMENT"
+    PARTIAL_AGREEMENT = "PARTIAL_AGREEMENT"
+    DISAGREEMENT = "DISAGREEMENT"
+    NO_USEFUL_OUTPUT = "NO_USEFUL_OUTPUT"
+
+class ReviewerConfidence(str, Enum):
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+
 class OCREngineProposal(BaseModel):
-    engine: str  # "paddleocr", "trocr", "gemini"
+    engine: str  # "paddleocr", "pretrained_trocr", "rxhandbd_v1", "gemini"
     text: str
     confidence: float = 0.0
 
 class MedicineGroundTruth(BaseModel):
-    name: Optional[str] = None  # Level B: Normalized name (e.g. "Amoxicillin")
+    name: Optional[str] = None  # Normalized canonical name (e.g. "Amoxicillin")
     generic_name: Optional[str] = None
-    strength: Optional[str] = None  # Level C: e.g. "500 mg"
-    dosage: Optional[str] = None  # Level C: e.g. "1 tablet"
-    frequency: Optional[str] = None  # Level C: e.g. "twice daily"
-    timing: Optional[str] = None  # Level C: e.g. "after food"
-    duration: Optional[str] = None  # Level C: e.g. "5 days"
+    strength: Optional[str] = None  # e.g. "500mg"
+    dosage: Optional[str] = None  # e.g. "1 tablet"
+    frequency: Optional[str] = None  # e.g. "twice daily" / "1-0-1"
+    timing: Optional[str] = None  # e.g. "after food"
+    duration: Optional[str] = None  # e.g. "5 days"
     verification_status: VerificationStatus = VerificationStatus.UNREVIEWED
 
 class RegionGroundTruth(BaseModel):
@@ -32,14 +43,30 @@ class RegionGroundTruth(BaseModel):
     bbox: Optional[List[int]] = None  # [xmin, ymin, xmax, ymax]
     raw_ocr: List[OCREngineProposal] = []
     
-    # Level A: Visual transcription (what is actually seen on the prescription)
+    # Priority calculated from multi-engine agreement
+    annotation_priority: Optional[AnnotationPriority] = AnnotationPriority.DISAGREEMENT
+    
+    # Level A: Literal Visual transcription (what is literally visible on the prescription)
     visual_transcription: Optional[str] = None
     
-    # Level B & C: Medical normalization and structured info
+    # Level B: Normalized canonical medicine name
+    normalized_medicine: Optional[str] = None
+    
+    # Level C: Structured regimen attributes
+    strength: Optional[str] = None
+    dosage_form: Optional[str] = None
+    frequency: Optional[str] = None
+    timing: Optional[str] = None
+    duration: Optional[str] = None
+    
+    # Context & Human Annotation Confidence
+    context_used: bool = False  # Set true only if reviewer used contextual information
+    reviewer_confidence: Optional[ReviewerConfidence] = ReviewerConfidence.HIGH
+    
+    # Legacy object compatibility
     medicine: Optional[MedicineGroundTruth] = None
     
-    # Context & Status
-    context_used: Optional[str] = None  # e.g. "Prescription context / standard dosage"
+    # Status & Notes
     status: VerificationStatus = VerificationStatus.UNREVIEWED
     notes: Optional[str] = None
 

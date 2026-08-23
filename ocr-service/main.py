@@ -195,15 +195,41 @@ def health_check():
 # ==================== Ground-Truth Annotation Endpoints ====================
 
 @app.get("/annotation/list")
-def get_annotation_list():
+def get_annotation_list(priority: Optional[str] = None, status: Optional[str] = None):
     """
-    Lists all 129 Kaggle images with their verification review status.
+    Lists all 129 Kaggle images with their verification review status and filter options.
     """
     mgr = get_annotation_manager()
     return {
         "success": True,
-        "items": mgr.get_all_items()
+        "items": mgr.get_all_items(priority_filter=priority, status_filter=status)
     }
+
+@app.get("/annotation/next-difficult")
+def get_next_difficult(current_id: Optional[str] = None):
+    """
+    Finds next unreviewed prescription with unresolved difficult regions (DISAGREEMENT -> PARTIAL_AGREEMENT).
+    """
+    mgr = get_annotation_manager()
+    item = mgr.get_next_difficult_item(current_id=current_id)
+    if not item:
+        return {
+            "success": False,
+            "message": "No unreviewed difficult cases remaining."
+        }
+    return {
+        "success": True,
+        "item": item
+    }
+
+@app.post("/annotation/export")
+def export_verified_dataset():
+    """
+    Exports strictly human-verified (VERIFIED) annotations into data/datasets/vaidyavaani_verified/
+    """
+    mgr = get_annotation_manager()
+    res = mgr.export_dataset()
+    return res
 
 @app.get("/annotation/item/{image_id}")
 def get_annotation_item(image_id: str):
@@ -260,4 +286,5 @@ def get_annotation_image(image_id: str):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
