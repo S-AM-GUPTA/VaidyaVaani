@@ -7,7 +7,7 @@ import SafetyMatrixPage from './pages/SafetyMatrixPage';
 import LabDecoderPage from './pages/LabDecoderPage';
 import RegionalCarePage from './pages/RegionalCarePage';
 import AnnotationPage from './pages/AnnotationPage';
-import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 
@@ -23,8 +23,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Multi-Page Healthcare Routes */}
+        {/* Public Healthcare Startup Homepage Routes */}
         <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Landing />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/safety-matrix" element={<SafetyMatrixPage />} />
         <Route path="/lab-decoder" element={<LabDecoderPage />} />
@@ -32,12 +33,12 @@ function App() {
         <Route path="/annotation" element={<AnnotationPage />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Authenticated Patient Vault Routes */}
+        {/* Authenticated Patient Vault & Clinical Dashboard Routes */}
         <Route 
-          path="/home" 
+          path="/dashboard" 
           element={
             <ProtectedRoute>
-              <Home />
+              <Dashboard />
             </ProtectedRoute>
           } 
         />

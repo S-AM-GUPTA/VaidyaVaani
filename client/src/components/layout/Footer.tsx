@@ -1,125 +1,109 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Heart } from 'lucide-react';
+import { ShieldCheck, Phone } from 'lucide-react';
 import Logo from '../Logo';
 
-const Footer = () => {
+export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#0F172A] text-slate-400 pt-16 pb-12 border-t border-slate-800">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-        
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 lg:gap-12 mb-14">
+    <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800">
+      
+      {/* Emergency & Medical Helpline Strip */}
+      <div className="border-b border-slate-800/80 py-3 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+          <div className="flex items-center gap-2 text-slate-300">
+            <Phone className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+            <span>National Medical Emergency Helpline: <strong className="text-white font-mono">108 / 102</strong> (Toll-Free, 24/7 across India)</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
+            <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+            <span>AI-Assisted Health Companion • Human Review Recommended</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer Links */}
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12">
           
-          {/* Column 1: Brand & Positioning (Spans 2 cols on md) */}
+          {/* Brand & Mission Column */}
           <div className="md:col-span-2 space-y-4">
-            <Logo theme="dark" size="md" to="/" />
-            
-            <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-              An AI-assisted health record companion that helps people understand prescriptions, lab reports, and medication safety.
+            <Logo to="/" theme="dark" size="md" />
+            <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
+              An AI-assisted health record companion helping people understand handwritten doctor prescriptions, laboratory reports, and medication safety in their preferred language.
             </p>
-
-            <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium pt-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>User-controlled records • Privacy-first design</span>
-            </div>
+            <p className="text-[11px] text-slate-500 font-mono">
+              Designed for patients, families, and caregivers across India.
+            </p>
           </div>
 
-          {/* Column 2: Product */}
+          {/* Product Links */}
           <div className="space-y-3">
-            <div className="text-xs font-semibold text-white uppercase tracking-wider">
-              Product
-            </div>
-            <ul className="space-y-2.5 text-sm">
+            <h4 className="text-white font-semibold text-xs tracking-wider uppercase">Product</h4>
+            <ul className="space-y-2">
               <li>
-                <a href="#prescription-ai" className="hover:text-white transition-colors">
-                  Prescription Reader
-                </a>
+                <Link to="/services" className="hover:text-emerald-400 transition-colors">Prescription Reader</Link>
               </li>
               <li>
-                <Link to="/lab-decoder" className="hover:text-white transition-colors">
-                  Lab Reports Decoder
-                </Link>
+                <Link to="/lab-decoder" className="hover:text-emerald-400 transition-colors">Lab Report Decoder</Link>
               </li>
               <li>
-                <Link to="/safety-matrix" className="hover:text-white transition-colors">
-                  Medication Safety
-                </Link>
+                <Link to="/safety-matrix" className="hover:text-emerald-400 transition-colors">Medication Safety</Link>
               </li>
               <li>
-                <Link to="/annotation" className="hover:text-white transition-colors text-slate-500 hover:text-slate-300">
-                  Research Ground Truth
-                </Link>
+                <Link to="/regional-care" className="hover:text-emerald-400 transition-colors">Regional Language Audio</Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Resources */}
+          {/* Resources & Trust */}
           <div className="space-y-3">
-            <div className="text-xs font-semibold text-white uppercase tracking-wider">
-              Resources
-            </div>
-            <ul className="space-y-2.5 text-sm">
+            <h4 className="text-white font-semibold text-xs tracking-wider uppercase">Resources</h4>
+            <ul className="space-y-2">
               <li>
-                <a href="#how-it-works" className="hover:text-white transition-colors">
-                  How it Works
-                </a>
+                <a href="#how-it-works" className="hover:text-emerald-400 transition-colors">How it Works</a>
               </li>
               <li>
-                <a href="#privacy" className="hover:text-white transition-colors">
-                  Privacy & Security
-                </a>
+                <a href="#technology" className="hover:text-emerald-400 transition-colors">Technology & OCR</a>
               </li>
               <li>
-                <a href="#technology" className="hover:text-white transition-colors">
-                  Technology Overview
-                </a>
+                <a href="#privacy" className="hover:text-emerald-400 transition-colors">Privacy & Security</a>
               </li>
               <li>
-                <a href="#features" className="hover:text-white transition-colors">
-                  Core Capabilities
-                </a>
+                <Link to="/annotation" className="hover:text-emerald-400 transition-colors">Annotation Studio</Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Account */}
+          {/* Account */}
           <div className="space-y-3">
-            <div className="text-xs font-semibold text-white uppercase tracking-wider">
-              Account
-            </div>
-            <ul className="space-y-2.5 text-sm">
+            <h4 className="text-white font-semibold text-xs tracking-wider uppercase">Account</h4>
+            <ul className="space-y-2">
               <li>
-                <Link to="/login" className="hover:text-white transition-colors">
-                  Sign In
-                </Link>
+                <Link to="/login" className="hover:text-emerald-400 transition-colors">Sign In</Link>
               </li>
               <li>
-                <Link to="/login" className="text-emerald-400 hover:text-emerald-300 transition-colors font-medium">
-                  Get Started →
-                </Link>
+                <Link to="/login" className="hover:text-emerald-400 transition-colors">Create Patient Account</Link>
               </li>
               <li>
-                <Link to="/profile" className="hover:text-white transition-colors">
-                  Health Profile
-                </Link>
+                <Link to="/dashboard" className="hover:text-emerald-400 transition-colors">Health Vault</Link>
+              </li>
+              <li>
+                <Link to="/profile" className="hover:text-emerald-400 transition-colors">Profile & Settings</Link>
               </li>
             </ul>
           </div>
 
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-slate-800/80 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} VaidyaVaani. An AI-assisted health record companion.</p>
-          <div className="flex items-center gap-4 text-xs">
-            <span>Built for healthcare clarity</span>
-            <span>•</span>
-            <span className="inline-flex items-center gap-1 text-slate-400">
-              Made with <Heart className="w-3 h-3 text-rose-500 fill-rose-500 inline" /> for patient empowerment
-            </span>
-          </div>
+        {/* Bottom Legal & Disclaimer */}
+        <div className="mt-12 pt-6 border-t border-slate-800 text-slate-500 text-[11px] leading-relaxed flex flex-col md:flex-row items-center justify-between gap-4">
+          <p>
+            © {new Date().getFullYear()} VaidyaVaani. All rights reserved. 
+          </p>
+          <p className="max-w-xl text-center md:text-right text-slate-500">
+            <strong>Important Medical Notice:</strong> VaidyaVaani is an AI-assisted informational tool and does not provide medical diagnoses or replace professional medical consultations. Always verify prescription details with your pharmacist or doctor.
+          </p>
         </div>
-
       </div>
     </footer>
   );

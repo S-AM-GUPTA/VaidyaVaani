@@ -269,16 +269,16 @@ const Profile = () => {
         {/* Navigation & Breadcrumb */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
           <button 
-            onClick={() => navigate('/home')}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors font-mono"
+            onClick={() => navigate('/dashboard')}
+            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Dashboard</span>
+            <span>Back to Health Vault</span>
           </button>
 
           <div className="med-badge font-mono">
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Zero-Knowledge Clinical Identity</span>
+            <span>Patient Health Profile</span>
           </div>
         </div>
 

@@ -65,7 +65,7 @@ const Login = () => {
     setError('');
     const res = await loginWithGoogle();
     if (res.success) {
-      navigate('/home');
+      navigate('/dashboard');
     } else {
       setError(res.error || 'Google Authentication failed. Please check network connection.');
     }
@@ -91,7 +91,7 @@ const Login = () => {
     if (authMode === 'login') {
       const res = await loginWithEmail(email, password);
       if (res.success) {
-        navigate('/home');
+        navigate('/dashboard');
       } else {
         setError(res.error || 'Invalid email or password.');
       }
@@ -107,7 +107,7 @@ const Login = () => {
 
       const res = await signupWithEmail(email, password, extraDetails);
       if (res.success) {
-        navigate('/home');
+        navigate('/dashboard');
       } else {
         setError(res.error || 'Could not create account. Please check details.');
       }
@@ -153,7 +153,7 @@ const Login = () => {
 
     const res = await verifyPhoneOtp(otpCode, phoneNumber, extraDetails);
     if (res.success) {
-      navigate('/home');
+      navigate('/dashboard');
     } else {
       setError(res.error || 'Invalid verification code.');
     }
