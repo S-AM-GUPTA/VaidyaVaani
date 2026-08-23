@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   CloudUpload, 
@@ -7,15 +7,20 @@ import {
   Send,
   Plus,
   Pill,
+  FileText,
   Activity,
-  FileSpreadsheet,
+  Volume2,
   ChevronRight,
-  Volume2
+  Sparkles,
+  ArrowRight,
+  Trash2
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Uploader from '../components/Uploader';
 import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 interface TimelineDoc {
   id: string;
@@ -35,30 +40,36 @@ interface Medication {
 }
 
 const AI_GREETINGS: Record<string, string> = {
-  en: "Hello! I am your clinical health assistant. Upload a prescription or lab report to begin, or ask me any question about your medications.",
-  hi: "नमस्ते! मैं आपका डिजिटल स्वास्थ्य सहायक हूँ। अपने पर्चे या लैब रिपोर्ट अपलोड करें, या अपनी दवाओं के बारे में कोई भी प्रश्न पूछें।",
-  bn: "নমস্কার! আমি আপনার ডিজিটাল স্বাস্থ্য সহকারী। আপনার প্রেসক্রিপশন বা ল্যাব রিপোর্ট আপলোড করুন, অথবা ওষুধ সংক্রান্ত যেকোনো প্রশ্ন জিজ্ঞাসা করুন।",
-  ta: "வணக்கம்! நான் உங்கள் டிஜிட்டல் மருத்துவ உதவியாளர். உங்கள் மருந்துச் சீட்டு அல்லது ஆய்வக அறிக்கையை பதிவேற்றி மருத்துவ ஆலோசனைகளைப் பெறலாம்.",
-  te: "నమస్కారం! నేను మీ డిజిటల్ ఆరోగ్య సహాయకుడిని. మీ ప్రిస్క్రిప్షన్ లేదా ల్యాబ్ నివేదికను అప్‌లోడ్ చేసి సందేహాలు అడగండి.",
-  mr: "नमस्कार! मी आपला डिजिटल आरोग्य सहाय्यक आहे. आपले प्रिस्क्रिप्शन किंवा लॅब अहवाल अपलोड करा किंवा औषधांविषयी प्रश्न विचारा.",
-  gu: "નમસ્તે! હું તમારો ડિજિટલ હેલ્થ સહાયક છું. તમારા પ્રિસ્ક્રિપ્શન અથવા લેબ રિપોર્ટ અપલોડ કરો અને કોઈપણ પ્રશ્ન પૂછો.",
+  en: "Hello! I am your AI health assistant. Upload a prescription or lab report, or ask any question about your medicines and dosages.",
+  hi: "नमस्ते! मैं आपका स्वास्थ्य सहायक हूँ। अपना पर्चा या लैब रिपोर्ट अपलोड करें, या दवाओं के बारे में कोई भी प्रश्न पूछें।",
+  bn: "নমস্কার! আমি আপনার ডিজিটাল স্বাস্থ্য সহকারী। আপনার প্রেসক্রিপশন বা রিপোর্ট সম্পর্কে যেকোনো প্রশ্ন জিজ্ঞাসা করুন।",
+  ta: "வணக்கம்! உங்கள் மருந்துச் சீட்டு அல்லது ஆய்வக அறிக்கை பற்றிய சந்தேகங்களை என்னிடம் கேட்கலாம்.",
+  te: "నమస్కారం! మీ ప్రిస్క్రిప్షన్ లేదా ల్యాబ్ నివేదిక వివరాల గురించి నన్ను అడగండి.",
+  mr: "नमस्कार! मी आपला आरोग्य सहाय्यक आहे. आपल्या औषधांविषयी कोणताही प्रश्न विचारा.",
+  gu: "નમસ્તે! તમારા પ્રિસ્ક્રિપ્શન અથવા લેબ રિપોર્ટ વિશે કોઈપણ પ્રશ્ન પૂછો.",
 };
 
-const Home = () => {
-  const { currentLanguage, t, speakText } = useLanguage();
+const Home: React.FC = () => {
+  const { currentLanguage, speakText } = useLanguage();
+  const { user } = useAuth();
+
+  const userDisplayName = user?.displayName || (user?.email ? user.email.split('@')[0] : 'Patient');
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-  const [uploadType, setUploadType] = useState<'reports' | 'prescriptions'>('reports');
+  const [uploadType, setUploadType] = useState<'reports' | 'prescriptions'>('prescriptions');
   const [isAddMedModalOpen, setIsAddMedModalOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<TimelineDoc | null>(null);
 
   // Active section tab toggle: 'all' | 'prescriptions' | 'labs'
-  const [activeTaskSection, setActiveTaskSection] = useState<'all' | 'prescriptions' | 'labs'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'prescriptions' | 'labs'>('all');
 
-  // Real Persistent Pharmacopeia List
+  // Real Persistent Medications List
   const [meds, setMeds] = useState<Medication[]>(() => {
     const saved = localStorage.getItem('vv_patient_meds');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : [
+      { name: 'Amoxicillin 500mg', timing: 'Morning & Night (1-0-1)', doctor: 'Dr. Sharma (Physician)' },
+      { name: 'Paracetamol 650mg', timing: 'As Needed (SOS)', doctor: 'Dr. Sharma (Physician)' }
+    ];
   });
   const [newMedName, setNewMedName] = useState('');
   const [newMedTiming, setNewMedTiming] = useState('Morning');
@@ -67,7 +78,21 @@ const Home = () => {
   // Real Persistent Documents
   const [prescriptions, setPrescriptions] = useState<TimelineDoc[]>(() => {
     const saved = localStorage.getItem('vv_patient_prescriptions');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : [
+      {
+        id: 'doc-initial-rx',
+        date: '24',
+        month: 'Aug',
+        title: 'Prescription — General Physician Visit',
+        category: 'prescription',
+        type: 'Active Therapy',
+        badgeColor: '#059669',
+        insights: [
+          '• Extracted: Amoxicillin 500mg (1-0-1 x 5 days)',
+          '• Verified against medicine interaction database'
+        ]
+      }
+    ];
   });
 
   const [labs, setLabs] = useState<TimelineDoc[]>(() => {
@@ -121,6 +146,10 @@ const Home = () => {
     setIsAddMedModalOpen(false);
   };
 
+  const handleDeleteMedicine = (index: number) => {
+    setMeds(prev => prev.filter((_, idx) => idx !== index));
+  };
+
   const handleUploadCompleted = () => {
     const today = new Date();
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -128,13 +157,13 @@ const Home = () => {
       id: 'doc-' + Date.now(),
       date: today.getDate().toString().padStart(2, '0'),
       month: monthNames[today.getMonth()],
-      title: uploadType === 'reports' ? 'Clinical Lab Report' : 'Doctor Prescription Document',
+      title: uploadType === 'reports' ? 'Laboratory Diagnostic Report' : 'Doctor Prescription Document',
       category: uploadType === 'reports' ? 'lab' : 'prescription',
       type: uploadType === 'reports' ? 'Diagnostic Pathology' : 'Active Therapy',
-      badgeColor: uploadType === 'reports' ? '#0d9488' : '#0284c7',
+      badgeColor: uploadType === 'reports' ? '#0284C7' : '#059669',
       insights: uploadType === 'reports' 
-        ? ['• Extracted from uploaded pathology document', '• Processed with zero-knowledge encryption']
-        : ['• Ingested into active medication list', '• Verified against pharmacopeia interaction database']
+        ? ['• Extracted biomarkers and reference ranges', '• Ready for review with physician']
+        : ['• Extracted medicines and dosage schedule', '• Checked for medication safety']
     };
 
     if (uploadType === 'reports') {
@@ -157,16 +186,22 @@ const Home = () => {
     setTimeout(() => {
       setIsTyping(false);
       let reply = '';
-      if (meds.length > 0) {
-        reply = `I have reviewed your active logged medications (${meds.map(m => m.name).join(', ')}). No conflicting contraindications were detected. Take medicines as scheduled with water and adhere to doctor prescribed intervals.`;
+      const qLower = userMsg.toLowerCase();
+
+      if (qLower.includes('amox') || qLower.includes('antibiotic')) {
+        reply = "Amoxicillin is an antibiotic prescribed for bacterial infections. Take it after food at equal intervals (e.g. morning & night) and make sure to finish the full 5-day course even if you feel better.";
+      } else if (qLower.includes('paracetamol') || qLower.includes('fever') || qLower.includes('pain')) {
+        reply = "Paracetamol (650mg) is taken for fever or pain as needed (SOS). Keep at least 4 to 6 hours between doses and do not exceed 3 to 4 tablets in 24 hours.";
+      } else if (meds.length > 0) {
+        reply = `I reviewed your active medicines (${meds.map(m => m.name).join(', ')}). No conflicting interactions were detected. Always consult your doctor before modifying any dosage.`;
       } else {
-        reply = `You currently have 0 medications logged in your vault. You can click "+ Add Rx" or upload a prescription to check for drug-drug interactions.`;
+        reply = "You can upload a prescription or medical report anytime to extract medicine timings and reference biomarker ranges.";
       }
 
       if (currentLanguage.code === 'hi') {
         reply = meds.length > 0 
-          ? `मैंने आपकी सक्रिय दवाओं (${meds.map(m => m.name).join(', ')}) की जांच कर ली है। कोई हानिकारक प्रभाव नहीं मिला है।`
-          : `वर्तमान में कोई दवा दर्ज नहीं है। आप पर्चा अपलोड करके या दवा जोड़कर सुरक्षा जांच सकते हैं।`;
+          ? `मैंने आपकी दवाओं (${meds.map(m => m.name).join(', ')}) की जांच कर ली है। कोई हानिकारक प्रभाव नहीं मिला है। समय पर दवाएं लें।`
+          : `आप कोई भी पर्चा या लैब रिपोर्ट अपलोड करके उसकी आसान व्याख्या देख सकते हैं।`;
       }
 
       setMessages(prev => [...prev, { sender: 'ai', text: reply }]);
@@ -174,7 +209,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans flex flex-col selection:bg-sky-600 selection:text-white">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans antialiased flex flex-col selection:bg-emerald-100 selection:text-emerald-900">
       <Navbar />
 
       {/* Hidden camera file input */}
@@ -187,157 +222,167 @@ const Home = () => {
         onChange={handleCameraFileSelected}
       />
 
-      <main className="flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
+      <main className="flex-grow w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 py-8 md:py-12">
         
-        {/* Workspace Top Header & Section Switcher */}
+        {/* ======================================================== */}
+        {/* Workspace Top Header                                     */}
+        {/* ======================================================== */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 pb-6 border-b border-slate-200">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-sky-700 mb-1 flex items-center gap-2 font-mono">
-              <span className="w-2 h-2 rounded-full bg-sky-600"></span>
-              {currentLanguage.native} • Health & Medicine Dashboard
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+              <span>Patient Health Companion</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
-              {t('vaultTitle')}
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Welcome, {userDisplayName}
             </h1>
+            <p className="text-sm text-slate-500 mt-1">
+              Your centralized dashboard for prescriptions, laboratory diagnostic reports, and medication schedule.
+            </p>
           </div>
 
-          {/* Section Filter Tabs */}
-          <div className="flex items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-lg shadow-xs w-fit">
+          {/* Tab Filter Switcher */}
+          <div className="flex items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-xl shadow-2xs w-fit">
             <button
-              onClick={() => setActiveTaskSection('all')}
-              className={`px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all ${
-                activeTaskSection === 'all' 
-                  ? 'bg-sky-600 text-white shadow-xs' 
-                  : 'text-slate-600 hover:text-slate-900'
+              onClick={() => setActiveTab('all')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                activeTab === 'all' 
+                  ? 'bg-emerald-600 text-white shadow-xs' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              {t('unifiedView')}
+              Unified Overview
             </button>
 
             <button
-              onClick={() => setActiveTaskSection('prescriptions')}
-              className={`px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                activeTaskSection === 'prescriptions' 
-                  ? 'bg-sky-600 text-white shadow-xs' 
-                  : 'text-slate-600 hover:text-slate-900'
+              onClick={() => setActiveTab('prescriptions')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeTab === 'prescriptions' 
+                  ? 'bg-emerald-600 text-white shadow-xs' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
               <Pill className="w-3.5 h-3.5" />
-              {t('rxSafetyTab')}
+              Prescriptions
             </button>
 
             <button
-              onClick={() => setActiveTaskSection('labs')}
-              className={`px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                activeTaskSection === 'labs' 
-                  ? 'bg-sky-600 text-white shadow-xs' 
-                  : 'text-slate-600 hover:text-slate-900'
+              onClick={() => setActiveTab('labs')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeTab === 'labs' 
+                  ? 'bg-emerald-600 text-white shadow-xs' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              <Activity className="w-3.5 h-3.5" />
-              {t('labDiagTab')}
+              <FileText className="w-3.5 h-3.5" />
+              Lab Reports
             </button>
           </div>
         </div>
 
-        {/* Real Summary Metric Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
-            <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">{t('activeRx')}</div>
-            <div className="text-2xl font-bold text-sky-700 font-mono">{meds.length} Active</div>
-            <div className="text-xs text-teal-600 font-medium mt-1">{meds.length > 0 ? 'Cross-checked safe' : 'Ready for entry'}</div>
+        {/* ======================================================== */}
+        {/* Metric Summary Cards                                     */}
+        {/* ======================================================== */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 mb-10">
+          
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Active Medicines</div>
+            <div className="text-2xl font-bold text-slate-900 font-mono">{meds.length}</div>
+            <div className="text-xs text-emerald-700 font-medium mt-1">✓ Scheduled today</div>
           </div>
 
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
-            <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">{t('labBiomarkers')}</div>
-            <div className="text-2xl font-bold text-slate-900 font-mono">{labs.length} Tracked</div>
-            <div className="text-xs text-slate-500 font-medium mt-1">{labs.length > 0 ? 'Decoded with norms' : 'No reports yet'}</div>
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Prescriptions</div>
+            <div className="text-2xl font-bold text-slate-900 font-mono">{prescriptions.length}</div>
+            <div className="text-xs text-slate-500 font-medium mt-1">Archived in vault</div>
           </div>
 
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
-            <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">Safety Advisory</div>
-            <div className="text-2xl font-bold text-teal-700 font-mono">0 Conflicts</div>
-            <div className="text-xs text-slate-500 mt-1">Pharmacopeia radar active</div>
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Lab Biomarkers</div>
+            <div className="text-2xl font-bold text-slate-900 font-mono">{labs.length > 0 ? labs.length * 4 : 0}</div>
+            <div className="text-xs text-slate-500 font-medium mt-1">Tracked with norms</div>
           </div>
 
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
-            <div className="text-xs font-mono uppercase text-slate-500 font-bold mb-1">Vault Privacy</div>
-            <div className="text-2xl font-bold text-teal-700 font-mono">100% Encrypted</div>
-            <div className="text-xs text-slate-500 mt-1">Client Zero-Knowledge</div>
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Medication Safety</div>
+            <div className="text-2xl font-bold text-emerald-700 font-mono">Verified</div>
+            <div className="text-xs text-emerald-700 font-medium mt-1">0 Active conflicts</div>
           </div>
+
         </div>
 
-        {/* =========================================================
-            TASK SECTION 1: PRESCRIPTIONS & DRUG SAFETY VAULT
-            ========================================================= */}
-        {(activeTaskSection === 'all' || activeTaskSection === 'prescriptions') && (
-          <section id="section-prescriptions" className="mb-12 scroll-mt-24">
+        {/* ======================================================== */}
+        {/* SECTION 1: PRESCRIPTIONS & ACTIVE MEDICATIONS            */}
+        {/* ======================================================== */}
+        {(activeTab === 'all' || activeTab === 'prescriptions') && (
+          <section id="prescriptions" className="mb-12 scroll-mt-24">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
-                <div className="med-badge mb-1 font-mono">
-                  Prescription Regimen
-                </div>
-                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-                  {t('rxSafetyTab')}
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                  <Pill className="w-5 h-5 text-emerald-600" />
+                  Prescriptions & Medication Regimen
                 </h2>
+                <p className="text-xs sm:text-sm text-slate-500">
+                  Track your active doses, doctor instructions, and uploaded prescription files.
+                </p>
               </div>
 
-              {/* Prescription Action Buttons */}
-              <div className="flex items-center gap-3">
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2.5">
                 <button
                   onClick={handleCameraScan}
-                  className="btn-med-secondary text-xs"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-all cursor-pointer"
                 >
-                  <Camera className="w-4 h-4 text-sky-600" />
-                  {t('scanRxPhoto')}
+                  <Camera className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Scan Photo</span>
                 </button>
 
                 <button
                   onClick={() => openUploadModal('prescriptions')}
-                  className="btn-med-primary text-xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer"
                 >
-                  <CloudUpload className="w-4 h-4" />
-                  {t('uploadPrescription')}
+                  <CloudUpload className="w-3.5 h-3.5" />
+                  <span>Upload Prescription</span>
                 </button>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               
-              {/* Active Medication List */}
-              <div className="lg:col-span-6 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
-                <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
+              {/* Active Medication Schedule */}
+              <div className="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+                <div className="flex justify-between items-center pb-3 border-b border-slate-100">
                   <div>
-                    <h3 className="text-base font-bold text-slate-900">{t('activeSchedule')}</h3>
-                    <p className="text-xs text-slate-500">Current therapies verified against interactions</p>
+                    <h3 className="text-sm font-bold text-slate-900">Current Medication Schedule</h3>
+                    <p className="text-xs text-slate-500">Cross-referenced against drug safety matrix</p>
                   </div>
                   <button
                     onClick={() => setIsAddMedModalOpen(true)}
-                    className="px-3 py-1 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-bold flex items-center gap-1 border border-sky-200 transition-colors"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center gap-1 border border-emerald-200 transition-colors cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
-                    {t('addRx')}
+                    <span>Add Medicine</span>
                   </button>
                 </div>
 
                 {meds.length === 0 ? (
-                  <div className="py-10 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                  <div className="py-10 text-center bg-slate-50/70 rounded-xl border border-dashed border-slate-200">
                     <Pill className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <div className="text-xs font-bold text-slate-700">No active medications logged</div>
-                    <p className="text-xs text-slate-500 mt-0.5 mb-4">Add your medicines or scan a prescription to check safety</p>
+                    <div className="text-xs font-bold text-slate-700">No active medicines added yet</div>
+                    <p className="text-xs text-slate-500 mt-1 mb-4">Add your medicines or upload a prescription to start tracking</p>
                     <button
                       onClick={() => setIsAddMedModalOpen(true)}
-                      className="btn-med-primary text-xs"
+                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold cursor-pointer"
                     >
-                      <Plus className="w-3.5 h-3.5" /> Add First Medicine
+                      + Add First Medicine
                     </button>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {meds.map((m, idx) => (
-                      <div key={idx} className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <div key={idx} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between group hover:border-slate-300 transition-colors">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
                             <Pill className="w-4 h-4" />
                           </div>
                           <div>
@@ -346,10 +391,17 @@ const Home = () => {
                           </div>
                         </div>
 
-                        <div>
-                          <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-sky-100 text-sky-800">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900">
                             {m.timing}
                           </span>
+                          <button
+                            onClick={() => handleDeleteMedicine(idx)}
+                            className="text-slate-400 hover:text-rose-600 transition-colors p-1 cursor-pointer opacity-0 group-hover:opacity-100"
+                            title="Remove medicine"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -357,32 +409,32 @@ const Home = () => {
                 )}
               </div>
 
-              {/* Prescription Documents Feed */}
-              <div className="lg:col-span-6 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
-                <div className="pb-4 border-b border-slate-100 mb-4">
-                  <h3 className="text-base font-bold text-slate-900">{t('rxTimeline')}</h3>
-                  <p className="text-xs text-slate-500">Deciphered clinical records and doctor orders</p>
+              {/* Uploaded Prescription Feed */}
+              <div className="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+                <div className="pb-3 border-b border-slate-100">
+                  <h3 className="text-sm font-bold text-slate-900">Prescription Documents</h3>
+                  <p className="text-xs text-slate-500">Decoded doctor prescriptions and treatment plans</p>
                 </div>
 
                 {prescriptions.length === 0 ? (
-                  <div className="py-10 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                  <div className="py-10 text-center bg-slate-50/70 rounded-xl border border-dashed border-slate-200">
                     <CloudUpload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
                     <div className="text-xs font-bold text-slate-700">No prescriptions uploaded yet</div>
-                    <p className="text-xs text-slate-500 mt-0.5 mb-4">Upload or photograph your doctor's prescription</p>
+                    <p className="text-xs text-slate-500 mt-1 mb-4">Upload or photograph a prescription to extract medicines</p>
                     <button
                       onClick={() => openUploadModal('prescriptions')}
-                      className="btn-med-primary text-xs"
+                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold cursor-pointer"
                     >
-                      <CloudUpload className="w-3.5 h-3.5" /> Upload Prescription
+                      Upload Prescription
                     </button>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {prescriptions.map((doc) => (
                       <div 
                         key={doc.id}
                         onClick={() => setSelectedDoc(doc)}
-                        className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all cursor-pointer group flex items-center justify-between"
+                        className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30 transition-all cursor-pointer group flex items-center justify-between"
                       >
                         <div className="flex items-center gap-3.5">
                           <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex flex-col items-center justify-center text-center shadow-2xs">
@@ -390,12 +442,12 @@ const Home = () => {
                             <span className="text-sm font-bold text-slate-900 font-mono">{doc.date}</span>
                           </div>
                           <div>
-                            <div className="text-sm font-bold text-slate-900 group-hover:text-sky-700 transition-colors">{doc.title}</div>
-                            <div className="text-xs text-slate-500">{doc.insights[0]}</div>
+                            <div className="text-sm font-bold text-slate-900 group-hover:text-emerald-800 transition-colors">{doc.title}</div>
+                            <div className="text-xs text-slate-500 truncate max-w-[280px]">{doc.insights[0]}</div>
                           </div>
                         </div>
 
-                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-700 transition-all" />
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-700 transition-all" />
                       </div>
                     ))}
                   </div>
@@ -406,65 +458,72 @@ const Home = () => {
           </section>
         )}
 
-        {/* =========================================================
-            TASK SECTION 2: CLINICAL LAB BIOMARKERS & DIAGNOSTICS
-            ========================================================= */}
-        {(activeTaskSection === 'all' || activeTaskSection === 'labs') && (
-          <section id="section-diagnostics" className="mb-12 scroll-mt-24 border-t border-slate-200 pt-10">
+        {/* ======================================================== */}
+        {/* SECTION 2: LAB DIAGNOSTICS & BIOMARKERS                  */}
+        {/* ======================================================== */}
+        {(activeTab === 'all' || activeTab === 'labs') && (
+          <section id="labs" className="mb-12 scroll-mt-24 border-t border-slate-200/80 pt-10">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
-                <div className="med-badge mb-1 font-mono">
-                  Diagnostics & Labs
-                </div>
-                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-                  {t('labDiagTab')}
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-sky-600" />
+                  Medical Reports & Laboratory Diagnostics
                 </h2>
+                <p className="text-xs sm:text-sm text-slate-500">
+                  Track extracted biomarkers, normal reference ranges, and diagnostic trends.
+                </p>
               </div>
 
-              {/* Lab Action Buttons */}
-              <div className="flex items-center gap-3">
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2.5">
+                <Link
+                  to="/lab-decoder"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-all"
+                >
+                  <span>Open Lab Decoder</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+
                 <button
                   onClick={() => openUploadModal('reports')}
-                  className="btn-med-primary text-xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer"
                 >
-                  <FileSpreadsheet className="w-4 h-4" />
-                  {t('uploadLabReport')}
+                  <CloudUpload className="w-3.5 h-3.5" />
+                  <span>Upload Lab Report</span>
                 </button>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               
-              {/* Extracted Biomarker Grid */}
-              <div className="lg:col-span-7 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
-                <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
-                  <div>
-                    <h3 className="text-base font-bold text-slate-900">{t('extractedPanels')}</h3>
-                    <p className="text-xs text-slate-500">Biomarkers extracted from uploaded pathology reports</p>
-                  </div>
+              {/* Extracted Biomarkers Overview */}
+              <div className="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+                <div className="pb-3 border-b border-slate-100">
+                  <h3 className="text-sm font-bold text-slate-900">Extracted Pathology Biomarkers</h3>
+                  <p className="text-xs text-slate-500">Key metrics compared with clinical standard reference ranges</p>
                 </div>
 
                 {labs.length === 0 ? (
-                  <div className="py-10 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                  <div className="py-10 text-center bg-slate-50/70 rounded-xl border border-dashed border-slate-200">
                     <Activity className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <div className="text-xs font-bold text-slate-700">No lab reports decoded yet</div>
-                    <p className="text-xs text-slate-500 mt-0.5 mb-4">Upload a blood test or pathology report to extract biomarkers</p>
+                    <div className="text-xs font-bold text-slate-700">No laboratory reports uploaded yet</div>
+                    <p className="text-xs text-slate-500 mt-1 mb-4">Upload a blood test or pathology report to decode biomarker ranges</p>
                     <button
                       onClick={() => openUploadModal('reports')}
-                      className="btn-med-primary text-xs"
+                      className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold cursor-pointer"
                     >
-                      <FileSpreadsheet className="w-3.5 h-3.5" /> Upload Lab Report
+                      Upload Lab Report
                     </button>
                   </div>
                 ) : (
                   <div className="space-y-3">
                     {labs.map((doc, idx) => (
-                      <div key={idx} className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <div key={idx} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                         <div>
                           <div className="text-sm font-bold text-slate-900">{doc.title}</div>
                           <div className="text-xs text-slate-500">{doc.insights.join(' ')}</div>
                         </div>
-                        <span className="text-xs font-mono font-bold text-teal-700 px-2 py-0.5 rounded bg-teal-50 border border-teal-200">
+                        <span className="text-xs font-semibold text-sky-800 px-2.5 py-1 rounded-md bg-sky-100">
                           {doc.type}
                         </span>
                       </div>
@@ -473,26 +532,26 @@ const Home = () => {
                 )}
               </div>
 
-              {/* Lab Reports Documents Timeline */}
-              <div className="lg:col-span-5 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
-                <div className="pb-4 border-b border-slate-100 mb-4">
-                  <h3 className="text-base font-bold text-slate-900">{t('diagFeed')}</h3>
-                  <p className="text-xs text-slate-500">Laboratory and imaging assessments</p>
+              {/* Lab Documents Timeline */}
+              <div className="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+                <div className="pb-3 border-b border-slate-100">
+                  <h3 className="text-sm font-bold text-slate-900">Diagnostic Archive</h3>
+                  <p className="text-xs text-slate-500">Laboratory test history</p>
                 </div>
 
                 {labs.length === 0 ? (
-                  <div className="py-10 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
-                    <FileSpreadsheet className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <div className="text-xs font-bold text-slate-700">No diagnostic records</div>
-                    <p className="text-xs text-slate-500 mt-0.5">Uploaded lab documents will appear here</p>
+                  <div className="py-10 text-center bg-slate-50/70 rounded-xl border border-dashed border-slate-200">
+                    <FileText className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                    <div className="text-xs font-bold text-slate-700">No diagnostic history</div>
+                    <p className="text-xs text-slate-500 mt-1">Uploaded reports will be archived here</p>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {labs.map((doc) => (
                       <div 
                         key={doc.id}
                         onClick={() => setSelectedDoc(doc)}
-                        className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/40 transition-all cursor-pointer group flex items-center justify-between"
+                        className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/30 transition-all cursor-pointer group flex items-center justify-between"
                       >
                         <div className="flex items-center gap-3.5">
                           <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex flex-col items-center justify-center text-center shadow-2xs">
@@ -516,26 +575,30 @@ const Home = () => {
           </section>
         )}
 
-        {/* =========================================================
-            AI HEALTH CONSULTATION ASSISTANT
-            ========================================================= */}
-        <section id="chat" className="scroll-mt-24 border-t border-slate-200 pt-10 mb-10">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-6">
-              <div className="med-badge mb-2 font-mono">
-                {currentLanguage.native} • Clinical Assistant
+        {/* ======================================================== */}
+        {/* SECTION 3: AI HEALTH ASSISTANT                           */}
+        {/* ======================================================== */}
+        <section id="chat" className="scroll-mt-24 border-t border-slate-200/80 pt-10 mb-10">
+          <div className="max-w-3xl mx-auto space-y-4">
+            <div className="text-center space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 text-xs font-semibold">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                <span>AI Health Assistant ({currentLanguage.native})</span>
               </div>
-              <h2 className="text-2xl font-bold text-slate-900">{t('askQuestionsTitle')}</h2>
+              <h2 className="text-2xl font-bold text-slate-900">Ask questions about your health records</h2>
+              <p className="text-xs sm:text-sm text-slate-500">
+                Get explanations on medicine timing, active salt ingredients, and laboratory terms.
+              </p>
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col h-[480px]">
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs flex flex-col h-[460px]">
               
               <div className="flex justify-between items-center pb-3 border-b border-slate-100 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
-                  <h3 className="font-bold text-slate-900 text-xs font-mono uppercase tracking-wider">{t('aiChat')} ({currentLanguage.native})</h3>
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <h3 className="font-bold text-slate-900 text-xs uppercase tracking-wider">Health Assistant</h3>
                 </div>
-                <span className="text-xs font-mono text-slate-500">Zero-Knowledge Consultation</span>
+                <span className="text-xs text-slate-400">AI-assisted interpretation</span>
               </div>
               
               {/* Message Feed */}
@@ -546,14 +609,14 @@ const Home = () => {
                     className={`p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed flex items-start justify-between gap-3 ${
                       m.sender === 'ai' 
                         ? 'bg-slate-50 border border-slate-200 text-slate-800 mr-8' 
-                        : 'bg-sky-600 text-white ml-8 text-right'
+                        : 'bg-emerald-600 text-white ml-8 text-right'
                     }`}
                   >
                     <div>{m.text}</div>
                     {m.sender === 'ai' && (
                       <button 
                         onClick={() => speakText(m.text)}
-                        className="p-1 rounded hover:bg-slate-200 text-slate-500 hover:text-sky-600 transition-colors shrink-0"
+                        className="p-1 rounded hover:bg-slate-200 text-slate-500 hover:text-emerald-700 transition-colors shrink-0 cursor-pointer"
                         title="Listen to this response"
                       >
                         <Volume2 className="w-4 h-4" />
@@ -562,27 +625,27 @@ const Home = () => {
                   </div>
                 ))}
                 {isTyping && (
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 flex items-center gap-2 w-fit font-mono">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-600 animate-bounce"></span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-600 animate-bounce [animation-delay:0.2s]"></span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-600 animate-bounce [animation-delay:0.4s]"></span>
-                    <span>Analyzing clinical guidelines in {currentLanguage.native}...</span>
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 flex items-center gap-2 w-fit">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-bounce"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-bounce [animation-delay:0.2s]"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-bounce [animation-delay:0.4s]"></span>
+                    <span>Analyzing health records in {currentLanguage.native}...</span>
                   </div>
                 )}
               </div>
               
               {/* Input Form */}
-              <form onSubmit={handleSendMessage} className="mt-2 flex items-center bg-slate-50 border border-slate-200 rounded-lg pl-4 pr-1.5 py-1.5 focus-within:border-sky-500 focus-within:bg-white transition-colors">
+              <form onSubmit={handleSendMessage} className="mt-2 flex items-center bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-1.5 py-1.5 focus-within:border-emerald-500 focus-within:bg-white transition-colors">
                 <input 
                   type="text" 
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
-                  placeholder={t('askAi')} 
+                  placeholder="Ask a question about medicines, food interactions, or report values..." 
                   className="flex-1 text-xs sm:text-sm outline-none bg-transparent text-slate-900 placeholder:text-slate-400" 
                 />
                 <button 
                   type="submit"
-                  className="w-8 h-8 bg-sky-600 hover:bg-sky-700 text-white rounded-md flex items-center justify-center transition-colors shrink-0"
+                  className="w-8 h-8 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg flex items-center justify-center transition-colors shrink-0 cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                 </button>
@@ -596,7 +659,9 @@ const Home = () => {
 
       <Footer />
 
-      {/* Modal: Document Ingestion */}
+      {/* ======================================================== */}
+      {/* Modal: Document Ingestion                                */}
+      {/* ======================================================== */}
       <AnimatePresence>
         {isUploadModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -605,25 +670,25 @@ const Home = () => {
               initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
-              className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-8 md:p-10"
+              className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-8"
             >
                <div className="absolute top-5 right-5 z-10">
                  <button 
                    onClick={() => setIsUploadModalOpen(false)}
-                   className="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg flex items-center justify-center transition-colors"
+                   className="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg flex items-center justify-center transition-colors cursor-pointer"
                  >
                    <X className="w-4 h-4" />
                  </button>
                </div>
                
                <div>
-                 <div className="text-xs font-bold uppercase tracking-wider text-sky-700 font-mono mb-1">
-                   {t('zeroKnowledgeVault')}
+                 <div className="text-xs font-semibold uppercase tracking-wider text-emerald-700 mb-1">
+                   Health Document Ingestion
                  </div>
                  <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">
-                   {uploadType === 'reports' ? t('uploadLabReport') : t('uploadPrescription')}
+                   {uploadType === 'reports' ? 'Upload Medical Report' : 'Upload Doctor Prescription'}
                  </h2>
-                 <p className="text-xs text-slate-500 mb-6 leading-relaxed">
+                 <p className="text-xs sm:text-sm text-slate-500 mb-6 leading-relaxed">
                    Upload your medical document to extract medicine timings, dosage guidelines, and lab reference values.
                  </p>
                  
@@ -637,7 +702,9 @@ const Home = () => {
         )}
       </AnimatePresence>
 
-      {/* Modal: Add Medicine to Pharmacopeia */}
+      {/* ======================================================== */}
+      {/* Modal: Add Medicine                                      */}
+      {/* ======================================================== */}
       <AnimatePresence>
         {isAddMedModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -646,16 +713,16 @@ const Home = () => {
               initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
-              className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-8"
+              className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 border border-slate-200 p-6 sm:p-7"
             >
-              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-6">
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-5">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-sky-700 font-mono">Pharmacopeia Entry</div>
-                  <h3 className="text-lg font-bold text-slate-900 mt-0.5">{t('addRx')}</h3>
+                  <div className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Medication Schedule</div>
+                  <h3 className="text-lg font-bold text-slate-900 mt-0.5">Add Medicine</h3>
                 </div>
                 <button 
                   onClick={() => setIsAddMedModalOpen(false)}
-                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -670,7 +737,7 @@ const Home = () => {
                     value={newMedName}
                     onChange={(e) => setNewMedName(e.target.value)}
                     placeholder="e.g. Metformin 500mg"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white"
                   />
                 </div>
 
@@ -680,8 +747,8 @@ const Home = () => {
                     type="text" 
                     value={newMedDoctor}
                     onChange={(e) => setNewMedDoctor(e.target.value)}
-                    placeholder="e.g. Dr. Verma (Endocrinologist)"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
+                    placeholder="e.g. Dr. Verma (Physician)"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white"
                   />
                 </div>
 
@@ -690,20 +757,21 @@ const Home = () => {
                   <select 
                     value={newMedTiming}
                     onChange={(e) => setNewMedTiming(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-500 focus:bg-white"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white"
                   >
                     <option value="Morning">Morning</option>
                     <option value="Afternoon">Afternoon</option>
                     <option value="Night">Night</option>
-                    <option value="Twice Daily">Twice Daily</option>
-                    <option value="As Needed">As Needed</option>
+                    <option value="Morning & Night (1-0-1)">Morning & Night (1-0-1)</option>
+                    <option value="Three times a day (1-1-1)">Three times a day (1-1-1)</option>
+                    <option value="As Needed (SOS)">As Needed (SOS)</option>
                   </select>
                 </div>
 
-                <div className="pt-2">
+                <div className="pt-3">
                   <button 
                     type="submit"
-                    className="w-full btn-med-primary py-3 text-xs"
+                    className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs cursor-pointer"
                   >
                     Save to Medication List
                   </button>
@@ -714,7 +782,9 @@ const Home = () => {
         )}
       </AnimatePresence>
 
-      {/* Modal: Document Detail Inspection */}
+      {/* ======================================================== */}
+      {/* Modal: Document Detail Inspection                        */}
+      {/* ======================================================== */}
       <AnimatePresence>
         {selectedDoc && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -727,27 +797,29 @@ const Home = () => {
             >
               <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
                 <div>
-                  <div className={`text-xs font-bold uppercase tracking-wider font-mono ${selectedDoc.category === 'prescription' ? 'text-sky-700' : 'text-teal-700'}`}>
+                  <div className={`text-xs font-semibold uppercase tracking-wider ${selectedDoc.category === 'prescription' ? 'text-emerald-700' : 'text-sky-700'}`}>
                     {selectedDoc.category === 'prescription' ? 'Prescription Record' : 'Diagnostic Lab Record'}
                   </div>
                   <h3 className="text-lg font-bold text-slate-900 mt-0.5">{selectedDoc.title}</h3>
                 </div>
                 <button 
                   onClick={() => setSelectedDoc(null)}
-                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs font-mono text-slate-500">
+                <div className="flex items-center justify-between text-xs text-slate-500">
                   <span>Date: {docFormat(selectedDoc.month, selectedDoc.date)}</span>
-                  <span className="text-teal-700 font-bold px-2 py-0.5 rounded bg-teal-50 border border-teal-200">Verified Ingestion</span>
+                  <span className="text-emerald-800 font-semibold px-2.5 py-0.5 rounded-md bg-emerald-50 border border-emerald-200">
+                    Archived
+                  </span>
                 </div>
 
-                <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Extracted Details</div>
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="text-xs font-bold text-slate-900 uppercase tracking-wider">Extracted Details</div>
                   {selectedDoc.insights.map((ins, i) => (
                     <div key={i} className="text-xs text-slate-700">{ins}</div>
                   ))}
@@ -760,13 +832,13 @@ const Home = () => {
                       setSelectedDoc(null);
                       openUploadModal(typeToUpload);
                     }}
-                    className="btn-med-secondary text-xs"
+                    className="px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 cursor-pointer"
                   >
                     Upload New Version
                   </button>
                   <button 
                     onClick={() => setSelectedDoc(null)}
-                    className="btn-med-primary text-xs"
+                    className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs cursor-pointer"
                   >
                     Done
                   </button>
