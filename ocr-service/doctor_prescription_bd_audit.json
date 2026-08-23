@@ -1,0 +1,78 @@
+{
+  "dataset_info": {
+    "dataset_name": "Doctor's Handwritten Prescription BD dataset",
+    "kaggle_slug": "mamun1113/doctors-handwritten-prescription-bd-dataset",
+    "kaggle_owner": "mamun1113",
+    "total_files": 4683,
+    "total_image_files": 4680,
+    "split_distribution": {
+      "testing_labels": 780,
+      "training_labels": 3120,
+      "validation_labels": 780
+    },
+    "sample_image_dimensions": [
+      "328x82",
+      "117x24",
+      "212x82",
+      "208x103",
+      "217x80"
+    ],
+    "dataset_type": "Word/Token Level Handwritten Medicine Name OCR (crops with bounding box crops of doctor handwriting)",
+    "license": "CC0: Public Domain (or Kaggle Open Dataset as uploaded by mamun1113)",
+    "provenance": "Derived from Bangladeshi doctor handwritten prescriptions, packaged into training_labels.csv (3,120), validation_labels.csv (780), testing_labels.csv (780)."
+  },
+  "comparison_metrics": {
+    "existing_rxhandbd_samples": 5578,
+    "new_dataset_samples": 4680,
+    "exact_sha256_duplicates": 0,
+    "perceptual_near_duplicates": 0,
+    "filename_matches": 0,
+    "unique_new_images": 4680,
+    "duplicate_percentage": 0.0
+  },
+  "vocabulary_comparison": {
+    "total_unique_labels_existing_rxhandbd": 1540,
+    "total_unique_labels_new_dataset": 78,
+    "shared_labels_count": 36,
+    "new_only_labels_count": 42,
+    "existing_only_labels_count": 1504,
+    "sample_shared_labels": [
+      "ace",
+      "alatrol",
+      "beklo",
+      "bicozin",
+      "denixil",
+      "disopan",
+      "esonix",
+      "esoral",
+      "exium",
+      "fenadin"
+    ],
+    "sample_new_labels": [
+      "aceta",
+      "amodis",
+      "atrizin",
+      "axodin",
+      "az",
+      "azithrocin",
+      "azyth",
+      "bacaid",
+      "backtone",
+      "baclofen"
+    ],
+    "sample_existing_labels": [
+      "5% dns",
+      "???",
+      "??r??",
+      "?icrogent",
+      "a-flux",
+      "a-fun",
+      "aaxius",
+      "abasaglar",
+      "abicon",
+      "abicon max"
+    ]
+  },
+  "duplicate_samples": [],
+  "final_decision": "GENUINELY NEW DATA"
+}

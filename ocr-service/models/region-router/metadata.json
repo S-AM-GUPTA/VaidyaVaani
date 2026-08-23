@@ -1,0 +1,74 @@
+{
+  "model_version": "region-router-v1",
+  "model_architecture": "google/mobilenet_v2_1.0_224",
+  "classes": {
+    "0": "Handwritten",
+    "1": "Printed",
+    "2": "Mixed",
+    "3": "Other"
+  },
+  "class_weights": [
+    0.9104,
+    0.9845,
+    22.5426,
+    0.543
+  ],
+  "epochs": 3,
+  "batch_size": 64,
+  "learning_rate": 0.0003,
+  "weight_decay": 0.0001,
+  "device": "cpu",
+  "seed": 42,
+  "training_duration_seconds": 2357.02,
+  "best_epoch": 3,
+  "best_val_metrics": {
+    "accuracy": 0.9623529411764706,
+    "macro_precision": 0.9548956031462372,
+    "macro_recall": 0.9522502143378704,
+    "macro_f1": 0.953452972106707,
+    "per_class_precision": [
+      0.9326315789473684,
+      0.9614457831325302,
+      0.9444444444444444,
+      0.9810606060606061
+    ],
+    "per_class_recall": [
+      0.9486081370449678,
+      0.9236111111111112,
+      0.9444444444444444,
+      0.9923371647509579
+    ],
+    "per_class_f1": [
+      0.940552016985138,
+      0.9421487603305785,
+      0.9444444444444444,
+      0.9866666666666667
+    ],
+    "confusion_matrix": [
+      [
+        443,
+        13,
+        1,
+        10
+      ],
+      [
+        28,
+        399,
+        0,
+        5
+      ],
+      [
+        1,
+        0,
+        17,
+        0
+      ],
+      [
+        3,
+        3,
+        0,
+        777
+      ]
+    ]
+  }
+}

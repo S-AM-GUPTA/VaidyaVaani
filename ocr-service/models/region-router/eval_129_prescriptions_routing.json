@@ -1,0 +1,302 @@
+{
+  "evaluation_type": "QUALITATIVE_GENERALIZATION (No Ground Truth Assumed)",
+  "total_prescriptions": 129,
+  "total_regions_processed": 759,
+  "class_distribution": {
+    "Printed": 75,
+    "Handwritten": 381,
+    "Other": 240,
+    "Mixed": 63
+  },
+  "routing_decision_distribution": {
+    "BOTH": 229,
+    "RXHANDBD": 302,
+    "IGNORE": 188,
+    "PADDLEOCR": 40
+  },
+  "confidence_metrics": {
+    "mean": 0.8662691699604743,
+    "median": 0.9609,
+    "min": 0.3418,
+    "max": 1.0,
+    "high_confidence_ratio": 0.7338603425559947,
+    "fallback_ratio": 0.26613965744400525
+  },
+  "sample_routed_regions": [
+    {
+      "prescription_id": "1",
+      "region_id": "reg_1",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Printed",
+      "confidence": 0.5541,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "1",
+      "region_id": "reg_2",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.7747,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "1",
+      "region_id": "reg_3",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.9926,
+      "route_decision": "RXHANDBD",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "1",
+      "region_id": "reg_4",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.9982,
+      "route_decision": "RXHANDBD",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "1",
+      "region_id": "reg_5",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.7342,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "1",
+      "region_id": "reg_6",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.9998,
+      "route_decision": "RXHANDBD",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "2",
+      "region_id": "reg_1",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Other",
+      "confidence": 0.6908,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "2",
+      "region_id": "reg_2",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.6211,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "2",
+      "region_id": "reg_3",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Other",
+      "confidence": 0.9092,
+      "route_decision": "IGNORE",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "2",
+      "region_id": "reg_4",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.8838,
+      "route_decision": "RXHANDBD",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "2",
+      "region_id": "reg_5",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Printed",
+      "confidence": 0.5644,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "2",
+      "region_id": "reg_6",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.6437,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "3",
+      "region_id": "reg_1",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Printed",
+      "confidence": 0.772,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "3",
+      "region_id": "reg_2",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Printed",
+      "confidence": 0.8517,
+      "route_decision": "PADDLEOCR",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "3",
+      "region_id": "reg_3",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.9999,
+      "route_decision": "RXHANDBD",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "3",
+      "region_id": "reg_4",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Other",
+      "confidence": 0.7563,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "3",
+      "region_id": "reg_5",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.9995,
+      "route_decision": "RXHANDBD",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "3",
+      "region_id": "reg_6",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Printed",
+      "confidence": 0.9652,
+      "route_decision": "PADDLEOCR",
+      "is_fallback": false
+    },
+    {
+      "prescription_id": "4",
+      "region_id": "reg_1",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Other",
+      "confidence": 0.5884,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "4",
+      "region_id": "reg_2",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Other",
+      "confidence": 0.7256,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "4",
+      "region_id": "reg_3",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Other",
+      "confidence": 0.7063,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "4",
+      "region_id": "reg_4",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Other",
+      "confidence": 0.7276,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "4",
+      "region_id": "reg_5",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Mixed",
+      "confidence": 0.4901,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "4",
+      "region_id": "reg_6",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Other",
+      "confidence": 0.674,
+      "route_decision": "BOTH",
+      "is_fallback": true
+    },
+    {
+      "prescription_id": "5",
+      "region_id": "reg_1",
+      "paddleocr_pred": "",
+      "trocr_pred": "",
+      "rxhandbd_pred": "",
+      "router_prediction": "Handwritten",
+      "confidence": 0.9908,
+      "route_decision": "RXHANDBD",
+      "is_fallback": false
+    }
+  ]
+}
