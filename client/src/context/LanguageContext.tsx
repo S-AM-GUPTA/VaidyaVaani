@@ -7,7 +7,7 @@ export interface LanguageOption {
   label: string;
   native: string;
   speechCode: string;
-  demoSpeechText: string;
+  defaultSpeechText: string;
 }
 
 export const LANGUAGES: LanguageOption[] = [
@@ -16,49 +16,49 @@ export const LANGUAGES: LanguageOption[] = [
     label: 'English',
     native: 'English',
     speechCode: 'en-IN',
-    demoSpeechText: "Hello! VaidyaVaani is your encrypted clinical assistant. You can upload prescriptions and lab reports to check drug safety in your regional language."
+    defaultSpeechText: "Hello! VaidyaVaani is your health record companion. You can upload prescriptions and lab reports to check drug safety in your regional language."
   },
   {
     code: 'hi',
     label: 'Hindi',
     native: 'हिन्दी',
     speechCode: 'hi-IN',
-    demoSpeechText: "नमस्ते! वैद्यवाणी आपका सुरक्षित डिजिटल स्वास्थ्य सहायक है। आप अपनी दवाओं और लैब रिपोर्ट की जांच अपनी भाषा में कर सकते हैं।"
+    defaultSpeechText: "नमस्ते! वैद्यवाणी आपका स्वास्थ्य साथी है। आप अपनी दवाओं और लैब रिपोर्ट की जांच अपनी भाषा में कर सकते हैं।"
   },
   {
     code: 'bn',
     label: 'Bengali',
     native: 'বাংলা',
     speechCode: 'bn-IN',
-    demoSpeechText: "নমস্কার! বৈদ্যবাণী আপনার সুরক্ষিত ডিজিটাল স্বাস্থ্য সহকারী। আপনি নিজের ভাষায় প্রেসক্রিপশন ও ল্যাব রিপোর্ট বুঝতে পারবেন।"
+    defaultSpeechText: "নমস্কার! বৈদ্যবাণী আপনার স্বাস্থ্য সহযোগী। আপনি নিজের ভাষায় প্রেসক্রিপশন ও ল্যাব রিপোর্ট বুঝতে পারবেন।"
   },
   {
     code: 'ta',
     label: 'Tamil',
     native: 'தமிழ்',
     speechCode: 'ta-IN',
-    demoSpeechText: "வணக்கம்! வைத்தியவாணி உங்கள் பாதுகாப்பான டிஜிட்டல் மருத்துவ உதவியாளர். உங்கள் மருந்துச் சீட்டு மற்றும் ஆய்வக அறிக்கைகளை தமிழில் எளிதாகப் புரிந்து கொள்ளலாம்."
+    defaultSpeechText: "வணக்கம்! வைத்தியவாணி உங்கள் மருத்துவ உதவியாளர். உங்கள் மருந்துச் சீட்டு மற்றும் ஆய்வக அறிக்கைகளை தமிழில் எளிதாகப் புரிந்து கொள்ளலாம்."
   },
   {
     code: 'te',
     label: 'Telugu',
     native: 'తెలుగు',
     speechCode: 'te-IN',
-    demoSpeechText: "నమస్కారం! వైద్యవాణి మీ సురక్షిత డిజిటల్ ఆరోగ్య సహాయకుడు. మీ ప్రిస్క్రిప్షన్లు మరియు ల్యాబ్ నివేదికలను తెలుగులో సులభంగా అర్థం చేసుకోండి."
+    defaultSpeechText: "నమస్కారం! వైద్యవాణి మీ ఆరోగ్య సహాయకుడు. మీ ప్రిస్క్రిప్షన్లు మరియు ల్యాబ్ నివేదికలను తెలుగులో సులభంగా అర్థం చేసుకోండి."
   },
   {
     code: 'mr',
     label: 'Marathi',
     native: 'मराठी',
     speechCode: 'mr-IN',
-    demoSpeechText: "नमस्कार! वैद्यवाणी आपले सुरक्षित डिजिटल आरोग्य सहाय्यक आहे. आपण आपले प्रिस्क्रिप्शन आणि लॅब अहवाल मराठीत सहज समजून घेऊ शकता."
+    defaultSpeechText: "नमस्कार! वैद्यवाणी आपले आरोग्य सहाय्यक आहे. आपण आपले प्रिस्क्रिप्शन आणि लॅब अहवाल मराठीत सहज समजून घेऊ शकता."
   },
   {
     code: 'gu',
     label: 'Gujarati',
     native: 'ગુજરાતી',
     speechCode: 'gu-IN',
-    demoSpeechText: "નમસ્તે! વૈદ્યવાણી તમારું સુરક્ષિત ડિજિટલ હેલ્થ સહાયક છે. તમે તમારા પ્રિસ્ક્રિપ્શન અને લેબ રિપોર્ટ સરળ ગુજરાતીમાં સમજી શકો છો."
+    defaultSpeechText: "નમસ્તે! વૈદ્યવાણી તમારું હેલ્થ સહાયક છે. તમે તમારા પ્રિસ્ક્રિપ્શન અને લેબ રિપોર્ટ સરળ ગુજરાતીમાં સમજી શકો છો."
   },
 ];
 
@@ -626,7 +626,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (!('speechSynthesis' in window)) return;
 
     window.speechSynthesis.cancel();
-    const textToSpeak = customText || currentLanguage.demoSpeechText;
+    const textToSpeak = customText || currentLanguage.defaultSpeechText;
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.lang = currentLanguage.speechCode;
     utterance.rate = 0.92;

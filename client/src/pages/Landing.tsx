@@ -157,7 +157,7 @@ export const Landing: React.FC = () => {
                   <span className="w-3 h-3 rounded-full bg-rose-400"></span>
                   <span className="w-3 h-3 rounded-full bg-amber-400"></span>
                   <span className="w-3 h-3 rounded-full bg-emerald-400"></span>
-                  <span className="text-xs font-semibold text-slate-500 ml-2">Prescription Analysis Preview</span>
+                  <span className="text-xs font-semibold text-slate-700 ml-2">Prescription Analysis</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <span className="text-[11px] font-mono text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full font-bold">

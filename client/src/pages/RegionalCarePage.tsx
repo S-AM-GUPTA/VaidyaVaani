@@ -219,7 +219,7 @@ const RegionalCarePage = () => {
               onClick={() => {
                 if (window.speechSynthesis) window.speechSynthesis.cancel();
                 setIsPlaying(false);
-                setCustomText(currentLanguage.demoSpeechText);
+                setCustomText(currentLanguage.defaultSpeechText);
               }}
               className="btn-med-secondary text-xs flex items-center gap-1 cursor-pointer"
             >
