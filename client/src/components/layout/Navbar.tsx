@@ -9,9 +9,12 @@ import {
   User, 
   LogOut, 
   LayoutDashboard,
-  ChevronDown
+  ChevronDown,
+  Globe,
+  Check
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage, LANGUAGES } from '../../context/LanguageContext';
 
 interface NavbarProps {
   onOpenUpload?: (type: 'prescriptions' | 'reports') => void;
@@ -22,17 +25,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, logout, user } = useAuth();
+  const { currentLanguage, setLanguage } = useLanguage();
   
   const userDisplayName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : 'User'));
   
+  const [isLangOpen, setIsLangOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const langRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setIsLangOpen(false);
+      }
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setIsProfileOpen(false);
       }
@@ -79,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
         {/* Brand Logo with Botanical Leaf and Tagline */}
         <Link to="/" className="flex items-center gap-3 select-none group text-left">
           {/* Green Leaf Botanical Icon */}
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform shadow-2xs">
             <svg className="w-6 h-6 text-emerald-800" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A9.49 9.49 0 0 0 12 21c6.08 0 10-4.92 10-11 0-.6-.05-1.19-.14-1.77L20.5 7.6A9.9 9.9 0 0 0 17 8zm-4.7 10.7a7.6 7.6 0 0 1-3.2-1.7c1.7-3.6 3.6-6.2 8.7-7.9a8 8 0 0 1-5.5 9.6zM7.2 4.4a8 8 0 0 1 8.6 1.4c-4.3 1.5-6.8 3.8-8.2 6.9A7.8 7.8 0 0 1 7.2 4.4z"/>
             </svg>
@@ -96,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
         </Link>
 
         {/* Center Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-6">
           <Link 
             to="/"
             className={`text-xs font-semibold py-1 transition-colors relative ${
@@ -109,10 +118,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
           </Link>
 
           <button 
-            onClick={() => handleNavClick('#clinical-intelligence')}
+            onClick={() => handleNavClick('#prescription-ocr')}
             className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
           >
-            Clinical Intelligence
+            Prescription OCR
           </button>
 
           <button 
@@ -123,44 +132,98 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
           </button>
 
           <Link 
+            to="/lab-decoder"
+            className={`text-xs font-semibold py-1 transition-colors ${
+              location.pathname === '/lab-decoder' ? 'text-emerald-800 font-bold' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Lab Reports
+          </Link>
+
+          <Link 
+            to="/safety-matrix"
+            className={`text-xs font-semibold py-1 transition-colors ${
+              location.pathname === '/safety-matrix' ? 'text-emerald-800 font-bold' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Drug Safety
+          </Link>
+
+          <Link 
             to="/regional-care"
-            className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+            className={`text-xs font-semibold py-1 transition-colors ${
+              location.pathname === '/regional-care' ? 'text-emerald-800 font-bold' : 'text-slate-600 hover:text-slate-900'
+            }`}
           >
             Voice Vault
           </Link>
-
-          <button 
-            onClick={() => handleNavClick('#about-us')}
-            className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
-          >
-            About Us
-          </button>
-
-          <button 
-            onClick={() => handleNavClick('#resources')}
-            className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
-          >
-            Resources
-          </button>
         </nav>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           
+          {/* Regional Language Selector */}
+          <div className="relative" ref={langRef}>
+            <button 
+              onClick={() => setIsLangOpen(!isLangOpen)}
+              className="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200 cursor-pointer shadow-2xs"
+              aria-label="Select Language"
+            >
+              <Globe className="w-3.5 h-3.5 text-emerald-700" />
+              <span>{currentLanguage.native}</span>
+              <ChevronDown className="w-3 h-3 text-slate-400" />
+            </button>
+
+            <AnimatePresence>
+              {isLangOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 mt-2 w-52 rounded-2xl bg-white border border-slate-200 shadow-xl p-1.5 z-50 text-slate-800 text-left"
+                >
+                  <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5 border-b border-slate-100">
+                    7 Regional Languages
+                  </div>
+                  <div className="py-1 space-y-0.5">
+                    {LANGUAGES.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setLanguage(lang.code);
+                          setIsLangOpen(false);
+                        }}
+                        className={`w-full text-left px-3 py-1.5 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer ${
+                          currentLanguage.code === lang.code 
+                            ? 'bg-emerald-50 text-emerald-800 font-bold' 
+                            : 'hover:bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <span>{lang.native} <span className="text-[10px] text-slate-400 font-normal">({lang.label})</span></span>
+                        {currentLanguage.code === lang.code && <Check className="w-3.5 h-3.5 text-emerald-600" />}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           {/* Theme Toggle Button */}
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer"
             aria-label="Toggle Theme"
           >
-            {isDarkMode ? <Moon className="w-4 h-4 text-emerald-700" /> : <Sun className="w-4 h-4 text-amber-600" />}
+            {isDarkMode ? <Moon className="w-3.5 h-3.5 text-emerald-700" /> : <Sun className="w-3.5 h-3.5 text-amber-600" />}
           </button>
 
           {/* Authentication Action */}
           {!isAuthenticated ? (
             <Link
               to="/login"
-              className="bg-[#1a472a] hover:bg-[#143720] text-white px-5 py-2.5 rounded-lg text-xs font-bold tracking-wide transition-all shadow-xs cursor-pointer select-none"
+              className="bg-[#1a472a] hover:bg-[#143720] text-white px-5 py-2 rounded-lg text-xs font-bold tracking-wide transition-all shadow-xs cursor-pointer select-none"
             >
               Get Started
             </Link>
@@ -255,10 +318,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
               Home
             </Link>
             <button
-              onClick={() => handleNavClick('#clinical-intelligence')}
+              onClick={() => handleNavClick('#prescription-ocr')}
               className="block text-xs font-semibold text-slate-700 py-1"
             >
-              Clinical Intelligence
+              Prescription OCR
             </button>
             <button
               onClick={() => handleNavClick('#generic-finder')}
@@ -267,24 +330,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
               Generic Salt Finder
             </button>
             <Link
+              to="/lab-decoder"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-semibold text-slate-700 py-1"
+            >
+              Lab Reports
+            </Link>
+            <Link
+              to="/safety-matrix"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-semibold text-slate-700 py-1"
+            >
+              Drug Safety
+            </Link>
+            <Link
               to="/regional-care"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block text-xs font-semibold text-slate-700 py-1"
             >
               Voice Vault
             </Link>
-            <button
-              onClick={() => handleNavClick('#about-us')}
-              className="block text-xs font-semibold text-slate-700 py-1"
-            >
-              About Us
-            </button>
-            <button
-              onClick={() => handleNavClick('#resources')}
-              className="block text-xs font-semibold text-slate-700 py-1"
-            >
-              Resources
-            </button>
             <div className="pt-2 border-t border-slate-100">
               <Link
                 to="/login"
