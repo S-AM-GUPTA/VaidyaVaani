@@ -17,7 +17,6 @@ import {
   EyeOff,
   User,
   MapPin,
-  Sparkles,
   FileCheck2
 } from 'lucide-react';
 import Logo from '../components/Logo';
@@ -188,12 +187,6 @@ const Login = () => {
 
         {/* Center Card */}
         <div className="my-auto w-full max-w-lg mx-auto">
-          
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider mb-4 border border-emerald-300/80">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-            Zero-Knowledge Personal Health Vault
-          </div>
-
           <h1 className="font-headline text-3xl xl:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
             Smart Medicine Savings & Multi-Doctor Safety for Everyone
           </h1>

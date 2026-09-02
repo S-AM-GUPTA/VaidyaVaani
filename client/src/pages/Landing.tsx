@@ -91,13 +91,6 @@ export const Landing: React.FC = () => {
           
           {/* Left Column: Core Value Proposition */}
           <div className="lg:col-span-6 space-y-6 text-left">
-            
-            {/* Eyebrow Label */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-              <span>UNDERSTAND YOUR HEALTH RECORDS</span>
-            </div>
-
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-slate-900 tracking-tight leading-[1.12]">
               Medical information, <br className="hidden sm:inline" />
