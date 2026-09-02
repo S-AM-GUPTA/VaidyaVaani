@@ -5,6 +5,7 @@
     --font-headline: 'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --font-serif: 'Newsreader', 'Lora', Georgia, serif;
   }
 
   body {
@@ -24,6 +25,10 @@
 
 .font-headline {
   font-family: var(--font-headline);
+}
+
+.font-editorial {
+  font-family: var(--font-serif);
 }
 
 .font-body {
