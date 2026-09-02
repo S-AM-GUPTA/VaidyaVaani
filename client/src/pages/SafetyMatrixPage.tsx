@@ -133,7 +133,7 @@ const SafetyMatrixPage = () => {
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-600 selection:text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
+      <main className="flex-grow w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-10 text-left">
         
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
@@ -145,7 +145,7 @@ const SafetyMatrixPage = () => {
             <span>Back</span>
           </button>
 
-          <div className="med-badge font-mono">
+          <div className="haptic-badge bg-emerald-50 text-emerald-800 border border-emerald-200">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Clinical Pharmacology Radar V2.4</span>
           </div>
@@ -153,148 +153,157 @@ const SafetyMatrixPage = () => {
 
         {/* Header */}
         <div className="max-w-3xl mb-12">
-          <div className="text-xs font-mono uppercase text-emerald-700 font-bold mb-2">Pharmacopeia Cross-Audit</div>
+          <div className="text-[11px] font-mono uppercase text-emerald-700 font-bold mb-2">Pharmacopeia Cross-Audit</div>
           <h1 className="font-headline text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Multi-Prescription Drug Interaction Radar
           </h1>
-          <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed font-normal">
             Screen drug combinations prescribed across multiple independent clinics to detect harmful pharmacokinetic clashes, bioavailability interference, and strict dosage spacing rules.
           </p>
         </div>
 
         {/* =========================================================
-            LIVE INTERACTIVE RADAR SIMULATOR
+            LIVE INTERACTIVE RADAR SIMULATOR (DOPPELRAND)
             ========================================================= */}
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 mb-16">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-emerald-700 font-bold mb-3">
-            <Zap className="w-4 h-4 text-emerald-600" />
-            Interactive Drug-Drug Co-Administration Radar
-          </div>
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">
-            Test Any Medicine Combination
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6 items-center">
+        <div className="doppel-shell mb-16 shadow-md">
+          <div className="doppel-core p-6 sm:p-10 space-y-6">
             
-            {/* Drug 1 Selector */}
-            <div className="md:col-span-5">
-              <label className="block text-xs font-bold font-mono text-slate-700 mb-1.5 uppercase">
-                First Medicine (Drug A):
-              </label>
-              <select
-                value={selectedDrug1}
-                onChange={(e) => {
-                  setSelectedDrug1(e.target.value);
-                  handleSimulate(e.target.value, selectedDrug2);
-                }}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 font-medium focus:outline-none focus:border-emerald-500 focus:bg-white"
-              >
-                {MEDICINES_DATABASE.map(m => (
-                  <option key={m.id} value={`${m.brand} (${m.salt})`}>
-                    {m.brand} — {m.category}
-                  </option>
-                ))}
-                <option value="Warfarin 5mg">Warfarin 5mg (Blood Thinner)</option>
-                <option value="Magnesium Antacid">Magnesium/Gelusil Antacid</option>
-                <option value="Grapefruit Extract">Grapefruit Extract</option>
-                <option value="Radiological Contrast">Radiological Contrast</option>
-              </select>
-            </div>
-
-            <div className="md:col-span-2 text-center text-xs font-mono font-bold text-slate-400">
-              <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200">VS</span>
-            </div>
-
-            {/* Drug 2 Selector */}
-            <div className="md:col-span-5">
-              <label className="block text-xs font-bold font-mono text-slate-700 mb-1.5 uppercase">
-                Second Medicine (Drug B):
-              </label>
-              <select
-                value={selectedDrug2}
-                onChange={(e) => {
-                  setSelectedDrug2(e.target.value);
-                  handleSimulate(selectedDrug1, e.target.value);
-                }}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm text-slate-900 font-medium focus:outline-none focus:border-emerald-500 focus:bg-white"
-              >
-                <option value="Ecosprin 75mg (Aspirin)">Ecosprin 75mg (Aspirin)</option>
-                <option value="Magnesium Antacid">Gelusil / Magnesium Antacid</option>
-                <option value="Shelcal 500 (Calcium)">Shelcal 500 (Calcium+D3)</option>
-                <option value="Grapefruit Extract">Grapefruit Juice Extract</option>
-                <option value="Radiological Contrast">Radiological CT Contrast</option>
-                {MEDICINES_DATABASE.map(m => (
-                  <option key={m.id} value={`${m.brand} (${m.salt})`}>
-                    {m.brand} — {m.category}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-          </div>
-
-          {/* Live Result Display Card */}
-          <div className="p-6 rounded-2xl bg-[#f8fafc] border border-slate-200">
-            <div className="flex flex-wrap items-center justify-between pb-4 border-b border-slate-200 gap-3 mb-4">
-              <div>
-                <span className="text-[10px] font-mono uppercase font-bold text-slate-400">Screening Verdict</span>
-                <h3 className="text-xl font-bold text-slate-900">{simResult.title}</h3>
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase text-emerald-800 font-bold">
+                <Zap className="w-4 h-4 text-emerald-600" />
+                <span>Interactive Drug-Drug Co-Administration Radar</span>
               </div>
+              <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full">
+                Active Audit
+              </span>
+            </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleSpeakResult}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-emerald-700 hover:border-emerald-300 flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
+            <h2 className="text-2xl font-extrabold text-slate-900 font-headline">
+              Test Any Medicine Combination
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+              
+              {/* Drug 1 Selector */}
+              <div className="md:col-span-5">
+                <label className="block text-xs font-bold font-mono text-slate-700 mb-1.5 uppercase">
+                  First Medicine (Drug A):
+                </label>
+                <select
+                  value={selectedDrug1}
+                  onChange={(e) => {
+                    setSelectedDrug1(e.target.value);
+                    handleSimulate(e.target.value, selectedDrug2);
+                  }}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs sm:text-sm text-slate-900 font-medium focus:outline-none focus:border-emerald-500 focus:bg-white shadow-xs cursor-pointer"
                 >
-                  {isSpeaking ? <VolumeX className="w-3.5 h-3.5 text-rose-500" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-600" />}
-                  <span>{isSpeaking ? 'Stop Voice' : 'Listen Warning'}</span>
-                </button>
+                  {MEDICINES_DATABASE.map(m => (
+                    <option key={m.id} value={`${m.brand} (${m.salt})`}>
+                      {m.brand} — {m.category}
+                    </option>
+                  ))}
+                  <option value="Warfarin 5mg">Warfarin 5mg (Blood Thinner)</option>
+                  <option value="Magnesium Antacid">Magnesium/Gelusil Antacid</option>
+                  <option value="Grapefruit Extract">Grapefruit Extract</option>
+                  <option value="Radiological Contrast">Radiological Contrast</option>
+                </select>
+              </div>
 
-                <span className={`text-xs font-mono font-bold px-3 py-1.5 rounded-full ${
-                  simResult.severity === 'critical' ? 'bg-rose-100 text-rose-800 border border-rose-300' :
-                  simResult.severity === 'moderate' ? 'bg-amber-100 text-amber-800 border border-amber-300' :
-                  simResult.severity === 'low' ? 'bg-teal-100 text-teal-800 border border-teal-300' :
-                  'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                }`}>
-                  {simResult.severity === 'critical' ? 'Lethal Hazard Contraindication' :
-                   simResult.severity === 'moderate' ? 'Spacing Advisory Required' :
-                   simResult.severity === 'low' ? 'Minor Dietary Advisory' : 'Safe to Combine'}
-                </span>
+              <div className="md:col-span-2 text-center text-xs font-mono font-bold text-slate-400">
+                <span className="px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200">VS</span>
+              </div>
+
+              {/* Drug 2 Selector */}
+              <div className="md:col-span-5">
+                <label className="block text-xs font-bold font-mono text-slate-700 mb-1.5 uppercase">
+                  Second Medicine (Drug B):
+                </label>
+                <select
+                  value={selectedDrug2}
+                  onChange={(e) => {
+                    setSelectedDrug2(e.target.value);
+                    handleSimulate(selectedDrug1, e.target.value);
+                  }}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs sm:text-sm text-slate-900 font-medium focus:outline-none focus:border-emerald-500 focus:bg-white shadow-xs cursor-pointer"
+                >
+                  <option value="Ecosprin 75mg (Aspirin)">Ecosprin 75mg (Aspirin)</option>
+                  <option value="Magnesium Antacid">Gelusil / Magnesium Antacid</option>
+                  <option value="Shelcal 500 (Calcium)">Shelcal 500 (Calcium+D3)</option>
+                  <option value="Grapefruit Extract">Grapefruit Juice Extract</option>
+                  <option value="Radiological Contrast">Radiological CT Contrast</option>
+                  {MEDICINES_DATABASE.map(m => (
+                    <option key={m.id} value={`${m.brand} (${m.salt})`}>
+                      {m.brand} — {m.category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+            </div>
+
+            {/* Live Result Display Card */}
+            <div className="p-6 rounded-3xl bg-[#f8fafc] border border-slate-200 shadow-xs space-y-4">
+              <div className="flex flex-wrap items-center justify-between pb-4 border-b border-slate-200 gap-3">
+                <div>
+                  <span className="text-[10px] font-mono uppercase font-bold text-slate-400">Screening Verdict</span>
+                  <h3 className="text-xl font-extrabold text-slate-900 font-headline">{simResult.title}</h3>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleSpeakResult}
+                    className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-emerald-700 hover:border-emerald-300 flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                  >
+                    {isSpeaking ? <VolumeX className="w-3.5 h-3.5 text-rose-500" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-600" />}
+                    <span>{isSpeaking ? 'Stop Voice' : 'Listen Warning'}</span>
+                  </button>
+
+                  <span className={`text-xs font-mono font-bold px-3 py-1.5 rounded-full ${
+                    simResult.severity === 'critical' ? 'bg-rose-100 text-rose-800 border border-rose-300' :
+                    simResult.severity === 'moderate' ? 'bg-amber-100 text-amber-800 border border-amber-300' :
+                    simResult.severity === 'low' ? 'bg-teal-100 text-teal-800 border border-teal-300' :
+                    'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                  }`}>
+                    {simResult.severity === 'critical' ? 'Lethal Hazard Contraindication' :
+                     simResult.severity === 'moderate' ? 'Spacing Advisory Required' :
+                     simResult.severity === 'low' ? 'Minor Dietary Advisory' : 'Safe to Combine'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-700">
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+                  <div className="font-bold text-slate-900 mb-1 font-mono uppercase text-xs">Biological Mechanism:</div>
+                  <p className="leading-relaxed font-normal">{simResult.mechanism}</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+                  <div className="font-bold text-slate-900 mb-1 font-mono uppercase text-xs">Clinical Adverse Outcome:</div>
+                  <p className="leading-relaxed font-normal">{simResult.effect}</p>
+                </div>
+              </div>
+
+              <div className={`p-4 rounded-2xl border text-xs sm:text-sm leading-relaxed ${
+                simResult.severity === 'critical' ? 'bg-rose-50 border-rose-200 text-rose-900' :
+                simResult.severity === 'moderate' ? 'bg-amber-50 border-amber-200 text-amber-900' :
+                simResult.severity === 'low' ? 'bg-teal-50 border-teal-200 text-teal-900' :
+                'bg-emerald-50 border-emerald-200 text-emerald-900'
+              }`}>
+                <div className="font-bold uppercase text-xs font-mono mb-1">Pharmacist Action Protocol:</div>
+                <p className="leading-relaxed font-normal">{simResult.advisory}</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-700 mb-4">
-              <div className="p-4 rounded-xl bg-white border border-slate-200">
-                <div className="font-bold text-slate-900 mb-1 font-mono uppercase text-xs">Biological Mechanism:</div>
-                <p>{simResult.mechanism}</p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-white border border-slate-200">
-                <div className="font-bold text-slate-900 mb-1 font-mono uppercase text-xs">Clinical Adverse Outcome:</div>
-                <p>{simResult.effect}</p>
-              </div>
-            </div>
-
-            <div className={`p-4 rounded-xl border text-xs sm:text-sm leading-relaxed ${
-              simResult.severity === 'critical' ? 'bg-rose-50 border-rose-200 text-rose-900' :
-              simResult.severity === 'moderate' ? 'bg-amber-50 border-amber-200 text-amber-900' :
-              simResult.severity === 'low' ? 'bg-teal-50 border-teal-200 text-teal-900' :
-              'bg-emerald-50 border-emerald-200 text-emerald-900'
-            }`}>
-              <div className="font-bold uppercase text-xs font-mono mb-1">Pharmacist Action Protocol:</div>
-              <p>{simResult.advisory}</p>
-            </div>
           </div>
-
         </div>
 
         {/* =========================================================
             SEARCHABLE PHARMACOLOGICAL REGISTRY
             ========================================================= */}
-        <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-slate-900">Verified Drug Interaction Database</h2>
-            <p className="text-xs text-slate-500">Indexed against CDSCO & WHO pharmacopeia guidelines.</p>
+            <h2 className="text-2xl font-extrabold text-slate-900 font-headline">Verified Drug Interaction Database</h2>
+            <p className="text-xs text-slate-500 font-mono">Indexed against CDSCO & WHO pharmacopeia guidelines.</p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
@@ -306,7 +315,7 @@ const SafetyMatrixPage = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Filter drug pairs..."
-                className="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 w-48 sm:w-60"
+                className="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-full text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 w-48 sm:w-60 shadow-xs"
               />
             </div>
 
@@ -314,7 +323,7 @@ const SafetyMatrixPage = () => {
             <select
               value={severityFilter}
               onChange={(e: any) => setSeverityFilter(e.target.value)}
-              className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-700 focus:outline-none focus:border-emerald-500"
+              className="bg-white border border-slate-200 rounded-full px-4 py-2 text-xs font-mono text-slate-700 focus:outline-none focus:border-emerald-500 shadow-xs cursor-pointer"
             >
               <option value="all">All Severities</option>
               <option value="critical">Critical Only</option>
@@ -326,45 +335,47 @@ const SafetyMatrixPage = () => {
         </div>
 
         {/* Registry Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredRegistry.map((item, idx) => (
-            <div key={idx} className="med-card p-6 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-[11px] font-mono font-bold text-slate-400 uppercase">Interaction Screen</span>
-                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
-                    item.severityType === 'critical' ? 'bg-rose-100 text-rose-800' :
-                    item.severityType === 'moderate' ? 'bg-amber-100 text-amber-800' :
-                    item.severityType === 'low' ? 'bg-teal-100 text-teal-800' :
-                    'bg-emerald-100 text-emerald-800'
-                  }`}>
-                    {item.severity}
-                  </span>
+            <div key={idx} className="doppel-shell flex flex-col justify-between">
+              <div className="doppel-core p-6 flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Interaction Screen</span>
+                    <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full ${
+                      item.severityType === 'critical' ? 'bg-rose-100 text-rose-800' :
+                      item.severityType === 'moderate' ? 'bg-amber-100 text-amber-800' :
+                      item.severityType === 'low' ? 'bg-teal-100 text-teal-800' :
+                      'bg-emerald-100 text-emerald-800'
+                    }`}>
+                      {item.severity}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base font-extrabold text-slate-900 font-headline mb-2">{item.pair}</h3>
+                  
+                  <div className="space-y-1 text-xs text-slate-600 mb-4">
+                    <div><strong>Drug 1:</strong> {item.primary}</div>
+                    <div><strong>Drug 2:</strong> {item.secondary}</div>
+                  </div>
+
+                  <p className="text-xs text-slate-600 mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200/80 leading-relaxed">
+                    {item.effect}
+                  </p>
                 </div>
 
-                <h3 className="text-base font-bold text-slate-900 mb-2">{item.pair}</h3>
-                
-                <div className="space-y-1 text-xs text-slate-600 mb-4">
-                  <div><strong>Drug 1:</strong> {item.primary}</div>
-                  <div><strong>Drug 2:</strong> {item.secondary}</div>
+                <div className="pt-3 border-t border-slate-100">
+                  <button
+                    onClick={() => {
+                      handleSimulate(item.primary, item.secondary);
+                      window.scrollTo({ top: 200, behavior: 'smooth' });
+                    }}
+                    className="w-full btn-island-secondary text-xs py-2 px-3 flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Load in Live Radar</span>
+                  </button>
                 </div>
-
-                <p className="text-xs text-slate-500 mb-4 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                  {item.effect}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-slate-100">
-                <button
-                  onClick={() => {
-                    handleSimulate(item.primary, item.secondary);
-                    window.scrollTo({ top: 200, behavior: 'smooth' });
-                  }}
-                  className="w-full btn-med-secondary text-xs flex items-center justify-center gap-1 cursor-pointer"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Load in Live Radar</span>
-                </button>
               </div>
             </div>
           ))}

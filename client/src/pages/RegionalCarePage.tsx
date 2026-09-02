@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Volume2, 
   ArrowLeft, 
-  Sparkles, 
   Play, 
-  Pause,
-  RotateCcw
+  Pause, 
+  RotateCcw, 
+  Sparkles
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -14,34 +14,34 @@ import { useLanguage, LANGUAGES } from '../context/LanguageContext';
 
 const PRESET_PHRASES = [
   {
-    title: 'Post-Meal Prescription Instruction',
-    text: 'Take one tablet twice daily strictly after meals with warm water. Do not skip doses.',
-    hi: 'भोजन के बाद गर्म पानी के साथ दिन में दो बार एक गोली लें। खुराक न छोड़ें।',
-    bn: 'খাওয়ার পর হালকা গরম জলের সাথে দিনে দুবার একটি ট্যাবলেট খান।',
-    ta: 'உணவுக்குப் பிறகு வெதுவெதுப்பான நீரில் தினமும் இரண்டு முறை ஒரு மாத்திரை எடுத்துக் கொள்ளுங்கள்.',
-    te: 'భోజనం తర్వాత గోరువెచ్చని నీటితో రోజుకు రెండుసార్లు ఒక టాబ్లెట్ తీసుకోండి.',
-    mr: 'जेवणानंतर कोमट पाण्यासोबत दिवसातून दोनदा एक गोळी घ्या. डोस चुकवू नका.',
-    gu: 'જમ્યા પછી હુંફાળા પાણી સાથે દિવસમાં બે વાર એક ગોળી લો.'
+    title: 'Dosage Spacing & Food Timing',
+    text: 'Take 1 tablet of Amoxicillin twice daily strictly after food. Complete the full 5-day course.',
+    hi: 'एमोक्सिसिलिन की 1 गोली दिन में दो बार भोजन के बाद लें। पूरा 5 दिन का कोर्स समाप्त करें।',
+    bn: 'অ্যামোক্সিসিলিনের ১টি ট্যাবলেট দিনে দুবার খাবারের পর খান। পুরো ৫ দিনের কোর্স সম্পন্ন করুন।',
+    ta: 'அமோக்சிசிலின் 1 மாத்திரையை தினமும் இரண்டு வேளை உணவுக்குப் பிறகு உட்கொள்ளவும்.',
+    te: 'అమోక్సిసిలిన్ 1 టాబ్లెట్ రోజుకు రెండుసార్లు భోజనం తర్వాత తీసుకోండి.',
+    mr: 'अमोक्सिसिलिनची १ गोळी दिवसातून दोनदा जेवणानंतर घ्या. पूर्ण ५ दिवसांचा कोर्स पूर्ण करा.',
+    gu: 'એમોક્સિસિલિનની ૧ ગોળી દિવસમાં બે વાર જમ્યા પછી લો. પૂરો ૫ દિવસનો કોર્સ પૂરો કરો.'
   },
   {
-    title: 'Drug Spacing Safety Alert',
-    text: 'Do not take antacids at the same time as blood pressure medicine. Maintain a 2-hour separation window.',
-    hi: 'ब्लड प्रेशर की दवा के साथ एंटासिड न लें। दोनों के बीच कम से कम 2 घंटे का अंतर रखें।',
-    bn: 'রক্তচাপের ওষুধের সাথে অ্যান্টাসিড খাবেন না। অন্তত ২ ঘণ্টার ব্যবধান রাখুন।',
-    ta: 'ரத்த அழுத்த மருந்துடன் அமில எதிர்ப்பு மருந்தை உட்கொள்ள வேண்டாம். 2 மணி நேர இடைவெளியை பராமரிக்கவும்.',
-    te: 'రక్తపోటు మందులతో పాటు యాంటాసిడ్ తీసుకోకండి. కనీసం 2 గంటల వ్యవధిని పాటించండి.',
-    mr: 'रक्तदाबाच्या औषधासोबत ॲसिडिटीची औषधे घेऊ नका. किमान २ तासांचे अंतर ठेवा.',
-    gu: 'બ્લડ પ્રેશરની દવા સાથે એન્ટાસિડ ન લો. બંને વચ્ચે 2 કલાકનું અંતર રાખો.'
+    title: 'Acidity / Antacid Spacing Precaution',
+    text: 'Take Pantocid DSR 30 minutes before breakfast. Do not take antacids within 2 hours of heart medicines.',
+    hi: 'पैंटोसिड डीएसआर नाश्ते से 30 मिनट पहले खाली पेट लें। दिल की दवाओं के 2 घंटे के भीतर एंटासिड न लें।',
+    bn: 'প্যান্টোসিড ডিএসআর প্রাতঃরাশের ৩০ মিনিট আগে খালি পেটে খান।',
+    ta: 'காலை உணவுக்கு 30 நிமிடங்களுக்கு முன் பேண்டோசிட் மாத்திரையை உட்கொள்ளவும்.',
+    te: 'అల్పాహారానికి 30 నిమిషాల ముందు పాంటోసిడ్ తీసుకోండి.',
+    mr: 'न्याहारीच्या ३० मिनिटे आधी पॅन्टोसिड डीएसआर घ्या.',
+    gu: 'નાસ્તાના ૩૦ મિનિટ પહેલાં પેન્ટોસિડ ડીએસઆર લો.'
   },
   {
-    title: 'Fasting Glucose Pathology Note',
-    text: 'Your fasting blood glucose is in the normal range. Continue maintaining balanced daily fiber and light exercise.',
-    hi: 'आपका फास्टिंग ब्लड शुगर सामान्य सीमा में है। संतुलित खानपान और नियमित व्यायाम जारी रखें।',
-    bn: 'আপনার ফাস্টিং ব্লাড সুগার স্বাভাবিক মাত্রায় রয়েছে। সুষম খাদ্য ও নিয়মিত ব্যায়াম বজায় রাখুন।',
-    ta: 'உங்கள் இரத்த சர்க்கரை அளவு இயல்பான வரம்பில் உள்ளது. சீரான உணவு முறையை தொடரவும்.',
-    te: 'మీ ఉపవాస రక్తంలో చక్కెర స్థాయి సాధారణ పరిధిలో ఉంది. సమతుల్య ఆహారం తీసుకోండి.',
-    mr: 'तुमची फास्टिंग ब्लड शुगर सामान्य पातळीत आहे. संतुलित आहार आणि नियमित व्यायाम सुरू ठेवा.',
-    gu: 'તમારું ફાસ્ટિંગ બ્લડ સુગર સામાન્ય મર્યાદામાં છે. સંતુલિત આહાર અને નિયમિત કસરત ચાલુ રાખો.'
+    title: 'Blood Sugar (HbA1c) Advisory',
+    text: 'Your 3-month average blood glucose HbA1c is 6.1%. This is within the prediabetes range. Regular walking recommended.',
+    hi: 'आपका 3 महीने का औसत ब्लड शुगर एचबीए1सी 6.1% है। यह प्रीडायबिटीज सीमा में है। रोज टहलें।',
+    bn: 'আপনার ৩ মাসের গড় ব্লাড সুগার ৬.১%। প্রতিদিন হালকা ব্যায়াম করুন।',
+    ta: 'உங்கள் 3 மாத சராசரி சர்க்கரை அளவு 6.1%. தினசரி நடைப்பயிற்சி பரிந்துரைக்கப்படுகிறது.',
+    te: 'మీ 3 నెలల సగటు రక్తంలో చక్కెర స్థాయి 6.1%. రోజూ నడవడం మంచిది.',
+    mr: 'आपली ३ महिन्यांची सरासरी रक्तातील साखर ६.१% आहे. रोज चालण्याचा व्यायाम करा.',
+    gu: 'તમારું ૩ મહિનાનું સરેરાશ બ્લડ સુગર ૬.૧% છે. નિયમિત ચાલવાની સલાહ આપવામાં આવે છે.'
   }
 ];
 
@@ -49,42 +49,28 @@ const RegionalCarePage = () => {
   const navigate = useNavigate();
   const { currentLanguage, setLanguage } = useLanguage();
 
-  const [customText, setCustomText] = useState(
-    'VaidyaVaani explains your prescriptions and medical reports clearly in your mother tongue.'
-  );
+  const [customText, setCustomText] = useState(currentLanguage.defaultSpeechText);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleSpeak = (textToSpeak?: string) => {
-    if (!window.speechSynthesis) return;
+    if (!('speechSynthesis' in window)) return;
 
-    window.speechSynthesis.cancel();
     if (isPlaying) {
+      window.speechSynthesis.cancel();
       setIsPlaying(false);
       return;
     }
 
-    const text = textToSpeak || customText;
-    const utterance = new SpeechSynthesisUtterance(text);
-    
-    // Map language code to TTS locale
-    const localeMap: Record<string, string> = {
-      en: 'en-IN',
-      hi: 'hi-IN',
-      bn: 'bn-IN',
-      ta: 'ta-IN',
-      te: 'te-IN',
-      mr: 'mr-IN',
-      gu: 'gu-IN'
-    };
+    window.speechSynthesis.cancel();
+    const phrase = textToSpeak || customText;
+    const utterance = new SpeechSynthesisUtterance(phrase);
+    utterance.lang = currentLanguage.speechCode;
+    utterance.rate = 0.92;
 
-    utterance.lang = localeMap[currentLanguage.code] || 'en-IN';
-    utterance.rate = 0.95;
-    utterance.pitch = 1.0;
-
+    utterance.onstart = () => setIsPlaying(true);
     utterance.onend = () => setIsPlaying(false);
     utterance.onerror = () => setIsPlaying(false);
 
-    setIsPlaying(true);
     window.speechSynthesis.speak(utterance);
   };
 
@@ -105,7 +91,7 @@ const RegionalCarePage = () => {
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-600 selection:text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
+      <main className="flex-grow w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-10 text-left">
         
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
@@ -117,7 +103,7 @@ const RegionalCarePage = () => {
             <span>Back</span>
           </button>
 
-          <div className="med-badge font-mono">
+          <div className="haptic-badge bg-emerald-50 text-emerald-800 border border-emerald-200">
             <Volume2 className="w-3.5 h-3.5" />
             <span>Regional Multilingual Speech Engine</span>
           </div>
@@ -125,140 +111,144 @@ const RegionalCarePage = () => {
 
         {/* Header */}
         <div className="max-w-3xl mb-12">
-          <div className="text-xs font-mono uppercase text-emerald-700 font-bold mb-2">Universal Healthcare Access</div>
+          <div className="text-[11px] font-mono uppercase text-emerald-700 font-bold mb-2">Universal Healthcare Access</div>
           <h1 className="font-headline text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Regional Language Clinical Voice Synthesizer
           </h1>
-          <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed font-normal">
             Eliminating prescription illiteracy. Listen to doctor instructions, drug timing warnings, and pathology lab evaluations spoken aloud in 7 Indian regional languages.
           </p>
         </div>
 
         {/* =========================================================
-            INTERACTIVE VOICE SYNTHESIZER CONSOLE
+            INTERACTIVE VOICE SYNTHESIZER CONSOLE (DOPPELRAND)
             ========================================================= */}
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 mb-16">
-          
-          {/* Language Selector Pills */}
-          <div className="mb-6">
-            <label className="block text-xs font-mono uppercase font-bold text-slate-500 mb-2">
-              Select Output Dialect:
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {LANGUAGES.map((l) => (
-                <button
-                  key={l.code}
-                  onClick={() => {
-                    setLanguage(l.code);
-                    if (isPlaying) {
-                      window.speechSynthesis.cancel();
-                      setIsPlaying(false);
-                    }
-                  }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
-                    currentLanguage.code === l.code
-                      ? 'bg-emerald-600 text-white shadow-xs'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  }`}
-                >
-                  {l.native} ({l.label})
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Interactive Text Input Area */}
-          <div className="mb-6">
-            <label className="block text-xs font-mono uppercase font-bold text-slate-500 mb-2">
-              Text to Synthesize ({currentLanguage.native}):
-            </label>
-            <textarea
-              rows={4}
-              value={customText}
-              onChange={(e) => setCustomText(e.target.value)}
-              placeholder="Type prescription notes or clinical text to hear it spoken..."
-              className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm sm:text-base text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white resize-none"
-            />
-          </div>
-
-          {/* Action Bar & Animated Waveform */}
-          <div className="p-4 rounded-2xl bg-[#f8fafc] border border-slate-200 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => handleSpeak()}
-                className="w-12 h-12 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shadow-xs transition-transform active:scale-95 cursor-pointer"
-              >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
-              </button>
-
-              <div>
-                <div className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <span>{currentLanguage.native} Voice Engine</span>
-                  <span className="text-[10px] font-mono text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded font-bold">
-                    {isPlaying ? 'ACTIVE AUDIO' : 'READY'}
-                  </span>
-                </div>
-                <div className="text-xs text-slate-500 mt-0.5">
-                  {isPlaying ? 'Speaking aloud in real-time...' : 'Click play to synthesize'}
-                </div>
+        <div className="doppel-shell mb-16 shadow-md">
+          <div className="doppel-core p-6 sm:p-10 space-y-6">
+            
+            {/* Language Selector Pills */}
+            <div>
+              <label className="block text-xs font-mono uppercase font-bold text-slate-500 mb-2.5">
+                Select Output Dialect:
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {LANGUAGES.map((l) => (
+                  <button
+                    key={l.code}
+                    onClick={() => {
+                      setLanguage(l.code);
+                      if (isPlaying) {
+                        window.speechSynthesis.cancel();
+                        setIsPlaying(false);
+                      }
+                    }}
+                    className={`px-4 py-2 rounded-full text-xs font-bold font-headline transition-all cursor-pointer ${
+                      currentLanguage.code === l.code
+                        ? 'bg-emerald-600 text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    {l.native} ({l.label})
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Audio Wave Bars */}
-            <div className="flex items-center gap-1.5 px-4 py-2 bg-white rounded-xl border border-slate-200">
-              {[35, 65, 25, 80, 45, 70, 30, 90, 50, 40].map((h, i) => (
-                <div
-                  key={i}
-                  className={`w-1 bg-emerald-600 rounded-full transition-all duration-200 ${isPlaying ? 'animate-pulse' : 'opacity-30'}`}
-                  style={{ height: `${isPlaying ? (h * 0.4) : 8}px` }}
-                />
-              ))}
+            {/* Interactive Text Input Area */}
+            <div>
+              <label className="block text-xs font-mono uppercase font-bold text-slate-500 mb-2">
+                Text to Synthesize ({currentLanguage.native}):
+              </label>
+              <textarea
+                rows={4}
+                value={customText}
+                onChange={(e) => setCustomText(e.target.value)}
+                placeholder="Type prescription notes or clinical text to hear it spoken..."
+                className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white resize-none shadow-xs"
+              />
             </div>
 
-            <button
-              onClick={() => {
-                if (window.speechSynthesis) window.speechSynthesis.cancel();
-                setIsPlaying(false);
-                setCustomText(currentLanguage.defaultSpeechText);
-              }}
-              className="btn-med-secondary text-xs flex items-center gap-1 cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reset Default</span>
-            </button>
-          </div>
+            {/* Action Bar & Animated Waveform */}
+            <div className="p-4 rounded-3xl bg-[#f8fafc] border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => handleSpeak()}
+                  className="w-12 h-12 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shadow-xs transition-transform active:scale-95 cursor-pointer"
+                >
+                  {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+                </button>
 
+                <div>
+                  <div className="text-sm font-bold text-slate-900 flex items-center gap-2 font-headline">
+                    <span>{currentLanguage.native} Voice Engine</span>
+                    <span className="text-[10px] font-mono text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full font-bold">
+                      {isPlaying ? 'ACTIVE AUDIO' : 'READY'}
+                    </span>
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5 font-normal">
+                    {isPlaying ? 'Speaking aloud in real-time...' : 'Click play to synthesize'}
+                  </div>
+                </div>
+              </div>
+
+              {/* Audio Wave Bars */}
+              <div className="flex items-center gap-1.5 px-4 py-2.5 bg-white rounded-2xl border border-slate-200 shadow-xs">
+                {[35, 65, 25, 80, 45, 70, 30, 90, 50, 40].map((h, i) => (
+                  <div
+                    key={i}
+                    className={`w-1 bg-emerald-600 rounded-full transition-all duration-200 ${isPlaying ? 'animate-pulse' : 'opacity-30'}`}
+                    style={{ height: `${isPlaying ? (h * 0.4) : 8}px` }}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={() => {
+                  if (window.speechSynthesis) window.speechSynthesis.cancel();
+                  setIsPlaying(false);
+                  setCustomText(currentLanguage.defaultSpeechText);
+                }}
+                className="btn-island-secondary text-xs py-2 px-4 flex items-center gap-1.5 cursor-pointer"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Reset Default</span>
+              </button>
+            </div>
+
+          </div>
         </div>
 
         {/* =========================================================
             PRESET CLINICAL PHRASES
             ========================================================= */}
-        <div className="mb-6">
-          <h2 className="text-xl font-bold text-slate-900 mb-1">Standard Clinical Voice Presets</h2>
-          <p className="text-xs text-slate-500 mb-6">Click any preset to load and listen in {currentLanguage.native}.</p>
+        <div className="mb-8">
+          <h2 className="text-2xl font-extrabold text-slate-900 font-headline mb-1">Standard Clinical Voice Presets</h2>
+          <p className="text-xs text-slate-500 font-mono mb-6">Click any preset to load and listen in {currentLanguage.native}.</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {PRESET_PHRASES.map((phrase, idx) => (
-              <div key={idx} className="med-card p-6 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase text-emerald-700 font-bold mb-2">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    Preset #{idx + 1}
+              <div key={idx} className="doppel-shell flex flex-col justify-between">
+                <div className="doppel-core p-6 flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-emerald-800 font-bold mb-2">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Preset #{idx + 1}</span>
+                    </div>
+                    <h3 className="text-base font-extrabold text-slate-900 font-headline mb-2">{phrase.title}</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-4 bg-slate-50 p-3 rounded-2xl border border-slate-200/80 font-normal">
+                      "{phrase.text}"
+                    </p>
                   </div>
-                  <h3 className="text-base font-bold text-slate-900 mb-2">{phrase.title}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                    "{phrase.text}"
-                  </p>
-                </div>
 
-                <div className="pt-3 border-t border-slate-100">
-                  <button
-                    onClick={() => handleApplyPreset(phrase)}
-                    className="w-full btn-med-secondary text-xs flex items-center justify-center gap-1.5 cursor-pointer hover:border-emerald-300"
-                  >
-                    <Volume2 className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Speak in {currentLanguage.native}</span>
-                  </button>
+                  <div className="pt-3 border-t border-slate-100">
+                    <button
+                      onClick={() => handleApplyPreset(phrase)}
+                      className="w-full btn-island-secondary text-xs py-2 px-3 flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <Volume2 className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Speak in {currentLanguage.native}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

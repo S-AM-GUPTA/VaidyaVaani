@@ -132,7 +132,7 @@ const LabDecoderPage = () => {
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-600 selection:text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-grow w-full max-w-[1280px] mx-auto px-6 lg:px-12 py-10">
+      <main className="flex-grow w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-10 text-left">
         
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
@@ -144,7 +144,7 @@ const LabDecoderPage = () => {
             <span>Back</span>
           </button>
 
-          <div className="med-badge font-mono">
+          <div className="haptic-badge bg-emerald-50 text-emerald-800 border border-emerald-200">
             <Activity className="w-3.5 h-3.5" />
             <span>NABL Pathology Diagnostic Matrix</span>
           </div>
@@ -152,151 +152,161 @@ const LabDecoderPage = () => {
 
         {/* Header */}
         <div className="max-w-3xl mb-12">
-          <div className="text-xs font-mono uppercase text-emerald-700 font-bold mb-2">Pathology Biomarker Intelligence</div>
+          <div className="text-[11px] font-mono uppercase text-emerald-700 font-bold mb-2">Pathology Biomarker Intelligence</div>
           <h1 className="font-headline text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Lab Report Diagnostic & Biomarker Decoder
           </h1>
-          <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed font-normal">
             Translate complex pathology blood test values into clear clinical understanding, normal reference ranges, and actionable physician lifestyle guidance.
           </p>
         </div>
 
         {/* =========================================================
-            INTERACTIVE LIVE BIOMARKER DECODER TOOL
+            INTERACTIVE LIVE BIOMARKER DECODER TOOL (DOPPELRAND)
             ========================================================= */}
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 mb-16">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-emerald-700 font-bold mb-3">
-            <Sliders className="w-4 h-4 text-emerald-600" />
-            Interactive Blood Test Diagnostic Simulator
-          </div>
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">
-            Input Your Pathology Test Value
-          </h2>
-
-          {/* Biomarker Selector Tabs */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            <button
-              onClick={() => {
-                setSelectedBiomarkerKey('glucose');
-                setTestValue(115);
-              }}
-              className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
-                selectedBiomarkerKey === 'glucose' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              Fasting Glucose (Sugar)
-            </button>
-            <button
-              onClick={() => {
-                setSelectedBiomarkerKey('hba1c');
-                setTestValue(6.1);
-              }}
-              className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
-                selectedBiomarkerKey === 'hba1c' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              HbA1c (3-Month Avg)
-            </button>
-            <button
-              onClick={() => {
-                setSelectedBiomarkerKey('ldl');
-                setTestValue(135);
-              }}
-              className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
-                selectedBiomarkerKey === 'ldl' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              LDL Cholesterol (Lipid)
-            </button>
-            <button
-              onClick={() => {
-                setSelectedBiomarkerKey('creatinine');
-                setTestValue(1.3);
-              }}
-              className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
-                selectedBiomarkerKey === 'creatinine' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              Serum Creatinine (Kidney)
-            </button>
-          </div>
-
-          {/* Value Slider & Controls */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-8">
+        <div className="doppel-shell mb-16 shadow-md">
+          <div className="doppel-core p-6 sm:p-10 space-y-6">
             
-            <div className="lg:col-span-6 bg-slate-50 p-6 rounded-2xl border border-slate-200">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-xs font-mono font-bold uppercase text-slate-500">
-                  {currentBio.name} Value:
-                </span>
-                <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">
-                  {testValue} <span className="text-sm text-slate-500 font-normal">{currentBio.unit}</span>
-                </span>
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase text-emerald-800 font-bold">
+                <Sliders className="w-4 h-4 text-emerald-600" />
+                <span>Interactive Blood Test Diagnostic Simulator</span>
               </div>
-
-              <input 
-                type="range"
-                min={selectedBiomarkerKey === 'hba1c' ? '3.5' : selectedBiomarkerKey === 'creatinine' ? '0.4' : '40'}
-                max={selectedBiomarkerKey === 'hba1c' ? '12.0' : selectedBiomarkerKey === 'creatinine' ? '4.0' : '300'}
-                step={selectedBiomarkerKey === 'hba1c' ? '0.1' : selectedBiomarkerKey === 'creatinine' ? '0.1' : '1'}
-                value={testValue}
-                onChange={(e) => setTestValue(Number(e.target.value))}
-                className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
-              />
-
-              <div className="flex justify-between text-[11px] font-mono text-slate-400 mt-2 font-bold">
-                <span>Standard Range: {currentBio.normalMin} – {currentBio.normalMax} {currentBio.unit}</span>
-              </div>
-
-              {/* Sample Presets */}
-              <div className="mt-4 pt-4 border-t border-slate-200 flex flex-wrap gap-2">
-                <span className="text-[11px] font-mono text-slate-500 self-center font-bold">Presets:</span>
-                <button
-                  onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 88 : selectedBiomarkerKey === 'hba1c' ? 5.2 : selectedBiomarkerKey === 'ldl' ? 85 : 0.9)}
-                  className="text-[11px] font-mono px-2 py-1 bg-white border border-slate-200 rounded text-emerald-700 hover:bg-emerald-50 cursor-pointer"
-                >
-                  Optimal Normal
-                </button>
-                <button
-                  onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 112 : selectedBiomarkerKey === 'hba1c' ? 6.1 : selectedBiomarkerKey === 'ldl' ? 122 : 1.4)}
-                  className="text-[11px] font-mono px-2 py-1 bg-white border border-slate-200 rounded text-amber-700 hover:bg-amber-50 cursor-pointer"
-                >
-                  Borderline / Mild
-                </button>
-                <button
-                  onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 168 : selectedBiomarkerKey === 'hba1c' ? 8.4 : selectedBiomarkerKey === 'ldl' ? 175 : 2.4)}
-                  className="text-[11px] font-mono px-2 py-1 bg-white border border-slate-200 rounded text-rose-700 hover:bg-rose-50 cursor-pointer"
-                >
-                  High / Alert
-                </button>
-              </div>
+              <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full">
+                Live Evaluation
+              </span>
             </div>
 
-            {/* Analysis Result Card */}
-            <div className="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-md">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+            {/* Biomarker Selector Tabs */}
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => {
+                  setSelectedBiomarkerKey('glucose');
+                  setTestValue(115);
+                }}
+                className={`px-4 py-2 rounded-full text-xs font-bold font-headline transition-all cursor-pointer ${
+                  selectedBiomarkerKey === 'glucose' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                Fasting Glucose (Sugar)
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedBiomarkerKey('hba1c');
+                  setTestValue(6.1);
+                }}
+                className={`px-4 py-2 rounded-full text-xs font-bold font-headline transition-all cursor-pointer ${
+                  selectedBiomarkerKey === 'hba1c' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                HbA1c (3-Month Avg)
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedBiomarkerKey('ldl');
+                  setTestValue(135);
+                }}
+                className={`px-4 py-2 rounded-full text-xs font-bold font-headline transition-all cursor-pointer ${
+                  selectedBiomarkerKey === 'ldl' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                LDL Cholesterol (Lipid)
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedBiomarkerKey('creatinine');
+                  setTestValue(1.3);
+                }}
+                className={`px-4 py-2 rounded-full text-xs font-bold font-headline transition-all cursor-pointer ${
+                  selectedBiomarkerKey === 'creatinine' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                Serum Creatinine (Kidney)
+              </button>
+            </div>
+
+            {/* Value Slider & Controls */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-2">
+              
+              <div className="lg:col-span-6 bg-slate-50 p-6 rounded-3xl border border-slate-200 flex flex-col justify-between shadow-xs">
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-slate-400 font-bold">Pathology Evaluation</span>
-                  <h3 className="text-lg font-bold text-slate-900">{evalResult.label}</h3>
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-xs font-mono font-bold uppercase text-slate-500">
+                      {currentBio.name} Value:
+                    </span>
+                    <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">
+                      {testValue} <span className="text-sm text-slate-500 font-normal">{currentBio.unit}</span>
+                    </span>
+                  </div>
+
+                  <input 
+                    type="range"
+                    min={selectedBiomarkerKey === 'hba1c' ? '3.5' : selectedBiomarkerKey === 'creatinine' ? '0.4' : '40'}
+                    max={selectedBiomarkerKey === 'hba1c' ? '12.0' : selectedBiomarkerKey === 'creatinine' ? '4.0' : '300'}
+                    step={selectedBiomarkerKey === 'hba1c' ? '0.1' : selectedBiomarkerKey === 'creatinine' ? '0.1' : '1'}
+                    value={testValue}
+                    onChange={(e) => setTestValue(Number(e.target.value))}
+                    className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                  />
+
+                  <div className="flex justify-between text-[11px] font-mono text-slate-400 mt-2 font-bold">
+                    <span>Standard Range: {currentBio.normalMin} – {currentBio.normalMax} {currentBio.unit}</span>
+                  </div>
                 </div>
 
-                <button
-                  onClick={handleSpeakAnalysis}
-                  className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 hover:text-emerald-700 flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
-                >
-                  {isSpeaking ? <VolumeX className="w-3.5 h-3.5 text-rose-500" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-600" />}
-                  <span>{isSpeaking ? 'Stop Audio' : 'Listen Report'}</span>
-                </button>
+                {/* Quick Presets */}
+                <div className="mt-6 pt-4 border-t border-slate-200 flex flex-wrap gap-2">
+                  <span className="text-[11px] font-mono text-slate-500 self-center font-bold">Presets:</span>
+                  <button
+                    onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 88 : selectedBiomarkerKey === 'hba1c' ? 5.2 : selectedBiomarkerKey === 'ldl' ? 85 : 0.9)}
+                    className="text-[11px] font-mono px-3 py-1 bg-white border border-slate-200 rounded-full text-emerald-700 hover:bg-emerald-50 cursor-pointer transition-colors"
+                  >
+                    Optimal Normal
+                  </button>
+                  <button
+                    onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 112 : selectedBiomarkerKey === 'hba1c' ? 6.1 : selectedBiomarkerKey === 'ldl' ? 122 : 1.4)}
+                    className="text-[11px] font-mono px-3 py-1 bg-white border border-slate-200 rounded-full text-amber-700 hover:bg-amber-50 cursor-pointer transition-colors"
+                  >
+                    Borderline / Mild
+                  </button>
+                  <button
+                    onClick={() => setTestValue(selectedBiomarkerKey === 'glucose' ? 168 : selectedBiomarkerKey === 'hba1c' ? 8.4 : selectedBiomarkerKey === 'ldl' ? 175 : 2.4)}
+                    className="text-[11px] font-mono px-3 py-1 bg-white border border-slate-200 rounded-full text-rose-700 hover:bg-rose-50 cursor-pointer transition-colors"
+                  >
+                    High / Alert
+                  </button>
+                </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                {evalResult.explanation}
-              </p>
+              {/* Analysis Result Card */}
+              <div className="lg:col-span-6 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+                    <div>
+                      <span className="text-[10px] font-mono uppercase text-slate-400 font-bold">Pathology Evaluation</span>
+                      <h3 className="text-xl font-extrabold text-slate-900 font-headline">{evalResult.label}</h3>
+                    </div>
 
-              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-900">
-                <div className="font-bold uppercase text-[11px] font-mono mb-0.5">Clinical & Lifestyle Advisory:</div>
-                <p>{evalResult.lifestyleTip}</p>
+                    <button
+                      onClick={handleSpeakAnalysis}
+                      className="px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 hover:text-emerald-700 flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      {isSpeaking ? <VolumeX className="w-3.5 h-3.5 text-rose-500" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-600" />}
+                      <span>{isSpeaking ? 'Stop Audio' : 'Listen Report'}</span>
+                    </button>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 font-normal">
+                    {evalResult.explanation}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 text-xs sm:text-sm text-emerald-900">
+                  <div className="font-bold uppercase text-[10px] font-mono text-emerald-800 mb-1">Clinical & Lifestyle Advisory:</div>
+                  <p className="leading-relaxed">{evalResult.lifestyleTip}</p>
+                </div>
               </div>
+
             </div>
 
           </div>
@@ -305,10 +315,10 @@ const LabDecoderPage = () => {
         {/* =========================================================
             PATHOLOGY LAB REFERENCE CATALOG
             ========================================================= */}
-        <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-slate-900">Diagnostic Blood Marker Reference Catalog</h2>
-            <p className="text-xs text-slate-500">Standardized clinical norms & diagnostic alert criteria.</p>
+            <h2 className="text-2xl font-extrabold text-slate-900 font-headline">Diagnostic Blood Marker Reference Catalog</h2>
+            <p className="text-xs text-slate-500 font-mono">Standardized clinical norms & diagnostic alert criteria.</p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
@@ -319,14 +329,14 @@ const LabDecoderPage = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Filter blood tests..."
-                className="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 w-48 sm:w-60"
+                className="pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-full text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 w-48 sm:w-60 shadow-xs"
               />
             </div>
 
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-700 focus:outline-none focus:border-emerald-500"
+              className="bg-white border border-slate-200 rounded-full px-4 py-2 text-xs font-mono text-slate-700 focus:outline-none focus:border-emerald-500 shadow-xs cursor-pointer"
             >
               <option value="all">All Departments</option>
               <option value="Diabetes">Diabetes / Endocrinology</option>
@@ -337,41 +347,43 @@ const LabDecoderPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCatalog.map((item, idx) => (
-            <div key={idx} className="med-card p-6 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-[11px] font-mono font-bold text-slate-400 uppercase">{item.category}</span>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                    Normal: {item.normalRange} {item.unit}
-                  </span>
-                </div>
-
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.name}</h3>
-
-                <div className="space-y-2 text-xs text-slate-600 mb-4">
-                  <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-                    <strong>Elevated Indicator:</strong> {item.elevatedRisk}
+            <div key={idx} className="doppel-shell flex flex-col justify-between">
+              <div className="doppel-core p-6 flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">{item.category}</span>
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                      Normal: {item.normalRange} {item.unit}
+                    </span>
                   </div>
-                  <p className="text-slate-500 leading-relaxed">{item.clinicalNote}</p>
-                </div>
-              </div>
 
-              <div className="pt-3 border-t border-slate-100">
-                <button
-                  onClick={() => {
-                    if (item.name.includes('Glucose')) handleLoadPreset('glucose', 110);
-                    else if (item.name.includes('HbA1c')) handleLoadPreset('hba1c', 6.0);
-                    else if (item.name.includes('LDL')) handleLoadPreset('ldl', 130);
-                    else if (item.name.includes('Creatinine')) handleLoadPreset('creatinine', 1.3);
-                    window.scrollTo({ top: 200, behavior: 'smooth' });
-                  }}
-                  className="w-full btn-med-secondary text-xs flex items-center justify-center gap-1 cursor-pointer"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Test in Simulator</span>
-                </button>
+                  <h3 className="text-lg font-extrabold text-slate-900 font-headline mb-2">{item.name}</h3>
+
+                  <div className="space-y-2 text-xs text-slate-600 mb-4">
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                      <strong className="text-slate-800">Elevated Indicator:</strong> {item.elevatedRisk}
+                    </div>
+                    <p className="text-slate-500 text-[11px] leading-relaxed pt-1">{item.clinicalNote}</p>
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100">
+                  <button
+                    onClick={() => {
+                      if (item.name.includes('Glucose')) handleLoadPreset('glucose', 110);
+                      else if (item.name.includes('HbA1c')) handleLoadPreset('hba1c', 6.0);
+                      else if (item.name.includes('LDL')) handleLoadPreset('ldl', 130);
+                      else if (item.name.includes('Creatinine')) handleLoadPreset('creatinine', 1.3);
+                      window.scrollTo({ top: 200, behavior: 'smooth' });
+                    }}
+                    className="w-full btn-island-secondary text-xs py-2 px-3 flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Test in Simulator</span>
+                  </button>
+                </div>
               </div>
             </div>
           ))}

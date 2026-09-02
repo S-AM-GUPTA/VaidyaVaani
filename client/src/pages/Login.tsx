@@ -17,6 +17,7 @@ import {
   EyeOff,
   User,
   MapPin,
+  Sparkles,
   FileCheck2
 } from 'lucide-react';
 import Logo from '../components/Logo';
@@ -187,6 +188,12 @@ const Login = () => {
 
         {/* Center Card */}
         <div className="my-auto w-full max-w-lg mx-auto">
+          
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider mb-4 border border-emerald-300/80">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            Zero-Knowledge Personal Health Vault
+          </div>
+
           <h1 className="font-headline text-3xl xl:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
             Smart Medicine Savings & Multi-Doctor Safety for Everyone
           </h1>
@@ -247,14 +254,15 @@ const Login = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="w-full max-w-lg mx-auto bg-white/90 backdrop-blur-lg p-7 sm:p-10 rounded-3xl border border-slate-200/90 shadow-xl"
+          className="w-full max-w-lg mx-auto doppel-shell shadow-2xl"
         >
-          {/* Header */}
-          <div className="mb-6 text-left">
-            <div className="med-badge mb-2 font-mono">
-              <HeartPulse className="w-3.5 h-3.5" />
-              User Access
-            </div>
+          <div className="doppel-core p-7 sm:p-10">
+            {/* Header */}
+            <div className="mb-6 text-left">
+              <div className="haptic-badge bg-emerald-50 text-emerald-800 border border-emerald-200 mb-2">
+                <HeartPulse className="w-3.5 h-3.5" />
+                <span>Secure User Access</span>
+              </div>
             
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
               {authMode === 'login' ? 'Sign In to Your Account' : 'Create Your Free Account'}
@@ -687,10 +695,11 @@ const Login = () => {
 
           {/* Footnote */}
           <p className="text-[11px] text-center text-slate-400 mt-6 leading-relaxed">
-            Your personal health records are encrypted and protected with bank-grade privacy standards.
+            Your personal health records are protected with privacy-first standards.
           </p>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
+    </div>
 
     </div>
   );
