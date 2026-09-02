@@ -2,48 +2,37 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Globe, 
-  ChevronDown, 
-  User, 
-  LogOut, 
-  Check, 
+  Sun, 
+  Moon, 
   Menu, 
   X, 
-  Pill, 
-  Activity, 
-  ShieldCheck, 
+  User, 
+  LogOut, 
   LayoutDashboard,
-  ArrowRight
+  ChevronDown
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { useLanguage, LANGUAGES } from '../../context/LanguageContext';
-import Logo from '../Logo';
 
 interface NavbarProps {
   onOpenUpload?: (type: 'prescriptions' | 'reports') => void;
+  onOpenSearch?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = () => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, logout, user } = useAuth();
-  const { currentLanguage, setLanguage } = useLanguage();
   
   const userDisplayName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : 'User'));
   
-  const [isLangOpen, setIsLangOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const langRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (langRef.current && !langRef.current.contains(event.target as Node)) {
-        setIsLangOpen(false);
-      }
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setIsProfileOpen(false);
       }
@@ -54,6 +43,12 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
   const handleNavClick = (anchorId: string) => {
     setIsMobileMenuOpen(false);
+    if (anchorId === '#generic-finder') {
+      if (onOpenSearch) {
+        onOpenSearch();
+        return;
+      }
+    }
     if (location.pathname !== '/' && location.pathname !== '/home') {
       navigate('/' + anchorId);
       setTimeout(() => {
@@ -78,179 +73,107 @@ export const Navbar: React.FC<NavbarProps> = () => {
   };
 
   return (
-    <header className="sticky top-3 sm:top-4 z-50 max-w-[1240px] mx-auto px-3 sm:px-6 w-full transition-all duration-300">
-      <div className="bg-white/90 backdrop-blur-xl border border-slate-200/90 rounded-full px-4 sm:px-6 py-2.5 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100/90 w-full transition-all">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
         
-        {/* Brand Logo */}
-        <div className="flex items-center gap-6 lg:gap-8">
-          <Logo to={isAuthenticated ? "/dashboard" : "/"} size="md" />
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
-            {!isAuthenticated ? (
-              <>
-                <button 
-                  onClick={() => handleNavClick('#features')}
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100/80 transition-all cursor-pointer"
-                >
-                  Product
-                </button>
-                <button 
-                  onClick={() => handleNavClick('#how-it-works')}
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100/80 transition-all cursor-pointer"
-                >
-                  How it Works
-                </button>
-                <button 
-                  onClick={() => handleNavClick('#prescription-reader')}
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100/80 transition-all cursor-pointer"
-                >
-                  Prescription Reader
-                </button>
-                <button 
-                  onClick={() => handleNavClick('#reports')}
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100/80 transition-all cursor-pointer"
-                >
-                  Reports
-                </button>
-                <button 
-                  onClick={() => handleNavClick('#safety')}
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100/80 transition-all cursor-pointer"
-                >
-                  Safety
-                </button>
-              </>
-            ) : (
-              <>
-                <Link 
-                  to="/dashboard"
-                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
-                    location.pathname === '/dashboard' 
-                      ? 'text-emerald-800 bg-emerald-100/80 shadow-xs' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
-                  }`}
-                >
-                  <LayoutDashboard className="w-3.5 h-3.5" />
-                  <span>Health Vault</span>
-                </Link>
-                <Link 
-                  to="/services"
-                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
-                    location.pathname === '/services' 
-                      ? 'text-emerald-800 bg-emerald-100/80 shadow-xs' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
-                  }`}
-                >
-                  <Pill className="w-3.5 h-3.5" />
-                  <span>Prescriptions</span>
-                </Link>
-                <Link 
-                  to="/lab-decoder"
-                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
-                    location.pathname === '/lab-decoder' 
-                      ? 'text-emerald-800 bg-emerald-100/80 shadow-xs' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
-                  }`}
-                >
-                  <Activity className="w-3.5 h-3.5" />
-                  <span>Reports</span>
-                </Link>
-                <Link 
-                  to="/safety-matrix"
-                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
-                    location.pathname === '/safety-matrix' 
-                      ? 'text-emerald-800 bg-emerald-100/80 shadow-xs' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
-                  }`}
-                >
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>Safety</span>
-                </Link>
-              </>
-            )}
-          </nav>
-        </div>
-
-        {/* Right Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          
-          {/* Language Selector */}
-          <div className="relative" ref={langRef}>
-            <button 
-              onClick={() => setIsLangOpen(!isLangOpen)}
-              className="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100/80 hover:bg-slate-200/80 transition-colors border border-slate-200/80 cursor-pointer"
-              aria-label="Select Language"
-            >
-              <Globe className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{currentLanguage.native}</span>
-              <ChevronDown className="w-3 h-3 text-slate-400" />
-            </button>
-
-            <AnimatePresence>
-              {isLangOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute right-0 mt-2 w-52 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200 shadow-xl p-1.5 z-50 text-slate-800"
-                >
-                  <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5 border-b border-slate-100">
-                    Regional Languages
-                  </div>
-                  <div className="py-1 space-y-0.5">
-                    {LANGUAGES.map((lang) => (
-                      <button
-                        key={lang.code}
-                        onClick={() => {
-                          setLanguage(lang.code);
-                          setIsLangOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-1.5 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer ${
-                          currentLanguage.code === lang.code 
-                            ? 'bg-emerald-50 text-emerald-800 font-bold' 
-                            : 'hover:bg-slate-50 text-slate-700'
-                        }`}
-                      >
-                        <span>{lang.native} <span className="text-[10px] text-slate-400 font-normal">({lang.label})</span></span>
-                        {currentLanguage.code === lang.code && <Check className="w-3.5 h-3.5 text-emerald-600" />}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+        {/* Brand Logo with Botanical Leaf and Tagline */}
+        <Link to="/" className="flex items-center gap-3 select-none group text-left">
+          {/* Green Leaf Botanical Icon */}
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform">
+            <svg className="w-6 h-6 text-emerald-800" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A9.49 9.49 0 0 0 12 21c6.08 0 10-4.92 10-11 0-.6-.05-1.19-.14-1.77L20.5 7.6A9.9 9.9 0 0 0 17 8zm-4.7 10.7a7.6 7.6 0 0 1-3.2-1.7c1.7-3.6 3.6-6.2 8.7-7.9a8 8 0 0 1-5.5 9.6zM7.2 4.4a8 8 0 0 1 8.6 1.4c-4.3 1.5-6.8 3.8-8.2 6.9A7.8 7.8 0 0 1 7.2 4.4z"/>
+            </svg>
           </div>
 
-          {/* Authentication CTA */}
+          <div>
+            <span className="text-xl sm:text-2xl font-black font-headline tracking-tight text-slate-900 block leading-none">
+              VaidyaVaani
+            </span>
+            <span className="text-[10px] text-slate-500 font-medium tracking-wide block mt-1">
+              Clinical Intelligence. Trusted Information.
+            </span>
+          </div>
+        </Link>
+
+        {/* Center Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-7">
+          <Link 
+            to="/"
+            className={`text-xs font-semibold py-1 transition-colors relative ${
+              location.pathname === '/' || location.pathname === '/home'
+                ? 'text-slate-900 font-bold after:content-[""] after:absolute after:bottom-[-6px] after:left-0 after:right-0 after:h-[2.5px] after:bg-[#1a472a] after:rounded-full' 
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Home
+          </Link>
+
+          <button 
+            onClick={() => handleNavClick('#clinical-intelligence')}
+            className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+          >
+            Clinical Intelligence
+          </button>
+
+          <button 
+            onClick={() => handleNavClick('#generic-finder')}
+            className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+          >
+            Generic Salt Finder
+          </button>
+
+          <Link 
+            to="/regional-care"
+            className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+          >
+            Voice Vault
+          </Link>
+
+          <button 
+            onClick={() => handleNavClick('#about-us')}
+            className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+          >
+            About Us
+          </button>
+
+          <button 
+            onClick={() => handleNavClick('#resources')}
+            className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+          >
+            Resources
+          </button>
+        </nav>
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-3">
+          
+          {/* Theme Toggle Button */}
+          <button
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer"
+            aria-label="Toggle Theme"
+          >
+            {isDarkMode ? <Moon className="w-4 h-4 text-emerald-700" /> : <Sun className="w-4 h-4 text-amber-600" />}
+          </button>
+
+          {/* Authentication Action */}
           {!isAuthenticated ? (
-            <div className="hidden sm:flex items-center gap-2">
-              <Link
-                to="/login"
-                className="px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 rounded-full hover:bg-slate-100 transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/login"
-                className="btn-island-primary text-xs py-1.5 pl-3.5 pr-2 group cursor-pointer"
-              >
-                <span>Get Started</span>
-                <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                  <ArrowRight className="w-3 h-3 text-white" />
-                </span>
-              </Link>
-            </div>
+            <Link
+              to="/login"
+              className="bg-[#1a472a] hover:bg-[#143720] text-white px-5 py-2.5 rounded-lg text-xs font-bold tracking-wide transition-all shadow-xs cursor-pointer select-none"
+            >
+              Get Started
+            </Link>
           ) : (
             <div className="relative" ref={profileRef}>
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full border border-slate-200/90 hover:bg-slate-50 text-slate-800 text-xs font-semibold transition-colors cursor-pointer"
+                className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-800 text-xs font-semibold transition-colors cursor-pointer"
               >
-                <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold shadow-xs">
+                <div className="w-6 h-6 rounded-full bg-[#1a472a] text-white flex items-center justify-center text-xs font-bold shadow-xs">
                   {userDisplayName.charAt(0).toUpperCase()}
                 </div>
-                <span className="hidden md:inline max-w-[100px] truncate">{userDisplayName}</span>
+                <span className="hidden sm:inline max-w-[100px] truncate">{userDisplayName}</span>
                 <ChevronDown className="w-3 h-3 text-slate-400" />
               </button>
 
@@ -261,14 +184,14 @@ export const Navbar: React.FC<NavbarProps> = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.96 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-2 w-56 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200 shadow-xl p-1.5 z-50 text-slate-800"
+                    className="absolute right-0 mt-2 w-56 rounded-2xl bg-white border border-slate-200 shadow-xl p-1.5 z-50 text-slate-800"
                   >
-                    <div className="px-3 py-2 border-b border-slate-100">
+                    <div className="px-3 py-2 border-b border-slate-100 text-left">
                       <p className="text-xs font-bold text-slate-900">{userDisplayName}</p>
                       <p className="text-[11px] text-slate-400 truncate">{user?.email || 'Logged in'}</p>
                     </div>
 
-                    <div className="py-1 space-y-0.5">
+                    <div className="py-1 space-y-0.5 text-left">
                       <Link
                         to="/dashboard"
                         onClick={() => setIsProfileOpen(false)}
@@ -283,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                         className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-slate-700 hover:bg-slate-50 font-medium transition-colors"
                       >
                         <User className="w-4 h-4 text-slate-500" />
-                        <span>Profile & Records</span>
+                        <span>Profile & Settings</span>
                       </Link>
                     </div>
 
@@ -302,11 +225,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
             </div>
           )}
 
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
-            aria-label="Toggle Menu"
+            className="lg:hidden p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+            aria-label="Toggle Mobile Menu"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -315,118 +238,62 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            className="md:hidden mt-2 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-200/90 shadow-xl p-5 space-y-4"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden border-t border-slate-100 bg-white px-6 py-4 space-y-3 text-left"
           >
-            {!isAuthenticated ? (
-              <>
-                <div className="flex flex-col space-y-1">
-                  <button
-                    onClick={() => handleNavClick('#features')}
-                    className="text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                  >
-                    Product
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#how-it-works')}
-                    className="text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                  >
-                    How it Works
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#prescription-reader')}
-                    className="text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                  >
-                    Prescription Reader
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#reports')}
-                    className="text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                  >
-                    Reports
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('#safety')}
-                    className="text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                  >
-                    Safety
-                  </button>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
-                  <Link
-                    to="/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full text-center py-2.5 rounded-full text-sm font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full text-center py-2.5 rounded-full text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm"
-                  >
-                    Get Started
-                  </Link>
-                </div>
-              </>
-            ) : (
-              <div className="flex flex-col space-y-1">
-                <Link
-                  to="/dashboard"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                >
-                  <LayoutDashboard className="w-4 h-4 text-emerald-600" />
-                  <span>Health Vault</span>
-                </Link>
-                <Link
-                  to="/services"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                >
-                  <Pill className="w-4 h-4 text-emerald-600" />
-                  <span>Prescriptions</span>
-                </Link>
-                <Link
-                  to="/lab-decoder"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                >
-                  <Activity className="w-4 h-4 text-emerald-600" />
-                  <span>Lab Reports</span>
-                </Link>
-                <Link
-                  to="/safety-matrix"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                >
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <span>Medication Safety</span>
-                </Link>
-                <Link
-                  to="/profile"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                >
-                  <User className="w-4 h-4 text-slate-500" />
-                  <span>Profile & Vault Settings</span>
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-rose-600 hover:bg-rose-50 flex items-center gap-2 cursor-pointer"
-                >
-                  <LogOut className="w-4 h-4 text-rose-500" />
-                  <span>Sign Out</span>
-                </button>
-              </div>
-            )}
+            <Link
+              to="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-bold text-emerald-800 py-1"
+            >
+              Home
+            </Link>
+            <button
+              onClick={() => handleNavClick('#clinical-intelligence')}
+              className="block text-xs font-semibold text-slate-700 py-1"
+            >
+              Clinical Intelligence
+            </button>
+            <button
+              onClick={() => handleNavClick('#generic-finder')}
+              className="block text-xs font-semibold text-slate-700 py-1"
+            >
+              Generic Salt Finder
+            </button>
+            <Link
+              to="/regional-care"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-semibold text-slate-700 py-1"
+            >
+              Voice Vault
+            </Link>
+            <button
+              onClick={() => handleNavClick('#about-us')}
+              className="block text-xs font-semibold text-slate-700 py-1"
+            >
+              About Us
+            </button>
+            <button
+              onClick={() => handleNavClick('#resources')}
+              className="block text-xs font-semibold text-slate-700 py-1"
+            >
+              Resources
+            </button>
+            <div className="pt-2 border-t border-slate-100">
+              <Link
+                to="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block text-center bg-[#1a472a] text-white py-2.5 rounded-lg text-xs font-bold"
+              >
+                Get Started
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
