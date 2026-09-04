@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import { LanguageSelector } from '../components/LanguageSelector';
 import Uploader from '../components/Uploader';
 
 export const LabDecoderPage: React.FC = () => {
@@ -113,6 +114,8 @@ export const LabDecoderPage: React.FC = () => {
 
           {/* Right Action Controls */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <LanguageSelector variant="compact" />
+
             <button
               onClick={() => handlePlayVoice("नमस्ते रमेश कुमार। आपकी 14 अक्टूबर की लाल पैथलैब्स की रिपोर्ट में मुख्य निष्कर्ष यह है: आपका तीन महीने का औसत शुगर HbA1c 8.2 प्रतिशत है जो अनियंत्रित है। आपके गुर्दे और सीरम क्रिएटिनिन 1.05 पूरी तरह सुरक्षित हैं। कोलेस्ट्रॉल 232 थोड़ा बढ़ा हुआ है।")}
               className="bg-[#002f6c] hover:bg-[#001f4c] text-white text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"

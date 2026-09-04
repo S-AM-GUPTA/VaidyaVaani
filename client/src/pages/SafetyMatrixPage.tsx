@@ -16,10 +16,13 @@ import {
   Share2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
+import { LanguageSelector } from '../components/LanguageSelector';
 import Uploader from '../components/Uploader';
 
 export const SafetyMatrixPage: React.FC = () => {
   const { user } = useAuth();
+  const { currentLanguage } = useLanguage();
 
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [selectedLangAudio, setSelectedLangAudio] = useState<'hi' | 'bho' | 'en'>('hi');
@@ -44,7 +47,7 @@ export const SafetyMatrixPage: React.FC = () => {
     setSelectedLangAudio(lang);
     const text = audioTexts[lang];
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === 'en' ? 'en-IN' : 'hi-IN';
+    utterance.lang = currentLanguage.speechCode || (lang === 'en' ? 'en-IN' : 'hi-IN');
     utterance.rate = 0.92;
     utterance.onstart = () => setIsPlayingAudio(true);
     utterance.onend = () => setIsPlayingAudio(false);
@@ -112,6 +115,8 @@ RECOMMENDED ACTION: Withhold Combiflam; switch to Paracetamol 500mg alone or top
 
           {/* Right Action Controls */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <LanguageSelector variant="compact" />
+
             <button
               onClick={() => handlePlayVoice('hi')}
               className="bg-[#002f6c] hover:bg-[#001f4c] text-white text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"

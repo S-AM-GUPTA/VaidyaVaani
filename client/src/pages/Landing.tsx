@@ -16,12 +16,15 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage, LANGUAGES } from '../context/LanguageContext';
+import { LanguageSelector } from '../components/LanguageSelector';
+import { getLandingContent } from '../locales/landingTranslations';
 import Uploader from '../components/Uploader';
 
 export const Landing: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout, user } = useAuth();
-  const { currentLanguage, setLanguage } = useLanguage();
+  const { currentLanguage, setLanguage, speakText } = useLanguage();
+  const txt = getLandingContent(currentLanguage.code);
 
   const isHi = currentLanguage.code === 'hi' || currentLanguage.code === 'bn' || currentLanguage.code === 'ta' || currentLanguage.code === 'te' || currentLanguage.code === 'mr' || currentLanguage.code === 'gu';
   const userDisplayName = user?.displayName || (user?.email ? user.email.split('@')[0] : (user?.phoneNumber ? user.phoneNumber : 'User'));
@@ -35,24 +38,9 @@ export const Landing: React.FC = () => {
   // Hidden camera input
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  // Voice Synthesizer State
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-
-  const handleSpeak = (text: string) => {
-    if (!('speechSynthesis' in window)) return;
-    if (isPlayingAudio) {
-      window.speechSynthesis.cancel();
-      setIsPlayingAudio(false);
-      return;
-    }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = currentLanguage.speechCode || 'hi-IN';
-    utterance.rate = 0.95;
-    utterance.onstart = () => setIsPlayingAudio(true);
-    utterance.onend = () => setIsPlayingAudio(false);
-    utterance.onerror = () => setIsPlayingAudio(false);
-    window.speechSynthesis.speak(utterance);
+  const handleSpeak = (text?: string) => {
+    const textToSpeak = text || txt.voiceSummaryText;
+    speakText(textToSpeak);
   };
 
   const handleCopyNote = (text: string, noteId: string) => {
@@ -176,15 +164,15 @@ export const Landing: React.FC = () => {
 
           {/* Right Action Controls */}
           <div className="flex items-center gap-2 sm:gap-3">
-            
+            <LanguageSelector variant="header" />
             <button
               onClick={() => {
                 setUploadType('prescriptions');
                 setIsUploadDrawerOpen(true);
               }}
-              className="bg-[#00221b] hover:bg-[#0e382f] text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+              className="bg-[#00221b] hover:bg-[#0e382f] text-white text-xs sm:text-sm font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
             >
-              <span>{isHi ? "📊 अपनी पर्ची या रिपोर्ट जांचें" : "📊 Check Prescription or Lab Report"}</span>
+              <span>📊 {txt.ctaUpload}</span>
             </button>
 
             {/* Profile Avatar / Auth */}
@@ -247,39 +235,22 @@ export const Landing: React.FC = () => {
         <section className="text-center max-w-4xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#e8f5e9] text-[#1b5e20] font-bold text-xs border border-[#c8e6c9]">
             <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-            <span>
-              {isHi 
-                ? "भारत का पहला निष्पक्ष AI • 100% मुफ़्त एवं सुरक्षित (Free for All Citizens)" 
-                : "India's First Unbiased Health AI • 100% Free & Secure for All Citizens"}
-            </span>
+            <span>{txt.taglineBadge}</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.18] font-headline">
-            {isHi ? (
-              <>
-                हर रिपोर्ट का सरल अर्थ, हर दवा की सुरक्षा —{' '}
-                <span className="text-[#0284c7]">आपकी अपनी भाषा में</span>
-              </>
-            ) : (
-              <>
-                Understand Every Lab Report, Stay Safe from Every Drug Clash —{' '}
-                <span className="text-[#0284c7]">In Your Language</span>
-              </>
-            )}
+            {txt.heroHeadline}{' '}
+            <span className="text-[#0284c7]">{txt.heroHighlight}</span>
           </h1>
 
           <div className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto space-y-1 font-normal leading-relaxed">
-            <p>
-              {isHi 
-                ? "जटिल मेडिकल रिपोर्ट को रोजमर्रा की सरल भाषा में समझें। अगर दो डॉक्टरों की दवाएं आपस में टकरा रही हों या ओवरडोज हो रही हों, तो तुरंत अलर्ट पाएं।"
-                : "Translates dense medical diagnostics into clear, everyday language. Automatically flags duplicate medicines, overdose hazards, and interactions across multiple prescriptions."}
-            </p>
+            <p>{txt.heroSubtitle}</p>
           </div>
 
           {/* Language Selector Pills */}
           <div className="pt-2 flex items-center justify-center flex-wrap gap-2 text-xs">
             <span className="text-slate-500 font-semibold">
-              {isHi ? "अपनी भाषा चुनें (Choose Language):" : "Choose Language (अपनी भाषा चुनें):"}
+              🌐 {currentLanguage.label}:
             </span>
             {LANGUAGES.map((lang) => (
               <button
@@ -291,7 +262,7 @@ export const Landing: React.FC = () => {
                     : 'bg-white border border-slate-200 text-slate-700 hover:border-slate-400'
                 }`}
               >
-                {lang.native} {lang.code === 'hi' ? '(Hindi)' : lang.code === 'en' ? '(English)' : ''}
+                {lang.native} ({lang.label})
               </button>
             ))}
           </div>
@@ -308,18 +279,16 @@ export const Landing: React.FC = () => {
                   🧪
                 </div>
                 <span className="px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold font-mono">
-                  {isHi ? "100% निष्पक्ष (Biomarker Engine)" : "100% Unbiased (Biomarker Engine)"}
+                  {txt.feature1Badge}
                 </span>
               </div>
 
               <div>
                 <h3 className="text-xl font-black text-slate-900 font-headline">
-                  {isHi ? "स्मार्ट लैब रिपोर्ट विश्लेषक" : "Smart Lab Report Analyzer"}
+                  {txt.feature1Title}
                 </h3>
                 <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                  {isHi 
-                    ? "Sugar (HbA1c), CBC, Lipid व KFT की जटिल मेडिकल रिपोर्ट को रंगीन संकेतकों और सरल हिंदी ऑडियो व भाषा में समझें।"
-                    : "Understand complex Sugar (HbA1c), CBC, Lipid & KFT diagnostics with color-coded gauges and plain vernacular audio."}
+                  {txt.feature1Desc}
                 </p>
               </div>
 
@@ -327,10 +296,10 @@ export const Landing: React.FC = () => {
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
                 <div className="flex justify-between items-center font-bold">
                   <span className="text-slate-700 font-mono">
-                    {isHi ? "HbA1c 3-महीने का औसत शुगर:" : "HbA1c 3-Month Average Glucose:"}
+                    {txt.sampleHbA1c}:
                   </span>
                   <span className="text-rose-700 font-black font-mono">
-                    {isHi ? "8.2% अनियंत्रित (High) 🔴" : "8.2% Uncontrolled (High) 🔴"}
+                    8.2% 🔴
                   </span>
                 </div>
                 
@@ -345,10 +314,7 @@ export const Landing: React.FC = () => {
                 </div>
 
                 <p className="text-[11px] text-slate-500 pt-1">
-                  💡 <strong>{isHi ? "सरल अर्थ:" : "Simple Summary:"}</strong>{' '}
-                  {isHi 
-                    ? "आपका शुगर अनियंत्रित है। तुरंत डॉक्टर से मिलकर दवा एडजस्ट करवाएं।"
-                    : "Your glucose level is uncontrolled. Consult your physician promptly for dosage adjustments."}
+                  💡 <strong>{txt.sampleHbA1cDesc}</strong>
                 </p>
               </div>
             </div>
@@ -362,14 +328,14 @@ export const Landing: React.FC = () => {
                 className="w-full bg-[#00221b] hover:bg-[#0e382f] text-white font-bold text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
               >
                 <Camera className="w-4 h-4" />
-                <span>{isHi ? "📷 लैब रिपोर्ट अपलोड करें (PDF/फोटो)" : "📷 Upload Lab Report (PDF/Photo)"}</span>
+                <span>📷 {txt.ctaUpload}</span>
               </button>
 
               <Link
                 to="/lab-decoder"
                 className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-1 transition-colors text-center"
               >
-                <span>{isHi ? "📊 रियल सैंपल रिपोर्ट देखें (Live Demo) →" : "📊 View Real Sample Report (Live Demo) →"}</span>
+                <span>{txt.feature1Cta}</span>
               </Link>
             </div>
           </div>
@@ -382,18 +348,16 @@ export const Landing: React.FC = () => {
                   💊
                 </div>
                 <span className="px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold font-mono">
-                  {isHi ? "दवा सुरक्षा चेतावनी (Safety Radar)" : "Drug Conflict Radar (Safety Radar)"}
+                  {txt.feature2Badge}
                 </span>
               </div>
 
               <div>
                 <h3 className="text-xl font-black text-slate-900 font-headline">
-                  {isHi ? "मल्टी-प्रिस्क्रिप्शन दवा रडार" : "Multi-Prescription Drug Radar"}
+                  {txt.feature2Title}
                 </h3>
                 <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                  {isHi 
-                    ? "अगर आप 2 अलग डॉक्टरों की पर्चियां खा रहे हैं, तो जांचिए कि कहीं एक ही साल्ट (एसिटामिनोफेन या दर्द निवारक) का खतरनाक ओवरडोज़ तो नहीं हो रहा!"
-                    : "If you take medicines from 2 different specialists, check if duplicate active salts (like Paracetamol or NSAIDs) are triggering dangerous accidental overdoses!"}
+                  {txt.feature2Desc}
                 </p>
               </div>
 
@@ -401,25 +365,22 @@ export const Landing: React.FC = () => {
               <div className="p-4 rounded-2xl bg-rose-50/50 border border-rose-200 space-y-2 text-xs">
                 <div className="text-rose-800 font-bold flex items-center gap-1 font-mono">
                   <AlertTriangle className="w-3.5 h-3.5" />
-                  <span>{isHi ? "संभावित टकराव और ओवरडोज़ (Duplicate Dose Found)" : "Potential Conflict & Overdose (Duplicate Dose Found)"}</span>
+                  <span>{txt.caseProblemTitle}</span>
                 </div>
                 
                 <div className="space-y-1 text-[11px] text-slate-700">
                   <div className="flex justify-between">
-                    <span>{isHi ? "डॉ. शर्मा (कार्डियोलॉजी): Crocin 650mg" : "Dr. Sharma (Cardio): Crocin 650mg"}</span>
-                    <strong className="font-mono">Paracetamol</strong>
+                    <span>Crocin 650mg TDS (Cardiology)</span>
+                    <strong className="font-mono">Paracetamol 650mg</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>{isHi ? "डॉ. वर्मा (ऑर्थोपेडिक्स): Combiflam" : "Dr. Verma (Ortho): Combiflam"}</span>
-                    <strong className="font-mono">Paracetamol + Ibuprofen</strong>
+                    <span>Combiflam TDS (Orthopedics)</span>
+                    <strong className="font-mono">Paracetamol 325mg + Ibuprofen</strong>
                   </div>
                 </div>
 
                 <p className="text-[11px] text-rose-700 font-semibold pt-1">
-                  ⚠️ <strong>{isHi ? "चेतावनी:" : "Warning:"}</strong>{' '}
-                  {isHi 
-                    ? "दोनों दवाओं में Paracetamol का दोहराव लिवर पर भारी नुकसान कर सकता है।"
-                    : "Duplicate Paracetamol across both slips poses severe acute liver injury risk."}
+                  ⚠️ <strong>{txt.caseSolutionAlert}</strong>
                 </p>
               </div>
             </div>
@@ -433,14 +394,14 @@ export const Landing: React.FC = () => {
                 className="w-full bg-[#00221b] hover:bg-[#0e382f] text-white font-bold text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
               >
                 <FileText className="w-4 h-4" />
-                <span>{isHi ? "📋 डॉक्टर का पर्चा अपलोड करें (Upload Slips)" : "📋 Upload Doctor Prescription Slips"}</span>
+                <span>📋 {txt.ctaUpload}</span>
               </button>
 
               <Link
                 to="/safety-matrix"
                 className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-1 transition-colors text-center"
               >
-                <span>{isHi ? "⚠️ लाइव दवा टकराव सिमुलेटर देखें →" : "⚠️ Open Drug Conflicts Simulator →"}</span>
+                <span>{txt.feature2Cta}</span>
               </Link>
             </div>
           </div>
@@ -454,19 +415,19 @@ export const Landing: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-left text-xs font-semibold text-slate-700">
             <div className="flex items-center gap-2.5">
               <span className="text-xl">🛡️</span>
-              <span>{isHi ? "100% सुरक्षित डेटा स्टोरेज (ABHA & ABDM)" : "100% Secure Isolated Storage (ABHA & ABDM)"}</span>
+              <span>{txt.pillar1Title}</span>
             </div>
             <div className="flex items-center gap-2.5">
               <span className="text-xl">🔊</span>
-              <span>{isHi ? "बुजुर्गों के लिए विशेष वॉइस सुविधा" : "Voice Playback for Elders & Caregivers"}</span>
+              <span>{txt.pillar4Title}</span>
             </div>
             <div className="flex items-center gap-2.5">
               <span className="text-xl">🏥</span>
-              <span>{isHi ? "एम्स व पीजीआई चिकित्सीय गाइडलाइन्स" : "AIIMS & PGI Clinical Guidelines"}</span>
+              <span>{txt.pillar2Title}</span>
             </div>
             <div className="flex items-center gap-2.5">
               <span className="text-xl">👥</span>
-              <span>{isHi ? "1,50,000+ भारतीय परिवारों का भरोसा" : "Trusted by 150,000+ Indian Families"}</span>
+              <span>{txt.trustedBy}</span>
             </div>
           </div>
         </section>
@@ -478,17 +439,13 @@ export const Landing: React.FC = () => {
           
           <div className="max-w-3xl space-y-1.5">
             <span className="text-xs font-mono uppercase font-bold text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200">
-              {isHi ? "वास्तविक मामलों की पड़ताल • Real Medical Conflict Case-Study" : "Real Medical Conflict Case-Study • वास्तविक मामलों की पड़ताल"}
+              {txt.caseBadge}
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-headline pt-1">
-              {isHi 
-                ? "दो अलग डॉक्टरों की दवाएं कभी-कभी अनजाने में नुकसान पहुँचा सकती हैं" 
-                : "Prescriptions from Two Different Doctors Can Silently Harm Your Health"}
+              {txt.caseTitle}
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              {isHi 
-                ? "भारत में 65% बुजुर्ग एक से अधिक डॉक्टरों (General Physician, Orthopedic, Cardiologist) से एक साथ इलाज करवाते हैं। बिना जानकारी के दवाइयों का आपस में टकराव जानलेवा हो सकता है।"
-                : "Over 65% of seniors in India consult multiple specialists concurrently. Without cross-auditing, uncoordinated drug combinations can cause severe liver or gastrointestinal injury."}
+              {txt.caseSubtitle}
             </p>
           </div>
 
