@@ -137,20 +137,13 @@ export const Landing: React.FC = () => {
       <header className="bg-white/95 sticky top-0 z-50 border-b border-slate-200/90 shadow-2xs backdrop-blur-md">
         <div className="flex justify-between items-center w-full px-4 sm:px-6 max-w-[1400px] mx-auto min-h-16 py-2.5 gap-3">
           
-          {/* Brand Logo */}
+          {/* Brand Original Logo */}
           <Link to="/" className="flex items-center gap-2.5 group select-none">
-            <div className="w-10 h-10 rounded-2xl bg-[#baeada] text-[#00221b] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
-              <ShieldCheck className="w-6 h-6 text-[#3b665a]" />
-            </div>
-            <div className="text-left">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xl font-black text-[#00221b] tracking-tight font-headline">VaidyaVaani</span>
-                <span className="text-sm font-bold text-[#3b665a]">वैद्यवाणी</span>
-              </div>
-              <p className="text-[10px] text-slate-400 font-medium -mt-0.5">
-                {isHi ? "सरल स्वास्थ्य साथी • Simple Health Companion" : "Simple Health Companion • सरल स्वास्थ्य साथी"}
-              </p>
-            </div>
+            <img
+              src="/logo/complete%20logo.png"
+              alt="VaidyaVaani वैद्यवाणी"
+              className="h-10 sm:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+            />
           </Link>
 
           {/* Navigation Links */}
@@ -1098,11 +1091,17 @@ export const Landing: React.FC = () => {
           ========================================================================= */}
       <footer className="border-t border-slate-200/80 bg-white text-slate-500 py-6 mt-12 text-xs">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div>
-            <span className="font-bold text-[#00221b]">VaidyaVaani वैद्यवाणी</span>
-            <p className="text-[11px] text-slate-400 mt-0.5">
-              © 2026 VaidyaVaani Healthcare Intelligence. Not a replacement for emergency clinical diagnosis. Emergency helpline: 108 / 112
-            </p>
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo/complete%20logo.png"
+              alt="VaidyaVaani"
+              className="h-8 w-auto object-contain"
+            />
+            <div>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                © 2026 VaidyaVaani Healthcare Intelligence. Not a replacement for emergency clinical diagnosis. Emergency helpline: 108 / 112
+              </p>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-[11px] text-slate-500 font-medium">
             <a href="tel:18002669900" className="hover:text-slate-900">

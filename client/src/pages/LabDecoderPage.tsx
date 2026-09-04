@@ -76,7 +76,14 @@ export const LabDecoderPage: React.FC = () => {
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 flex-wrap">
           
           {/* Left Tabs */}
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link to="/" className="flex items-center group select-none mr-1">
+              <img
+                src="/logo/complete%20logo.png"
+                alt="VaidyaVaani"
+                className="h-8 sm:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+              />
+            </Link>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#e8f5e9] text-[#1b5e20] text-xs font-bold border border-[#c8e6c9]">
               <ShieldCheck className="w-3.5 h-3.5 text-[#2e7d32]" />
               <span>ABDM / ABHA Connected</span>
@@ -900,11 +907,17 @@ export const LabDecoderPage: React.FC = () => {
           ========================================================================= */}
       <footer className="border-t border-slate-200/80 bg-white text-slate-500 py-6 mt-12 text-xs">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div>
-            <span className="font-bold text-[#00221b]">VaidyaVaani वैद्यवाणी</span>
-            <p className="text-[11px] text-slate-400 mt-0.5">
-              © 2026 VaidyaVaani Healthcare Intelligence. Not a replacement for emergency clinical diagnosis. Emergency helpline: 108 / 112
-            </p>
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo/complete%20logo.png"
+              alt="VaidyaVaani"
+              className="h-8 w-auto object-contain"
+            />
+            <div>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                © 2026 VaidyaVaani Healthcare Intelligence. Not a replacement for emergency clinical diagnosis. Emergency helpline: 108 / 112
+              </p>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-[11px] text-slate-500 font-medium">
             <a href="tel:18002669900" className="hover:text-slate-900">टोल फ्री सहायता (Help Desk)</a>

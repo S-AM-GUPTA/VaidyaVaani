@@ -85,23 +85,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100/90 w-full transition-all">
       <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
         
-        {/* Brand Logo with Botanical Leaf and Tagline */}
-        <Link to="/" className="flex items-center gap-3 select-none group text-left">
-          {/* Green Leaf Botanical Icon */}
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 border border-emerald-100 group-hover:scale-105 transition-transform shadow-2xs">
-            <svg className="w-6 h-6 text-emerald-800" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A9.49 9.49 0 0 0 12 21c6.08 0 10-4.92 10-11 0-.6-.05-1.19-.14-1.77L20.5 7.6A9.9 9.9 0 0 0 17 8zm-4.7 10.7a7.6 7.6 0 0 1-3.2-1.7c1.7-3.6 3.6-6.2 8.7-7.9a8 8 0 0 1-5.5 9.6zM7.2 4.4a8 8 0 0 1 8.6 1.4c-4.3 1.5-6.8 3.8-8.2 6.9A7.8 7.8 0 0 1 7.2 4.4z"/>
-            </svg>
-          </div>
-
-          <div>
-            <span className="text-xl sm:text-2xl font-black font-headline tracking-tight text-slate-900 block leading-none">
-              VaidyaVaani
-            </span>
-            <span className="text-[10px] text-slate-500 font-medium tracking-wide block mt-1">
-              Clinical Intelligence. Trusted Information.
-            </span>
-          </div>
+        {/* Brand Original Logo */}
+        <Link to="/" className="flex items-center gap-3 select-none group">
+          <img
+            src="/logo/complete%20logo.png"
+            alt="VaidyaVaani"
+            className="h-10 sm:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+          />
         </Link>
 
         {/* Center Desktop Navigation Links */}
