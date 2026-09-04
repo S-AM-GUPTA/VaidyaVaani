@@ -133,8 +133,30 @@ export const Landing: React.FC = () => {
             </div>
           </Link>
 
+          {/* Navigation Tabs (Lab Reports & Drug Conflicts) */}
+          <div className="flex items-center gap-1.5 bg-[#f1f3ff] p-1 rounded-full border border-slate-200 text-xs">
+            <Link
+              to="/"
+              className="px-3.5 py-1 rounded-full font-bold bg-[#00221b] text-white shadow-2xs"
+            >
+              Home
+            </Link>
+            <Link
+              to="/lab-decoder"
+              className="px-3.5 py-1 rounded-full font-semibold text-slate-700 hover:text-slate-900 hover:bg-white transition-colors"
+            >
+              Lab Reports (स्मार्ट रिपोर्ट)
+            </Link>
+            <Link
+              to="/safety-matrix"
+              className="px-3.5 py-1 rounded-full font-semibold text-slate-700 hover:text-slate-900 hover:bg-white transition-colors"
+            >
+              Drug Conflicts (दवा सुरक्षा)
+            </Link>
+          </div>
+
           {/* Language Pill Switcher with Globe Icon */}
-          <div className="hidden md:flex items-center bg-[#f1f3ff] border border-slate-200 rounded-full p-1 text-xs font-medium gap-1">
+          <div className="hidden lg:flex items-center bg-[#f1f3ff] border border-slate-200 rounded-full p-1 text-xs font-medium gap-1">
             <span className="flex items-center gap-1 pl-2 pr-1 text-slate-500 text-xs">
               <Globe className="w-4 h-4 text-[#3b665a]" />
             </span>
@@ -296,27 +318,36 @@ export const Landing: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-5 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => {
-                  setUploadType('reports');
-                  setIsUploadDrawerOpen(true);
-                }}
-                className="w-full bg-[#00221b] hover:bg-[#0e382f] text-white font-bold text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+            <div className="space-y-2 mt-6 pt-5 border-t border-slate-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUploadType('reports');
+                    setIsUploadDrawerOpen(true);
+                  }}
+                  className="w-full bg-[#00221b] hover:bg-[#0e382f] text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+                >
+                  <Camera className="w-4 h-4" />
+                  <span>Take Photo / Upload</span>
+                </button>
+                <a
+                  href="https://wa.me/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#ECFDF5] hover:bg-[#D1FAE5] border border-[#A7F3D0] text-[#065F46] font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all text-center"
+                >
+                  <MessageCircle className="w-4 h-4 text-[#059669]" />
+                  <span>Send on WhatsApp</span>
+                </a>
+              </div>
+
+              <Link
+                to="/lab-decoder"
+                className="w-full bg-[#002f6c] hover:bg-[#001f4c] text-white font-bold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-2xs"
               >
-                <Camera className="w-5 h-5" />
-                <span>Take Photo / Upload</span>
-              </button>
-              <a
-                href="https://wa.me/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-[#ECFDF5] hover:bg-[#D1FAE5] border border-[#A7F3D0] text-[#065F46] font-bold text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all text-center"
-              >
-                <MessageCircle className="w-5 h-5 text-[#059669]" />
-                <span>Send on WhatsApp</span>
-              </a>
+                <span>📊 Open Full Lab Report Screen (स्मार्ट रिपोर्ट देखें) →</span>
+              </Link>
             </div>
           </div>
 
@@ -355,26 +386,35 @@ export const Landing: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-5 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => {
-                  setUploadType('prescriptions');
-                  setIsUploadDrawerOpen(true);
-                }}
-                className="w-full bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+            <div className="space-y-2 mt-6 pt-5 border-t border-slate-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUploadType('prescriptions');
+                    setIsUploadDrawerOpen(true);
+                  }}
+                  className="w-full bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Upload Slip</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSpeak("You have uploaded two prescriptions: your heart medication Clopidogrel and your antacid Omeprazole. Note that taking them together reduces the heart medicine's absorption by 45%. Please ask your doctor for safe alternatives like Pantoprazole.", "hero-voice")}
+                  className="w-full bg-[#f1f3ff] hover:bg-[#e1e8fd] text-[#00221b] font-bold text-sm py-3 px-4 rounded-xl border border-slate-200 flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <Mic className="w-4 h-4 text-[#3b665a]" />
+                  <span>Speak Names</span>
+                </button>
+              </div>
+
+              <Link
+                to="/safety-matrix"
+                className="w-full bg-[#ba1a1a] hover:bg-[#93000a] text-white font-bold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-2xs"
               >
-                <FileText className="w-5 h-5" />
-                <span>Upload Slip</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSpeak("You have uploaded two prescriptions: your heart medication Clopidogrel and your antacid Omeprazole. Note that taking them together reduces the heart medicine's absorption by 45%. Please ask your doctor for safe alternatives like Pantoprazole.", "hero-voice")}
-                className="w-full bg-[#f1f3ff] hover:bg-[#e1e8fd] text-[#00221b] font-bold text-sm py-3.5 px-4 rounded-xl border border-slate-200 flex items-center justify-center gap-2 transition-all cursor-pointer"
-              >
-                <Mic className="w-5 h-5 text-[#3b665a]" />
-                <span>Speak Medicine Names</span>
-              </button>
+                <span>⚠️ Open Drug Conflicts Radar (दवा टकराव जांचें) →</span>
+              </Link>
             </div>
           </div>
 
